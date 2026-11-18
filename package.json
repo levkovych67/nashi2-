@@ -1,0 +1,9 @@
+{
+  "name": "nashi-v2",
+  "private": true,
+  "workspaces": ["contracts", "web", "studio"],
+  "scripts": {
+    "test": "npm test --workspaces --if-present",
+    "lint:api": "npm run lint -w contracts"
+  }
+}

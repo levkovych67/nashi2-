@@ -1,0 +1,1023 @@
+openapi: 3.1.0
+info:
+  title: Наші V2 API
+  version: 2.0.0
+  summary: Публічний API інтерактивної карти українських музикантів
+  description: |
+    Нормативне джерело — `docs/02-contracts.md` (розділи 1–2). Зміна контракту = зміна того файлу
+    і цього файлу в одному коміті.
+
+    Загальні правила: JSON, `camelCase`, UTF-8. Часткові дати — рядок `YYYY`, `YYYY-MM` або `YYYY-MM-DD`.
+    Мітки часу — ISO 8601 UTC. Координати в тілах — `lat`, `lon`; у масивах `center`/`bbox` порядок GeoJSON:
+    `[lon, lat]`, `[west, south, east, north]`. Публічні ендпойнти без автентифікації. Помилки — RFC 9457
+    (`application/problem+json`), тексти `title`, `detail`, `errors[].message` — українською.
+  license:
+    name: Proprietary
+    identifier: LicenseRef-Proprietary
+servers:
+  - url: /api/v2
+security: []
+tags:
+  - name: map
+    description: Дані для карти і фільтрів (кешуються через ETag).
+  - name: musicians
+    description: Список, сторінка, фрагмент аудіо і лайки музикантів.
+  - name: places
+    description: Довідник населених пунктів.
+  - name: submissions
+    description: Пропозиції нових музикантів.
+  - name: system
+    description: Конфігурація і стан сервісу.
+
+paths:
+  /map/pins:
+    get:
+      operationId: getMapPins
+      tags: [map]
+      summary: Усі опубліковані музиканти з пінами
+      description: |
+        Компактно, бо завантажується на телефоні одразу (≈3,7 тис. записів ≈ 90 КБ gzip).
+        Музиканти без піна (місце не в Україні) сюди не входять. Підтримує `ETag` / `If-None-Match`.
+      parameters:
+        - $ref: '#/components/parameters/IfNoneMatch'
+      responses:
+        '200':
+          description: Піни музикантів
+          headers:
+            ETag: { $ref: '#/components/headers/ETag' }
+            Cache-Control: { $ref: '#/components/headers/CacheControl' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MapPinsResponse' }
+              example:
+                version: 7f3a9c1e
+                pins:
+                  - id: 6650f0c2a1b2c3d4e5f60718
+                    slug: okean-elzy
+                    name: Океан Ельзи
+                    kind: BAND
+                    lat: 49.8412
+                    lon: 24.0297
+                    region: LVIV
+                    placeId: Q36036
+                    thumbUrl: https://cdn.nashi.example/artists/6650f0c2a1b2c3d4e5f60718/thumb.jpg
+                    hasAudio: true
+        '304': { $ref: '#/components/responses/NotModified' }
+        '500': { $ref: '#/components/responses/InternalError' }
+
+  /map/regions:
+    get:
+      operationId: getMapRegions
+      tags: [map]
+      summary: 27 регіонів з кількостями
+      description: Завжди 27 елементів, `count` може бути 0. `center` — візуальний центр (polylabel) полігону.
+      parameters:
+        - $ref: '#/components/parameters/IfNoneMatch'
+      responses:
+        '200':
+          description: Регіони
+          headers:
+            ETag: { $ref: '#/components/headers/ETag' }
+            Cache-Control: { $ref: '#/components/headers/CacheControl' }
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 27
+                maxItems: 27
+                items: { $ref: '#/components/schemas/RegionStat' }
+              example:
+                - { code: CRIMEA, name: Автономна Республіка Крим, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: VINNYTSIA, name: Вінницька область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: VOLYN, name: Волинська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: DNIPROPETROVSK, name: Дніпропетровська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: DONETSK, name: Донецька область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: ZHYTOMYR, name: Житомирська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: ZAKARPATTIA, name: Закарпатська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: ZAPORIZHZHIA, name: Запорізька область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: IVANO_FRANKIVSK, name: Івано-Франківська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: KYIV, name: Київська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: KIROVOHRAD, name: Кіровоградська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: LUHANSK, name: Луганська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: LVIV, name: Львівська область, center: [24.0, 49.7], bbox: [22.6, 48.7, 25.5, 50.6], count: 487 }
+                - { code: MYKOLAIV, name: Миколаївська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: ODESA, name: Одеська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: POLTAVA, name: Полтавська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: RIVNE, name: Рівненська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: SUMY, name: Сумська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: TERNOPIL, name: Тернопільська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: KHARKIV, name: Харківська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: KHERSON, name: Херсонська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: KHMELNYTSKYI, name: Хмельницька область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: CHERKASY, name: Черкаська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: CHERNIVTSI, name: Чернівецька область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: CHERNIHIV, name: Чернігівська область, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: KYIV_CITY, name: Київ, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+                - { code: SEVASTOPOL_CITY, name: Севастополь, center: [30.0, 49.0], bbox: [22.0, 44.0, 40.0, 52.0], count: 0 }
+        '304': { $ref: '#/components/responses/NotModified' }
+        '500': { $ref: '#/components/responses/InternalError' }
+
+  /map/places:
+    get:
+      operationId: getMapPlaces
+      tags: [map]
+      summary: Населені пункти, з яких є хоча б один музикант
+      parameters:
+        - $ref: '#/components/parameters/IfNoneMatch'
+      responses:
+        '200':
+          description: Населені пункти з кількостями
+          headers:
+            ETag: { $ref: '#/components/headers/ETag' }
+            Cache-Control: { $ref: '#/components/headers/CacheControl' }
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/PlaceStat' }
+              example:
+                - placeId: Q36036
+                  name: Львів
+                  region: LVIV
+                  type: CITY
+                  lat: 49.8419
+                  lon: 24.0315
+                  count: 273
+        '304': { $ref: '#/components/responses/NotModified' }
+        '500': { $ref: '#/components/responses/InternalError' }
+
+  /filters:
+    get:
+      operationId: getFilters
+      tags: [map]
+      summary: Опис фільтрів (розширювана структура критеріїв)
+      description: |
+        У фазі 1 — лише `region`. Нові критерії додаються як нові елементи масиву; UI рендерить їх за `type`.
+        Значення фільтра в URL продукту: `?<key>=<v1>,<v2>`.
+      parameters:
+        - $ref: '#/components/parameters/IfNoneMatch'
+      responses:
+        '200':
+          description: Фільтри
+          headers:
+            ETag: { $ref: '#/components/headers/ETag' }
+            Cache-Control: { $ref: '#/components/headers/CacheControl' }
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/FilterDefinition' }
+              example:
+                - key: region
+                  label: Область
+                  type: MULTI_SELECT
+                  options:
+                    - { value: LVIV, label: Львівська область, count: 487 }
+        '304': { $ref: '#/components/responses/NotModified' }
+        '500': { $ref: '#/components/responses/InternalError' }
+
+  /musicians:
+    get:
+      operationId: listMusicians
+      tags: [musicians]
+      summary: Список музикантів
+      parameters:
+        - name: region
+          in: query
+          description: Повторюваний параметр, напр. `region=LVIV&region=KYIV_CITY`.
+          schema:
+            type: array
+            items: { $ref: '#/components/schemas/Region' }
+          style: form
+          explode: true
+        - name: q
+          in: query
+          description: Пошук за ім'ям, без урахування регістру, апострофів і наголосів.
+          schema: { type: string, minLength: 2 }
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [NAME, LIKES, RECENT]
+            default: NAME
+        - name: page
+          in: query
+          description: Номер сторінки, з 0.
+          schema: { type: integer, minimum: 0, default: 0 }
+        - name: size
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+      responses:
+        '200':
+          description: Сторінка музикантів
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MusicianPage' }
+              example:
+                items:
+                  - id: 6650f0c2a1b2c3d4e5f60718
+                    slug: okean-elzy
+                    name: Океан Ельзи
+                    kind: BAND
+                    thumbUrl: https://cdn.nashi.example/artists/6650f0c2a1b2c3d4e5f60718/thumb.jpg
+                    placeName: Львів
+                    region: LVIV
+                    likesCount: 1234
+                    hasAudio: true
+                page: 0
+                size: 20
+                totalItems: 487
+                totalPages: 25
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '500': { $ref: '#/components/responses/InternalError' }
+
+  /musicians/{slug}:
+    get:
+      operationId: getMusician
+      tags: [musicians]
+      summary: Сторінка музиканта
+      description: 404 (`NOT_FOUND`), якщо музикант не опублікований.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Музикант
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MusicianDetails' }
+              example:
+                id: 6650f0c2a1b2c3d4e5f60719
+                slug: solomiia-krushelnytska
+                name: Соломія Крушельницька
+                kind: PERSON
+                tagline: українська оперна співачка
+                summary: Соломія Амвросіївна Крушельницька — українська оперна співачка (сопрано), педагогиня.
+                description: Соломія Амвросіївна Крушельницька — українська оперна співачка (сопрано), педагогиня.
+                textSource:
+                  type: WIKIPEDIA
+                  title: Крушельницька Соломія Амвросіївна
+                  url: https://uk.wikipedia.org/wiki/Крушельницька_Соломія_Амвросіївна
+                  license: CC BY-SA 4.0
+                  licenseUrl: https://creativecommons.org/licenses/by-sa/4.0/deed.uk
+                images:
+                  - url: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Krushelnytska.jpg/800px-Krushelnytska.jpg
+                    thumbUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Krushelnytska.jpg/400px-Krushelnytska.jpg
+                    alt: Соломія Крушельницька
+                    credit:
+                      author: Невідомий автор
+                      license: Public domain
+                      licenseUrl: null
+                      sourceUrl: https://commons.wikimedia.org/wiki/File:Krushelnytska.jpg
+                origin:
+                  placeId: Q4251478
+                  placeName: Білявинці
+                  region: TERNOPIL
+                  regionName: Тернопільська область
+                  basis: BIRTH
+                  precision: SETTLEMENT
+                  lat: 49.07
+                  lon: 25.32
+                dates: { birth: '1872-09-23', death: '1952-11-16', activeFrom: null, activeTo: null }
+                genres: [опера]
+                materials:
+                  clips:
+                    - clipId: c_01
+                      title: Аріозо
+                      source: COMMONS
+                      durationSec: 184
+                      externalUrl: https://commons.wikimedia.org/wiki/File:Krushelnytska-arioso.ogg
+                  works:
+                    - { title: Збірка записів, year: 1995, type: ALBUM, url: 'https://example.org/album' }
+                  videos:
+                    - { youtubeId: dQw4w9WgXcQ, title: Запис виступу }
+                links:
+                  - { platform: SPOTIFY, group: MUSIC, url: 'https://open.spotify.com/artist/abc' }
+                youtubeChannelUrl: https://www.youtube.com/channel/UCabc
+                likesCount: 1234
+                hasAudio: true
+                updatedAt: '2026-11-17T10:15:00Z'
+        '404': { $ref: '#/components/responses/NotFound' }
+        '500': { $ref: '#/components/responses/InternalError' }
+
+  /musicians/{id}/fragment:
+    get:
+      operationId: getFragment
+      tags: [musicians]
+      summary: Випадковий фрагмент аудіо
+      description: |
+        `204 No Content`, якщо аудіо немає. `url` грається напряму браузером; для `DEEZER` посилання тимчасове
+        (`expiresAt`), клієнт не кешує його довше.
+
+        Інваріант: `0 ≤ startSec` і `startSec + durationSec ≤ тривалість кліпу`; якщо кліп коротший за фрагмент —
+        `startSec = 0`, `durationSec` = тривалість кліпу.
+      parameters:
+        - $ref: '#/components/parameters/MusicianId'
+        - name: exclude
+          in: query
+          required: false
+          description: '`clipId`, який не повторювати.'
+          schema: { type: string }
+      responses:
+        '200':
+          description: Фрагмент
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Fragment' }
+              example:
+                clipId: c_01
+                url: https://cdnt-preview.dzcdn.net/stream/c-abc.mp3?hdnea=exp=1
+                startSec: 7.5
+                durationSec: 15
+                fadeInMs: 300
+                fadeOutMs: 600
+                title: Обійми
+                source: DEEZER
+                attribution: 'Прев''ю: Deezer'
+                externalUrl: https://www.deezer.com/track/123
+                expiresAt: '2026-11-17T10:30:00Z'
+        '204':
+          description: Аудіо немає
+        '404': { $ref: '#/components/responses/NotFound' }
+        '500': { $ref: '#/components/responses/InternalError' }
+
+  /musicians/{id}/likes:
+    post:
+      operationId: addLikes
+      tags: [musicians]
+      summary: Додати лайки
+      parameters:
+        - $ref: '#/components/parameters/MusicianId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/LikeRequest' }
+            example: { count: 3 }
+      responses:
+        '200':
+          description: Нова кількість лайків
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LikeResponse' }
+              example: { likesCount: 1237 }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+
+  /places/search:
+    get:
+      operationId: searchPlaces
+      tags: [places]
+      summary: Автодоповнення населених пунктів
+      description: Префікс слова, без урахування регістру й апострофів. Сортування — за населенням спадно.
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema: { type: string, minLength: 2 }
+        - name: region
+          in: query
+          required: false
+          schema: { $ref: '#/components/schemas/Region' }
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 20, default: 10 }
+      responses:
+        '200':
+          description: Підказки
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/PlaceSuggestion' }
+              example:
+                - placeId: Q465104
+                  name: Броди
+                  type: TOWN
+                  region: LVIV
+                  regionName: Львівська область
+                  lat: 50.078
+                  lon: 25.154
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '500': { $ref: '#/components/responses/InternalError' }
+
+  /submissions:
+    post:
+      operationId: createSubmission
+      tags: [submissions]
+      summary: Пропозиція музиканта
+      description: |
+        `multipart/form-data`: частина `data` (`application/json`, схема `SubmissionRequest`) і частини `images`
+        (1..5 файлів: `image/jpeg`, `image/png`, `image/webp`; ≤ 10 МБ кожен; ≤ 55 МБ увесь запит).
+
+        `faxNumber` — пастка для ботів: має бути порожнім, інакше сервер відповідає `202`, але заявку мовчки
+        відкидає. У `errors[].field` для файлів — `images[2]`.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [data, images]
+              properties:
+                data:
+                  type: string
+                  contentMediaType: application/json
+                  contentSchema: { $ref: '#/components/schemas/SubmissionRequest' }
+                images:
+                  type: array
+                  minItems: 1
+                  maxItems: 5
+                  items:
+                    type: string
+                    contentMediaType: image/*
+            encoding:
+              data: { contentType: application/json }
+              images: { contentType: 'image/jpeg, image/png, image/webp' }
+      responses:
+        '202':
+          description: Заявку прийнято на модерацію
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SubmissionAccepted' }
+              example: { id: 6650f0c2a1b2c3d4e5f6071a, status: PENDING }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '413': { $ref: '#/components/responses/PayloadTooLarge' }
+        '415': { $ref: '#/components/responses/UnsupportedMediaType' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+
+  /config/public:
+    get:
+      operationId: getPublicConfig
+      tags: [system]
+      summary: Налаштування, від яких залежить UI
+      responses:
+        '200':
+          description: Публічна конфігурація
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PublicConfig' }
+              example:
+                fragmentSeconds: 15
+                map: { regionMaxZoom: 7, placeMaxZoom: 10, minZoom: 5, maxZoom: 17 }
+                likes: { batchMax: 50, flushMs: 600 }
+                submission: { maxImages: 5, maxImageMb: 10, summaryMin: 30, summaryMax: 1000 }
+                turnstileSiteKey: null
+        '500': { $ref: '#/components/responses/InternalError' }
+
+  /health:
+    get:
+      operationId: getHealth
+      tags: [system]
+      summary: Стан сервісу
+      responses:
+        '200':
+          description: Сервіс працює
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Health' }
+              example: { status: UP }
+        '503':
+          description: MongoDB недоступна (без тексту винятку)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Health' }
+              example: { status: DOWN }
+
+components:
+  parameters:
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      required: false
+      description: Значення `ETag` з попередньої відповіді; збіг дає `304`.
+      schema: { type: string }
+    MusicianId:
+      name: id
+      in: path
+      required: true
+      description: Ідентифікатор музиканта (hex ObjectId).
+      schema: { type: string }
+
+  headers:
+    ETag:
+      description: Версія відповіді (для `/map/pins` збігається з `version`, але в лапках).
+      schema: { type: string }
+    CacheControl:
+      description: '`public, max-age=60`.'
+      schema: { type: string, examples: ['public, max-age=60'] }
+    RetryAfter:
+      description: Скільки секунд зачекати до повторного запиту.
+      schema: { type: integer, minimum: 0 }
+
+  responses:
+    NotModified:
+      description: Не змінилося (збіг `If-None-Match`); тіла немає.
+      headers:
+        ETag: { $ref: '#/components/headers/ETag' }
+        Cache-Control: { $ref: '#/components/headers/CacheControl' }
+    BadRequest:
+      description: Некоректні дані (`VALIDATION_FAILED`).
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+          example:
+            type: https://nashi.example/problems/validation
+            title: Некоректні дані
+            status: 400
+            detail: Поле summary коротше за 30 символів
+            instance: /api/v2/submissions
+            code: VALIDATION_FAILED
+            errors:
+              - { field: summary, message: Мінімум 30 символів }
+    NotFound:
+      description: Не знайдено (`NOT_FOUND`).
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+          example:
+            type: https://nashi.example/problems/not-found
+            title: Не знайдено
+            status: 404
+            code: NOT_FOUND
+    PayloadTooLarge:
+      description: Запит завеликий (`PAYLOAD_TOO_LARGE`).
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+          example:
+            type: https://nashi.example/problems/payload-too-large
+            title: Завеликий запит
+            status: 413
+            code: PAYLOAD_TOO_LARGE
+    UnsupportedMediaType:
+      description: Непідтримуваний тип (`UNSUPPORTED_MEDIA_TYPE`).
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+          example:
+            type: https://nashi.example/problems/unsupported-media-type
+            title: Непідтримуваний тип файлу
+            status: 415
+            code: UNSUPPORTED_MEDIA_TYPE
+    TooManyRequests:
+      description: Забагато запитів (`RATE_LIMITED`).
+      headers:
+        Retry-After: { $ref: '#/components/headers/RetryAfter' }
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+          example:
+            type: https://nashi.example/problems/rate-limited
+            title: Забагато запитів
+            status: 429
+            code: RATE_LIMITED
+    InternalError:
+      description: Внутрішня помилка (`INTERNAL`).
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+          example:
+            type: https://nashi.example/problems/internal
+            title: Внутрішня помилка
+            status: 500
+            code: INTERNAL
+
+  schemas:
+    Region:
+      type: string
+      enum: [CRIMEA, VINNYTSIA, VOLYN, DNIPROPETROVSK, DONETSK, ZHYTOMYR, ZAKARPATTIA, ZAPORIZHZHIA,
+        IVANO_FRANKIVSK, KYIV, KIROVOHRAD, LUHANSK, LVIV, MYKOLAIV, ODESA, POLTAVA, RIVNE, SUMY, TERNOPIL,
+        KHARKIV, KHERSON, KHMELNYTSKYI, CHERKASY, CHERNIVTSI, CHERNIHIV, KYIV_CITY, SEVASTOPOL_CITY]
+    MusicianKind:
+      type: string
+      enum: [PERSON, BAND]
+    OriginBasis:
+      type: string
+      description: BIRTH — місце народження; FORMATION — місце заснування гурту; ORIGIN — місто походження зі слів заявника.
+      enum: [BIRTH, FORMATION, ORIGIN]
+    PinPrecision:
+      type: string
+      enum: [EXACT, SETTLEMENT, CITY]
+    AudioSource:
+      type: string
+      enum: [UPLOAD, DEEZER, ITUNES, COMMONS]
+    LinkPlatform:
+      type: string
+      enum: [SPOTIFY, APPLE_MUSIC, DEEZER, YOUTUBE_MUSIC, SOUNDCLOUD, BANDCAMP, YOUTUBE, WIKIPEDIA, WEBSITE,
+        INSTAGRAM, FACEBOOK, TIKTOK, TELEGRAM, X, OTHER]
+    LinkGroup:
+      type: string
+      description: |
+        MUSIC (Spotify, Apple Music, Deezer, YouTube Music, SoundCloud, Bandcamp), VIDEO (YouTube),
+        REFERENCE (Wikipedia, Website), SOCIAL (решта).
+      enum: [MUSIC, VIDEO, REFERENCE, SOCIAL]
+    PlaceType:
+      type: string
+      description: CITY, TOWN (селище, смт), VILLAGE, OTHER.
+      enum: [CITY, TOWN, VILLAGE, OTHER]
+    WorkType:
+      type: string
+      enum: [ALBUM, SINGLE, SONG, COMPOSITION, OTHER]
+    FilterType:
+      type: string
+      enum: [MULTI_SELECT, SINGLE_SELECT, RANGE, BOOLEAN]
+
+    MapPin:
+      type: object
+      required: [id, slug, name, kind, lat, lon, region, placeId, hasAudio]
+      properties:
+        id: { type: string }
+        slug: { type: string }
+        name: { type: string }
+        kind: { $ref: '#/components/schemas/MusicianKind' }
+        lat: { type: number, format: double }
+        lon: { type: number, format: double }
+        region: { $ref: '#/components/schemas/Region' }
+        placeId: { type: string }
+        thumbUrl:
+          type: string
+          format: uri
+          description: Може бути відсутнім (тоді UI показує ініціал).
+        hasAudio: { type: boolean }
+    MapPinsResponse:
+      type: object
+      required: [version, pins]
+      properties:
+        version:
+          type: string
+          description: '`ETag` без лапок.'
+        pins:
+          type: array
+          items: { $ref: '#/components/schemas/MapPin' }
+    RegionStat:
+      type: object
+      required: [code, name, center, bbox, count]
+      properties:
+        code: { $ref: '#/components/schemas/Region' }
+        name: { type: string }
+        center:
+          type: array
+          description: '`[lon, lat]`.'
+          minItems: 2
+          maxItems: 2
+          items: { type: number, format: double }
+        bbox:
+          type: array
+          description: '`[west, south, east, north]`.'
+          minItems: 4
+          maxItems: 4
+          items: { type: number, format: double }
+        count: { type: integer, format: int64, minimum: 0 }
+    PlaceStat:
+      type: object
+      required: [placeId, name, region, type, lat, lon, count]
+      properties:
+        placeId: { type: string }
+        name: { type: string }
+        region: { $ref: '#/components/schemas/Region' }
+        type: { $ref: '#/components/schemas/PlaceType' }
+        lat: { type: number, format: double }
+        lon: { type: number, format: double }
+        count: { type: integer, format: int64, minimum: 0 }
+    FilterOption:
+      type: object
+      required: [value, label, count]
+      properties:
+        value: { type: string }
+        label: { type: string }
+        count: { type: integer, format: int64, minimum: 0 }
+    FilterDefinition:
+      type: object
+      required: [key, label, type, options]
+      properties:
+        key: { type: string }
+        label: { type: string }
+        type: { $ref: '#/components/schemas/FilterType' }
+        options:
+          type: array
+          items: { $ref: '#/components/schemas/FilterOption' }
+
+    MusicianListItem:
+      type: object
+      required: [id, slug, name, kind, placeName, region, likesCount, hasAudio]
+      properties:
+        id: { type: string }
+        slug: { type: string }
+        name: { type: string }
+        kind: { $ref: '#/components/schemas/MusicianKind' }
+        thumbUrl:
+          type: string
+          format: uri
+          description: Може бути відсутнім.
+        placeName: { type: string }
+        region: { $ref: '#/components/schemas/Region' }
+        likesCount: { type: integer, format: int64, minimum: 0 }
+        hasAudio: { type: boolean }
+    MusicianPage:
+      type: object
+      required: [items, page, size, totalItems, totalPages]
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/MusicianListItem' }
+        page: { type: integer, minimum: 0 }
+        size: { type: integer, minimum: 1 }
+        totalItems: { type: integer, format: int64, minimum: 0 }
+        totalPages: { type: integer, minimum: 0 }
+
+    TextSource:
+      type: object
+      required: [type, title, url, license, licenseUrl]
+      properties:
+        type:
+          type: string
+          description: Джерело тексту, напр. `WIKIPEDIA`.
+        title: { type: string }
+        url: { type: string, format: uri }
+        license: { type: string }
+        licenseUrl: { type: string, format: uri }
+    ImageCredit:
+      type: object
+      required: [author, license, sourceUrl]
+      properties:
+        author: { type: string }
+        license: { type: string }
+        licenseUrl: { type: [string, 'null'], format: uri }
+        sourceUrl: { type: string, format: uri }
+    Image:
+      type: object
+      required: [url, thumbUrl, alt, credit]
+      properties:
+        url: { type: string, format: uri }
+        thumbUrl: { type: string, format: uri }
+        alt: { type: string }
+        credit:
+          description: '`null` для наших завантажень.'
+          oneOf:
+            - $ref: '#/components/schemas/ImageCredit'
+            - type: 'null'
+    Origin:
+      type: object
+      description: '`lat`/`lon` — координати піна (те, що на карті).'
+      required: [placeId, placeName, region, regionName, basis, precision, lat, lon]
+      properties:
+        placeId: { type: string }
+        placeName: { type: string }
+        region: { $ref: '#/components/schemas/Region' }
+        regionName: { type: string }
+        basis: { $ref: '#/components/schemas/OriginBasis' }
+        precision: { $ref: '#/components/schemas/PinPrecision' }
+        lat: { type: number, format: double }
+        lon: { type: number, format: double }
+    LifeDates:
+      type: object
+      description: Часткові дати `YYYY`, `YYYY-MM` або `YYYY-MM-DD`.
+      required: [birth, death, activeFrom, activeTo]
+      properties:
+        birth: { $ref: '#/components/schemas/PartialDate' }
+        death: { $ref: '#/components/schemas/PartialDate' }
+        activeFrom: { $ref: '#/components/schemas/PartialDate' }
+        activeTo: { $ref: '#/components/schemas/PartialDate' }
+    PartialDate:
+      type: [string, 'null']
+      pattern: '^\d{4}(-\d{2}(-\d{2})?)?$'
+      examples: ['1872-09-23']
+    ClipSummary:
+      type: object
+      required: [clipId, title, source, durationSec]
+      properties:
+        clipId: { type: string }
+        title: { type: string }
+        source: { $ref: '#/components/schemas/AudioSource' }
+        durationSec: { type: integer, minimum: 0 }
+        externalUrl: { type: [string, 'null'], format: uri }
+    Work:
+      type: object
+      required: [title, type]
+      properties:
+        title: { type: string }
+        year: { type: [integer, 'null'] }
+        type: { $ref: '#/components/schemas/WorkType' }
+        url: { type: [string, 'null'], format: uri }
+    Video:
+      type: object
+      required: [youtubeId, title]
+      properties:
+        youtubeId: { type: string }
+        title: { type: string }
+    Materials:
+      type: object
+      description: '`videos` у фазі 1 заповнюється лише якщо налаштовано ключ YouTube Data API.'
+      required: [clips, works, videos]
+      properties:
+        clips:
+          type: array
+          items: { $ref: '#/components/schemas/ClipSummary' }
+        works:
+          type: array
+          items: { $ref: '#/components/schemas/Work' }
+        videos:
+          type: array
+          items: { $ref: '#/components/schemas/Video' }
+    Link:
+      type: object
+      required: [platform, group, url]
+      properties:
+        platform: { $ref: '#/components/schemas/LinkPlatform' }
+        group: { $ref: '#/components/schemas/LinkGroup' }
+        url: { type: string, format: uri }
+    MusicianDetails:
+      type: object
+      required: [id, slug, name, kind, summary, textSource, images, origin, dates, genres, materials, links,
+        likesCount, hasAudio, updatedAt]
+      properties:
+        id: { type: string }
+        slug: { type: string }
+        name: { type: string }
+        kind: { $ref: '#/components/schemas/MusicianKind' }
+        tagline: { type: [string, 'null'] }
+        summary: { type: string }
+        description:
+          type: [string, 'null']
+          description: Повний вступ статті, до 2000 символів.
+        textSource:
+          description: '`null` для тексту від заявника.'
+          oneOf:
+            - $ref: '#/components/schemas/TextSource'
+            - type: 'null'
+        images:
+          type: array
+          description: Може бути порожнім.
+          items: { $ref: '#/components/schemas/Image' }
+        origin: { $ref: '#/components/schemas/Origin' }
+        dates: { $ref: '#/components/schemas/LifeDates' }
+        genres:
+          type: array
+          items: { type: string }
+        materials: { $ref: '#/components/schemas/Materials' }
+        links:
+          type: array
+          items: { $ref: '#/components/schemas/Link' }
+        youtubeChannelUrl: { type: [string, 'null'], format: uri }
+        likesCount: { type: integer, format: int64, minimum: 0 }
+        hasAudio: { type: boolean }
+        updatedAt: { type: string, format: date-time }
+
+    Fragment:
+      type: object
+      required: [clipId, url, startSec, durationSec, fadeInMs, fadeOutMs, title, source, attribution]
+      properties:
+        clipId: { type: string }
+        url: { type: string, format: uri }
+        startSec: { type: number, minimum: 0 }
+        durationSec: { type: number, exclusiveMinimum: 0 }
+        fadeInMs: { type: integer, minimum: 0 }
+        fadeOutMs: { type: integer, minimum: 0 }
+        title: { type: string }
+        source: { $ref: '#/components/schemas/AudioSource' }
+        attribution: { type: string }
+        externalUrl: { type: [string, 'null'], format: uri }
+        expiresAt:
+          type: [string, 'null']
+          format: date-time
+          description: Лише для тимчасових посилань (`DEEZER`); інакше `null` або відсутнє.
+
+    LikeRequest:
+      type: object
+      required: [count]
+      properties:
+        count: { type: integer, minimum: 1, maximum: 50 }
+    LikeResponse:
+      type: object
+      required: [likesCount]
+      properties:
+        likesCount: { type: integer, format: int64, minimum: 0 }
+
+    PlaceSuggestion:
+      type: object
+      required: [placeId, name, type, region, regionName, lat, lon]
+      properties:
+        placeId: { type: string }
+        name: { type: string }
+        type: { $ref: '#/components/schemas/PlaceType' }
+        region: { $ref: '#/components/schemas/Region' }
+        regionName: { type: string }
+        lat: { type: number, format: double }
+        lon: { type: number, format: double }
+
+    SubmissionRequest:
+      type: object
+      required: [name, kind, originPlaceId, summary, links, consent]
+      properties:
+        name: { type: string, minLength: 2, maxLength: 100 }
+        kind: { $ref: '#/components/schemas/MusicianKind' }
+        originPlaceId:
+          type: string
+          description: Існуючий `placeId` (з `searchPlaces`).
+        birthPlaceId:
+          type: [string, 'null']
+          description: Існуючий `placeId` або `null`; лише для `PERSON`.
+        summary: { type: string, minLength: 30, maxLength: 1000 }
+        genres:
+          type: array
+          maxItems: 5
+          items: { type: string, minLength: 2, maxLength: 40 }
+        links:
+          type: array
+          minItems: 1
+          maxItems: 10
+          description: |
+            Абсолютні `http(s)` URL; щонайменше одне з групи `MUSIC` або `VIDEO` (платформу визначає сервер),
+            разом із `youtubeChannelUrl` теж зараховується.
+          items: { type: string, format: uri, pattern: '^https?://' }
+        youtubeChannelUrl:
+          type: [string, 'null']
+          format: uri
+          description: Домен `youtube.com` / `youtu.be`.
+        wikipediaUrl:
+          type: [string, 'null']
+          format: uri
+          description: Домен `uk.wikipedia.org` або `en.wikipedia.org`.
+        contact: { type: string, maxLength: 200 }
+        consent:
+          type: boolean
+          const: true
+        faxNumber:
+          type: string
+          maxLength: 0
+          description: Пастка для ботів. Має бути порожнім, інакше сервер відповідає `202`, але заявку відкидає.
+    SubmissionAccepted:
+      type: object
+      required: [id, status]
+      properties:
+        id: { type: string }
+        status:
+          type: string
+          const: PENDING
+
+    PublicConfig:
+      type: object
+      required: [fragmentSeconds, map, likes, submission, turnstileSiteKey]
+      properties:
+        fragmentSeconds: { type: integer, minimum: 1 }
+        map:
+          type: object
+          required: [regionMaxZoom, placeMaxZoom, minZoom, maxZoom]
+          properties:
+            regionMaxZoom: { type: integer }
+            placeMaxZoom: { type: integer }
+            minZoom: { type: integer }
+            maxZoom: { type: integer }
+        likes:
+          type: object
+          required: [batchMax, flushMs]
+          properties:
+            batchMax: { type: integer }
+            flushMs: { type: integer }
+        submission:
+          type: object
+          required: [maxImages, maxImageMb, summaryMin, summaryMax]
+          properties:
+            maxImages: { type: integer }
+            maxImageMb: { type: integer }
+            summaryMin: { type: integer }
+            summaryMax: { type: integer }
+        turnstileSiteKey: { type: [string, 'null'] }
+
+    Health:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [UP, DOWN]
+
+    FieldError:
+      type: object
+      required: [field, message]
+      properties:
+        field:
+          type: string
+          description: Назва поля; для файлів — `images[2]`.
+        message: { type: string }
+    Problem:
+      type: object
+      description: RFC 9457. Тексти — українською, безпечні для показу користувачу.
+      required: [type, title, status, code]
+      properties:
+        type: { type: string, format: uri }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        instance: { type: string }
+        code:
+          type: string
+          enum: [VALIDATION_FAILED, NOT_FOUND, PAYLOAD_TOO_LARGE, UNSUPPORTED_MEDIA_TYPE, RATE_LIMITED,
+            INTERNAL, UNAVAILABLE]
+        errors:
+          type: array
+          items: { $ref: '#/components/schemas/FieldError' }

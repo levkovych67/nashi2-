@@ -1,0 +1,154 @@
+[
+  {
+    "url": "https://open.spotify.com/artist/4gzpq5DPGxSnKTe4SA8HAU",
+    "platform": "SPOTIFY"
+  },
+  {
+    "url": "https://open.spotify.com/album/1A2Gt8sMRTiNZyvxpO1ZPw",
+    "platform": "SPOTIFY"
+  },
+  {
+    "url": "https://spotify.link/abcDEF123",
+    "platform": "SPOTIFY"
+  },
+  {
+    "url": "https://music.apple.com/ua/artist/okean-elzy/123456",
+    "platform": "APPLE_MUSIC"
+  },
+  {
+    "url": "https://music.apple.com/us/album/vstupne/987654",
+    "platform": "APPLE_MUSIC"
+  },
+  {
+    "url": "https://www.deezer.com/artist/1234",
+    "platform": "DEEZER"
+  },
+  {
+    "url": "https://deezer.com/en/album/5678",
+    "platform": "DEEZER"
+  },
+  {
+    "url": "https://music.youtube.com/channel/UCabc123",
+    "platform": "YOUTUBE_MUSIC"
+  },
+  {
+    "url": "https://music.youtube.com/playlist?list=OLAK5uy_abc",
+    "platform": "YOUTUBE_MUSIC"
+  },
+  {
+    "url": "https://soundcloud.com/some-artist",
+    "platform": "SOUNDCLOUD"
+  },
+  {
+    "url": "https://m.soundcloud.com/some-artist/track",
+    "platform": "SOUNDCLOUD"
+  },
+  {
+    "url": "https://someband.bandcamp.com/album/first",
+    "platform": "BANDCAMP"
+  },
+  {
+    "url": "https://bandcamp.com/someband",
+    "platform": "BANDCAMP"
+  },
+  {
+    "url": "https://www.youtube.com/channel/UCabc123",
+    "platform": "YOUTUBE"
+  },
+  {
+    "url": "https://youtu.be/dQw4w9WgXcQ",
+    "platform": "YOUTUBE"
+  },
+  {
+    "url": "https://www.youtube.com/@somechannel",
+    "platform": "YOUTUBE"
+  },
+  {
+    "url": "https://m.youtube.com/watch?v=dQw4w9WgXcQ",
+    "platform": "YOUTUBE"
+  },
+  {
+    "url": "https://uk.wikipedia.org/wiki/Океан_Ельзи",
+    "platform": "WIKIPEDIA"
+  },
+  {
+    "url": "https://uk.m.wikipedia.org/wiki/Океан_Ельзи",
+    "platform": "WIKIPEDIA"
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Okean_Elzy",
+    "platform": "WIKIPEDIA"
+  },
+  {
+    "url": "https://okeanelzy.com.ua/",
+    "platform": "WEBSITE"
+  },
+  {
+    "url": "http://example.org/band",
+    "platform": "WEBSITE"
+  },
+  {
+    "url": "https://unknown-domain.example/path?x=1",
+    "platform": "WEBSITE"
+  },
+  {
+    "url": "https://www.instagram.com/somemusician/",
+    "platform": "INSTAGRAM"
+  },
+  {
+    "url": "https://instagram.com/somemusician",
+    "platform": "INSTAGRAM"
+  },
+  {
+    "url": "https://www.facebook.com/somemusician",
+    "platform": "FACEBOOK"
+  },
+  {
+    "url": "https://fb.com/somemusician",
+    "platform": "FACEBOOK"
+  },
+  {
+    "url": "https://m.facebook.com/somemusician",
+    "platform": "FACEBOOK"
+  },
+  {
+    "url": "https://www.tiktok.com/@somemusician",
+    "platform": "TIKTOK"
+  },
+  {
+    "url": "https://vm.tiktok.com/ZMabc/",
+    "platform": "TIKTOK"
+  },
+  {
+    "url": "https://t.me/somemusician",
+    "platform": "TELEGRAM"
+  },
+  {
+    "url": "https://telegram.me/somemusician",
+    "platform": "TELEGRAM"
+  },
+  {
+    "url": "https://x.com/somemusician",
+    "platform": "X"
+  },
+  {
+    "url": "https://twitter.com/somemusician",
+    "platform": "X"
+  },
+  {
+    "url": "https://mobile.twitter.com/somemusician",
+    "platform": "X"
+  },
+  {
+    "url": "mailto:band@example.org",
+    "platform": "OTHER"
+  },
+  {
+    "url": "ftp://files.example.org/band",
+    "platform": "OTHER"
+  },
+  {
+    "url": "tel:+380501234567",
+    "platform": "OTHER"
+  }
+]

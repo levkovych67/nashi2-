@@ -42,3 +42,16 @@ nashi_v2/
 
 Дизайн-команда не чекає на backend (студія працює на фікстурах тієї ж форми, що й API). Технічна команда не чекає на
 дизайн (логіка в `web/src/core/` не залежить від скіну; каркасний UI замінюється після handoff).
+
+## Як запустити
+
+Потрібен Node.js 24 (`.nvmrc`).
+
+```bash
+npm install            # залежності всіх workspace-ів (contracts, web, studio — ті, що вже існують)
+npm test               # тести в усіх workspace-ах
+npm run lint:api       # лінт contracts/openapi.yaml (Redocly)
+```
+
+Контракт API — `contracts/openapi.yaml` (опис і тест-вектори: `contracts/README.md`). Рішення щодо версій і
+архітектури — `docs/adr/`.

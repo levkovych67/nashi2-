@@ -1,0 +1,5 @@
+extends:
+  - recommended
+rules:
+  # GET-ендпойнти без параметрів (config, health, map/*) не мають 4xx за контрактом 02-contracts.md.
+  operation-4xx-response: off
