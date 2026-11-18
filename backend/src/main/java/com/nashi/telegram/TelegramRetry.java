@@ -7,9 +7,11 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
+import java.io.IOException;
+
 /**
  * Runs a Bot API call with at most {@value #MAX_ATTEMPTS} attempts: 429 waits {@code retry_after}; 5xx and
- * network errors wait 1, 2, 4, 8 s; other 4xx fail at once.
+ * network (I/O) errors wait 1, 2, 4, 8 s; everything else (other 4xx, validation, parse errors) fails at once.
  */
 @Component
 public class TelegramRetry {
@@ -64,15 +66,27 @@ public class TelegramRetry {
 
     /** Milliseconds to wait before retrying, or -1 when the failure is final. */
     private static long waitMillis(TelegramApiException e, int attempt) {
-        if (e instanceof TelegramApiRequestException request && request.getErrorCode() != null) {
-            int code = request.getErrorCode();
-            if (code == 429) {
+        if (e instanceof TelegramApiRequestException request) {
+            Integer code = request.getErrorCode();
+            if (code != null && code == 429) {
                 Integer retryAfter = request.getParameters() == null ? null : request.getParameters().getRetryAfter();
                 return (retryAfter == null ? 1 : retryAfter) * 1000L;
             }
-            return code >= 500 ? backoff(attempt) : -1;
+            if (code != null && code >= 500) {
+                return backoff(attempt);
+            }
         }
-        return backoff(attempt);
+        // Validation and parse failures are deterministic; only a real I/O failure is worth another try.
+        return causedByIo(e) ? backoff(attempt) : -1;
+    }
+
+    private static boolean causedByIo(Throwable e) {
+        for (Throwable t = e; t != null; t = t.getCause() == t ? null : t.getCause()) {
+            if (t instanceof IOException) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static long backoff(int attempt) {

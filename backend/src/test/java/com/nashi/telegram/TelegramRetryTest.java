@@ -65,11 +65,11 @@ class TelegramRetryTest {
     }
 
     @Test
-    void retryBacksOffOnNetworkErrors() throws Exception {
+    void retriesOnNetworkIoFailure() throws Exception {
         AtomicInteger calls = new AtomicInteger();
         String result = retry.execute(() -> {
             if (calls.incrementAndGet() < 3) {
-                throw new TelegramApiException("connection reset");
+                throw new TelegramApiException("connection reset", new java.io.IOException("reset"));
             }
             return "ok";
         });
@@ -90,5 +90,16 @@ class TelegramRetryTest {
         } finally {
             Thread.interrupted();
         }
+    }
+
+    @Test
+    void retryStopsOnValidationError() {
+        AtomicInteger calls = new AtomicInteger();
+        assertThatThrownBy(() -> retry.execute(() -> {
+            calls.incrementAndGet();
+            throw new org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException("too long", (org.telegram.telegrambots.meta.api.interfaces.BotApiObject) null);
+        })).isInstanceOf(org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException.class);
+        assertThat(calls).hasValue(1);
+        assertThat(sleeps).isEmpty();
     }
 }
