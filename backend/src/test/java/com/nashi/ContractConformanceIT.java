@@ -96,7 +96,11 @@ class ContractConformanceIT extends MongoIT {
             } else {
                 Set<String> want = properties(expected);
                 Set<String> have = properties(found);
-                if (!want.equals(have)) {
+                if (want.isEmpty()) {
+                    problems.add("contract schema " + name + " has no properties (composition not supported by this test)");
+                } else if (have.isEmpty()) {
+                    problems.add("implementation schema " + name + " has no properties");
+                } else if (!want.equals(have)) {
                     problems.add("schema " + name + ": properties differ, contract-only " + minus(want, have)
                             + ", implementation-only " + minus(have, want));
                 }
@@ -165,6 +169,9 @@ class ContractConformanceIT extends MongoIT {
                                           Map<String, Object> found, List<String> problems) {
         Map<String, Map<String, Object>> want = parameters(contractDoc, expected);
         Map<String, Map<String, Object>> have = parameters(actualDoc, found);
+        if (want.isEmpty() && have.isEmpty() && expected.containsKey("parameters")) {
+            problems.add(operationId + ": parameters could not be read from either document");
+        }
         for (String key : want.keySet()) {
             if (!have.containsKey(key)) {
                 problems.add(operationId + ": parameter " + key + " missing in the implementation");
@@ -230,6 +237,9 @@ class ContractConformanceIT extends MongoIT {
                                             Map<String, Object> found, List<String> problems) {
         Set<String> want = successCodes((Map<String, Object>) expected.get("responses"));
         Set<String> have = successCodes((Map<String, Object>) found.get("responses"));
+        if (want.isEmpty()) {
+            problems.add(operationId + ": the contract declares no success response (nothing to compare)");
+        }
         if (!want.equals(have)) {
             problems.add(operationId + ": success response codes differ, contract " + want + ", implementation "
                     + have);
