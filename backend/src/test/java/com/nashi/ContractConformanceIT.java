@@ -38,14 +38,14 @@ class ContractConformanceIT extends MongoIT {
     private static final List<String> IMPLEMENTED_OPERATIONS = List.of(
             "getHealth", "searchPlaces", "listMusicians", "getMusician", "getMapPins", "getMapRegions",
             "getMapPlaces", "getFilters", "getPublicConfig", "addLikes",
-            "createSubmission");
+            "createSubmission", "getFragment");
 
     /** Schemas whose property names are compared: the response/request bodies of the implemented operations. */
     private static final List<String> SCHEMAS = List.of(
             "MapPin", "MapPinsResponse", "RegionStat", "PlaceStat", "FilterDefinition", "FilterOption",
             "MusicianListItem", "MusicianPage", "MusicianDetails", "LikeRequest", "LikeResponse", "PlaceSuggestion",
             "PublicConfig", "Health", "Image", "ImageCredit", "Origin", "Link", "Materials", "ClipSummary",
-            "TextSource", "LifeDates", "Work", "Video", "SubmissionRequest", "SubmissionAccepted");
+            "TextSource", "LifeDates", "Work", "Video", "SubmissionRequest", "SubmissionAccepted", "Fragment");
 
     private static final List<String> ENUMS = List.of(
             "Region", "MusicianKind", "OriginBasis", "PinPrecision", "AudioSource", "LinkPlatform", "LinkGroup",
@@ -55,6 +55,11 @@ class ContractConformanceIT extends MongoIT {
 
     @Autowired
     private RestTestClient http;
+
+    @Test
+    void allTwelveOperationsAreCovered() {
+        assertThat(IMPLEMENTED_OPERATIONS).hasSize(12).doesNotHaveDuplicates();
+    }
 
     @Test
     @SuppressWarnings("unchecked")
