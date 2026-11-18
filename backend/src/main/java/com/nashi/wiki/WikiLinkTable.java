@@ -5,6 +5,7 @@ import com.nashi.wiki.WikiLink.Platform;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 /**
  * The links of an imported artist, in the order of the spec's link table. Templates are the formatter URLs (P1630) of
@@ -42,6 +43,8 @@ public final class WikiLinkTable {
             new Row(Platform.WIKI, e -> WikiLinks.articleUrl(e.ukTitle())),
             new Row(Platform.WIKIDATA, e -> WikiLinks.wikidataUrl(e.qid())));
 
+    private static final Pattern YOUTUBE_CHANNEL = Pattern.compile("https://www\\.youtube\\.com/channel/UC[\\w-]+");
+
     private WikiLinkTable() {
     }
 
@@ -58,13 +61,15 @@ public final class WikiLinkTable {
     }
 
     /**
-     * The YouTube channel (P2397) among the links: the first link of the YOUTUBE platform, which on Wikidata links
-     * comes first; null when there is none.
+     * The YouTube channel among the links: the first YOUTUBE link that is a channel id
+     * ({@code https://www.youtube.com/channel/UC…}); null when there is none. Given the links of {@link #links}, that
+     * is P2397; handles ({@code /@…}) and user names ({@code /user/…}) are never a channel.
      */
     public static String youtubeChannelUrl(List<WikiLink> links) {
         return links == null ? null : links.stream()
                 .filter(l -> l.getPlatform() == Platform.YOUTUBE)
                 .map(WikiLink::getUrl)
+                .filter(url -> url != null && YOUTUBE_CHANNEL.matcher(url).matches())
                 .findFirst().orElse(null);
     }
 

@@ -1,8 +1,8 @@
 package com.nashi.wiki;
 
 /**
- * One row of a works query. A work can come in several rows (two images, two dates, found as notable and as authored);
- * {@link WorkSelector} keeps one per creator.
+ * One row of a works query ({@link WikiQueries#albums}). A work can come in several rows (two release dates, two
+ * images); {@link WorkSelector} keeps one per creator.
  *
  * @param creator         QID of the artist or author
  * @param work            QID of the work
@@ -10,7 +10,6 @@ package com.nashi.wiki;
  * @param year            of publication or inception
  * @param imageFile       Commons file name of P18 (the cover), without "File:"
  * @param ukTitle         title of the uk.wikipedia article about the work
- * @param wikisourceTitle title of the work's text on uk.wikisource
  * @param notable         the creator lists it as a notable work (P800)
  */
 public record WorkRow(
@@ -20,6 +19,5 @@ public record WorkRow(
         Integer year,
         String imageFile,
         String ukTitle,
-        String wikisourceTitle,
         boolean notable) {
 }

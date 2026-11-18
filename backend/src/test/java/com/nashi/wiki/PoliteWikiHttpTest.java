@@ -178,6 +178,50 @@ class PoliteWikiHttpTest {
     }
 
     @Test
+    void downloadsAFileWithTheUserAgentTheGapAndRetries() {
+        byte[] jpeg = {(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, 0x01, 0x02};
+        respond("/ok", 200);
+        server.createContext("/thumb.jpg", exchange -> {
+            int n = requests.getAndIncrement();
+            userAgents.add(exchange.getRequestHeaders().getFirst("User-Agent"));
+            if (n == 1) {
+                exchange.getResponseHeaders().add("Retry-After", "2");
+                exchange.sendResponseHeaders(429, -1);
+                exchange.close();
+                return;
+            }
+            exchange.getResponseHeaders().add("Content-Type", "image/jpeg; charset=binary");
+            exchange.sendResponseHeaders(200, jpeg.length);
+            try (OutputStream out = exchange.getResponseBody()) {
+                out.write(jpeg);
+            }
+        });
+        PoliteWikiHttp http = http();
+
+        http.get(url("/ok"));
+        WikiFileHttp.WikiFile file = http.getFile(url("/thumb.jpg"));
+
+        assertThat(file.bytes()).isEqualTo(jpeg);
+        assertThat(file.contentType()).isEqualTo("image/jpeg");
+        assertThat(requests.get()).isEqualTo(3);
+        assertThat(userAgents).containsOnly(PoliteWikiHttp.DEFAULT_USER_AGENT);
+        assertThat(sleeps).as("the gap before the download, then Retry-After, which outlasts the gap")
+                .containsExactly(1000L, 2000L);
+    }
+
+    @Test
+    void aFileWithoutAContentTypeHasNone() {
+        server.createContext("/plain", exchange -> {
+            exchange.sendResponseHeaders(200, 2);
+            try (OutputStream out = exchange.getResponseBody()) {
+                out.write(new byte[]{1, 2});
+            }
+        });
+
+        assertThat(http().getFile(url("/plain")).contentType()).isNull();
+    }
+
+    @Test
     void reportsTheClientTimeout() {
         WikiFetchException e = new WikiFetchException("request failed: x", new HttpTimeoutException("t"));
 

@@ -10,6 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.LongSupplier;
@@ -20,12 +21,12 @@ import java.util.function.LongSupplier;
  * sends a project User-Agent without personal details, keeps at least {@code requestGap} between the end of one
  * request and the start of the next, and on 429/502/503/504 waits {@code Retry-After} (or an exponential backoff)
  * before retrying up to {@value #MAX_RETRIES} times. Calls are serialized: one instance never sends two requests at
- * once.
+ * once, whether for text ({@link #get}) or for a file ({@link #getFile}), so the gap holds across both.
  * <p>
  * In Spring the User-Agent and the gap come from {@code nashi.http.user-agent} and {@code nashi.wiki.request-gap}
  * ({@link WikiHttpConfig}); stand-alone tools pass them in.
  */
-public class PoliteWikiHttp implements WikiHttp {
+public class PoliteWikiHttp implements WikiHttp, WikiFileHttp {
 
     private static final Logger log = LoggerFactory.getLogger(PoliteWikiHttp.class);
 
@@ -84,18 +85,33 @@ public class PoliteWikiHttp implements WikiHttp {
 
     @Override
     public synchronized String get(String url) {
+        return send(url, "application/sparql-results+json, application/json",
+                HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8)).body();
+    }
+
+    @Override
+    public synchronized WikiFile getFile(String url) {
+        HttpResponse<byte[]> response = send(url, "image/*", HttpResponse.BodyHandlers.ofByteArray());
+        String contentType = response.headers().firstValue("Content-Type")
+                .map(value -> value.split(";", 2)[0].trim().toLowerCase(Locale.ROOT))
+                .filter(value -> !value.isEmpty())
+                .orElse(null);
+        return new WikiFile(response.body(), contentType);
+    }
+
+    private <T> HttpResponse<T> send(String url, String accept, HttpResponse.BodyHandler<T> bodyHandler) {
         HttpRequest request = HttpRequest.newBuilder(URI.create(url))
                 .timeout(REQUEST_TIMEOUT)
                 .header("User-Agent", userAgent)
-                .header("Accept", "application/sparql-results+json, application/json")
+                .header("Accept", accept)
                 .GET()
                 .build();
 
         for (int attempt = 0; ; attempt++) {
             keepGap();
-            HttpResponse<String> response;
+            HttpResponse<T> response;
             try {
-                response = client.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+                response = client.send(request, bodyHandler);
             } catch (IOException e) {
                 if (attempt < MAX_RETRIES) {
                     log.warn("[WIKI] {} failed ({}), retry {}", shorten(url), e.getMessage(), attempt + 1);
@@ -113,7 +129,7 @@ public class PoliteWikiHttp implements WikiHttp {
 
             int status = response.statusCode();
             if (status == 200) {
-                return response.body();
+                return response;
             }
             if (isRetryable(status) && attempt < MAX_RETRIES) {
                 long wait = retryAfterMillis(response).orElse(backoff(attempt));

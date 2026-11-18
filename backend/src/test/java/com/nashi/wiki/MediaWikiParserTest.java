@@ -10,6 +10,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class MediaWikiParserTest {
 
     @Test
+    void wikibaseItemOfAPage() {
+        assertEquals("Q1008489", MediaWikiParser.parseWikibaseItem("{\"batchcomplete\":true,\"query\":{\"pages\":["
+                + "{\"pageid\":63871,\"ns\":0,\"title\":\"Океан Ельзи\",\"pageprops\":{\"wikibase_item\":\"Q1008489\"}}]}}"));
+        assertNull(MediaWikiParser.parseWikibaseItem(
+                "{\"query\":{\"pages\":[{\"ns\":0,\"title\":\"Нема\",\"missing\":true}]}}"));
+        assertThrows(WikiFetchException.class, () -> MediaWikiParser.parseWikibaseItem(
+                "{\"error\":{\"code\":\"maxlag\",\"info\":\"Waiting for a database server.\"}}"));
+    }
+
+    @Test
     void introOfARedirectedTitleIsKeyedByTheRequestedTitle() {
         Map<String, String> intros = MediaWikiParser.parseIntros(Fixtures.read("extracts.json"));
 
@@ -27,6 +37,7 @@ class MediaWikiParserTest {
 
         assertEquals("Іван Петрук (нар. 14 травня 1975, Мукачево) — співак.", MediaWikiParser.parseIntros(json).get("Тест"));
         assertEquals("нар. 14 травня 1975,", MediaWikiParser.cleanIntro("нар. 14 травня 1975(1975-05-14) ,"));
+        assertEquals("нар. 6 січня 1978, Броди", MediaWikiParser.cleanIntro("нар. 6 січня 1978(19780106), Броди"));
         // A date in brackets of its own, after a space, is the author's text and stays.
         assertEquals("дата (1975-05-14) у тексті", MediaWikiParser.cleanIntro("дата (1975-05-14) у тексті"));
     }

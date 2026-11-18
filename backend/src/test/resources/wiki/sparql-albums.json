@@ -1,0 +1,536 @@
+{
+  "head" : {
+    "vars" : [ "creator", "work", "title", "year", "ukTitle" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q22132106"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Подих (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q2662517"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2015"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Подих"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q56368963"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Крила (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q2662517"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2018"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Крила"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q12131540"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Міра (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2007"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Міра (альбом)"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q2445442"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Там, де нас нема"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "1998"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Там, де нас нема"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q12135411"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Океан Ельзи: The Best Of"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2010"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Океан Ельзи: The Best Of"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q18602787"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "All or nothing (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q2662517"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2013"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "All or Nothing (альбом)"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q3859802"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Модель (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2001"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Модель (альбом)"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q130340741"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Той день"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2024"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Той день"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q130518400"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Lighthouse (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2024"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Lighthouse"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q12089132"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Вибране…"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2007"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Вибране…"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q129775914"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "QIRIM"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q2662517"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2023"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "QIRIM"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q24542409"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "1944 (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q2662517"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2016"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "1944"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q107041677"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Ми (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q2662517"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2021"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Ми"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q4537843"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Янанебібув"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2000"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Янанебібув"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1393131"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "TVій формат"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2003"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Tvій формат"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q18563267"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "For every heart (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q2662517"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2011"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "For Every Heart (2011)"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q4446320"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Суперсиметрія (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2003"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Суперсиметрія (альбом)"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q2365889"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Gloria (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2005"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "GLORIA"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1954831"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Dolce Vita"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2010"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Dolce Vita"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q24114132"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Без меж"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2016"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Без меж"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q14633569"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Земля (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2013"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Земля (альбом)"
+      }
+    }, {
+      "work" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q4028586"
+      },
+      "ukTitle" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "1221 (альбом)"
+      },
+      "creator" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2006"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "1221 (альбом)"
+      }
+    } ]
+  }
+}

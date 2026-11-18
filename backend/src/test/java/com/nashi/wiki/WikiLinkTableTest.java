@@ -108,6 +108,16 @@ class WikiLinkTableTest {
     }
 
     @Test
+    void youtubeChannelIsOnlyAChannelId() {
+        // a P2397 value that is not a channel id, and the handle and user forms MusicBrainz knows
+        assertNull(WikiLinkTable.youtubeChannelUrl(WikiLinkTable.links(
+                TestEntities.entity("Q8").socialIds(Map.of("P2397", "@okeanelzy")).build())));
+        assertNull(WikiLinkTable.youtubeChannelUrl(List.of(
+                WikiLink.builder().platform(Platform.YOUTUBE).url("https://www.youtube.com/@okeanelzy").build(),
+                WikiLink.builder().platform(Platform.YOUTUBE).url("https://www.youtube.com/user/okeanelzy").build())));
+    }
+
+    @Test
     void articleLinkWhenThereIsAUkTitle() {
         assertEquals("https://uk.wikipedia.org/wiki/%D0%9B%D0%B5%D1%81%D1%8F_%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%BA%D0%B0",
                 url(WikiLinkTable.links(kinds.get("Q298033")), Platform.WIKI));

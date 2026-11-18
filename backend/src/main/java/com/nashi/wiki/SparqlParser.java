@@ -71,7 +71,7 @@ public final class SparqlParser {
             }
             rows.add(new WorkRow(creator, work, title, integer(value(binding, "year")),
                     commonsFile(value(binding, "image")), value(binding, "ukTitle"),
-                    value(binding, "wikisourceTitle"), "true".equals(value(binding, "notable"))));
+                    "true".equals(value(binding, "notable"))));
         }
         return rows;
     }

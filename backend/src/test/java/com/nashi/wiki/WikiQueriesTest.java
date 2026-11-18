@@ -66,6 +66,18 @@ class WikiQueriesTest {
                 WikiQueries.ensembles());
     }
 
+    @Test
+    void albumQueryAsksForAlbumsOfTheCreatorsWithYearArticleAndLabel() {
+        assertEquals("SELECT DISTINCT ?creator ?work ?title ?year ?ukTitle WHERE { "
+                + "VALUES ?creator { wd:Q1008489 wd:Q2662517 } "
+                + "?work wdt:P175 ?creator; wdt:P31/wdt:P279* wd:Q482994. "
+                + "OPTIONAL { ?work wdt:P577 ?date. } BIND(YEAR(?date) AS ?year) "
+                + "OPTIONAL { ?article schema:about ?work; schema:isPartOf <https://uk.wikipedia.org/>; "
+                + "schema:name ?ukTitle. } "
+                + "SERVICE wikibase:label { bd:serviceParam wikibase:language \"uk,en\". ?work rdfs:label ?title. } }",
+                WikiQueries.albums(List.of("Q1008489", "Q2662517")));
+    }
+
     private static void assertPeopleQuery(String query, String rule) {
         assertTrue(query.contains(NOT_RUSSIAN), query);
         assertTrue(query.contains(UK_ARTICLE), query);

@@ -46,12 +46,12 @@ class SparqlParserTest {
         assertEquals(13, rows.size());
         assertTrue(rows.stream().noneMatch(r -> r.creator().equals("Q4082561")));
         assertEquals(new WorkRow("Q2601651", "Q123614066", "Весілля в Київській губернії", 1891,
-                "Пимоненко М Весілля в Київській губернії 1891.PNG", "Весілля в Київській губернії", null, false),
+                "Пимоненко М Весілля в Київській губернії 1891.PNG", "Весілля в Київській губернії", false),
                 work(rows, "Q123614066"));
         assertEquals(new WorkRow("Q4307907", "Q124338217", "Портрет Адріана Прахова", 1904,
-                "Adrian Prakhov by Murashko (1904).jpg", null, null, false), work(rows, "Q124338217"));
+                "Adrian Prakhov by Murashko (1904).jpg", null, false), work(rows, "Q124338217"));
         assertEquals(new WorkRow("Q2601651", "Q112066266", "Matchmakers", 1882, "Mykola Pymonenko-Svaty.jpg",
-                null, null, false), work(rows, "Q112066266"), "an English label when there is no Ukrainian one");
+                null, false), work(rows, "Q112066266"), "an English label when there is no Ukrainian one");
         assertNull(work(rows, "Q112066285").year());
         assertEquals(List.of("Mikołaj K. Pimonienko - Study of a young boy in a straw hat - M.Ob.908 - National "
                         + "Museum in Warsaw.jpg", "Pymonenko A boy in a straw hat.jpg"),
@@ -60,22 +60,36 @@ class SparqlParserTest {
     }
 
     @Test
-    void parsesWrittenWorksWithNotableAndWikisource() {
+    void parsesWrittenWorksWithNotable() {
         List<WorkRow> rows = SparqlParser.parseWorks(Fixtures.read("sparql-works-written.json"));
 
         assertEquals(26, rows.size());
         assertEquals(List.of(
-                        new WorkRow("Q134958", "Q2658157", "Кобзар", 1840, null, "Кобзар (збірка)", "Кобзар", true),
-                        new WorkRow("Q134958", "Q2658157", "Кобзар", 1840, null, "Кобзар (збірка)", "Кобзар", false)),
+                        new WorkRow("Q134958", "Q2658157", "Кобзар", 1840, null, "Кобзар (збірка)", true),
+                        new WorkRow("Q134958", "Q2658157", "Кобзар", 1840, null, "Кобзар (збірка)", false)),
                 rows.stream().filter(r -> r.work().equals("Q2658157")).toList(),
                 "a notable work also found as authored comes twice");
-        assertEquals(new WorkRow("Q298033", "Q131380149", "Місячна легенда", 1893, null, null, "Місячна легенда",
-                false), work(rows, "Q131380149"), "only a text on Wikisource");
-        assertEquals("Кобзарь (1876)/Том 2/Ляхам", work(rows, "Q9208105").wikisourceTitle());
-        assertEquals(new WorkRow("Q298033", "Q113708658", "Давня весна", 1894, null, "Давня весна", null, false),
+        assertEquals(new WorkRow("Q298033", "Q131380149", "Місячна легенда", 1893, null, null, false),
+                work(rows, "Q131380149"), "no article");
+        assertEquals(new WorkRow("Q298033", "Q113708658", "Давня весна", 1894, null, "Давня весна", false),
                 work(rows, "Q113708658"), "only an article");
         assertEquals(4, rows.stream().filter(WorkRow::notable).count());
         assertTrue(rows.stream().allMatch(r -> r.imageFile() == null));
+    }
+
+    @Test
+    void parsesRecordedAlbums() {
+        // Okean Elzy (Q1008489), Jamala (Q2662517) and Lysenko (Q172425), as the live endpoint answered
+        // WikiQueries.albums on 2026-11-18; Lysenko has no albums.
+        List<WorkRow> rows = SparqlParser.parseWorks(Fixtures.read("sparql-albums.json"));
+
+        assertEquals(22, rows.size());
+        assertEquals(15, rows.stream().filter(r -> r.creator().equals("Q1008489")).count());
+        assertTrue(rows.stream().noneMatch(r -> r.creator().equals("Q172425")));
+        assertEquals(new WorkRow("Q1008489", "Q2445442", "Там, де нас нема", 1998, null, "Там, де нас нема", false),
+                work(rows, "Q2445442"));
+        assertEquals(new WorkRow("Q2662517", "Q24542409", "1944", 2016, null, "1944 (альбом)", false),
+                work(rows, "Q24542409"));
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.nashi.wiki;
 
-
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -62,6 +61,7 @@ public final class WikiArtistAssembler {
             }
         }
         List<String> genres = genres(e, labels);
+        List<WikiLink> links = WikiLinkTable.links(e);
 
         return Optional.of(new WikiArtistData(
                 e.qid(),
@@ -76,7 +76,9 @@ public final class WikiArtistAssembler {
                 ensemble ? e.dissolved() : e.workEnd(),
                 located.place(),
                 e.imageFile(),
-                WikiLinkTable.links(e),
+                links,
+                WikiLinkTable.youtubeChannelUrl(links),
+                null,
                 null,
                 null,
                 categories(e, ensemble, group, kinds),

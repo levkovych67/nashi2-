@@ -204,20 +204,28 @@ class WikiCollectorTest {
         assertEquals(2, byId.size());
         assertFalse(byId.containsKey("Q1980296"));
         assertEquals(1, collector.russiaLinkedExcluded(), "Kobzon is a citizen of Russia");
-        assertTrue(sparqlQueries().stream().allMatch(WikiCollectorTest::isTree), "no works asked for musicians");
+        assertEquals(List.of(WikiQueries.albums(List.of("Q172425", "Q1008489"))),
+                sparqlQueries().stream().filter(q -> !isTree(q)).toList(), "one album query for the assembled");
 
         WikiArtistData lysenko = byId.get("Q172425");
         assertEquals(Region.POLTAVA, lysenko.place().region());
         assertTrue(lysenko.biography().startsWith("Микола"));
-        assertTrue(lysenko.biography().length() <= 1501);
+        assertEquals(MediaWikiParser.parseIntros(Fixtures.read("extracts.json")).get("Лисенко Микола Віталійович"),
+                lysenko.biography(), "the whole intro: SummaryCleaner cuts it");
         assertNotNull(lysenko.imageUrl());
         assertEquals("Public domain", lysenko.imageCredit().getLicense());
+        assertNull(lysenko.youtubeChannelUrl());
 
         WikiArtistData band = byId.get("Q1008489");
         assertEquals(Region.LVIV, band.place().region());
         assertTrue(band.biography().contains("рок-гурт"));
         assertEquals("Alexander Khanin", band.imageCredit().getAuthor());
         assertTrue(band.imageUrl().contains("OkeanElzi25.jpg"));
+        assertTrue(band.imageFullUrl().contains("OkeanElzi25.jpg"));
+        assertEquals("https://www.youtube.com/channel/UCjJ-oj2aJTINILYLDv2MFEQ", band.youtubeChannelUrl());
+        List<String> imageRequests = urls.stream().filter(u -> u.startsWith("https://commons.wikimedia.org/")).toList();
+        assertEquals(2, imageRequests.size(), "the portrait at 400 px and at 800 px: " + imageRequests);
+        assertTrue(imageRequests.get(0).contains("iiurlwidth=400") && imageRequests.get(1).contains("iiurlwidth=800"));
         assertEquals(List.of(WikiCategory.BAND), band.categories());
         assertEquals(LocationBasis.FORMATION, band.locationBasis());
         assertEquals(List.of(MUSICIAN), lysenko.categories());
@@ -274,6 +282,41 @@ class WikiCollectorTest {
                 .filter(l -> l.getPlatform() == WikiLink.Platform.YOUTUBE).map(WikiLink::getUrl).findFirst().orElseThrow());
         assertEquals(1, links.stream().filter(l -> l.getPlatform() == WikiLink.Platform.YOUTUBE).count());
         assertTrue(links.stream().anyMatch(l -> l.getPlatform() == WikiLink.Platform.DEEZER));
+        assertNull(artists.get(0).youtubeChannelUrl(), "the channel comes from Wikidata P2397 only");
+    }
+
+    @Test
+    void attachesTheAlbumsOfTheRecordedAnswer() {
+        sparql = query -> isTree(query) ? smallWorld(query)
+                : query.contains("wd:Q482994") ? Fixtures.read("sparql-albums.json") : NO_ROWS;
+
+        WikiArtistData band = new WikiCollector(http)
+                .fetchDetails(List.of(new WikiCandidate("Q1008489", "Океан Ельзи", CandidateGroup.ENSEMBLE))).get(0);
+
+        assertEquals(12, band.works().size(), "15 recorded albums, capped");
+        assertEquals(new WikiWork("Q2445442", "Там, де нас нема", 1998, null, null, null,
+                "https://uk.wikipedia.org/wiki/" + URLEncoder.encode("Там,_де_нас_нема", StandardCharsets.UTF_8)),
+                band.works().get(0), "oldest first, as WorkSelector orders works with an article");
+        assertEquals(List.of(1998, 2000, 2001), band.works().subList(0, 3).stream().map(WikiWork::year).toList());
+        assertTrue(band.works().stream().map(WikiWork::title).toList().containsAll(List.of("Міра", "Модель", "1221")),
+                "the «(альбом)» qualifier is dropped: " + band.works());
+        assertTrue(band.works().stream().noneMatch(w -> w.year() != null && w.year() >= 2016),
+                "the newest are left out by the cap");
+    }
+
+    @Test
+    void leavesOutAlbumsWithoutATitle() {
+        sparql = query -> isTree(query) ? smallWorld(query) : query.contains("wd:Q482994")
+                ? "{\"head\":{\"vars\":[\"creator\",\"work\",\"title\"]},\"results\":{\"bindings\":["
+                + "{\"creator\":{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q1008489\"},"
+                + "\"work\":{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q77\"},"
+                + "\"title\":{\"type\":\"literal\",\"value\":\"Q77\"}}]}}"
+                : NO_ROWS;
+
+        WikiArtistData band = new WikiCollector(http)
+                .fetchDetails(List.of(new WikiCandidate("Q1008489", "Океан Ельзи", CandidateGroup.ENSEMBLE))).get(0);
+
+        assertEquals(List.of(), band.works());
     }
 
     @Test

@@ -14,8 +14,11 @@ import java.util.regex.Pattern;
 /** Reads MediaWiki API responses (formatversion=2): article intros, Commons image info and category members. */
 public final class MediaWikiParser {
 
-    /** An ISO date in brackets right after text, with no space: the template's hidden copy of the date. */
-    private static final Pattern GLUED_ISO_DATE = Pattern.compile("(?<=\\S)\\(\\d{4}-\\d{2}-\\d{2}\\)");
+    /**
+     * An ISO date in brackets right after text, with no space: the template's hidden copy of the date, with dashes
+     * ({@code 1975(1975-05-14)}) or without ({@code 1978(19780106)}).
+     */
+    private static final Pattern GLUED_ISO_DATE = Pattern.compile("(?<=\\S)\\((?:\\d{4}-\\d{2}-\\d{2}|\\d{8})\\)");
     private static final Pattern SPACE_BEFORE_COMMA = Pattern.compile("[ \\t\\u00A0]+,");
 
     private MediaWikiParser() {
@@ -46,10 +49,11 @@ public final class MediaWikiParser {
      *   <li>stress marks: Wikipedia marks stress with a combining acute accent (Мико́ла); it would break search and
      *   reads oddly;</li>
      *   <li>the hidden microformat date of a date template, which the extract keeps glued to the visible date:
-     *   "нар. 14 травня 1975(1975-05-14) , Київ" becomes "нар. 14 травня 1975, Київ".</li>
+     *   "нар. 14 травня 1975(1975-05-14) , Київ" becomes "нар. 14 травня 1975, Київ", and so does
+     *   "1975(19750514)".</li>
      * </ul>
      */
-    static String cleanIntro(String text) {
+    public static String cleanIntro(String text) {
         String clean = text.replace("\u0301", "");
         clean = GLUED_ISO_DATE.matcher(clean).replaceAll("");
         clean = SPACE_BEFORE_COMMA.matcher(clean).replaceAll(",");
@@ -120,6 +124,30 @@ public final class MediaWikiParser {
         }
         addFileAliases(query, urls);
         return urls;
+    }
+
+    /**
+     * The Wikidata item of the page in a {@code prop=pageprops&ppprop=wikibase_item} answer; null for a missing page or
+     * a page without an item.
+     *
+     * @throws WikiFetchException when the API answers with an error
+     */
+    public static String parseWikibaseItem(String json) {
+        JsonObject root = JsonParser.parseString(json).getAsJsonObject();
+        if (root.has("error")) {
+            throw new WikiFetchException("API error: " + root.get("error"));
+        }
+        JsonObject query = root.has("query") ? root.getAsJsonObject("query") : null;
+        if (query == null || !query.has("pages")) {
+            return null;
+        }
+        for (JsonElement element : query.getAsJsonArray("pages")) {
+            JsonObject page = element.getAsJsonObject();
+            if (page.has("pageprops") && page.getAsJsonObject("pageprops").has("wikibase_item")) {
+                return page.getAsJsonObject("pageprops").get("wikibase_item").getAsString();
+            }
+        }
+        return null;
     }
 
     private static JsonObject query(String json) {

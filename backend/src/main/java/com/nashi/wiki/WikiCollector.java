@@ -31,9 +31,16 @@ public class WikiCollector implements ArtistCandidateSource {
 
     static final int ENTITY_BATCH = 50;
     static final int TITLE_BATCH = 20;
-    static final int BIOGRAPHY_MAX = 1500;
     /** The API rounds 400 up to a standard 500 px thumbnail. */
     static final int PORTRAIT_WIDTH = 400;
+    /** The portrait on the musician's page. */
+    static final int PORTRAIT_FULL_WIDTH = 800;
+    /** Artists per album query; the 2026-11-18 query for three artists took about a second. */
+    static final int ALBUM_BATCH = 200;
+    static final int MAX_ALBUMS = 12;
+    /** A Wikipedia qualifier at the end of an album label: "Міра (альбом)". */
+    private static final Pattern ALBUM_QUALIFIER =
+            Pattern.compile("\\s*\\((?:альбом|album)\\)\\s*$", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 
     private static final String SPARQL = "https://query.wikidata.org/sparql?format=json&query=";
     private static final String WIKIDATA_API = "https://www.wikidata.org/w/api.php";
@@ -138,7 +145,7 @@ public class WikiCollector implements ArtistCandidateSource {
     }
 
     /**
-     * Wikidata items with their places, genres, awards, kinds, article intro and photo. Items linked to Russia
+     * Wikidata items with their places, genres, awards, kinds, article intro, photo and albums. Items linked to Russia
      * (citizenship, or an award of {@link WikiArtistAssembler#isRussianAward}) are left out and counted.
      */
     @Override
@@ -180,15 +187,43 @@ public class WikiCollector implements ArtistCandidateSource {
         List<String> files = assembled.stream().map(WikiArtistData::imageFile).filter(f -> f != null).toList();
         Map<String, WikiImageCredit> credits = new HashMap<>();
         Map<String, String> thumbs = new HashMap<>();
+        Map<String, String> fullImages = new HashMap<>();
         images(files, PORTRAIT_WIDTH, credits, thumbs);
+        images(files, PORTRAIT_FULL_WIDTH, new HashMap<>(), fullImages);
+        Map<String, List<WikiWork>> albums = albums(assembled.stream().map(WikiArtistData::qid).toList());
 
         return assembled.stream()
                 .map(a -> a.withMedia(
-                                MediaWikiParser.truncate(intros.get(a.wikiTitle()), BIOGRAPHY_MAX),
+                                intros.get(a.wikiTitle()),
                                 a.imageFile() == null ? null : thumbs.get(a.imageFile()),
-                                a.imageFile() == null ? null : credits.get(a.imageFile())))
+                                a.imageFile() == null ? null : fullImages.get(a.imageFile()),
+                                a.imageFile() == null ? null : credits.get(a.imageFile()))
+                        .withWorks(albums.getOrDefault(a.qid(), List.of())))
                 .map(this::withMusicBrainzLinks)
                 .toList();
+    }
+
+    /**
+     * Albums of the artists keyed by QID, at most {@value #MAX_ALBUMS} each in {@link WorkSelector#ORDER}; albums
+     * without a title are left out. Wikidata is asked {@value #ALBUM_BATCH} artists at a time; a chunk that looks too
+     * heavy is halved, as in {@link ChunkSplitter}.
+     */
+    Map<String, List<WikiWork>> albums(List<String> artists) {
+        if (artists.isEmpty()) {
+            return Map.of();
+        }
+        List<WorkRow> rows = new ChunkSplitter().fetchAll("albums", artists, ALBUM_BATCH,
+                chunk -> SparqlParser.parseWorks(sparql(WikiQueries.albums(chunk))));
+        Map<String, List<WikiWork>> albums = new HashMap<>();
+        WorkSelector.select(rows.stream().filter(row -> row.title() != null).toList(), MAX_ALBUMS)
+                .forEach((artist, selected) -> albums.put(artist, selected.stream().map(WikiCollector::album).toList()));
+        return albums;
+    }
+
+    private static WikiWork album(WorkRow row) {
+        String title = ALBUM_QUALIFIER.matcher(row.title()).replaceFirst("");
+        return new WikiWork(row.work(), title.isEmpty() ? row.title() : title, row.year(), null, null, null,
+                WikiLinks.articleUrl(row.ukTitle()));
     }
 
     /**

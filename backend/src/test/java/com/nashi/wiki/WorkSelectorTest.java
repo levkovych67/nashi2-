@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class WorkSelectorTest {
 
     private static WorkRow row(String creator, String work, String title, Integer year, String ukTitle,
-                               String wikisourceTitle, boolean notable) {
-        return new WorkRow(creator, work, title, year, null, ukTitle, wikisourceTitle, notable);
+                               boolean notable) {
+        return new WorkRow(creator, work, title, year, null, ukTitle, notable);
     }
 
     private static List<String> works(List<WorkRow> rows) {
@@ -23,13 +23,13 @@ class WorkSelectorTest {
     @Test
     void notableFirstThenArticleThenTitleThenYear() {
         List<WorkRow> rows = List.of(
-                row("Q1", "Q10", "Пізня", 1900, null, null, false),
-                row("Q1", "Q11", "Рання", 1850, null, null, false),
-                row("Q1", "Q12", null, 1800, null, null, false),
-                row("Q1", "Q14", "Зі статтею", 1960, "Стаття", null, false),
-                row("Q1", "Q15", null, null, null, null, true),
-                row("Q1", "Q16", "Без року", null, null, null, false),
-                row("Q1", "Q9", "Рання двійня", 1850, null, null, false));
+                row("Q1", "Q10", "Пізня", 1900, null, false),
+                row("Q1", "Q11", "Рання", 1850, null, false),
+                row("Q1", "Q12", null, 1800, null, false),
+                row("Q1", "Q14", "Зі статтею", 1960, "Стаття", false),
+                row("Q1", "Q15", null, null, null, true),
+                row("Q1", "Q16", "Без року", null, null, false),
+                row("Q1", "Q9", "Рання двійня", 1850, null, false));
 
         List<WorkRow> selected = WorkSelector.select(rows, 12).get("Q1");
 
@@ -41,7 +41,7 @@ class WorkSelectorTest {
     void capsAtTwelve() {
         List<WorkRow> rows = new ArrayList<>();
         for (int i = 1; i <= 20; i++) {
-            rows.add(row("Q1", "Q" + (100 + i), "Твір " + i, 1900 + i, null, null, false));
+            rows.add(row("Q1", "Q" + (100 + i), "Твір " + i, 1900 + i, null, false));
         }
 
         List<WorkRow> selected = WorkSelector.select(rows, 12).get("Q1");
@@ -54,11 +54,11 @@ class WorkSelectorTest {
     @Test
     void keepsWorksWithTheirCreator() {
         List<WorkRow> rows = List.of(
-                row("QA", "Q1", "A1", 1901, null, null, false),
-                row("QB", "Q2", "B1", 1902, null, null, false),
-                row("QA", "Q3", "A2", 1903, null, null, false),
-                row("QB", "Q4", "B2", 1904, null, null, false),
-                row("QA", "Q5", "A3", 1905, "A3", null, false));
+                row("QA", "Q1", "A1", 1901, null, false),
+                row("QB", "Q2", "B1", 1902, null, false),
+                row("QA", "Q3", "A2", 1903, null, false),
+                row("QB", "Q4", "B2", 1904, null, false),
+                row("QA", "Q5", "A3", 1905, "A3", false));
 
         Map<String, List<WorkRow>> selected = WorkSelector.select(rows, 12);
 
@@ -73,11 +73,11 @@ class WorkSelectorTest {
     void duplicateWorkRowsCollapsed() {
         // A work found as notable (P800) and again as authored (P50); a painting with two images; a work by two people.
         List<WorkRow> rows = List.of(
-                row("Q1", "Q10", "Кобзар", 1840, "Кобзар (збірка)", "Кобзар", false),
-                row("Q1", "Q10", "Кобзар", 1840, "Кобзар (збірка)", "Кобзар", true),
-                new WorkRow("Q1", "Q11", "Картина", 1850, "a.jpg", null, null, false),
-                new WorkRow("Q1", "Q11", "Картина", 1850, "b.jpg", null, null, false),
-                row("Q2", "Q10", "Кобзар", 1840, "Кобзар (збірка)", "Кобзар", false));
+                row("Q1", "Q10", "Кобзар", 1840, "Кобзар (збірка)", false),
+                row("Q1", "Q10", "Кобзар", 1840, "Кобзар (збірка)", true),
+                new WorkRow("Q1", "Q11", "Картина", 1850, "a.jpg", null, false),
+                new WorkRow("Q1", "Q11", "Картина", 1850, "b.jpg", null, false),
+                row("Q2", "Q10", "Кобзар", 1840, "Кобзар (збірка)", false));
 
         Map<String, List<WorkRow>> selected = WorkSelector.select(rows, 12);
 
