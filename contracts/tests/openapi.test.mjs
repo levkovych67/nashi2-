@@ -262,7 +262,7 @@ test('createSubmission is multipart with data (json) and images (1..5), responds
   assert.equal(images.items.contentMediaType, 'image/*');
   assert.deepEqual(mp.schema.required.sort(), ['data', 'images']);
   assert.ok(op.responses['202']);
-  for (const c of ['400', '413', '415', '429']) assert.ok(op.responses[c], `missing ${c}`);
+  for (const c of ['400', '413', '415', '429', '503']) assert.ok(op.responses[c], `missing ${c}`);
   assert.equal(S.SubmissionAccepted.properties.status.const ?? S.SubmissionAccepted.properties.status.enum[0], 'PENDING');
 });
 

@@ -4,15 +4,19 @@ import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import com.drew.metadata.exif.GpsDirectory;
+import com.nashi.api.UnavailableException;
 import com.nashi.api.UnsupportedMediaException;
 import org.junit.jupiter.api.Test;
 
 import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -134,5 +138,73 @@ class ImageProcessorTest {
         Color opaqueSpot = new Color(full.getRGB(400, 300));
         assertThat(opaqueSpot.getRed()).isGreaterThan(150);
         assertThat(opaqueSpot.getGreen()).isLessThan(110);
+    }
+
+    private static byte[] encode(BufferedImage img, String format) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        assertThat(ImageIO.write(img, format, out)).isTrue();
+        return out.toByteArray();
+    }
+
+    @Test
+    void subsamplingFactorKeepsTheDecodedLongerSideWithin3200() {
+        assertThat(ImageProcessor.subsampling(3200, 100)).isEqualTo(1);
+        assertThat(ImageProcessor.subsampling(100, 3201)).isEqualTo(2);
+        assertThat(ImageProcessor.subsampling(5000, 4000)).isEqualTo(2);
+        assertThat(ImageProcessor.subsampling(10_000, 4000)).isEqualTo(4);
+        assertThat(ImageProcessor.subsampling(4000, 8000)).isEqualTo(3);
+    }
+
+    @Test
+    void decodesALargeImageSubsampled() throws IOException {
+        BufferedImage big = new BufferedImage(5000, 4000, BufferedImage.TYPE_3BYTE_BGR);
+        Graphics2D g = big.createGraphics();
+        g.setColor(new Color(30, 90, 200));
+        g.fillRect(0, 0, 5000, 4000);
+        g.setColor(Color.RED);
+        g.fillRect(0, 0, 500, 500);
+        g.dispose();
+        byte[] jpeg = encode(big, "jpg");
+        big = null;
+
+        BufferedImage decoded = ImageProcessor.decode(jpeg);
+        assertThat(decoded.getWidth()).isEqualTo(2500);
+        assertThat(decoded.getHeight()).isEqualTo(2000);
+
+        ProcessedImage result = processor.process(jpeg, "images[0]");
+        assertThat(result.width()).isEqualTo(1600);
+        assertThat(result.height()).isEqualTo(1280);
+        BufferedImage full = decode(result.full());
+        assertThat(isRed(full.getRGB(40, 40))).isTrue();
+        assertThat(isRed(full.getRGB(1500, 1200))).isFalse();
+        BufferedImage thumb = decode(result.thumb());
+        assertThat(thumb.getWidth()).isEqualTo(400);
+        assertThat(thumb.getHeight()).isEqualTo(400);
+    }
+
+    @Test
+    void refusesMoreThan40Megapixels() throws IOException {
+        // 1-bit PNGs: a 40 MP canvas costs 5 MB to build here and compresses to almost nothing
+        byte[] atLimit = encode(new BufferedImage(8000, 5000, BufferedImage.TYPE_BYTE_BINARY), "png");
+        ProcessedImage ok = processor.process(atLimit, "images[0]");
+        assertThat(ok.width()).isEqualTo(1600);
+        assertThat(ok.height()).isEqualTo(1000);
+
+        byte[] overLimit = encode(new BufferedImage(8000, 5001, BufferedImage.TYPE_BYTE_BINARY), "png");
+        assertThatThrownBy(() -> processor.process(overLimit, "images[1]"))
+                .isInstanceOfSatisfying(UnsupportedMediaException.class, e -> assertThat(e.field()).isEqualTo("images[1]"));
+    }
+
+    @Test
+    void answersUnavailableWhenNoProcessingSlotFreesUpInTime() throws IOException {
+        ImageProcessor oneSlot = new ImageProcessor(1, Duration.ofMillis(50));
+        byte[] tiny = fixture("tiny.jpg");
+        // The only slot is taken (as by a concurrent upload) while this upload waits for it
+        oneSlot.withPermit(() -> {
+            assertThatThrownBy(() -> oneSlot.process(tiny, "images[0]")).isInstanceOf(UnavailableException.class);
+            return null;
+        });
+        // and is free again afterwards
+        assertThat(oneSlot.process(tiny, "images[0]").width()).isEqualTo(300);
     }
 }

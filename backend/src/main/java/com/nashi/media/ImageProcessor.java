@@ -2,12 +2,14 @@ package com.nashi.media;
 
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.exif.ExifIFD0Directory;
+import com.nashi.api.UnavailableException;
 import com.nashi.api.UnsupportedMediaException;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
@@ -20,11 +22,20 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Iterator;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 /**
  * Turns an uploaded JPEG/PNG/WebP into a display JPEG and a thumbnail. The pixels are decoded, rotated by the EXIF
  * Orientation and re-encoded from a {@link BufferedImage} with no metadata, so EXIF, GPS and XMP never reach storage.
+ * <p>
+ * Memory is bounded because the form is public: a canvas over {@value #MAX_PIXELS} pixels is refused from its header,
+ * a larger one is decoded subsampled so its longer side is at most {@value #MAX_DECODE_SIDE} (about 40 MB per copy),
+ * and at most {@value #PERMITS} images are processed at a time. An upload that gets no slot within
+ * {@link #PERMIT_WAIT} is answered 503 {@code UNAVAILABLE} instead of queueing without bound.
  */
 @Component
 public class ImageProcessor {
@@ -33,16 +44,58 @@ public class ImageProcessor {
     static final int THUMB_SIDE = 400;
     static final float JPEG_QUALITY = 0.85f;
     /** Refuses decompression bombs: a small file can declare a huge canvas. */
-    private static final long MAX_PIXELS = 100_000_000L;
+    static final long MAX_PIXELS = 40_000_000L;
+    /** Longest side decoded into memory; twice {@link #MAX_SIDE}, so the downscale still has detail to work with. */
+    static final int MAX_DECODE_SIDE = 3200;
+    static final int PERMITS = 2;
+    static final Duration PERMIT_WAIT = Duration.ofSeconds(10);
+
+    private final Semaphore permits;
+    private final Duration permitWait;
+
+    public ImageProcessor() {
+        this(PERMITS, PERMIT_WAIT);
+    }
+
+    ImageProcessor(int permits, Duration permitWait) {
+        this.permits = new Semaphore(permits, true);
+        this.permitWait = permitWait;
+    }
 
     /**
      * @param field name of the upload for the error ({@code images[2]})
      * @throws UnsupportedMediaException for an unknown format or a file that cannot be decoded
+     * @throws UnavailableException when no processing slot frees up within {@link #PERMIT_WAIT}
      */
     public ProcessedImage process(byte[] input, String field) {
         if (ImageFormat.sniff(input).isEmpty()) {
             throw new UnsupportedMediaException(field);
         }
+        return withPermit(() -> processNow(input, field));
+    }
+
+    /** Runs {@code work} holding one of the {@value #PERMITS} processing slots (fair, so uploads go in order). */
+    <T> T withPermit(Supplier<T> work) {
+        try {
+            if (!permits.tryAcquire(permitWait.toMillis(), TimeUnit.MILLISECONDS)) {
+                throw busy();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw busy();
+        }
+        try {
+            return work.get();
+        } finally {
+            permits.release();
+        }
+    }
+
+    private static UnavailableException busy() {
+        return new UnavailableException("Сервер зараз обробляє інші фото. Спробуйте за хвилину");
+    }
+
+    private ProcessedImage processNow(byte[] input, String field) {
         BufferedImage source;
         try {
             source = decode(input);
@@ -53,7 +106,7 @@ public class ImageProcessor {
             throw new UnsupportedMediaException(field);
         }
         try {
-            BufferedImage oriented = applyOrientation(flattenToRgb(source), orientationOf(input));
+            BufferedImage oriented = applyOrientation(toRgb(source), orientationOf(input));
             BufferedImage full = fitWithin(oriented, MAX_SIDE);
             return new ProcessedImage(encodeJpeg(full), encodeJpeg(thumbnail(full)), full.getWidth(), full.getHeight());
         } catch (IOException e) {
@@ -61,7 +114,16 @@ public class ImageProcessor {
         }
     }
 
-    private static BufferedImage decode(byte[] input) throws IOException {
+    /**
+     * Integer subsampling factor that brings the longer side down to at most {@value #MAX_DECODE_SIDE}, chosen from
+     * the header before any pixel is decoded (decoded side = ceil(side / factor)).
+     */
+    static int subsampling(int width, int height) {
+        return Math.max(1, Math.ceilDiv(Math.max(width, height), MAX_DECODE_SIDE));
+    }
+
+    /** {@code null} when no reader knows the format or the canvas is over {@value #MAX_PIXELS} pixels. */
+    static BufferedImage decode(byte[] input) throws IOException {
         try (ImageInputStream in = ImageIO.createImageInputStream(new ByteArrayInputStream(input))) {
             Iterator<ImageReader> readers = ImageIO.getImageReaders(in);
             if (!readers.hasNext()) {
@@ -70,10 +132,15 @@ public class ImageProcessor {
             ImageReader reader = readers.next();
             try {
                 reader.setInput(in, true, true);
-                if ((long) reader.getWidth(0) * reader.getHeight(0) > MAX_PIXELS) {
+                int width = reader.getWidth(0);
+                int height = reader.getHeight(0);
+                if ((long) width * height > MAX_PIXELS) {
                     return null;
                 }
-                return reader.read(0);
+                ImageReadParam param = reader.getDefaultReadParam();
+                int factor = subsampling(width, height);
+                param.setSourceSubsampling(factor, factor, 0, 0);
+                return reader.read(0, param);
             } finally {
                 reader.dispose();
             }
@@ -92,6 +159,16 @@ public class ImageProcessor {
             // no readable metadata: show the pixels as stored
         }
         return 1;
+    }
+
+    /**
+     * Opaque RGB for the JPEG encoder. A decoded photo without alpha in an RGB layout is used as it is (no copy);
+     * anything else (alpha, grey, palette, 16-bit) is drawn onto white.
+     */
+    private static BufferedImage toRgb(BufferedImage source) {
+        boolean rgbLayout = source.getType() == BufferedImage.TYPE_3BYTE_BGR
+                || source.getType() == BufferedImage.TYPE_INT_RGB;
+        return rgbLayout && !source.getColorModel().hasAlpha() ? source : flattenToRgb(source);
     }
 
     /** Opaque RGB; transparent areas become white (JPEG has no alpha). */
