@@ -98,6 +98,8 @@ tasks.named('processResources') {
 // Shared test vectors (contracts/test-vectors) are also the front end's: tests read them from the classpath.
 tasks.named('processTestResources') {
     from('../contracts/test-vectors') { into 'test-vectors' }
+    // The API contract: ContractConformanceIT compares the springdoc output with it.
+    from('../contracts/openapi.yaml') { into 'contract' }
 }
 
 // Regenerates the places seed from live Wikidata (sequential SPARQL, pause >= 1 s, honours Retry-After); not part of

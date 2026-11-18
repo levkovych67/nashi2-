@@ -1,5 +1,6 @@
 package com.nashi.health;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ public class HealthController {
         this.mongo = mongo;
     }
 
+    @Operation(operationId = "getHealth", summary = "Стан сервісу")
     @GetMapping("/health")
     public ResponseEntity<Health> health() {
         boolean up;

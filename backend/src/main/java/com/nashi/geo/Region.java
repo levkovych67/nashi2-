@@ -1,6 +1,9 @@
 package com.nashi.geo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /** The 27 regions of the contract (docs/02-contracts.md, section 2), in contract order. */
+@Schema(enumAsRef = true)
 public enum Region {
     CRIMEA("Автономна Республіка Крим"),
     VINNYTSIA("Вінницька область"),

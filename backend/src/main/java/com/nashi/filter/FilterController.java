@@ -4,6 +4,7 @@ import com.nashi.api.ConditionalGet;
 import com.nashi.map.MapService;
 import com.nashi.map.MapSnapshot;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -26,6 +27,8 @@ public class FilterController {
     }
 
     @Operation(operationId = "getFilters", summary = "Визначення фільтрів")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "304", description = "Не змінилося (збіг If-None-Match); тіла немає")
     @GetMapping
     public ResponseEntity<List<FilterDefinition>> filters(
             @RequestHeader(name = "If-None-Match", required = false) String ifNoneMatch) {

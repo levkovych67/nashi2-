@@ -2,6 +2,7 @@ package com.nashi.map;
 
 import com.nashi.api.ConditionalGet;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -22,6 +23,8 @@ public class MapController {
     }
 
     @Operation(operationId = "getMapPins", summary = "Піни на карті")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "304", description = "Не змінилося (збіг If-None-Match); тіла немає")
     @GetMapping("/pins")
     public ResponseEntity<MapPinsResponse> pins(
             @RequestHeader(name = "If-None-Match", required = false) String ifNoneMatch) {
@@ -30,6 +33,8 @@ public class MapController {
     }
 
     @Operation(operationId = "getMapRegions", summary = "Кількість музикантів по областях")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "304", description = "Не змінилося (збіг If-None-Match); тіла немає")
     @GetMapping("/regions")
     public ResponseEntity<List<RegionStat>> regions(
             @RequestHeader(name = "If-None-Match", required = false) String ifNoneMatch) {
@@ -38,6 +43,8 @@ public class MapController {
     }
 
     @Operation(operationId = "getMapPlaces", summary = "Кількість музикантів по населених пунктах")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "304", description = "Не змінилося (збіг If-None-Match); тіла немає")
     @GetMapping("/places")
     public ResponseEntity<List<PlaceStat>> places(
             @RequestHeader(name = "If-None-Match", required = false) String ifNoneMatch) {
