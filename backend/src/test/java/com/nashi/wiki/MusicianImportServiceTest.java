@@ -241,6 +241,23 @@ class MusicianImportServiceTest {
     }
 
     @Test
+    void importsAWikipediaNamesakeOfAnEnrichedSubmission() {
+        // the enriched submission is known by its Wikidata id and article; MongoMusicianStore leaves out the names of
+        // artists that have a Wikidata id (MongoMusicianStoreIT), so its name is not among the manual names
+        store.wikidataIds.add("Q222");
+        store.wikiTitles.add("Збагачений Гурт (гурт)");
+        store.slugs.add("zbahachenyi-hurt");
+        source.add("Q333", "Збагачений Гурт", LVIV, CandidateGroup.ENSEMBLE);
+
+        ImportReport report = service().runNow();
+
+        assertThat(report.added()).isEqualTo(1);
+        assertThat(report.alreadyKnown()).isZero();
+        assertThat(store.saved).extracting(Artist::getWikidataId, Artist::getSlug)
+                .containsExactly(org.assertj.core.groups.Tuple.tuple("Q333", "zbahachenyi-hurt-2"));
+    }
+
+    @Test
     void importsNamesakesWithDistinctSlugs() {
         source.add("Q101", "Іван Петренко", LVIV);
         source.add("Q202", "Іван Петренко", LVIV);

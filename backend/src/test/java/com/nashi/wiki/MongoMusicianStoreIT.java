@@ -64,14 +64,16 @@ class MongoMusicianStoreIT extends MongoIT {
     }
 
     @Test
-    void manualNamesAreThoseOfFormAndV1Artists() {
+    void manualNamesAreThoseOfFormAndV1ArtistsWithoutAWikidataId() {
         artist("«Стара Гвардія»", ArtistSource.V1_MIGRATION, ArtistStatus.PUBLISHED, null, null);
+        artist("Порожній Ід", ArtistSource.SUBMISSION, ArtistStatus.PUBLISHED, " ", null);
         artist("Збагачений Гурт", ArtistSource.SUBMISSION, ArtistStatus.PUBLISHED, "Q222", "Збагачений Гурт");
         artist("Вікі Гурт", ArtistSource.WIKIPEDIA, ArtistStatus.PUBLISHED, "Q333", "Вікі Гурт (гурт)");
 
         KnownArtists known = store.loadKnown();
 
-        assertThat(known.manualNames()).containsExactlyInAnyOrder("стара гвардія", "збагачений гурт");
+        // an enriched submission is matched by its Wikidata id, so a Wikipedia namesake of it is not blocked
+        assertThat(known.manualNames()).containsExactlyInAnyOrder("стара гвардія", "порожній ід");
         assertThat(known.wikidataIds()).containsExactlyInAnyOrder("Q222", "Q333");
         assertThat(known.wikiTitles()).containsExactlyInAnyOrder("Збагачений Гурт", "Вікі Гурт (гурт)");
     }

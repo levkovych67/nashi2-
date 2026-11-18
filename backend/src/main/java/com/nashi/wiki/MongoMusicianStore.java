@@ -16,8 +16,9 @@ import java.util.Set;
 
 /**
  * The import's view of {@code artists}. Every artist counts as known by its Wikidata id and article title, whatever
- * its status (a hidden one must not come back); artists added through the form or migrated from V1 also count by
- * {@code nameNormalized}, so a Wikipedia namesake of one of them is not imported as a second artist.
+ * its status (a hidden one must not come back). Artists added through the form or migrated from V1 that have no
+ * Wikidata id also count by {@code nameNormalized}, so the import does not add a second copy of them; one with an id
+ * (an enriched submission) is matched by the id alone, so a different Wikipedia namesake is still imported (as V1).
  */
 @Component
 public class MongoMusicianStore implements ArtistStore {
@@ -45,9 +46,10 @@ public class MongoMusicianStore implements ArtistStore {
         Set<String> titles = new HashSet<>();
         Set<String> manualNames = new HashSet<>();
         for (Document artist : mongo.find(query, Document.class, COLLECTION)) {
-            addIfPresent(ids, artist.getString("wikidataId"));
+            String wikidataId = artist.getString("wikidataId");
+            addIfPresent(ids, wikidataId);
             addIfPresent(titles, artist.getString("wikiTitle"));
-            if (MANUAL_SOURCES.contains(artist.getString("source"))) {
+            if (MANUAL_SOURCES.contains(artist.getString("source")) && (wikidataId == null || wikidataId.isBlank())) {
                 addIfPresent(manualNames, artist.getString("nameNormalized"));
             }
         }
