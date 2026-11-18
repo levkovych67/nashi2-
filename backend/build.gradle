@@ -82,3 +82,14 @@ tasks.named('test') {
     def mockitoAgentJar = configurations.mockitoAgent
     jvmArgumentProviders.add({ ["-javaagent:${mockitoAgentJar.singleFile.absolutePath}", '-Xshare:off'] } as CommandLineArgumentProvider)
 }
+
+// Single source of truth for region centers/bboxes is contracts/geo; the build copies it onto the classpath.
+tasks.named('processResources') {
+    def geoFile = file('../contracts/geo/regions-meta.json')
+    doFirst {
+        if (!geoFile.exists()) {
+            throw new GradleException("Missing ${geoFile} (run: node contracts/scripts/provisional-regions-meta.mjs)")
+        }
+    }
+    from(geoFile) { into 'geo' }
+}
