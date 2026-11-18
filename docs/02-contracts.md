@@ -304,7 +304,7 @@
 | `submissionId` | string? | |
 | `createdAt`, `updatedAt`, `publishedAt` | Instant | |
 
-Індекси: `slug_unique`, `wikidataId_unique_sparse`, `pin_2dsphere`, `status_1_origin.region_1`,
+Індекси: `slug_unique`, `wikidataId_unique_sparse`, `legacyV1Id_unique_sparse` (внутрішній, для міграції з V1), `pin_2dsphere`, `status_1_origin.region_1`,
 `status_1_nameNormalized_1`, `status_1_likesCount_-1`, `status_1_origin.placeId_1`.
 
 ### `places` — довідник населених пунктів України

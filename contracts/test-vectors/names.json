@@ -1,1 +1,97 @@
-[]
+[
+ {
+  "input": "«Океан Ельзи»",
+  "normalized": "океан ельзи",
+  "slug": "okean-elzy"
+ },
+ {
+  "input": "Соломія Крушельницька",
+  "normalized": "соломія крушельницька",
+  "slug": "solomiia-krushelnytska"
+ },
+ {
+  "input": "Кам’янець",
+  "normalized": "камянець",
+  "slug": "kamianets"
+ },
+ {
+  "input": "Ї́жак  Згорани",
+  "normalized": "їжак згорани",
+  "slug": "yizhak-zghorany"
+ },
+ {
+  "input": "ДахаБраха",
+  "normalized": "дахабраха",
+  "slug": "dakhabrakha"
+ },
+ {
+  "input": "The Hardkiss",
+  "normalized": "the hardkiss",
+  "slug": "the-hardkiss"
+ },
+ {
+  "input": "Юрій",
+  "normalized": "юрій",
+  "slug": "yurii"
+ },
+ {
+  "input": "Щедрик",
+  "normalized": "щедрик",
+  "slug": "shchedryk"
+ },
+ {
+  "input": "Євген Йосипович",
+  "normalized": "євген йосипович",
+  "slug": "yevhen-yosypovych"
+ },
+ {
+  "input": "Андрій Яблуновський",
+  "normalized": "андрій яблуновський",
+  "slug": "andrii-yablunovskyi"
+ },
+ {
+  "input": "Мозгова",
+  "normalized": "мозгова",
+  "slug": "mozghova"
+ },
+ {
+  "input": "Тіна Кароль",
+  "normalized": "тіна кароль",
+  "slug": "tina-karol"
+ },
+ {
+  "input": "Скрябін",
+  "normalized": "скрябін",
+  "slug": "skriabin"
+ },
+ {
+  "input": "Один в каное",
+  "normalized": "один в каное",
+  "slug": "odyn-v-kanoe"
+ },
+ {
+  "input": "Ґринджоли",
+  "normalized": "ґринджоли",
+  "slug": "gryndzholy"
+ },
+ {
+  "input": "Pianoboy 2000",
+  "normalized": "pianoboy 2000",
+  "slug": "pianoboy-2000"
+ },
+ {
+  "input": "Jamala (Джамала)",
+  "normalized": "jamala (джамала)",
+  "slug": "jamala-dzhamala"
+ },
+ {
+  "input": "  Кам'янка-Бузька\t",
+  "normalized": "камянка-бузька",
+  "slug": "kamianka-buzka"
+ },
+ {
+  "input": "Заєць",
+  "normalized": "заєць",
+  "slug": "zaiets"
+ }
+]

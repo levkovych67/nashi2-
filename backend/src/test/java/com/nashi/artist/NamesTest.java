@@ -25,6 +25,21 @@ class NamesTest {
                 Arguments.of("The Hardkiss", "the hardkiss"));
     }
 
+    static Stream<Arguments> namesJson() {
+        return TestVectors.read("names.json").stream().map(v -> Arguments.of(v.get("input"), v.get("normalized"), v.get("slug")));
+    }
+
+    @ParameterizedTest
+    @MethodSource("namesJson")
+    void normalizeMatchesVector(String in, String expected, String ignoredSlug) {
+        assertThat(Names.normalize(in)).isEqualTo(expected);
+    }
+
+    @Test
+    void namesVectorsAreEnough() {
+        assertThat(TestVectors.read("names.json")).hasSizeGreaterThanOrEqualTo(12);
+    }
+
     @ParameterizedTest
     @MethodSource("vectors")
     void normalizes(String input, String expected) {
