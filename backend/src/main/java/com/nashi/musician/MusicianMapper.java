@@ -7,6 +7,7 @@ import com.nashi.artist.LifeDates;
 import com.nashi.artist.Link;
 import com.nashi.artist.Origin;
 import com.nashi.media.FileStorage;
+import com.nashi.media.ImageUrls;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Component;
 
@@ -55,9 +56,8 @@ public class MusicianMapper {
         return new MusicianDetails.Image(url, thumb != null ? thumb : url, i.alt(), i.credit());
     }
 
-    /** The stored thumbnail wins over an external one. */
     private String thumbOf(ImageAsset i) {
-        return i.thumbKey() != null ? storage.publicUrl(i.thumbKey()) : i.thumbUrl();
+        return ImageUrls.thumb(i, storage);
     }
 
     private static MusicianDetails.OriginDto toOrigin(Origin o, GeoJsonPoint pin) {
