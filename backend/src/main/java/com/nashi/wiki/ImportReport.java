@@ -1,19 +1,22 @@
 package com.nashi.wiki;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
- * The result of one import run.
+ * The result of one finished import run. A run that stops with an exception has no report: {@code JobRunLog} records
+ * it as {@code FAILED} and alerts the group.
  *
+ * @param alreadyKnown          candidates skipped as already in the database (by Wikidata id, article title or the
+ *                              name of an artist added through the form)
+ * @param withoutPlace          added without an origin, so not on the map
  * @param failedCandidateChunks candidate queries that failed for good; the run went on without their items
  * @param russiaLinked          items left out as linked to Russia (citizenship, a state award or title of Russia)
- * @param failure               null when the run finished; otherwise why it stopped
  */
 public record ImportReport(int candidates, int alreadyKnown, int added, int withoutPlace, int errors,
-                           int failedCandidateChunks, int russiaLinked, String failure) {
+                           int failedCandidateChunks, int russiaLinked) {
 
     public String toTelegramText() {
-        if (failure != null) {
-            return "Імпорт з Вікіпедії впав: " + failure + ". Збережено до збою: " + added + ".";
-        }
         return "Імпорт з Вікіпедії: знайдено " + candidates + ", уже були " + alreadyKnown + ", додано " + added
                 + " (без місця на карті " + withoutPlace + "), помилок " + errors
                 + (russiaLinked > 0 ? ", відсіяно через зв'язок з РФ: " + russiaLinked : "")
@@ -21,5 +24,18 @@ public record ImportReport(int candidates, int alreadyKnown, int added, int with
                         ? ", не вдалося отримати частину кандидатів: " + failedCandidateChunks + " запитів"
                         : "")
                 + ".";
+    }
+
+    /** The report of the run in {@code jobs_runs}. */
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("candidates", candidates);
+        map.put("alreadyKnown", alreadyKnown);
+        map.put("added", added);
+        map.put("withoutPlace", withoutPlace);
+        map.put("errors", errors);
+        map.put("failedCandidateChunks", failedCandidateChunks);
+        map.put("russiaLinked", russiaLinked);
+        return map;
     }
 }

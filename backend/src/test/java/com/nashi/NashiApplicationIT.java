@@ -1,8 +1,11 @@
 package com.nashi;
 
+import com.nashi.admin.JobTrigger;
 import com.nashi.config.NashiProperties;
 import com.nashi.support.MongoIT;
+import com.nashi.wiki.MusicianImportService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.BeanFactoryAnnotationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.annotation.CreatedDate;
@@ -70,6 +73,16 @@ class NashiApplicationIT extends MongoIT {
         assertThat(context.getEnvironment().getProperty("nashi.telegram.sending-enabled")).isEqualTo("false");
         assertThat(properties.cors().allowedOrigins()).isEqualTo(List.of("http://localhost:5173"));
         assertThat(properties.audio().fragmentSeconds()).isEqualTo(15);
+    }
+
+    @Test
+    void wikiImportIsTheJobTriggerOfTheAdminCommand() {
+        assertThat(context.getBean("musicianImportService")).isInstanceOf(MusicianImportService.class);
+        assertThat(BeanFactoryAnnotationUtils.qualifiedBeanOfType(context.getAutowireCapableBeanFactory(),
+                JobTrigger.class, "wikiImport")).isInstanceOf(MusicianImportService.class);
+        assertThat(context.getEnvironment().getProperty("nashi.wiki-import.enabled")).isEqualTo("false");
+        assertThat(context.getEnvironment().getProperty("nashi.wiki-import.on-startup")).isEqualTo("false");
+        assertThat(context.getEnvironment().getProperty("nashi.wiki.enrichment.enabled")).isEqualTo("false");
     }
 
     @Test

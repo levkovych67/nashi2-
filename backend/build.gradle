@@ -124,3 +124,24 @@ tasks.register('placesSeed', JavaExec) {
         systemProperty 'nashi.wiki.request-gap', project.property('requestGap')
     }
 }
+
+// Collects musicians and bands from the live Wikimedia APIs (sequential, pause >= 1 s, project User-Agent) without
+// Spring, the database or Telegram, and writes build/wiki-dry-run.json; nothing is saved. Not part of the build.
+// Usage: ./gradlew wikiDryRun   or   ./gradlew wikiDryRun -Plimit=50   (the first 50 candidates of each group)
+// Optional: -PuserAgent='NashiBot/2.0 (+https://<domain>/about)'  -PrequestGap=2s
+tasks.register('wikiDryRun', JavaExec) {
+    group = 'application'
+    description = 'Collects musicians from Wikipedia into build/wiki-dry-run.json without the database'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.nashi.wiki.WikiDryRun'
+    workingDir = projectDir
+    if (project.hasProperty('limit')) {
+        args '--limit', project.property('limit')
+    }
+    if (project.hasProperty('userAgent')) {
+        systemProperty 'nashi.http.user-agent', project.property('userAgent')
+    }
+    if (project.hasProperty('requestGap')) {
+        systemProperty 'nashi.wiki.request-gap', project.property('requestGap')
+    }
+}
