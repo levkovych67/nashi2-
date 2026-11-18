@@ -6,6 +6,7 @@ import com.nashi.artist.ImageAsset;
 import com.nashi.artist.LifeDates;
 import com.nashi.artist.Link;
 import com.nashi.artist.Origin;
+import com.nashi.artist.Video;
 import com.nashi.media.FileStorage;
 import com.nashi.media.ImageUrls;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -42,7 +43,7 @@ public class MusicianMapper {
                 orEmpty(a.getGenres()),
                 new MusicianDetails.Materials(
                         orEmpty(a.getAudio()).stream().map(MusicianMapper::toClip).toList(),
-                        orEmpty(a.getWorks()), orEmpty(a.getVideos())),
+                        orEmpty(a.getWorks()), videosOf(a)),
                 orEmpty(a.getLinks()).stream()
                         .sorted(Comparator.comparing((Link l) -> l.platform().group()))
                         .map(l -> new MusicianDetails.LinkDto(l.platform(), l.platform().group(), l.url()))
@@ -70,6 +71,14 @@ public class MusicianMapper {
 
     private static MusicianDetails.ClipSummary toClip(AudioClip c) {
         return new MusicianDetails.ClipSummary(c.clipId(), c.title(), c.source(), c.durationSec(), c.externalUrl());
+    }
+
+    private static List<Video> videosOf(Artist a) {
+        return hasVideos(a) ? a.getVideos() : YoutubeVideos.fromLinks(a.getLinks(), a.getName());
+    }
+
+    private static boolean hasVideos(Artist a) {
+        return a.getVideos() != null && !a.getVideos().isEmpty();
     }
 
     private static boolean hasAudio(Artist a) {

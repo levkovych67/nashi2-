@@ -7,6 +7,7 @@ import com.nashi.artist.ImageAsset;
 import com.nashi.artist.Link;
 import com.nashi.artist.LinkPlatform;
 import com.nashi.artist.Origin;
+import com.nashi.artist.Video;
 import com.nashi.artist.OriginBasis;
 import com.nashi.artist.PinPrecision;
 import com.nashi.geo.Region;
@@ -108,6 +109,15 @@ class MusicianMapperTest {
                 new MusicianDetails.ClipSummary("c1", "T", AudioSource.UPLOAD, 12, "https://ext"));
         assertThat(MusicianDetails.ClipSummary.class.getRecordComponents()).extracting("name")
                 .doesNotContain("url", "key");
+    }
+
+    @Test
+    void videosDerivedFromYoutubeLinksWhenNoneStored() {
+        Artist a = base().links(List.of(new Link(LinkPlatform.YOUTUBE, "https://youtu.be/aaaaaaaaaaa"),
+                new Link(LinkPlatform.YOUTUBE_MUSIC, "https://music.youtube.com/watch?v=bbbbbbbbbbb"))).build();
+
+        assertThat(mapper.toDetails(a).materials().videos())
+                .containsExactly(new Video("aaaaaaaaaaa", "N"));
     }
 
     @Test
