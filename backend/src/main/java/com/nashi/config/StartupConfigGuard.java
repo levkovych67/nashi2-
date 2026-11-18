@@ -24,6 +24,9 @@ public class StartupConfigGuard implements EnvironmentPostProcessor, Ordered {
 
     static final String MONGO_URI = "spring.mongodb.uri";
     static final String S3_ENDPOINT = "nashi.s3.endpoint";
+    static final String V1_MONGO_URI = "nashi.migration.v1.mongo-uri";
+    static final String V1_S3_BUCKET = "nashi.migration.v1.s3-bucket";
+    static final String V1_S3_ENDPOINT = "nashi.migration.v1.s3-endpoint";
 
     /** Keys production reads from the secrets file. */
     private static final List<String> PRODUCTION_KEYS = List.of(
@@ -93,6 +96,17 @@ public class StartupConfigGuard implements EnvironmentPostProcessor, Ordered {
         }
         if (!isLocalS3(env.getProperty(S3_ENDPOINT))) {
             problems.add(S3_ENDPOINT + " must be an http:// URL whose host is localhost, 127.0.0.1 or minio"
+                    + " under the local and test profiles (empty means real AWS S3)");
+        }
+        // The V1 migration reads another database and bucket; unset means "not configured", which is safe
+        if (!isBlank(env.getProperty(V1_MONGO_URI)) && !isLocalMongo(env.getProperty(V1_MONGO_URI))) {
+            problems.add(V1_MONGO_URI + " must be a mongodb:// URI whose hosts are localhost, 127.0.0.1, mongo"
+                    + " or host.docker.internal under the local and test profiles");
+        }
+        String v1Endpoint = env.getProperty(V1_S3_ENDPOINT);
+        boolean v1Bucket = !isBlank(env.getProperty(V1_S3_BUCKET));
+        if ((!isBlank(v1Endpoint) || v1Bucket) && !isLocalS3(v1Endpoint)) {
+            problems.add(V1_S3_ENDPOINT + " must be an http:// URL whose host is localhost, 127.0.0.1 or minio"
                     + " under the local and test profiles (empty means real AWS S3)");
         }
         return problems;

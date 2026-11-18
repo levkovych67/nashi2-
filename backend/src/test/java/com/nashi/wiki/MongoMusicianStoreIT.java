@@ -42,6 +42,7 @@ class MongoMusicianStoreIT extends MongoIT {
     @BeforeEach
     void clean() {
         artists.deleteAll();
+        mongo.remove(new Query(), "wiki_denylist");
         recorded.clear();
     }
 
@@ -76,6 +77,21 @@ class MongoMusicianStoreIT extends MongoIT {
         assertThat(known.manualNames()).containsExactlyInAnyOrder("стара гвардія", "порожній ід");
         assertThat(known.wikidataIds()).containsExactlyInAnyOrder("Q222", "Q333");
         assertThat(known.wikiTitles()).containsExactlyInAnyOrder("Збагачений Гурт", "Вікі Гурт (гурт)");
+    }
+
+    @Test
+    void denylistedWikipediaArtistsAreKnown() {
+        mongo.insert(new Document("_id", "Q777").append("wikidataId", "Q777").append("wikiTitle", "Заборонений")
+                .append("reason", "V1_HIDDEN"), "wiki_denylist");
+        mongo.insert(new Document("_id", "title:Без Ід").append("wikidataId", null).append("wikiTitle", "Без Ід")
+                .append("reason", "V1_HIDDEN"), "wiki_denylist");
+        artist("Жива", ArtistSource.WIKIPEDIA, ArtistStatus.PUBLISHED, "Q1", "Жива");
+
+        KnownArtists known = store.loadKnown();
+
+        assertThat(known.wikidataIds()).containsExactlyInAnyOrder("Q1", "Q777");
+        assertThat(known.wikiTitles()).containsExactlyInAnyOrder("Жива", "Заборонений", "Без Ід");
+        assertThat(known.manualNames()).isEmpty();
     }
 
     @Test

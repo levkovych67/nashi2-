@@ -149,6 +149,41 @@ class StartupConfigGuardTest {
     }
 
     @Test
+    void localRejectsRemoteMigrationSources() {
+        List<String> remoteMongo = StartupConfigGuard.problems(localEnv("local")
+                .withProperty("nashi.migration.v1.mongo-uri", "mongodb+srv://u:Secr3tPw@cluster0.example.net/nashi"));
+        assertEquals(1, remoteMongo.size());
+        assertTrue(remoteMongo.get(0).startsWith("nashi.migration.v1.mongo-uri "));
+        assertFalse(remoteMongo.get(0).contains("Secr3tPw"));
+
+        for (String endpoint : List.of("https://s3.eu-north-1.amazonaws.com", "http://minio.example.net", "not a url")) {
+            List<String> problems = StartupConfigGuard.problems(localEnv("test")
+                    .withProperty("nashi.migration.v1.s3-endpoint", endpoint));
+            assertEquals(1, problems.size(), "one problem for: " + endpoint);
+            assertTrue(problems.get(0).startsWith("nashi.migration.v1.s3-endpoint "));
+        }
+        // A bucket without an endpoint would read real AWS S3
+        List<String> bucketOnly = StartupConfigGuard.problems(localEnv("local")
+                .withProperty("nashi.migration.v1.s3-bucket", "nashi-v1"));
+        assertEquals(1, bucketOnly.size());
+        assertTrue(bucketOnly.get(0).startsWith("nashi.migration.v1.s3-endpoint "));
+    }
+
+    @Test
+    void localAcceptsLocalOrUnsetMigrationSources() {
+        assertEquals(List.of(), StartupConfigGuard.problems(localEnv("local")));
+        assertEquals(List.of(), StartupConfigGuard.problems(localEnv("local")
+                .withProperty("nashi.migration.v1.mongo-uri", "mongodb://localhost:27017/nashi")
+                .withProperty("nashi.migration.v1.s3-bucket", "nashi-v1")
+                .withProperty("nashi.migration.v1.s3-endpoint", "http://localhost:9000")));
+    }
+
+    @Test
+    void productionDoesNotNeedMigrationSettings() {
+        assertEquals(List.of(), StartupConfigGuard.problems(productionEnv()));
+    }
+
+    @Test
     void testProfileHasSameRulesAsLocal() {
         MockEnvironment safe = new MockEnvironment();
         safe.setActiveProfiles("test");

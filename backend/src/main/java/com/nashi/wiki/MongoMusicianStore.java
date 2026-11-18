@@ -19,11 +19,14 @@ import java.util.Set;
  * its status (a hidden one must not come back). Artists added through the form or migrated from V1 that have no
  * Wikidata id also count by {@code nameNormalized}, so the import does not add a second copy of them; one with an id
  * (an enriched submission) is matched by the id alone, so a different Wikipedia namesake is still imported (as V1).
+ * The ids and titles in {@code wiki_denylist} count as known too.
  */
 @Component
 public class MongoMusicianStore implements ArtistStore {
 
     private static final String COLLECTION = "artists";
+    /** Wikipedia artists hidden by V1 administrators ({@code V1MigrationJob}); the import must not recreate them. */
+    static final String DENYLIST = "wiki_denylist";
     private static final Set<String> MANUAL_SOURCES =
             Set.of(ArtistSource.SUBMISSION.name(), ArtistSource.V1_MIGRATION.name());
 
@@ -37,7 +40,7 @@ public class MongoMusicianStore implements ArtistStore {
         this.events = events;
     }
 
-    /** Reads only the four fields it needs of every artist. */
+    /** Reads only the four fields it needs of every artist, and the denylist. */
     @Override
     public KnownArtists loadKnown() {
         Query query = new Query();
@@ -52,6 +55,10 @@ public class MongoMusicianStore implements ArtistStore {
             if (MANUAL_SOURCES.contains(artist.getString("source")) && (wikidataId == null || wikidataId.isBlank())) {
                 addIfPresent(manualNames, artist.getString("nameNormalized"));
             }
+        }
+        for (Document denied : mongo.find(new Query(), Document.class, DENYLIST)) {
+            addIfPresent(ids, denied.getString("wikidataId"));
+            addIfPresent(titles, denied.getString("wikiTitle"));
         }
         return new KnownArtists(ids, titles, manualNames);
     }
