@@ -1,0 +1,130 @@
+[
+  {
+    "name": "Київ, артист 1",
+    "artistId": "65a1b2c3d4e5f60718293a41",
+    "place": {
+      "placeId": "Q1899",
+      "lat": 50.45,
+      "lon": 30.5236,
+      "type": "CITY",
+      "areaKm2": 839
+    },
+    "precision": "SETTLEMENT",
+    "expected": {
+      "lat": 50.4843771635916,
+      "lon": 30.534184264703768
+    }
+  },
+  {
+    "name": "Київ, артист 2",
+    "artistId": "65a1b2c3d4e5f60718293a42",
+    "place": {
+      "placeId": "Q1899",
+      "lat": 50.45,
+      "lon": 30.5236,
+      "type": "CITY",
+      "areaKm2": 839
+    },
+    "precision": "SETTLEMENT",
+    "expected": {
+      "lat": 50.412094434292435,
+      "lon": 30.49237419505899
+    }
+  },
+  {
+    "name": "Київ, артист 3",
+    "artistId": "65a1b2c3d4e5f60718293a43",
+    "place": {
+      "placeId": "Q1899",
+      "lat": 50.45,
+      "lon": 30.5236,
+      "type": "CITY",
+      "areaKm2": 839
+    },
+    "precision": "SETTLEMENT",
+    "expected": {
+      "lat": 50.51465938008554,
+      "lon": 30.544302699984907
+    }
+  },
+  {
+    "name": "Броди (TOWN, без площі)",
+    "artistId": "65a1b2c3d4e5f60718293a44",
+    "place": {
+      "placeId": "Q465104",
+      "lat": 50.078055555,
+      "lon": 25.154166666,
+      "type": "TOWN",
+      "areaKm2": null
+    },
+    "precision": "SETTLEMENT",
+    "expected": {
+      "lat": 50.078476470085455,
+      "lon": 25.15014693817576
+    }
+  },
+  {
+    "name": "Село (VILLAGE, 2.1 км²)",
+    "artistId": "65a1b2c3d4e5f60718293a45",
+    "place": {
+      "placeId": "Q4220129",
+      "lat": 47.255555555,
+      "lon": 31.363611111,
+      "type": "VILLAGE",
+      "areaKm2": 2.1
+    },
+    "precision": "SETTLEMENT",
+    "expected": {
+      "lat": 47.25655960992554,
+      "lon": 31.36189982049882
+    }
+  },
+  {
+    "name": "OTHER без площі",
+    "artistId": "65a1b2c3d4e5f60718293a46",
+    "place": {
+      "placeId": "Q9000001",
+      "lat": 49.1,
+      "lon": 28.2,
+      "type": "OTHER",
+      "areaKm2": null
+    },
+    "precision": "SETTLEMENT",
+    "expected": {
+      "lat": 49.09911217158637,
+      "lon": 28.196353282159915
+    }
+  },
+  {
+    "name": "EXACT",
+    "artistId": "65a1b2c3d4e5f60718293a47",
+    "place": {
+      "placeId": "Q1899",
+      "lat": 50.45,
+      "lon": 30.5236,
+      "type": "CITY",
+      "areaKm2": 839
+    },
+    "precision": "EXACT",
+    "expected": {
+      "lat": 50.45,
+      "lon": 30.5236
+    }
+  },
+  {
+    "name": "Мала площа (0.01 км² → 150 м)",
+    "artistId": "65a1b2c3d4e5f60718293a48",
+    "place": {
+      "placeId": "Q9000002",
+      "lat": 48.5,
+      "lon": 35,
+      "type": "VILLAGE",
+      "areaKm2": 0.01
+    },
+    "precision": "SETTLEMENT",
+    "expected": {
+      "lat": 48.50083489334317,
+      "lon": 35.000373509132295
+    }
+  }
+]
