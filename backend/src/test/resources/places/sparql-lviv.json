@@ -1,0 +1,672 @@
+{
+ "head": {
+  "vars": [
+   "place",
+   "label",
+   "coord",
+   "type",
+   "areaM2",
+   "pop",
+   "popDate"
+  ]
+ },
+ "results": {
+  "bindings": [
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q156592"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "5850"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2017-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "20000000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.8725 49.155)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q4100864"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Моршин"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q156592"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "5850"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2017-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "20000000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.8725 49.155)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q12131624"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Моршин"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q156592"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "5850"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2017-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "20000000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.8725 49.155)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q21672098"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Моршин"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q4126913"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "2099"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2011-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "12720000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.089722222 49.558055555)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q21672098"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Воютичі"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q4126913"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "2099"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2011-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "12720000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.11275 49.54945)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q21672098"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Воютичі"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1973639"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "517"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "1880-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "4190000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.874666666 49.840388888)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q4100864"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Рудно"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1973639"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "7244"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2019-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "4190000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.874666666 49.840388888)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q4100864"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Рудно"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1973639"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "7213"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2017-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "4190000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.874666666 49.840388888)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q4100864"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Рудно"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1973639"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "6247"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "1970-01-15T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "4190000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.874666666 49.840388888)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q4100864"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Рудно"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1973639"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "7502"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2022-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "4190000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.874666666 49.840388888)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q4100864"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Рудно"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1973639"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "7350"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2021-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "4190000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.874666666 49.840388888)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q4100864"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Рудно"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1973639"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "7316"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2020-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "4190000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.874666666 49.840388888)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q4100864"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Рудно"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1973639"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "7359"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2018-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "4190000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.874666666 49.840388888)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q4100864"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Рудно"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1973639"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "3534"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "1959-01-15T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "4190000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(23.874666666 49.840388888)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q4100864"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Рудно"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q36036"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "717273"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2022-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "182000000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(24.0315921 49.841952)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1549591"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Львів"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q36036"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "717273"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2022-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "182000000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(24.0315921 49.841952)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q7930989"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Львів"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q36036"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "717273"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2022-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "182000000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(24.0315921 49.841952)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q12131624"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Львів"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q465104"
+    },
+    "pop": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "23454"
+    },
+    "popDate": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+     "type": "literal",
+     "value": "2020-01-01T00:00:00Z"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "8670000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(25.154166666 50.078055555)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q12131624"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Броди"
+    }
+   },
+   {
+    "place": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q7193281"
+    },
+    "areaM2": {
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "type": "literal",
+     "value": "8430000"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(24.224166666 49.920833333)"
+    },
+    "type": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q121366249"
+    },
+    "label": {
+     "xml:lang": "uk",
+     "type": "literal",
+     "value": "Запитів"
+    }
+   }
+  ]
+ }
+}

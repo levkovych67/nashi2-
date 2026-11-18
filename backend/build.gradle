@@ -93,3 +93,26 @@ tasks.named('processResources') {
     }
     from(geoFile) { into 'geo' }
 }
+
+// Regenerates the places seed from live Wikidata (sequential SPARQL, pause >= 1 s, honours Retry-After); not part of
+// the build. Commit both output files.
+// Usage: ./gradlew placesSeed           writes src/main/resources/geo/places-ua.json.gz and places-ua.version
+//        ./gradlew placesSeed -Ptypes   prints the P31 types of Ukrainian settlements (to review PlaceTypes)
+// Optional: -PuserAgent='NashiBot/2.0 (+https://<domain>/about)'  -PrequestGap=2s
+tasks.register('placesSeed', JavaExec) {
+    group = 'application'
+    description = 'Regenerates the places seed (src/main/resources/geo/places-ua.*) from Wikidata'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.nashi.place.seed.PlaceSeedGenerator'
+    if (project.hasProperty('types')) {
+        args '--types'
+    } else {
+        args '--out', file('src/main/resources/geo').absolutePath
+    }
+    if (project.hasProperty('userAgent')) {
+        systemProperty 'nashi.http.user-agent', project.property('userAgent')
+    }
+    if (project.hasProperty('requestGap')) {
+        systemProperty 'nashi.wiki.request-gap', project.property('requestGap')
+    }
+}
