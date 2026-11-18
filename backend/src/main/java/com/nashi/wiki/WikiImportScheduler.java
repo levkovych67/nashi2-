@@ -7,9 +7,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * Starts the Wikipedia import once a month: on the 1st at 04:00 Kyiv time ({@code nashi.wiki-import.cron}), unless
- * {@code nashi.wiki-import.enabled=false} (local and test). {@code @Scheduled} itself needs
- * {@code nashi.scheduling.enabled}.
+ * Starts the Wikipedia import once a month: on the 1st at 04:00 Kyiv time ({@code nashi.wiki-import.cron}), when
+ * {@code nashi.wiki-import.enabled=true}. It is off by default (and in local and test): production turns it on at
+ * cutover, after {@code /migrate_v1 run} (ADR 0002). {@code @Scheduled} itself needs {@code nashi.scheduling.enabled}.
  */
 @Component
 public class WikiImportScheduler {
@@ -20,7 +20,7 @@ public class WikiImportScheduler {
     private final boolean enabled;
 
     public WikiImportScheduler(MusicianImportService importService,
-                               @Value("${nashi.wiki-import.enabled:true}") boolean enabled) {
+                               @Value("${nashi.wiki-import.enabled:false}") boolean enabled) {
         this.importService = importService;
         this.enabled = enabled;
     }

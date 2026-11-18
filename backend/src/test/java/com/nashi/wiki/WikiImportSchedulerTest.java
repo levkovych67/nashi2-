@@ -1,9 +1,12 @@
 package com.nashi.wiki;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.support.CronExpression;
 
+import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -39,5 +42,13 @@ class WikiImportSchedulerTest {
         new WikiImportScheduler(importService, false).monthly();
 
         verify(importService, never()).startInBackground();
+    }
+
+    /** Production must not import before {@code /migrate_v1 run} (ADR 0002): the switch is turned on at cutover. */
+    @Test
+    void productionDefaultKeepsTheMonthlyImportOffUntilTheV1Migration() throws IOException {
+        var defaults = PropertiesLoaderUtils.loadProperties(new ClassPathResource("application.properties"));
+
+        assertThat(defaults.getProperty("nashi.wiki-import.enabled")).isEqualTo("false");
     }
 }

@@ -55,10 +55,17 @@ class NotifyRetryJobIT extends MongoIT {
     }
 
     private String insert(SubmissionStatus status, TelegramRefs telegram, int failures, Duration age) {
+        return insert(status, telegram, failures, age, Duration.ZERO);
+    }
+
+    /** {@code lastFailureAgo}: how long before NOW the last of the {@code failures} happened (one minute apart). */
+    private String insert(SubmissionStatus status, TelegramRefs telegram, int failures, Duration age,
+                          Duration lastFailureAgo) {
         List<ModerationEntry> log = new ArrayList<>();
         log.add(new ModerationEntry(ModerationAction.DUPLICATE_WARNING, null, NOW, "a1"));
         for (int i = 0; i < failures; i++) {
-            log.add(new ModerationEntry(ModerationAction.FAILED, null, NOW, "TelegramGatewayException: x"));
+            Instant at = NOW.minus(lastFailureAgo).minus(Duration.ofMinutes(failures - 1 - i));
+            log.add(new ModerationEntry(ModerationAction.FAILED, null, at, "TelegramGatewayException: x"));
         }
         String id = new ObjectId().toHexString();
         submissions.save(Submission.builder().id(id).status(status).name("Гурт").telegram(telegram)
@@ -74,7 +81,7 @@ class NotifyRetryJobIT extends MongoIT {
         String newer = insert(SubmissionStatus.PENDING, new TelegramRefs(-1L, null, List.of(501), null), 4,
                 Duration.ofMinutes(20));
         String older = insert(SubmissionStatus.PENDING, null, 0, Duration.ofHours(2));
-        // gave up after five failures
+        // five failures, the last one just now: waits for the hourly retry
         insert(SubmissionStatus.PENDING, null, 5, Duration.ofHours(1));
         // sent
         insert(SubmissionStatus.PENDING, new TelegramRefs(-1L, null, List.of(501), 503), 0, Duration.ofHours(1));
@@ -98,5 +105,24 @@ class NotifyRetryJobIT extends MongoIT {
         order.verify(notifier).send(older);
         order.verify(notifier).send(newer);
         verifyNoMoreInteractions(notifier);
+    }
+
+    @Test
+    void afterFiveFailuresRetriesOnceAnHourAfterTheLastFailure() {
+        // never abandoned: an hour after the last failure it is due again, however many failures there were
+        String hourAgo = insert(SubmissionStatus.PENDING, null, 5, Duration.ofDays(1), Duration.ofHours(1));
+        String longAgo = insert(SubmissionStatus.PENDING, null, 12, Duration.ofDays(2), Duration.ofHours(3));
+        // the last failure is less than an hour old (the first of the five was 64 minutes ago)
+        insert(SubmissionStatus.PENDING, null, 5, Duration.ofDays(1), Duration.ofMinutes(59));
+        insert(SubmissionStatus.PENDING, null, 9, Duration.ofDays(1), Duration.ZERO);
+
+        assertThat(job.dueSubmissionIds()).containsExactly(longAgo, hourAgo);
+    }
+
+    @Test
+    void underFiveFailuresRetriesEveryRunWhateverTheLastFailure() {
+        String justFailed = insert(SubmissionStatus.PENDING, null, 4, Duration.ofMinutes(30), Duration.ZERO);
+
+        assertThat(job.dueSubmissionIds()).containsExactly(justFailed);
     }
 }

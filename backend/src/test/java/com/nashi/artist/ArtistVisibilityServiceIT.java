@@ -6,11 +6,20 @@ import com.nashi.map.MapService;
 import com.nashi.submission.Submission;
 import com.nashi.submission.SubmissionRepository;
 import com.nashi.submission.SubmissionStatus;
+import com.nashi.submission.TelegramRefs;
 import com.nashi.support.MongoIT;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.util.List;
 
 import static com.nashi.map.MapFixtures.KYIV_ID;
 import static com.nashi.map.MapFixtures.artist;
@@ -29,6 +38,8 @@ class ArtistVisibilityServiceIT extends MongoIT {
     private SubmissionRepository submissions;
     @Autowired
     private MapService map;
+    @Autowired
+    private MongoTemplate mongo;
 
     @BeforeEach
     @AfterEach
@@ -90,6 +101,27 @@ class ArtistVisibilityServiceIT extends MongoIT {
         submissions.save(Submission.builder().status(SubmissionStatus.APPROVED).build());
 
         assertThat(stats.summary()).isEqualTo("Музикантів на карті: 2 · без піна: 1 · з аудіо: 1 · "
-                + "заявок на модерації: 1 · лайків за весь час: 7");
+                + "заявок на модерації: 1 · лайків за весь час: 7 · не надіслано: 0");
+    }
+
+    @Test
+    void statsCountsPendingSubmissionsNotSentToTheGroupForOverFiveMinutes() {
+        String sent = pending(new TelegramRefs(-1L, null, List.of(501), 503), Duration.ofHours(1));
+        String unsent = pending(new TelegramRefs(-1L, null, List.of(501), null), Duration.ofHours(1));
+        String neverTried = pending(null, Duration.ofMinutes(6));
+        String fresh = pending(null, Duration.ofMinutes(1));
+        submissions.save(Submission.builder().status(SubmissionStatus.APPROVED).build());
+
+        assertThat(stats.summary()).endsWith(" · заявок на модерації: 4 · лайків за весь час: 0 · не надіслано: 2");
+        assertThat(List.of(sent, unsent, neverTried, fresh)).doesNotHaveDuplicates();
+    }
+
+    /** A PENDING submission created {@code age} ago (createdAt comes from auditing, so it is moved afterwards). */
+    private String pending(TelegramRefs telegram, Duration age) {
+        String id = submissions.save(Submission.builder().status(SubmissionStatus.PENDING).telegram(telegram).build())
+                .getId();
+        mongo.updateFirst(Query.query(Criteria.where("_id").is(id)),
+                Update.update("createdAt", Instant.now().minus(age)), Submission.class);
+        return id;
     }
 }
