@@ -14,9 +14,12 @@ const alphabetic = (a,b) => a < b ? -1 : a > b ? 1 : 0;
 const fixedDate = '2026-11-08T18:35:57Z'; // V1 snapshot timestamp; generated fixtures are reproducible.
 const asDate = date => date != null && /^\d{4}(-\d{2}){0,2}$/.test(String(date)) ? String(date) : null;
 
+function kindOf(record) {
+  return record.ensemble || record.categories?.includes('BAND') ? 'BAND' : 'PERSON';
+}
 function isMusic(record) {
   return record.categories?.some(category => category === 'MUSICIAN' || category === 'BAND')
-    && (record.locationBasis === 'BIRTH' || record.locationBasis === 'FORMATION');
+    && record.locationBasis === (kindOf(record) === 'BAND' ? 'FORMATION' : 'BIRTH');
 }
 function usablePlace(place) {
   return place?.qid && place.labelUk && regionOf(place) && Number.isFinite(place.lat)
@@ -52,7 +55,7 @@ function profile({record,submission,id}, place, slug) {
   const precision = submission ? 'CITY' : 'SETTLEMENT';
   const pin = pinFor(id,place,precision);
   return {
-    id,slug,name,kind:record.ensemble || record.categories?.includes('BAND') ? 'BAND' : 'PERSON',
+    id,slug,name,kind:kindOf(record),
     tagline:taglineFrom(firstSentence(bio)),summary:summarize(bio,300),description:summarize(bio,2000),textSource,
     images:mapImages(record,submission),
     origin:{

@@ -93,3 +93,12 @@ test('only supported origin evidence contributes to pins, places, regions and fi
   assert.equal(Object.values(set.details).filter(x=>x.textSource===null).length,3);
   assert.deepEqual(set.pins,buildFixtures([...r].reverse(),mockMeta,extras).pins);
 });
+
+test('birth and formation evidence must match the artist kind', () => {
+  const person = json('./sample-dry-run.json')[0];
+  const band = {...person, categories:['BAND'], qid:'Q123'};
+  const wrongPerson = {...person, locationBasis:'FORMATION'};
+  const set = buildFixtures([wrongPerson, band], mockMeta, []);
+  assert.equal(set.pins.pins.length,0);
+  assert.equal(set.regions.reduce((total, region)=>total+region.count,0),0);
+});
