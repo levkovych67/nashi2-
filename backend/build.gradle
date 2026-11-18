@@ -1,0 +1,84 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.1.2'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.nashi'
+version = '2.0.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+// Versions not managed by the Spring Boot BOM. See docs/adr/0001-spring-boot-version.md.
+ext {
+    springdocVersion = '3.2.0'
+    telegrambotsVersion = '10.3.0'
+    awsSdkVersion = '2.59.3'
+    bucket4jVersion = '8.22.0'
+    thumbnailatorVersion = '0.4.21'
+    twelvemonkeysVersion = '3.15.3'
+    metadataExtractorVersion = '2.22.0'
+    jaudiotaggerVersion = '3.0.1'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "software.amazon.awssdk:bom:${awsSdkVersion}"
+    }
+}
+
+configurations {
+    mockitoAgent
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
+
+    implementation 'com.github.ben-manes.caffeine:caffeine'
+    implementation "com.bucket4j:bucket4j_jdk17-core:${bucket4jVersion}"
+    implementation 'software.amazon.awssdk:s3'
+    implementation "org.telegram:telegrambots-longpolling:${telegrambotsVersion}"
+    implementation "org.telegram:telegrambots-client:${telegrambotsVersion}"
+    implementation "net.coobird:thumbnailator:${thumbnailatorVersion}"
+    implementation "com.twelvemonkeys.imageio:imageio-webp:${twelvemonkeysVersion}"
+    implementation "com.drewnoakes:metadata-extractor:${metadataExtractorVersion}"
+    implementation "net.jthink:jaudiotagger:${jaudiotaggerVersion}"
+    implementation 'com.google.code.gson:gson'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-mongodb-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
+    testImplementation 'org.testcontainers:testcontainers-mongodb'
+    testImplementation 'org.testcontainers:testcontainers-minio'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    mockitoAgent('org.mockito:mockito-core') { transitive = false }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    // Mockito's inline mock maker as a declared agent instead of self-attaching at runtime (JDK 21+ warns otherwise).
+    // -Xshare:off: class data sharing does not work with an agent on the boot class path and warns on every run.
+    def mockitoAgentJar = configurations.mockitoAgent
+    jvmArgumentProviders.add({ ["-javaagent:${mockitoAgentJar.singleFile.absolutePath}", '-Xshare:off'] } as CommandLineArgumentProvider)
+}

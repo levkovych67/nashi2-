@@ -1,0 +1,6 @@
+plugins {
+    // Downloads the JDK 21 toolchain when the machine has none (CI and laptops with a newer JDK only)
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+rootProject.name = 'nashi-backend'
