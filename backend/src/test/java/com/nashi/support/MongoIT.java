@@ -1,10 +1,19 @@
 package com.nashi.support;
 
+import java.net.URI;
+
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
+import software.amazon.awssdk.services.s3.model.HeadBucketRequest;
+import software.amazon.awssdk.services.s3.model.NoSuchBucketException;
 import org.testcontainers.containers.MinIOContainer;
 import org.testcontainers.lifecycle.Startables;
 import org.testcontainers.mongodb.MongoDBContainer;
@@ -34,13 +43,31 @@ public abstract class MongoIT {
 
     /**
      * MinIO no longer publishes images to Docker Hub; pgsty/minio is the community build of the same server
-     * (same entrypoint, same API). The bucket is not created here: the S3 client that creates it comes with storage.
+     * (same entrypoint, same API). The bucket is created in the static initialiser below.
      */
     protected static final MinIOContainer MINIO = new MinIOContainer(
             DockerImageName.parse("pgsty/minio:RELEASE.2026-08-04T00-00-00Z").asCompatibleSubstituteFor("minio/minio"));
 
     static {
         Startables.deepStart(MONGO, MINIO).join();
+        createBucket();
+    }
+
+    /** Creates {@link #BUCKET} once, unless it exists. Production code never creates buckets. */
+    private static void createBucket() {
+        try (S3Client s3 = S3Client.builder()
+                .endpointOverride(URI.create(MINIO.getS3URL()))
+                .region(Region.US_EAST_1)
+                .credentialsProvider(StaticCredentialsProvider.create(
+                        AwsBasicCredentials.create(MINIO.getUserName(), MINIO.getPassword())))
+                .forcePathStyle(true)
+                .build()) {
+            try {
+                s3.headBucket(HeadBucketRequest.builder().bucket(BUCKET).build());
+            } catch (NoSuchBucketException e) {
+                s3.createBucket(CreateBucketRequest.builder().bucket(BUCKET).build());
+            }
+        }
     }
 
     @DynamicPropertySource
