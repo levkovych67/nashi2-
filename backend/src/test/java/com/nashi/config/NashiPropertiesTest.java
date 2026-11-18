@@ -27,6 +27,21 @@ class NashiPropertiesTest {
     }
 
     @Test
+    void audioProvidersAreOffUnlessSwitchedOn() {
+        assertEquals(new NashiProperties.ProvidersProps(new NashiProperties.ProviderProps(false),
+                new NashiProperties.ProviderProps(false), new NashiProperties.ProviderProps(false)),
+                bind(Map.of()).audio().providers());
+
+        NashiProperties.ProvidersProps on = bind(Map.of(
+                "nashi.audio.providers.deezer.enabled", "true",
+                "nashi.audio.providers.commons.enabled", "true")).audio().providers();
+
+        assertEquals(true, on.deezer().enabled());
+        assertEquals(false, on.itunes().enabled());
+        assertEquals(true, on.commons().enabled());
+    }
+
+    @Test
     void bindsKebabCaseKeys() {
         NashiProperties props = bind(Map.of(
                 "nashi.cors.allowed-origins", "https://nashi.example,http://localhost:5173",

@@ -7,6 +7,7 @@ import com.nashi.artist.ArtistChangedEvent;
 import com.nashi.artist.ArtistStatus;
 import com.nashi.artist.ImageAsset;
 import com.nashi.artist.Origin;
+import com.nashi.audio.AudioPolicy;
 import com.nashi.geo.RegionCatalog;
 import com.nashi.geo.RegionMeta;
 import com.nashi.media.FileStorage;
@@ -50,16 +51,19 @@ public class MapService {
     private final RegionCatalog regions;
     private final PlaceStore places;
     private final FileStorage storage;
+    private final AudioPolicy audioPolicy;
     private final Cache<String, MapSnapshot> cache = Caffeine.newBuilder()
             .maximumSize(1)
             .expireAfterWrite(Duration.ofMinutes(5))
             .build();
 
-    public MapService(MongoTemplate mongo, RegionCatalog regions, PlaceStore places, FileStorage storage) {
+    public MapService(MongoTemplate mongo, RegionCatalog regions, PlaceStore places, FileStorage storage,
+                      AudioPolicy audioPolicy) {
         this.mongo = mongo;
         this.regions = regions;
         this.places = places;
         this.storage = storage;
+        this.audioPolicy = audioPolicy;
     }
 
     /**
@@ -91,7 +95,7 @@ public class MapService {
         for (Artist a : artists) {
             Origin o = a.getOrigin();
             pins.add(new MapPin(a.getId(), a.getSlug(), a.getName(), a.getKind(), round(a.getPin().getY()), round(a.getPin().getX()),
-                    o.region(), o.placeId(), thumb(a), a.getAudio() != null && !a.getAudio().isEmpty()));
+                    o.region(), o.placeId(), thumb(a), audioPolicy.hasAudio(a)));
             regionCounts.merge(o.region(), 1L, Long::sum);
             placeCounts.computeIfAbsent(o.placeId(), id -> new PlaceAcc(o)).count++;
             // "<id>:<updatedAt>" per artist, joined with '\n' (a character that is in neither part)

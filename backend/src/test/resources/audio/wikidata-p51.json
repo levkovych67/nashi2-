@@ -1,0 +1,66 @@
+{
+ "claims": {
+  "P51": [
+   {
+    "mainsnak": {
+     "snaktype": "value",
+     "property": "P51",
+     "hash": "3e599869920570c80088fca8c44c6e70ec2ec31c",
+     "datavalue": {
+      "value": "Hold your hand out, naughty boy.mp3",
+      "type": "string"
+     },
+     "datatype": "commonsMedia"
+    },
+    "type": "statement",
+    "id": "Q5461945$91af83c7-4401-8f3a-8f9b-9d697112efa2",
+    "rank": "normal"
+   },
+   {
+    "mainsnak": {
+     "snaktype": "value",
+     "property": "P51",
+     "hash": "fbc0d5c957326c06142212cb1b281c3cd37ef966",
+     "datavalue": {
+      "value": "'Tis a faded picture by Florrie Forde.mp3",
+      "type": "string"
+     },
+     "datatype": "commonsMedia"
+    },
+    "type": "statement",
+    "id": "Q5461945$c77621e9-42dc-4b02-0706-14282ac55199",
+    "rank": "normal"
+   },
+   {
+    "mainsnak": {
+     "snaktype": "value",
+     "property": "P51",
+     "hash": "a1",
+     "datavalue": {
+      "value": "Choir with mp3.ogg",
+      "type": "string"
+     },
+     "datatype": "commonsMedia"
+    },
+    "type": "statement",
+    "id": "Q5461945$hand-edited-a1",
+    "rank": "normal"
+   },
+   {
+    "mainsnak": {
+     "snaktype": "value",
+     "property": "P51",
+     "hash": "a2",
+     "datavalue": {
+      "value": "Choir ogg only.ogg",
+      "type": "string"
+     },
+     "datatype": "commonsMedia"
+    },
+    "type": "statement",
+    "id": "Q5461945$hand-edited-a2",
+    "rank": "normal"
+   }
+  ]
+ }
+}

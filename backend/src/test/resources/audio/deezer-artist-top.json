@@ -1,0 +1,45 @@
+{
+ "data": [
+  {
+   "id": 437046332,
+   "readable": true,
+   "title": "Beggin'",
+   "title_short": "Beggin'",
+   "link": "https://www.deezer.com/track/437046332",
+   "duration": 212,
+   "preview": "https://cdnt-preview.dzcdn.net/api/1/1/1/b/1/0/1b1d973c22173fa447dd661d80c9128c.mp3?hdnea=exp=1795006999~acl=/api/1/1/1/b/1/0/1b1d973c22173fa447dd661d80c9128c.mp3*~data=user_id=0,application_id=42~hmac=c1b663568bc589e19c55914f2447d055c717254eb51d3bc8f9b2252dbeafee19",
+   "type": "track"
+  },
+  {
+   "id": 1279728532,
+   "readable": true,
+   "title": "I WANNA BE YOUR SLAVE",
+   "title_short": "I WANNA BE YOUR SLAVE",
+   "link": "https://www.deezer.com/track/1279728532",
+   "duration": 172,
+   "preview": "https://cdnt-preview.dzcdn.net/api/1/1/5/5/7/0/55730de8477957ea4b3c4c33a2775ce4.mp3?hdnea=exp=1795006999~acl=/api/1/1/5/5/7/0/55730de8477957ea4b3c4c33a2775ce4.mp3*~data=user_id=0,application_id=42~hmac=e950ae1116399d8e2f96295b93196f3b7777b564e6a11aa2ed30e2ca0b253e5a",
+   "type": "track"
+  },
+  {
+   "id": 1262536082,
+   "readable": true,
+   "title": "ZITTI E BUONI",
+   "title_short": "ZITTI E BUONI",
+   "link": "https://www.deezer.com/track/1262536082",
+   "duration": 192,
+   "preview": "https://cdnt-preview.dzcdn.net/api/1/1/7/a/d/0/7ad51b27ea7a183f1931aae74b565247.mp3?hdnea=exp=1795006999~acl=/api/1/1/7/a/d/0/7ad51b27ea7a183f1931aae74b565247.mp3*~data=user_id=0,application_id=42~hmac=92cdc0aead985d185ff49c49900cbabacddf0ddd804c178ff8ac2843ea8c1783",
+   "type": "track"
+  },
+  {
+   "id": 999000001,
+   "readable": true,
+   "title": "No preview track (hand-edited)",
+   "title_short": "No preview track (hand-edited)",
+   "link": "https://www.deezer.com/track/999000001",
+   "duration": 192,
+   "preview": "",
+   "type": "track"
+  }
+ ],
+ "total": 5
+}

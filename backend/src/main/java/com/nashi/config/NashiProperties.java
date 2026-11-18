@@ -28,8 +28,19 @@ public record NashiProperties(
     public record CorsProps(@DefaultValue List<String> allowedOrigins) {
     }
 
-    /** @param fragmentSeconds length of the random audio fragment */
-    public record AudioProps(@DefaultValue("15") int fragmentSeconds) {
+    /**
+     * @param fragmentSeconds length of the random audio fragment
+     * @param providers       which external sources of preview clips are on ({@code nashi.audio.providers.*})
+     */
+    public record AudioProps(@DefaultValue("15") int fragmentSeconds, @DefaultValue ProvidersProps providers) {
+    }
+
+    /** Off unless switched on: the legal OK for Deezer and Apple previews is pending. */
+    public record ProvidersProps(@DefaultValue ProviderProps deezer, @DefaultValue ProviderProps itunes,
+                                 @DefaultValue ProviderProps commons) {
+    }
+
+    public record ProviderProps(@DefaultValue("false") boolean enabled) {
     }
 
     /** Zoom thresholds: regions up to {@code regionMaxZoom}, places up to {@code placeMaxZoom}, then pins. */

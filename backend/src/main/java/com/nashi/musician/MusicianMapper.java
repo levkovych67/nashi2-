@@ -7,6 +7,7 @@ import com.nashi.artist.LifeDates;
 import com.nashi.artist.Link;
 import com.nashi.artist.Origin;
 import com.nashi.artist.Video;
+import com.nashi.audio.AudioPolicy;
 import com.nashi.media.FileStorage;
 import com.nashi.media.ImageUrls;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -20,9 +21,11 @@ import java.util.List;
 public class MusicianMapper {
 
     private final FileStorage storage;
+    private final AudioPolicy audioPolicy;
 
-    public MusicianMapper(FileStorage storage) {
+    public MusicianMapper(FileStorage storage, AudioPolicy audioPolicy) {
         this.storage = storage;
+        this.audioPolicy = audioPolicy;
     }
 
     public MusicianListItem toListItem(Artist a) {
@@ -31,7 +34,7 @@ public class MusicianMapper {
         return new MusicianListItem(a.getId(), a.getSlug(), a.getName(), a.getKind(),
                 images.isEmpty() ? null : thumbOf(images.get(0)),
                 origin == null ? null : origin.placeName(), origin == null ? null : origin.region(),
-                a.getLikesCount(), hasAudio(a));
+                a.getLikesCount(), audioPolicy.hasAudio(a));
     }
 
     public MusicianDetails toDetails(Artist a) {
@@ -42,13 +45,13 @@ public class MusicianMapper {
                 a.getDates() == null ? new LifeDates(null, null, null, null) : a.getDates(),
                 orEmpty(a.getGenres()),
                 new MusicianDetails.Materials(
-                        orEmpty(a.getAudio()).stream().map(MusicianMapper::toClip).toList(),
+                        audioPolicy.playableClips(a.getAudio()).stream().map(MusicianMapper::toClip).toList(),
                         orEmpty(a.getWorks()), videosOf(a)),
                 orEmpty(a.getLinks()).stream()
                         .sorted(Comparator.comparing((Link l) -> l.platform().group()))
                         .map(l -> new MusicianDetails.LinkDto(l.platform(), l.platform().group(), l.url()))
                         .toList(),
-                a.getYoutubeChannelUrl(), a.getLikesCount(), hasAudio(a), a.getUpdatedAt());
+                a.getYoutubeChannelUrl(), a.getLikesCount(), audioPolicy.hasAudio(a), a.getUpdatedAt());
     }
 
     private MusicianDetails.Image toImage(ImageAsset i) {
@@ -79,10 +82,6 @@ public class MusicianMapper {
 
     private static boolean hasVideos(Artist a) {
         return a.getVideos() != null && !a.getVideos().isEmpty();
-    }
-
-    private static boolean hasAudio(Artist a) {
-        return a.getAudio() != null && !a.getAudio().isEmpty();
     }
 
     private static <T> List<T> orEmpty(List<T> list) {

@@ -1,6 +1,7 @@
 package com.nashi.musician;
 
 import com.nashi.artist.Artist;
+import com.nashi.audio.AudioPolicy;
 import com.nashi.artist.AudioClip;
 import com.nashi.artist.AudioSource;
 import com.nashi.artist.ImageAsset;
@@ -39,7 +40,7 @@ class MusicianMapperTest {
             return "https://cdn.test/" + key;
         }
     };
-    private final MusicianMapper mapper = new MusicianMapper(storage);
+    private final MusicianMapper mapper = new MusicianMapper(storage, AudioPolicy.of(true, true, true));
 
     private static Artist.ArtistBuilder base() {
         return Artist.builder().id("1").slug("s").name("N").likesCount(3);
@@ -123,5 +124,22 @@ class MusicianMapperTest {
     @Test
     void textSourceNullForSubmission() {
         assertThat(mapper.toDetails(base().build()).textSource()).isNull();
+    }
+
+    @Test
+    void clipsOfADisabledSourceAreHiddenAndDoNotLightUpHasAudio() {
+        MusicianMapper deezerOff = new MusicianMapper(storage, AudioPolicy.of(false, true, true));
+        AudioClip deezer = new AudioClip("dz_1", AudioSource.DEEZER, "1", null, null, "D", 30, "a", null);
+        AudioClip itunes = new AudioClip("it_1", AudioSource.ITUNES, "2", null, "https://p", "I", 30, "a", null);
+
+        Artist onlyDeezer = base().audio(List.of(deezer)).build();
+        assertThat(deezerOff.toListItem(onlyDeezer).hasAudio()).isFalse();
+        assertThat(deezerOff.toDetails(onlyDeezer).hasAudio()).isFalse();
+        assertThat(deezerOff.toDetails(onlyDeezer).materials().clips()).isEmpty();
+
+        Artist both = base().audio(List.of(deezer, itunes)).build();
+        assertThat(deezerOff.toListItem(both).hasAudio()).isTrue();
+        assertThat(deezerOff.toDetails(both).materials().clips()).extracting(MusicianDetails.ClipSummary::clipId)
+                .containsExactly("it_1");
     }
 }

@@ -120,4 +120,26 @@ class MapServiceIT extends MongoIT {
         changed();
         assertThat(service.snapshot().version()).isEqualTo(before);
     }
+
+    @Autowired
+    private com.nashi.geo.RegionCatalog regionCatalog;
+    @Autowired
+    private com.nashi.place.PlaceStore placeStore;
+    @Autowired
+    private com.nashi.media.FileStorage fileStorage;
+
+    @Test
+    void pinHasAudioIgnoresClipsOfDisabledSources() {
+        artists.save(MapFixtures.artist("deezer-only", Region.LVIV, LVIV_ID, "Львів")
+                .audio(java.util.List.of(new com.nashi.artist.AudioClip("dz_1", com.nashi.artist.AudioSource.DEEZER, "1",
+                        null, null, "T", 30, "a", null))).build());
+        artists.save(MapFixtures.withAudio(MapFixtures.artist("upload", Region.LVIV, LVIV_ID, "Львів")).build());
+        MapService deezerOff = new MapService(mongo, regionCatalog, placeStore, fileStorage,
+                com.nashi.audio.AudioPolicy.of(false, true, true));
+
+        var byName = deezerOff.snapshot().pins().stream()
+                .collect(java.util.stream.Collectors.toMap(MapPin::name, MapPin::hasAudio));
+
+        assertThat(byName).containsEntry("Гурт deezer-only", false).containsEntry("Гурт upload", true);
+    }
 }

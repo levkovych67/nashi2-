@@ -1,0 +1,61 @@
+{
+ "resultCount": 5,
+ "results": [
+  {
+   "wrapperType": "artist",
+   "artistType": "Artist",
+   "artistName": "Океан Ельзи",
+   "artistLinkUrl": "https://music.apple.com/ua/artist/okean-elzy/362306254?uo=4",
+   "artistId": 362306254,
+   "primaryGenreName": "Rock",
+   "primaryGenreId": 21
+  },
+  {
+   "wrapperType": "track",
+   "kind": "song",
+   "artistId": 362306254,
+   "trackId": 1033595614,
+   "artistName": "Okean Elzy",
+   "trackName": "Обійми",
+   "trackViewUrl": "https://music.apple.com/ua/album/%D0%BE%D0%B1%D1%96%D0%B9%D0%BC%D0%B8/1033595599?i=1033595614&uo=4",
+   "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/49/08/de/4908de11-0fb4-6d1e-a089-db004e4ff678/mzaf_12803258068509752850.plus.aac.p.m4a",
+   "trackTimeMillis": 224112,
+   "country": "UKR"
+  },
+  {
+   "wrapperType": "track",
+   "kind": "song",
+   "artistId": 362306254,
+   "trackId": 1584393417,
+   "artistName": "Okean Elzy",
+   "trackName": "Місто весни (feat. Один в каное)",
+   "trackViewUrl": "https://music.apple.com/ua/album/%D0%BC%D1%96%D1%81%D1%82%D0%BE-%D0%B2%D0%B5%D1%81%D0%BD%D0%B8-feat-%D0%BE%D0%B4%D0%B8%D0%BD-%D0%B2-%D0%BA%D0%B0%D0%BD%D0%BE%D0%B5/1584393407?i=1584393417&uo=4",
+   "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/32/33/11/3233119b-ec10-d7dc-cf60-9d778157d41f/mzaf_15022821599873192531.plus.aac.p.m4a",
+   "trackTimeMillis": 252533,
+   "country": "UKR"
+  },
+  {
+   "wrapperType": "track",
+   "kind": "song",
+   "artistId": 362306254,
+   "trackId": 1033596607,
+   "artistName": "Okean Elzy",
+   "trackName": "На небі",
+   "trackViewUrl": "https://music.apple.com/ua/album/%D0%BD%D0%B0-%D0%BD%D0%B5%D0%B1%D1%96/1033595599?i=1033596607&uo=4",
+   "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/43/e9/29/43e92978-2662-b1cd-942c-0eab37afa764/mzaf_16881309247510886726.plus.aac.p.m4a",
+   "trackTimeMillis": 221635,
+   "country": "UKR"
+  },
+  {
+   "wrapperType": "track",
+   "kind": "song",
+   "artistId": 362306254,
+   "trackId": 999000002,
+   "artistName": "Okean Elzy",
+   "trackName": "No preview track (hand-edited)",
+   "trackViewUrl": "https://music.apple.com/ua/album/%D0%BD%D0%B0-%D0%BD%D0%B5%D0%B1%D1%96/1033595599?i=1033596607&uo=4",
+   "trackTimeMillis": 221635,
+   "country": "UKR"
+  }
+ ]
+}

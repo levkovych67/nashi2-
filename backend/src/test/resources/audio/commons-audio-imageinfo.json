@@ -1,0 +1,204 @@
+{
+ "batchcomplete": true,
+ "warnings": {
+  "videoinfo": {
+   "warnings": "Unrecognized value for parameter \"viprop\": duration"
+  }
+ },
+ "query": {
+  "pages": [
+   {
+    "pageid": 69384900,
+    "ns": 6,
+    "title": "File:'Tis a faded picture by Florrie Forde.mp3",
+    "imagerepository": "local",
+    "imageinfo": [
+     {
+      "size": 10883012,
+      "width": 0,
+      "height": 0,
+      "duration": 272.01628586960186,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/%27Tis_a_faded_picture_by_Florrie_Forde.mp3?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:%27Tis_a_faded_picture_by_Florrie_Forde.mp3",
+      "extmetadata": {
+       "Artist": {
+        "value": "Florrie Forde (16 August 1875 – 18 April 1940[1]), born Flora May Augusta Flannagan, was an Australian popular singer and vaudevillian entertainer"
+       },
+       "LicenseShortName": {
+        "value": "Public domain"
+       }
+      },
+      "mime": "audio/mpeg"
+     }
+    ],
+    "videoinfo": [
+     {
+      "size": 10883012,
+      "width": 0,
+      "height": 0,
+      "duration": 272.01628586960186,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/%27Tis_a_faded_picture_by_Florrie_Forde.mp3?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:%27Tis_a_faded_picture_by_Florrie_Forde.mp3",
+      "mime": "audio/mpeg",
+      "derivatives": [
+       {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bd/%27Tis_a_faded_picture_by_Florrie_Forde.mp3/%27Tis_a_faded_picture_by_Florrie_Forde.mp3.ogg",
+        "type": "audio/ogg; codecs=\"vorbis\"",
+        "transcodekey": "ogg",
+        "width": 0,
+        "height": 0,
+        "bandwidth": 82360
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "pageid": 69385678,
+    "ns": 6,
+    "title": "File:Hold your hand out, naughty boy.mp3",
+    "imagerepository": "local",
+    "imageinfo": [
+     {
+      "size": 3971764,
+      "width": 0,
+      "height": 0,
+      "duration": 248.17125,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Hold_your_hand_out%2C_naughty_boy.mp3?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Hold_your_hand_out,_naughty_boy.mp3",
+      "extmetadata": {
+       "Artist": {
+        "value": "Florrie Forde"
+       },
+       "LicenseShortName": {
+        "value": "Public domain"
+       }
+      },
+      "mime": "audio/mpeg"
+     }
+    ],
+    "videoinfo": [
+     {
+      "size": 3971764,
+      "width": 0,
+      "height": 0,
+      "duration": 248.17125,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Hold_your_hand_out%2C_naughty_boy.mp3?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Hold_your_hand_out,_naughty_boy.mp3",
+      "mime": "audio/mpeg",
+      "derivatives": [
+       {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c3/Hold_your_hand_out%2C_naughty_boy.mp3/Hold_your_hand_out%2C_naughty_boy.mp3.ogg",
+        "type": "audio/ogg; codecs=\"vorbis\"",
+        "transcodekey": "ogg",
+        "width": 0,
+        "height": 0,
+        "bandwidth": 79784
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "pageid": 69384901,
+    "ns": 6,
+    "title": "File:Choir with mp3.ogg",
+    "imagerepository": "local",
+    "imageinfo": [
+     {
+      "size": 10883012,
+      "width": 0,
+      "height": 0,
+      "duration": 95.5,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Choir_with_mp3.ogg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:%27Tis_a_faded_picture_by_Florrie_Forde.mp3",
+      "extmetadata": {
+       "Artist": {
+        "value": "<a href=\"//commons.wikimedia.org/wiki/User:Example\">Example Choir</a>"
+       },
+       "LicenseShortName": {
+        "value": "CC BY-SA 4.0"
+       }
+      },
+      "mime": "application/ogg"
+     }
+    ],
+    "videoinfo": [
+     {
+      "size": 10883012,
+      "width": 0,
+      "height": 0,
+      "duration": 95.5,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Choir_with_mp3.ogg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:%27Tis_a_faded_picture_by_Florrie_Forde.mp3",
+      "mime": "application/ogg",
+      "derivatives": [
+       {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/aa/Choir_with_mp3.ogg/Choir_with_mp3.ogg.mp3",
+        "type": "audio/mpeg",
+        "transcodekey": "mp3",
+        "width": 0,
+        "height": 0,
+        "bandwidth": 128000
+       },
+       {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/aa/Choir_with_mp3.ogg/Choir_with_mp3.ogg.ogg",
+        "type": "audio/ogg; codecs=\"vorbis\"",
+        "transcodekey": "ogg",
+        "width": 0,
+        "height": 0,
+        "bandwidth": 80000
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "pageid": 69384901,
+    "ns": 6,
+    "title": "File:Choir ogg only.ogg",
+    "imagerepository": "local",
+    "imageinfo": [
+     {
+      "size": 10883012,
+      "width": 0,
+      "height": 0,
+      "duration": 95.5,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Choir_ogg_only.ogg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:%27Tis_a_faded_picture_by_Florrie_Forde.mp3",
+      "extmetadata": {
+       "Artist": {
+        "value": "<a href=\"//commons.wikimedia.org/wiki/User:Example\">Example Choir</a>"
+       },
+       "LicenseShortName": {
+        "value": "CC BY-SA 4.0"
+       }
+      },
+      "mime": "application/ogg"
+     }
+    ],
+    "videoinfo": [
+     {
+      "size": 10883012,
+      "width": 0,
+      "height": 0,
+      "duration": 95.5,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Choir_ogg_only.ogg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:%27Tis_a_faded_picture_by_Florrie_Forde.mp3",
+      "mime": "application/ogg",
+      "derivatives": [
+       {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/aa/Choir_ogg_only.ogg/Choir_ogg_only.ogg.opus",
+        "type": "audio/ogg; codecs=\"opus\"",
+        "transcodekey": "opus",
+        "width": 0,
+        "height": 0,
+        "bandwidth": 64000
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}
