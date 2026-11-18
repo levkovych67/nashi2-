@@ -1,6 +1,7 @@
 package com.nashi.health;
 
 import com.nashi.support.MongoIT;
+import com.nashi.support.OpenApiContract;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -19,6 +20,8 @@ class HealthControllerIT extends MongoIT {
                 .expectStatus().isOk()
                 .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
                 .expectBody().json("{\"status\":\"UP\"}", JsonCompareMode.STRICT);
+        OpenApiContract.assertResponse("getHealth", http.get().uri("/api/v2/health").exchange()
+                .returnResult(byte[].class));
     }
 
     @Test

@@ -203,6 +203,13 @@ test('nullable and optional markers follow the contract notes', () => {
   const credit = S.Image.properties.credit;
   assert.ok(credit.oneOf?.some((x) => x.type === 'null') || nullable(credit), 'Image.credit nullable');
   assert.ok(nullable(S.ImageCredit.properties.licenseUrl), 'ImageCredit.licenseUrl nullable');
+  for (const f of ['author', 'license']) {
+    assert.ok(nullable(S.ImageCredit.properties[f]), `ImageCredit.${f} nullable`);
+    assert.ok(S.ImageCredit.required.includes(f), `ImageCredit.${f} required`);
+  }
+  assert.ok(nullable(S.MusicianDetails.properties.summary), 'MusicianDetails.summary nullable');
+  assert.ok(S.MusicianDetails.required.includes('summary'), 'MusicianDetails.summary required');
+  assert.ok(types(S.MusicianDetails.properties.summary).includes('string'), 'MusicianDetails.summary string');
   assert.ok(nullable(S.Fragment.properties.expiresAt), 'Fragment.expiresAt nullable');
   for (const f of ['birth', 'death', 'activeFrom', 'activeTo']) {
     assert.ok(nullable(deref(S.LifeDates.properties[f])), `LifeDates.${f} nullable`);

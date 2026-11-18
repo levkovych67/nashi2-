@@ -27,6 +27,7 @@ ext {
     twelvemonkeysVersion = '3.15.3'
     metadataExtractorVersion = '2.22.0'
     jaudiotaggerVersion = '3.0.1'
+    jsonSchemaValidatorVersion = '3.0.9'
 }
 
 dependencyManagement {
@@ -69,6 +70,8 @@ dependencies {
     testImplementation 'org.testcontainers:testcontainers-mongodb'
     testImplementation 'org.testcontainers:testcontainers-minio'
     testImplementation 'org.apache.commons:commons-imaging:1.0.0-alpha6' // writes EXIF for the test fixtures only
+    // Validates real response bodies against contracts/openapi.yaml (JSON Schema 2020-12, Jackson 3)
+    testImplementation "com.networknt:json-schema-validator:${jsonSchemaValidatorVersion}"
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

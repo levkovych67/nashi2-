@@ -758,9 +758,10 @@ components:
     ImageCredit:
       type: object
       required: [author, license, sourceUrl]
+      description: '`author` і `license` — `null`, якщо Wikimedia Commons їх не вказує.'
       properties:
-        author: { type: string }
-        license: { type: string }
+        author: { type: [string, 'null'] }
+        license: { type: [string, 'null'] }
         licenseUrl: { type: [string, 'null'], format: uri }
         sourceUrl: { type: string, format: uri }
     Image:
@@ -855,7 +856,9 @@ components:
         name: { type: string }
         kind: { $ref: '#/components/schemas/MusicianKind' }
         tagline: { type: [string, 'null'] }
-        summary: { type: string }
+        summary:
+          type: [string, 'null']
+          description: '`null`, якщо стаття без вступу (або вступу немає в джерелі).'
         description:
           type: [string, 'null']
           description: Повний вступ статті, до 2000 символів.

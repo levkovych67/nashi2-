@@ -31,6 +31,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Both documents are read as plain maps (SnakeYAML for the contract, Jackson for springdoc's JSON) with a small
  * {@code $ref} resolver instead of swagger-parser: only names, flags and enum values are compared, and this avoids
  * pulling a second Jackson/YAML stack into the build. T14 adds {@code createSubmission}, T21 {@code getFragment}.
+ * <p>
+ * What the server actually sends (status, {@code Content-Type}, declared headers, and bodies against the schemas with
+ * types, nulls and formats) is checked by {@link com.nashi.support.OpenApiContract} in the HTTP ITs.
  */
 class ContractConformanceIT extends MongoIT {
 

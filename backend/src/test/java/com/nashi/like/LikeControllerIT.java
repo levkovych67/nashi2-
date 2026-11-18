@@ -6,6 +6,7 @@ import com.nashi.artist.ArtistStatus;
 import com.nashi.geo.Region;
 import com.nashi.map.MapFixtures;
 import com.nashi.support.MongoIT;
+import com.nashi.support.OpenApiContract;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,7 @@ class LikeControllerIT extends MongoIT {
     void responseHasNewTotal() throws Exception {
         var res = post(artist.getId(), freshIp(), "{\"count\":3}");
         assertThat(res.getStatus()).isEqualTo(HttpStatus.OK);
+        OpenApiContract.assertResponse("addLikes", res);
         assertThat(JSON.readTree(res.getResponseBody()).get("likesCount").asLong()).isEqualTo(3);
         res = post(artist.getId(), freshIp(), "{\"count\":50}");
         assertThat(JSON.readTree(res.getResponseBody()).get("likesCount").asLong()).isEqualTo(53);
@@ -71,6 +73,7 @@ class LikeControllerIT extends MongoIT {
         for (String body : new String[] {"{\"count\":0}", "{\"count\":51}", "{}"}) {
             var res = post(artist.getId(), freshIp(), body);
             assertThat(res.getStatus()).as(body).isEqualTo(HttpStatus.BAD_REQUEST);
+            OpenApiContract.assertResponse("addLikes", res);
             JsonNode json = JSON.readTree(res.getResponseBody());
             assertThat(json.get("code").asString()).isEqualTo("VALIDATION_FAILED");
             assertThat(json.get("errors").get(0).get("field").asString()).as(body).isEqualTo("count");
@@ -84,6 +87,7 @@ class LikeControllerIT extends MongoIT {
         for (String id : new String[] {hidden.getId(), "missing"}) {
             var res = post(id, freshIp(), "{\"count\":1}");
             assertThat(res.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+            OpenApiContract.assertResponse("addLikes", res);
             assertThat(JSON.readTree(res.getResponseBody()).get("code").asString()).isEqualTo("NOT_FOUND");
         }
     }
@@ -96,6 +100,7 @@ class LikeControllerIT extends MongoIT {
         }
         var res = post(artist.getId(), ip, "{\"count\":1}");
         assertThat(res.getStatus()).isEqualTo(HttpStatus.TOO_MANY_REQUESTS);
+        OpenApiContract.assertResponse("addLikes", res);
         assertThat(Long.parseLong(res.getResponseHeaders().getFirst("Retry-After"))).isBetween(1L, 10L);
         assertThat(JSON.readTree(res.getResponseBody()).get("code").asString()).isEqualTo("RATE_LIMITED");
         assertThat(artists.findById(artist.getId()).orElseThrow().getLikesCount()).isEqualTo(20);

@@ -2,6 +2,7 @@ package com.nashi.place;
 
 import com.nashi.geo.Region;
 import com.nashi.support.MongoIT;
+import com.nashi.support.OpenApiContract;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,7 @@ class PlaceControllerIT extends MongoIT {
                 .expectBody()
                 .jsonPath("$.code").isEqualTo("VALIDATION_FAILED")
                 .jsonPath("$.errors[0].field").isEqualTo(field);
+        OpenApiContract.assertResponse("searchPlaces", search(query).returnResult(byte[].class));
     }
 
     @Test
@@ -56,6 +58,7 @@ class PlaceControllerIT extends MongoIT {
                         [{"placeId":"Q465104","name":"Броди","type":"CITY","region":"LVIV",
                           "regionName":"Львівська область","lat":50.078055555,"lon":25.154166666}]""",
                         JsonCompareMode.STRICT);
+        OpenApiContract.assertResponse("searchPlaces", search("q=бро").returnResult(byte[].class));
     }
 
     @Test

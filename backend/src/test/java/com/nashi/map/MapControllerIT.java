@@ -15,6 +15,7 @@ import org.bson.types.ObjectId;
 import com.nashi.artist.OriginBasis;
 import com.nashi.artist.PinPrecision;
 import com.nashi.support.MongoIT;
+import com.nashi.support.OpenApiContract;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -88,6 +90,7 @@ class MapControllerIT extends MongoIT {
     void pinsReturnEtagAndCacheControl() throws IOException {
         var res = get("/pins", null);
         assertThat(res.getStatus()).isEqualTo(HttpStatus.OK);
+        OpenApiContract.assertResponse("getMapPins", res);
         JsonNode body = JSON.readTree(res.getResponseBody());
         assertThat(res.getResponseHeaders().getFirst("ETag")).isEqualTo("\"" + body.get("version").asString() + "\"");
         assertThat(res.getResponseHeaders().getFirst("Cache-Control")).isEqualTo("public, max-age=60");
@@ -96,12 +99,15 @@ class MapControllerIT extends MongoIT {
 
     @Test
     void ifNoneMatchGives304() {
+        Map<String, String> operations = Map.of("/pins", "getMapPins", "/regions", "getMapRegions",
+                "/places", "getMapPlaces");
         for (String path : List.of("/pins", "/regions", "/places")) {
             String etag = get(path, null).getResponseHeaders().getFirst("ETag");
             assertThat(etag).as(path).isNotNull();
             for (String header : List.of(etag, "W/" + etag, "*", "\"other\", " + etag)) {
                 var res = get(path, header);
                 assertThat(res.getStatus()).as(path + " " + header).isEqualTo(HttpStatus.NOT_MODIFIED);
+                OpenApiContract.assertResponse(operations.get(path), res);
                 assertThat(res.getResponseBody()).as(path + " body").isNullOrEmpty();
                 assertThat(res.getResponseHeaders().getFirst("ETag")).isEqualTo(etag);
                 assertThat(res.getResponseHeaders().getFirst("Cache-Control")).isEqualTo("public, max-age=60");
@@ -136,6 +142,8 @@ class MapControllerIT extends MongoIT {
 
     @Test
     void regionsAndPlacesJson() throws IOException {
+        OpenApiContract.assertResponse("getMapRegions", get("/regions", null));
+        OpenApiContract.assertResponse("getMapPlaces", get("/places", null));
         JsonNode regions = JSON.readTree(get("/regions", null).getResponseBody());
         assertThat(regions).hasSize(27);
         assertThat(keys(regions.get(0))).containsExactly("bbox", "center", "code", "count", "name");

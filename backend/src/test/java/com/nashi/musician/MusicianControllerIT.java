@@ -5,6 +5,8 @@ import com.nashi.artist.ArtistRepository;
 import com.nashi.artist.ArtistStatus;
 import com.nashi.artist.AudioClip;
 import com.nashi.artist.AudioSource;
+import com.nashi.artist.ImageAsset;
+import com.nashi.artist.ImageCredit;
 import com.nashi.artist.Link;
 import com.nashi.artist.LinkPlatform;
 import com.nashi.artist.MusicianKind;
@@ -13,6 +15,7 @@ import com.nashi.artist.OriginBasis;
 import com.nashi.artist.PinPrecision;
 import com.nashi.geo.Region;
 import com.nashi.support.MongoIT;
+import com.nashi.support.OpenApiContract;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -186,5 +189,29 @@ class MusicianControllerIT extends MongoIT {
     void musicianWithoutPinHasPage() {
         get("/no-pin").expectStatus().isOk().expectBody()
                 .jsonPath("$.origin").value(v -> assertThat(v).isNull());
+    }
+
+    @Test
+    void responsesMatchTheContractIncludingNullSummaryAndCredit() {
+        // A Wikipedia article without an intro and a Commons file without author/license metadata (contract 2.6)
+        artists.save(Artist.builder().slug("no-intro").name("Без вступу").kind(MusicianKind.PERSON)
+                .status(ArtistStatus.PUBLISHED).summary(null).publishedAt(Instant.parse("2026-06-01T00:00:00Z"))
+                .origin(new Origin("Q1", "Місто", Region.LVIV, OriginBasis.BIRTH, PinPrecision.SETTLEMENT,
+                        new GeoJsonPoint(24, 49)))
+                .pin(new GeoJsonPoint(24.1, 49.1))
+                .images(List.of(
+                        new ImageAsset(null, "https://upload.wikimedia.org/a.jpg", null,
+                                "https://upload.wikimedia.org/400px-a.jpg", "Без вступу",
+                                new ImageCredit(null, null, null, "https://commons.wikimedia.org/wiki/File:A.jpg")),
+                        new ImageAsset(null, "https://img/full.jpg", null, "https://img/thumb.jpg", "Фото", null)))
+                .build());
+
+        OpenApiContract.assertResponse("getMusician", get("/no-intro").returnResult(byte[].class));
+        OpenApiContract.assertResponse("getMusician", get("/kamianets").returnResult(byte[].class));
+        OpenApiContract.assertResponse("getMusician", get("/no-pin").returnResult(byte[].class));
+        OpenApiContract.assertResponse("listMusicians", get("").returnResult(byte[].class));
+        OpenApiContract.assertResponse("listMusicians", get("?q=без&sort=LIKES").returnResult(byte[].class));
+        OpenApiContract.assertResponse("getMusician", get("/hidden").returnResult(byte[].class));
+        OpenApiContract.assertResponse("listMusicians", get("?size=101").returnResult(byte[].class));
     }
 }

@@ -7,6 +7,7 @@ import com.nashi.artist.AudioClip;
 import com.nashi.artist.AudioSource;
 import com.nashi.artist.MusicianKind;
 import com.nashi.support.MongoIT;
+import com.nashi.support.OpenApiContract;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,7 +56,9 @@ class FragmentControllerIT extends MongoIT {
 
     @Test
     void noAudioIs204() {
-        get(save(ArtistStatus.PUBLISHED), "").expectStatus().isNoContent();
+        String id = save(ArtistStatus.PUBLISHED);
+        get(id, "").expectStatus().isNoContent();
+        OpenApiContract.assertResponse("getFragment", get(id, "").returnResult(byte[].class));
     }
 
     @Test
@@ -63,6 +66,7 @@ class FragmentControllerIT extends MongoIT {
         String id = save(ArtistStatus.HIDDEN, clip("u", AudioSource.UPLOAD, 30));
         get(id, "").expectStatus().isNotFound().expectHeader().contentType(MediaType.APPLICATION_PROBLEM_JSON)
                 .expectBody().jsonPath("$.code").isEqualTo("NOT_FOUND");
+        OpenApiContract.assertResponse("getFragment", get(id, "").returnResult(byte[].class));
     }
 
     @Test
@@ -87,6 +91,7 @@ class FragmentControllerIT extends MongoIT {
                 .jsonPath("$.externalUrl").isEqualTo("https://ext/c1")
                 .jsonPath("$.startSec").isNumber()
                 .jsonPath("$.expiresAt").doesNotExist();
+        OpenApiContract.assertResponse("getFragment", get(id, "").returnResult(byte[].class));
     }
 
     @Test
@@ -97,6 +102,7 @@ class FragmentControllerIT extends MongoIT {
         get(id, "").expectStatus().isOk().expectBody()
                 .jsonPath("$.url").isEqualTo("https://dz/fresh.mp3")
                 .jsonPath("$.expiresAt").isEqualTo("2026-11-17T10:09:00Z");
+        OpenApiContract.assertResponse("getFragment", get(id, "").returnResult(byte[].class));
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.nashi.artist.ArtistChangedEvent;
 import com.nashi.artist.ArtistRepository;
 import com.nashi.geo.Region;
 import com.nashi.support.MongoIT;
+import com.nashi.support.OpenApiContract;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,8 @@ class FilterControllerIT extends MongoIT {
     void returnsRegionFilterWithEtagAnd304() {
         var res = http.get().uri("/api/v2/filters").exchange().returnResult(String.class);
         assertThat(res.getStatus()).isEqualTo(HttpStatus.OK);
+        OpenApiContract.assertResponse("getFilters",
+                http.get().uri("/api/v2/filters").exchange().returnResult(byte[].class));
         String etag = res.getResponseHeaders().getFirst("ETag");
         assertThat(etag).matches("\"[0-9a-f]{8}\"");
         assertThat(res.getResponseHeaders().getFirst("Cache-Control")).isEqualTo("public, max-age=60");
@@ -52,6 +55,8 @@ class FilterControllerIT extends MongoIT {
         var cached = http.get().uri("/api/v2/filters").header("If-None-Match", etag).exchange()
                 .returnResult(String.class);
         assertThat(cached.getStatus()).isEqualTo(HttpStatus.NOT_MODIFIED);
+        OpenApiContract.assertResponse("getFilters", http.get().uri("/api/v2/filters").header("If-None-Match", etag)
+                .exchange().returnResult(byte[].class));
         assertThat(cached.getResponseBody()).isNullOrEmpty();
         assertThat(cached.getResponseHeaders().getFirst("ETag")).isEqualTo(etag);
         assertThat(cached.getResponseHeaders().getFirst("Cache-Control")).isEqualTo("public, max-age=60");

@@ -1,6 +1,7 @@
 package com.nashi.config;
 
 import com.nashi.support.MongoIT;
+import com.nashi.support.OpenApiContract;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.client.RestTestClient;
@@ -27,6 +28,8 @@ class PublicConfigControllerIT extends MongoIT {
                 .jsonPath("$.submission.summaryMin").isEqualTo(30)
                 .jsonPath("$.submission.summaryMax").isEqualTo(1000)
                 .jsonPath("$.turnstileSiteKey").value(v -> assertThat(v).isNull());
+        OpenApiContract.assertResponse("getPublicConfig",
+                http.get().uri("/api/v2/config/public").exchange().returnResult(byte[].class));
         // present as an explicit null (required, nullable in the contract), not omitted
         assertThat(http.get().uri("/api/v2/config/public").exchange().returnResult(String.class).getResponseBody())
                 .contains("\"turnstileSiteKey\":null");

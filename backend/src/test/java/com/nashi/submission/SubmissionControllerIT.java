@@ -10,6 +10,7 @@ import com.nashi.place.Place;
 import com.nashi.place.PlaceRepository;
 import com.nashi.place.PlaceType;
 import com.nashi.support.MongoIT;
+import com.nashi.support.OpenApiContract;
 import com.nashi.support.RecordedEvents;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -132,6 +133,7 @@ class SubmissionControllerIT extends MongoIT {
         var res = post(freshIp(), json("Океан", ""), image("tiny.jpg"), image("photo.png"));
 
         assertThat(res.getStatus()).isEqualTo(HttpStatus.ACCEPTED);
+        OpenApiContract.assertResponse("createSubmission", res);
         String id = body(res).get("id").asString();
         assertThat(body(res).get("status").asString()).isEqualTo("PENDING");
 
@@ -172,6 +174,7 @@ class SubmissionControllerIT extends MongoIT {
         var res = post(freshIp(), data, image("tiny.jpg"));
 
         assertThat(res.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        OpenApiContract.assertResponse("createSubmission", res);
         List<String> fields = body(res).get("errors").valueStream().map(e -> e.get("field").asString()).toList();
         assertThat(fields).contains("name", "originPlaceId", "summary", "links[0]", "consent");
     }
@@ -188,6 +191,7 @@ class SubmissionControllerIT extends MongoIT {
         var res = post(freshIp(), json("Фейк", ""), image("fake.jpg"));
 
         assertThat(res.getStatus()).isEqualTo(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        OpenApiContract.assertResponse("createSubmission", res);
         assertThat(body(res).get("code").asString()).isEqualTo("UNSUPPORTED_MEDIA_TYPE");
         assertThat(body(res).get("errors").get(0).get("field").asString()).isEqualTo("images[0]");
         assertThat(submissions.count()).isZero();
@@ -215,6 +219,7 @@ class SubmissionControllerIT extends MongoIT {
         var res = post(freshIp(), json("Бот", "x"), image("tiny.jpg"));
 
         assertThat(res.getStatus()).isEqualTo(HttpStatus.ACCEPTED);
+        OpenApiContract.assertResponse("createSubmission", res);
         String id = body(res).get("id").asString();
         assertThat(body(res).get("status").asString()).isEqualTo("PENDING");
         Submission saved = submissions.findById(id).orElseThrow();
@@ -233,6 +238,7 @@ class SubmissionControllerIT extends MongoIT {
         var res = post(ip, json("Гурт 6", ""), image("tiny.jpg"));
 
         assertThat(res.getStatus()).isEqualTo(HttpStatus.TOO_MANY_REQUESTS);
+        OpenApiContract.assertResponse("createSubmission", res);
         assertThat(body(res).get("code").asString()).isEqualTo("RATE_LIMITED");
         assertThat(res.getResponseHeaders().getFirst("Retry-After")).isNotBlank();
         assertThat(submissions.count()).isEqualTo(5);
