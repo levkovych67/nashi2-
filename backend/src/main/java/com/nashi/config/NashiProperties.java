@@ -64,5 +64,11 @@ public record NashiProperties(
 
     /** @param ipHashSecret HMAC key for hashing client IPs; production gets it from the secrets file */
     public record SecurityProps(String ipHashSecret) {
+
+        /** The secret is masked: this record can end up in logs. */
+        @Override
+        public String toString() {
+            return "SecurityProps[ipHashSecret=" + Secrets.mask(ipHashSecret) + "]";
+        }
     }
 }

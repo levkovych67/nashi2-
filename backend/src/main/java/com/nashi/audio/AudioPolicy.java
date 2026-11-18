@@ -7,6 +7,7 @@ import com.nashi.config.NashiProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -52,6 +53,11 @@ public class AudioPolicy {
             set.add(AudioSource.COMMONS);
         }
         return set;
+    }
+
+    /** The sources whose clips are shown, in enum order. */
+    public Set<AudioSource> enabledSources() {
+        return Collections.unmodifiableSet(EnumSet.copyOf(enabled));
     }
 
     public boolean enabled(AudioSource source) {

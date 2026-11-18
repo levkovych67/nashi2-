@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.time.Clock;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -70,6 +73,34 @@ class JobRunLogIT extends MongoIT {
     void successfulRunDoesNotAlert() {
         runLog.run(JobKind.V1_MIGRATION, () -> Map.of("ok", true));
         assertThat(runLog.lastRun(JobKind.V1_MIGRATION).orElseThrow().getStatus()).isEqualTo("OK");
+        verify(gateway, never()).sendText(org.mockito.ArgumentMatchers.anyString());
+    }
+
+    private String insert(JobKind kind, String status, Instant startedAt) {
+        JobRun run = new JobRun();
+        run.setJob(kind);
+        run.setStatus(status);
+        run.setStartedAt(startedAt);
+        return mongo.insert(run).getId();
+    }
+
+    @Test
+    void runsLeftRunningByThePreviousProcessAreFailedAtStartup() {
+        Instant boot = Instant.parse("2026-11-18T10:00:00Z");
+        String stale = insert(JobKind.WIKI_IMPORT, "RUNNING", boot.minus(Duration.ofHours(1)));
+        String done = insert(JobKind.AUDIO_RESOLVE, "OK", boot.minus(Duration.ofHours(2)));
+        // started by this process (e.g. an admin command right after the bot connected): still running
+        String current = insert(JobKind.V1_MIGRATION, "RUNNING", boot.plusSeconds(1));
+
+        new InterruptedJobRuns(runLog, Clock.fixed(boot, ZoneOffset.UTC)).run(null);
+
+        JobRun failed = mongo.findById(stale, JobRun.class);
+        assertThat(failed.getStatus()).isEqualTo("FAILED");
+        assertThat(failed.getReport()).isEqualTo(Map.of("error", "Interrupted"));
+        assertThat(failed.getFinishedAt()).isNotNull();
+        assertThat(mongo.findById(done, JobRun.class).getStatus()).isEqualTo("OK");
+        assertThat(mongo.findById(done, JobRun.class).getReport()).isNull();
+        assertThat(mongo.findById(current, JobRun.class).getStatus()).isEqualTo("RUNNING");
         verify(gateway, never()).sendText(org.mockito.ArgumentMatchers.anyString());
     }
 }

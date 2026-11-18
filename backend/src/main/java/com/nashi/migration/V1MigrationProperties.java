@@ -1,5 +1,6 @@
 package com.nashi.migration;
 
+import com.nashi.config.Secrets;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -25,5 +26,13 @@ public record V1MigrationProperties(String mongoUri, String s3Bucket, String s3R
 
     public boolean configured() {
         return mongoUri != null && !mongoUri.isBlank();
+    }
+
+    /** The secret key and the credentials in {@code mongoUri} are masked: this record can end up in logs. */
+    @Override
+    public String toString() {
+        return "V1MigrationProperties[mongoUri=" + Secrets.maskUriCredentials(mongoUri) + ", s3Bucket=" + s3Bucket
+                + ", s3Region=" + s3Region + ", s3Endpoint=" + s3Endpoint + ", s3AccessKeyId=" + s3AccessKeyId
+                + ", s3SecretAccessKey=" + Secrets.mask(s3SecretAccessKey) + "]";
     }
 }

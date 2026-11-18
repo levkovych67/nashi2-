@@ -38,14 +38,22 @@ import java.util.Objects;
 
 /**
  * The map snapshot: one cached entry, dropped by {@link ArtistChangedEvent} and rebuilt lazily on the next read.
- * {@code expireAfterWrite} of 5 minutes is a backstop for writers that publish no event (the V1 migration).
- * Caffeine's {@code get(key, loader)} runs one load at a time, so concurrent requests share one rebuild.
+ * Every writer of published artists publishes that event (moderation, {@code /hide} and {@code /show}, the Wikipedia
+ * import, enrichment, audio resolution and the V1 migration); {@code expireAfterWrite} of 5 minutes is only a backstop
+ * for a listener that failed or a change made by hand in the database. Caffeine's {@code get(key, loader)} runs one
+ * load at a time, so concurrent requests share one rebuild.
+ * <p>
+ * The version (the {@code ETag} of the map endpoints) hashes the response shape ({@link #SHAPE}), the enabled audio
+ * sources (they decide {@code hasAudio} on pins) and {@code id:updatedAt} of every pinned artist, so a provider switch
+ * or a new pin shape changes it even when no artist changed.
  */
 @Service
 public class MapService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MapService.class);
     private static final String KEY = "snapshot";
+    /** Bump when the JSON of {@code /map/*} changes shape, so clients holding the old ETag get the new body. */
+    static final String SHAPE = "map-v2";
 
     private final MongoTemplate mongo;
     private final RegionCatalog regions;
@@ -92,6 +100,7 @@ public class MapService {
         Map<com.nashi.geo.Region, Long> regionCounts = new HashMap<>();
         Map<String, PlaceAcc> placeCounts = new LinkedHashMap<>();
         MessageDigest sha = sha256();
+        sha.update((versionSeed(audioPolicy) + "\n").getBytes(StandardCharsets.UTF_8));
         for (Artist a : artists) {
             Origin o = a.getOrigin();
             pins.add(new MapPin(a.getId(), a.getSlug(), a.getName(), a.getKind(), round(a.getPin().getY()), round(a.getPin().getX()),
@@ -112,6 +121,11 @@ public class MapService {
         LOG.info("Map snapshot {} built in {} ms: {} pins, {} places", version, (System.nanoTime() - start) / 1_000_000,
                 pins.size(), placeStats.size());
         return new MapSnapshot(version, List.copyOf(pins), regionStats, placeStats);
+    }
+
+    /** What the version depends on besides the artists: the shape constant and the enabled audio sources. */
+    static String versionSeed(AudioPolicy policy) {
+        return SHAPE + "|" + policy.enabledSources();
     }
 
     private PlaceStat placeStat(String placeId, PlaceAcc acc) {

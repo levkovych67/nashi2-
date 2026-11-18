@@ -1,5 +1,6 @@
 package com.nashi.media;
 
+import com.nashi.config.Secrets;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
@@ -20,4 +21,12 @@ public record S3Properties(
         String secretAccessKey,
         String publicBaseUrl,
         @DefaultValue("false") boolean pathStyleAccess) {
+
+    /** The secret key is masked (the key id is not a secret): this record can end up in logs. */
+    @Override
+    public String toString() {
+        return "S3Properties[endpoint=" + endpoint + ", region=" + region + ", bucket=" + bucket + ", accessKeyId="
+                + accessKeyId + ", secretAccessKey=" + Secrets.mask(secretAccessKey) + ", publicBaseUrl="
+                + publicBaseUrl + ", pathStyleAccess=" + pathStyleAccess + "]";
+    }
 }

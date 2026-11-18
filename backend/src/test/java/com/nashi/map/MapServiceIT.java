@@ -142,4 +142,26 @@ class MapServiceIT extends MongoIT {
 
         assertThat(byName).containsEntry("Гурт deezer-only", false).containsEntry("Гурт upload", true);
     }
+
+    @Test
+    void versionChangesWithTheEnabledAudioSourcesOnTheSameData() {
+        MapService allOn = new MapService(mongo, regionCatalog, placeStore, fileStorage,
+                com.nashi.audio.AudioPolicy.of(true, true, true));
+        MapService allOnAgain = new MapService(mongo, regionCatalog, placeStore, fileStorage,
+                com.nashi.audio.AudioPolicy.of(true, true, true));
+        MapService deezerOff = new MapService(mongo, regionCatalog, placeStore, fileStorage,
+                com.nashi.audio.AudioPolicy.of(false, true, true));
+
+        // a provider switch changes hasAudio on pins without touching any artist, so it must change the ETag
+        assertThat(allOnAgain.snapshot().version()).isEqualTo(allOn.snapshot().version());
+        assertThat(deezerOff.snapshot().version()).isNotEqualTo(allOn.snapshot().version());
+    }
+
+    @Test
+    void versionCoversTheResponseShape() {
+        assertThat(MapService.versionSeed(com.nashi.audio.AudioPolicy.of(false, false, true)))
+                .startsWith(MapService.SHAPE + "|")
+                .contains("UPLOAD", "COMMONS")
+                .doesNotContain("DEEZER", "ITUNES");
+    }
 }

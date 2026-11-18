@@ -1,8 +1,11 @@
 package com.nashi.config;
 
 import com.mongodb.ConnectionString;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.EnvironmentPostProcessor;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.logging.DeferredLogFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Profiles;
@@ -19,6 +22,11 @@ import java.util.Set;
  * service). Runs after config data, including the imported secrets file, is loaded, so it sees only static
  * properties: values added later, such as a test's {@code @DynamicPropertySource}, are not checked.
  * Messages name the key and the rule, never the value. Registered in {@code META-INF/spring.factories}.
+ * <p>
+ * In production it also warns, without stopping, about settings that still hold a repository placeholder:
+ * {@code nashi.http.user-agent} naming {@code nashi.example} (the domain is not chosen yet, but Wikimedia and
+ * MusicBrainz ask for a contact URL that works). The warning goes through Boot's deferred log, which is written once
+ * logging is set up.
  */
 public class StartupConfigGuard implements EnvironmentPostProcessor, Ordered {
 
@@ -27,6 +35,8 @@ public class StartupConfigGuard implements EnvironmentPostProcessor, Ordered {
     static final String V1_MONGO_URI = "nashi.migration.v1.mongo-uri";
     static final String V1_S3_BUCKET = "nashi.migration.v1.s3-bucket";
     static final String V1_S3_ENDPOINT = "nashi.migration.v1.s3-endpoint";
+    static final String USER_AGENT = "nashi.http.user-agent";
+    private static final String PLACEHOLDER_DOMAIN = "nashi.example";
 
     /** Keys production reads from the secrets file. */
     private static final List<String> PRODUCTION_KEYS = List.of(
@@ -56,6 +66,17 @@ public class StartupConfigGuard implements EnvironmentPostProcessor, Ordered {
     private static final Set<String> LOCAL_MONGO_HOSTS = Set.of("localhost", "127.0.0.1", "mongo", "host.docker.internal");
     private static final Set<String> LOCAL_S3_HOSTS = Set.of("localhost", "127.0.0.1", "minio");
 
+    private final Log log;
+
+    /** The constructor Boot uses (it supplies the deferred log factory). */
+    public StartupConfigGuard(DeferredLogFactory logFactory) {
+        this.log = logFactory.getLog(StartupConfigGuard.class);
+    }
+
+    public StartupConfigGuard() {
+        this.log = LogFactory.getLog(StartupConfigGuard.class);
+    }
+
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
         List<String> problems = problems(environment);
@@ -64,6 +85,20 @@ public class StartupConfigGuard implements EnvironmentPostProcessor, Ordered {
                     + "\nProduction reads its secrets from the file named by NASHI_SECRETS_FILE"
                     + " (default /etc/nashi-v2/backend.properties). Local runs need SPRING_PROFILES_ACTIVE=local.");
         }
+        warnings(environment).forEach(log::warn);
+    }
+
+    /** Production settings that do not stop the startup but should be fixed; none under the local and test profiles. */
+    static List<String> warnings(ConfigurableEnvironment env) {
+        if (env.acceptsProfiles(SAFE_PROFILES)) {
+            return List.of();
+        }
+        String userAgent = env.getProperty(USER_AGENT);
+        if (userAgent != null && userAgent.toLowerCase(Locale.ROOT).contains(PLACEHOLDER_DOMAIN)) {
+            return List.of(USER_AGENT + " still names the placeholder domain " + PLACEHOLDER_DOMAIN
+                    + "; set the production domain in the secrets file");
+        }
+        return List.of();
     }
 
     @Override

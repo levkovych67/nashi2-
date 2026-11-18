@@ -1,5 +1,6 @@
 package com.nashi.config;
 
+import org.apache.commons.logging.Log;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.EnvironmentPostProcessor;
 import org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor;
@@ -22,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class StartupConfigGuardTest {
 
@@ -241,6 +244,33 @@ class StartupConfigGuardTest {
     @Test
     void postProcessPassesWhenThereAreNoProblems() {
         new StartupConfigGuard().postProcessEnvironment(productionEnv(), null);
+    }
+
+    @Test
+    void productionWarnsWhileTheUserAgentNamesThePlaceholderDomain() throws IOException {
+        // the repository default is the placeholder until the domain is known
+        String repoDefault = load("/application.properties").getProperty(StartupConfigGuard.USER_AGENT);
+        MockEnvironment env = productionEnv().withProperty(StartupConfigGuard.USER_AGENT, repoDefault);
+
+        List<String> warnings = StartupConfigGuard.warnings(env);
+
+        assertEquals(1, warnings.size());
+        assertTrue(warnings.get(0).startsWith(StartupConfigGuard.USER_AGENT + " "), warnings.get(0));
+        // a warning, not a failure: the domain is still open
+        assertEquals(List.of(), StartupConfigGuard.problems(env));
+        Log log = mock(Log.class);
+        new StartupConfigGuard(destination -> log).postProcessEnvironment(env, null);
+        verify(log).warn(warnings.get(0));
+    }
+
+    @Test
+    void noUserAgentWarningWithARealDomainOrUnderLocalProfiles() {
+        MockEnvironment real = productionEnv()
+                .withProperty(StartupConfigGuard.USER_AGENT, "NashiBot/2.0 (+https://nashi.org.ua/about)");
+        assertEquals(List.of(), StartupConfigGuard.warnings(real));
+        MockEnvironment local = localEnv("local")
+                .withProperty(StartupConfigGuard.USER_AGENT, "NashiBot/2.0 (+https://nashi.example/about)");
+        assertEquals(List.of(), StartupConfigGuard.warnings(local));
     }
 
     @Test

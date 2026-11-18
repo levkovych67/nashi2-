@@ -1,10 +1,13 @@
 package com.nashi.api;
 
+import com.mongodb.MongoSocketException;
+import com.mongodb.MongoTimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.core.MethodParameter;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -48,6 +51,7 @@ public class ProblemDetailsAdvice extends ResponseEntityExceptionHandler {
 
     private static final String VALIDATION_FAILED = "VALIDATION_FAILED";
     private static final String INTERNAL = "INTERNAL";
+    private static final String UNAVAILABLE = "UNAVAILABLE";
 
     private static final Map<String, String> TITLES = Map.of(
             VALIDATION_FAILED, "Некоректні дані",
@@ -56,7 +60,7 @@ public class ProblemDetailsAdvice extends ResponseEntityExceptionHandler {
             "UNSUPPORTED_MEDIA_TYPE", "Непідтримуваний формат",
             "RATE_LIMITED", "Забагато запитів",
             INTERNAL, "Внутрішня помилка",
-            "UNAVAILABLE", "Сервіс тимчасово недоступний");
+            UNAVAILABLE, "Сервіс тимчасово недоступний");
 
     /** Details for errors that carry none of their own (Spring MVC exceptions, unexpected failures). */
     private static final Map<String, String> DEFAULT_DETAILS = Map.of(
@@ -66,7 +70,7 @@ public class ProblemDetailsAdvice extends ResponseEntityExceptionHandler {
             "UNSUPPORTED_MEDIA_TYPE", "Тип вмісту запиту не підтримується",
             "RATE_LIMITED", "Забагато запитів. Спробуйте пізніше",
             INTERNAL, "Щось пішло не так. Спробуйте пізніше",
-            "UNAVAILABLE", "Сервіс тимчасово недоступний. Спробуйте пізніше");
+            UNAVAILABLE, "Сервіс тимчасово недоступний. Спробуйте пізніше");
 
     private static final String INVALID_VALUE = "Некоректне значення";
 
@@ -86,9 +90,26 @@ public class ProblemDetailsAdvice extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, body, headers, ex.status(), request);
     }
 
+    /**
+     * MongoDB unreachable or timing out (Spring's {@link DataAccessResourceFailureException}, or the driver's
+     * timeout and socket exceptions where they reach us untranslated or wrapped): 503 {@code UNAVAILABLE}, the
+     * exception text (hosts, timeouts) stays in the log.
+     */
+    @ExceptionHandler({DataAccessResourceFailureException.class, MongoTimeoutException.class,
+            MongoSocketException.class})
+    public ResponseEntity<Object> handleUnavailable(Exception ex, WebRequest request) {
+        log.warn("Database unavailable for {}", request.getDescription(false), ex);
+        HttpStatus status = HttpStatus.SERVICE_UNAVAILABLE;
+        return handleExceptionInternal(ex, problem(status, UNAVAILABLE, DEFAULT_DETAILS.get(UNAVAILABLE), List.of()),
+                new HttpHeaders(), status, request);
+    }
+
     /** Anything unexpected: logged with its stack trace, answered with a generic 500 that reveals nothing. */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleUnexpected(Exception ex, WebRequest request) {
+        if (databaseUnavailable(ex)) {
+            return handleUnavailable(ex, request);
+        }
         log.error("Unhandled exception for {}", request.getDescription(false), ex);
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         return handleExceptionInternal(ex, problem(status, INTERNAL, DEFAULT_DETAILS.get(INTERNAL), List.of()),
@@ -193,6 +214,17 @@ public class ProblemDetailsAdvice extends ResponseEntityExceptionHandler {
             // The contract has no code for 405, 406 and the like: they are bad requests too.
             default -> status.is4xxClientError() ? VALIDATION_FAILED : INTERNAL;
         };
+    }
+
+    /** A database outage wrapped in another exception (for example {@code UncategorizedMongoDbException}). */
+    private static boolean databaseUnavailable(Throwable ex) {
+        for (Throwable t = ex; t != null; t = t.getCause() == t ? null : t.getCause()) {
+            if (t instanceof DataAccessResourceFailureException || t instanceof MongoTimeoutException
+                    || t instanceof MongoSocketException) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static boolean isContractProblem(Object body) {

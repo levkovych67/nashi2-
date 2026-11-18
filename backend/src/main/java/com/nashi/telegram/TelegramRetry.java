@@ -10,8 +10,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import java.io.IOException;
 
 /**
- * Runs a Bot API call with at most {@value #MAX_ATTEMPTS} attempts: 429 waits {@code retry_after}; 5xx and
- * network (I/O) errors wait 1, 2, 4, 8 s; everything else (other 4xx, validation, parse errors) fails at once.
+ * Runs a Bot API call with at most {@value #MAX_ATTEMPTS} attempts: 429 waits {@code retry_after} (at most
+ * {@value #MAX_RETRY_AFTER_SECONDS} s, so one flood-control answer cannot park the single Telegram thread for long);
+ * 5xx and network (I/O) errors wait 1, 2, 4, 8 s; everything else (other 4xx, validation, parse errors) fails at once.
  */
 @Component
 public class TelegramRetry {
@@ -29,6 +30,7 @@ public class TelegramRetry {
     }
 
     static final int MAX_ATTEMPTS = 5;
+    static final int MAX_RETRY_AFTER_SECONDS = 60;
     private static final long BASE_BACKOFF_MILLIS = 1000;
     private static final Logger log = LoggerFactory.getLogger(TelegramRetry.class);
 
@@ -70,7 +72,8 @@ public class TelegramRetry {
             Integer code = request.getErrorCode();
             if (code != null && code == 429) {
                 Integer retryAfter = request.getParameters() == null ? null : request.getParameters().getRetryAfter();
-                return (retryAfter == null ? 1 : retryAfter) * 1000L;
+                int seconds = retryAfter == null ? 1 : Math.clamp(retryAfter, 0, MAX_RETRY_AFTER_SECONDS);
+                return seconds * 1000L;
             }
             if (code != null && code >= 500) {
                 return backoff(attempt);

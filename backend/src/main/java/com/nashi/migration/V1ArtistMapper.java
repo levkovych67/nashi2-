@@ -3,6 +3,7 @@ package com.nashi.migration;
 import com.nashi.artist.Artist;
 import com.nashi.artist.Discipline;
 import com.nashi.artist.Link;
+import com.nashi.artist.LinkClassifier;
 import com.nashi.artist.LinkPlatform;
 import com.nashi.artist.MusicianKind;
 import com.nashi.artist.Names;
@@ -107,13 +108,14 @@ final class V1ArtistMapper {
                 || strings(v1.get("categories")).contains("BAND");
     }
 
+    /** Absolute {@code http(s)} links only, as for submissions; {@code javascript:}, relative and other schemes go. */
     private static List<Link> links(Document v1) {
         if (!(v1.get("socialLinks") instanceof List<?> raw)) {
             return List.of();
         }
         return raw.stream()
                 .filter(Document.class::isInstance).map(Document.class::cast)
-                .filter(l -> l.getString("url") != null && !l.getString("url").isBlank())
+                .filter(l -> l.getString("url") != null && LinkClassifier.isAbsoluteHttp(l.getString("url").trim()))
                 .map(l -> new Link(platform(l.getString("platform")), l.getString("url").trim()))
                 .distinct()
                 .toList();

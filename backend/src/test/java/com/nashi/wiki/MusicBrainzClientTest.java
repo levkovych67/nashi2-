@@ -28,6 +28,7 @@ class MusicBrainzClientTest {
     private final List<Long> sleeps = new ArrayList<>();
     /** A clock the fake sleeper moves forward, so pacing is measured without waiting. */
     private final AtomicLong nanos = new AtomicLong(1_000_000_000L);
+    private volatile String retryAfter = "5";
     private MusicBrainzClient client;
 
     @BeforeEach
@@ -55,7 +56,7 @@ class MusicBrainzClientTest {
             queries.add(exchange.getRequestURI().toString());
             int status = statuses[Math.min(n, statuses.length - 1)];
             if (status == 503 || status == 429) {
-                exchange.getResponseHeaders().add("Retry-After", "5");
+                exchange.getResponseHeaders().add("Retry-After", retryAfter);
             }
             byte[] body = (status == 200 ? "{\"relations\":[]}" : "busy").getBytes(StandardCharsets.UTF_8);
             exchange.sendResponseHeaders(status, body.length);
@@ -112,6 +113,16 @@ class MusicBrainzClientTest {
         WikiFetchException e = assertThrows(WikiFetchException.class, () -> client.get("a"));
         assertEquals(1, requests.get());
         assertEquals(java.util.OptionalInt.of(404), e.httpStatus());
+    }
+
+    @Test
+    void retryAfterIsCappedAtSixtySeconds() {
+        retryAfter = "86400";
+        respond(429, 200);
+
+        assertEquals("{\"relations\":[]}", client.get("a"));
+        assertTrue(sleeps.contains(60_000L), "slept " + sleeps);
+        assertTrue(sleeps.stream().allMatch(ms -> ms <= 60_000L), "slept " + sleeps);
     }
 
     @Test

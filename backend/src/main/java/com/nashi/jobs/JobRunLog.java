@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.time.Clock;
+import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -55,6 +56,17 @@ public class JobRunLog {
         mongo.updateFirst(Query.query(Criteria.where("_id").is(runId)),
                 new Update().set("finishedAt", clock.instant()).set("status", status).set("report", report),
                 JobRun.class);
+    }
+
+    /**
+     * Marks every run still {@code RUNNING} that started before {@code startedBefore} as {@code FAILED} with
+     * {@code {error: "Interrupted"}} ({@link InterruptedJobRuns}); returns how many there were.
+     */
+    public long failInterrupted(Instant startedBefore) {
+        return mongo.updateMulti(Query.query(Criteria.where("status").is(RUNNING).and("startedAt").lt(startedBefore)),
+                new Update().set("finishedAt", clock.instant()).set("status", FAILED)
+                        .set("report", Map.of("error", "Interrupted")),
+                JobRun.class).getModifiedCount();
     }
 
     public Optional<JobRun> lastRun(JobKind kind) {

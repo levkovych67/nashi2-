@@ -1,5 +1,6 @@
 package com.nashi.telegram;
 
+import com.nashi.config.Secrets;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
@@ -17,6 +18,13 @@ public record TelegramProperties(
         @DefaultValue("false") boolean pollingEnabled,
         @DefaultValue("false") boolean sendingEnabled,
         @DefaultValue Moderation moderation) {
+
+    /** The token is masked: this record can end up in logs. */
+    @Override
+    public String toString() {
+        return "TelegramProperties[botToken=" + Secrets.mask(botToken) + ", pollingEnabled=" + pollingEnabled
+                + ", sendingEnabled=" + sendingEnabled + ", moderation=" + moderation + "]";
+    }
 
     /**
      * @param chatId         the only chat the bot talks to and listens to

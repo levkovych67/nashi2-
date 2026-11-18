@@ -102,6 +102,23 @@ class V1ArtistMapperTest {
     }
 
     @Test
+    void keepsOnlyAbsoluteHttpLinksLikeSubmissions() {
+        Document v1 = form("Лінки2").append("socialLinks", List.of(
+                new Document("platform", "SPOTIFY").append("url", " https://open.spotify.com/artist/1 "),
+                new Document("platform", "WEBSITE").append("url", "http://band.example"),
+                new Document("platform", "INSTAGRAM").append("url", "javascript:alert(1)"),
+                new Document("platform", "FACEBOOK").append("url", "facebook.com/band"),
+                new Document("platform", "TELEGRAM").append("url", "tg://resolve?domain=band"),
+                new Document("platform", "OTHER").append("url", "mailto:band@example.com"),
+                new Document("platform", "OTHER").append("url", "https://"),
+                new Document("platform", "OTHER").append("url", "https://bad host/x")));
+
+        assertThat(V1ArtistMapper.map(v1, LVIV, "a", "s").getLinks()).containsExactly(
+                new Link(LinkPlatform.SPOTIFY, "https://open.spotify.com/artist/1"),
+                new Link(LinkPlatform.WEBSITE, "http://band.example"));
+    }
+
+    @Test
     void onlyVisualArtistsAndWritersAreNonMusic() {
         assertThat(V1ArtistMapper.isNonMusic(new Document("categories", List.of("VISUAL_ARTIST")))).isTrue();
         assertThat(V1ArtistMapper.isNonMusic(new Document("categories", List.of("WRITER", "VISUAL_ARTIST")))).isTrue();

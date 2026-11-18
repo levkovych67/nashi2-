@@ -43,6 +43,18 @@ class TelegramRetryTest {
     }
 
     @Test
+    void retryAfterIsCappedAtSixtySeconds() throws Exception {
+        AtomicInteger calls = new AtomicInteger();
+        retry.execute(() -> {
+            if (calls.incrementAndGet() == 1) {
+                throw coded(429, 3600);
+            }
+            return "ok";
+        });
+        assertThat(sleeps).containsExactly(60_000L);
+    }
+
+    @Test
     void retryStopsOn400() {
         AtomicInteger calls = new AtomicInteger();
         assertThatThrownBy(() -> retry.execute(() -> {

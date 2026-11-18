@@ -20,6 +20,8 @@ public class MusicBrainzClient implements MusicBrainzSource {
     static final long MIN_GAP_MILLIS = 1100;
     static final int MAX_RETRIES = 4;
     static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(30);
+    /** A longer {@code Retry-After} is cut to this, like {@code PoliteHttp} and {@code TelegramRetry}. */
+    static final long MAX_RETRY_AFTER_SECONDS = 60;
 
     private final HttpClient client;
     private final Sleeper sleeper;
@@ -105,7 +107,8 @@ public class MusicBrainzClient implements MusicBrainzSource {
     private static Optional<Long> retryAfterMillis(HttpResponse<?> response) {
         return response.headers().firstValue("Retry-After").flatMap(value -> {
             try {
-                return Optional.of(Long.parseLong(value.trim()) * 1000L);
+                long seconds = Math.clamp(Long.parseLong(value.trim()), 0, MAX_RETRY_AFTER_SECONDS);
+                return Optional.of(seconds * 1000L);
             } catch (NumberFormatException e) {
                 return Optional.empty();
             }

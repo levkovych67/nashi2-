@@ -1,10 +1,15 @@
 package com.nashi.api;
 
+import com.mongodb.MongoSocketReadTimeoutException;
+import com.mongodb.MongoTimeoutException;
+import com.mongodb.ServerAddress;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.junit.jupiter.api.Test;
+import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.data.mongodb.UncategorizedMongoDbException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -58,6 +63,23 @@ class ProblemDetailsAdviceTest {
                 .andExpect(jsonPath("$.title").value("Внутрішня помилка"))
                 .andExpect(content().string(not(containsString("secret-detail"))))
                 .andExpect(content().string(not(containsString("IllegalStateException"))));
+    }
+
+    @Test
+    void databaseUnavailableIs503WithoutExceptionText() throws Exception {
+        for (String path : List.of("/test/db-down", "/test/mongo-timeout", "/test/wrapped-timeout")) {
+            problem(mvc.perform(get(path)), 503, "UNAVAILABLE")
+                    .andExpect(jsonPath("$.title").value("Сервіс тимчасово недоступний"))
+                    .andExpect(jsonPath("$.detail").value("Сервіс тимчасово недоступний. Спробуйте пізніше"))
+                    .andExpect(content().string(not(containsString("secret-host"))))
+                    .andExpect(content().string(not(containsString("Exception"))));
+        }
+    }
+
+    @Test
+    void apiUnavailableExceptionIs503WithItsDetail() throws Exception {
+        problem(mvc.perform(get("/test/busy")), 503, "UNAVAILABLE")
+                .andExpect(jsonPath("$.detail").value("Зайнято"));
     }
 
     @Test
@@ -161,6 +183,27 @@ class ProblemDetailsAdviceTest {
         @GetMapping("/boom")
         void boom() {
             throw new IllegalStateException("secret-detail");
+        }
+
+        @GetMapping("/db-down")
+        void dbDown() {
+            throw new DataAccessResourceFailureException("Timed out connecting to secret-host:27017");
+        }
+
+        @GetMapping("/mongo-timeout")
+        void mongoTimeout() {
+            throw new MongoTimeoutException("Timed out after 30000 ms waiting for secret-host:27017");
+        }
+
+        @GetMapping("/wrapped-timeout")
+        void wrappedTimeout() {
+            throw new UncategorizedMongoDbException("secret-host",
+                    new MongoSocketReadTimeoutException("secret-host", new ServerAddress("secret-host"), null));
+        }
+
+        @GetMapping("/busy")
+        void busy() {
+            throw new UnavailableException("Зайнято");
         }
 
         @GetMapping("/max-upload")

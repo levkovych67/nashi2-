@@ -60,6 +60,14 @@ public final class LinkClassifier {
         return LinkPlatform.WEBSITE;
     }
 
+    /**
+     * True for an absolute {@code http(s)} URL with a host: the only links the site shows (submissions validate the
+     * same rule; the V1 migration drops anything else).
+     */
+    public static boolean isAbsoluteHttp(String url) {
+        return hostOf(url) != null;
+    }
+
     private static String hostOf(String url) {
         if (url == null) {
             return null;
