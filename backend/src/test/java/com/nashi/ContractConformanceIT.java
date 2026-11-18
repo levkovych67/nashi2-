@@ -37,14 +37,15 @@ class ContractConformanceIT extends MongoIT {
     /** operationId of the operations implemented so far. */
     private static final List<String> IMPLEMENTED_OPERATIONS = List.of(
             "getHealth", "searchPlaces", "listMusicians", "getMusician", "getMapPins", "getMapRegions",
-            "getMapPlaces", "getFilters", "getPublicConfig", "addLikes");
+            "getMapPlaces", "getFilters", "getPublicConfig", "addLikes",
+            "createSubmission");
 
     /** Schemas whose property names are compared: the response/request bodies of the implemented operations. */
     private static final List<String> SCHEMAS = List.of(
             "MapPin", "MapPinsResponse", "RegionStat", "PlaceStat", "FilterDefinition", "FilterOption",
             "MusicianListItem", "MusicianPage", "MusicianDetails", "LikeRequest", "LikeResponse", "PlaceSuggestion",
             "PublicConfig", "Health", "Image", "ImageCredit", "Origin", "Link", "Materials", "ClipSummary",
-            "TextSource", "LifeDates", "Work", "Video");
+            "TextSource", "LifeDates", "Work", "Video", "SubmissionRequest", "SubmissionAccepted");
 
     private static final List<String> ENUMS = List.of(
             "Region", "MusicianKind", "OriginBasis", "PinPrecision", "AudioSource", "LinkPlatform", "LinkGroup",
