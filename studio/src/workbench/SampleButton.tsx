@@ -1,91 +1,55 @@
-import { useEffect, useRef, useState } from 'react'
+import { t } from '../proto/copy/t'
+import { useMemo } from 'react'
+import { useSound, type AudioPin, type Clip, type SoundDeck } from './sound'
 
-interface Sample {
-  url: string
-  startSec: number
-}
-let active: HTMLAudioElement | null = null
-
-export function SampleButton({ id }: { id: string }) {
-  const [sample, setSample] = useState<Sample | null>()
-  const [attempt, setAttempt] = useState(0)
-  const [playing, setPlaying] = useState(false)
-  const [blocked, setBlocked] = useState(false)
-  const audio = useRef<HTMLAudioElement | null>(null)
-  useEffect(() => {
-    let live = true
-    fetch('/fixtures/fragments/' + id + '.json')
-      .then((response) => {
-        if (!response.ok) throw Error()
-        return response.json() as Promise<Sample>
-      })
-      .then(
-        (clip) => {
-          if (live) setSample(clip)
-        },
-        () => {
-          if (live) setSample(null)
-        },
-      )
-    return () => {
-      live = false
-      const current = audio.current
-      if (current) {
-        current.onpause = null
-        current.onended = null
-        current.pause()
-      }
-      if (current === active) active = null
-    }
-  }, [id, attempt])
-  if (sample === null)
+export function PlaybackButton({
+  pin,
+  deck,
+  clip,
+}: {
+  pin: AudioPin
+  deck: SoundDeck
+  clip?: Clip
+}) {
+  const tracks = deck.lists[pin.id]
+  if (tracks === null)
     return (
-      <button
-        onClick={() => {
-          setSample(undefined)
-          setAttempt((n) => n + 1)
-        }}
-      >
-        Повторити завантаження фрагмента
-      </button>
+      <button onClick={deck.retry}>Повторити завантаження фрагмента</button>
     )
-  function toggle() {
-    if (!sample) return
-    if (playing) {
-      audio.current?.pause()
-      return
-    }
-    active?.pause()
-    const next = audio.current ?? new Audio(sample.url)
-    audio.current = active = next
-    next.onpause = next.onended = () => setPlaying(false)
-    next.currentTime = sample.startSec
-    // Call play in the click handler so Safari retains the user's activation.
-    void next.play().then(
-      () => {
-        if (active === next) {
-          setBlocked(false)
-          setPlaying(!next.paused)
-        }
-      },
-      () => {
-        if (active === next) {
-          setPlaying(false)
-          setBlocked(true)
-        }
-      },
-    )
-  }
+  if (tracks?.length === 0 || (!pin.hasAudio && !tracks))
+    return <p>{t('musician.noAudio')}</p>
+  const active =
+    deck.state.id === pin.id &&
+    (!clip || deck.state.clip?.clipId === clip.clipId)
+  const playing =
+    active &&
+    (deck.state.status === 'playing' || deck.state.status === 'loading')
   return (
     <>
-      <button disabled={!sample} aria-pressed={playing} onClick={toggle}>
-        {playing ? 'Зупинити' : '▷ Тестовий фрагмент'}
+      <button
+        type="button"
+        className="artist-play"
+        disabled={!tracks || deck.muted}
+        aria-pressed={playing}
+        onClick={() => deck.toggle(pin, false, clip)}
+      >
+        <span aria-hidden="true">{playing ? 'Ⅱ' : '▷'}</span>{' '}
+        {playing
+          ? 'Пауза'
+          : active && deck.state.status === 'paused'
+            ? 'Продовжити'
+            : t('preview.play')}
       </button>
-      {blocked && (
+      {active && deck.state.status === 'blocked' && (
         <p role="status">
           Відтворення недоступне. Натисніть кнопку, щоб спробувати знову.
         </p>
       )}
     </>
   )
+}
+export function SampleButton({ id }: { id: string }) {
+  const pins = useMemo(() => [{ id, hasAudio: true }], [id])
+  const deck = useSound(pins)
+  return <PlaybackButton pin={pins[0]} deck={deck} />
 }

@@ -1,0 +1,84 @@
+.handoff-page :is(input, button) {
+  font: inherit;
+}
+.handoff-page button {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid #8c9f90;
+  border-radius: 3px;
+}
+.handoff-page button:disabled {
+  cursor: default;
+  opacity: 0.58;
+}
+.handoff-page :is(button, input):focus-visible {
+  outline: 3px solid #9e4515;
+  outline-offset: 2px;
+}
+.handoff-page :is(.handoff-readiness, .handoff-sign, .handoff-export) {
+  margin: 30px 0;
+}
+.handoff-page h2 {
+  font:
+    500 clamp(24px, 3vw, 36px) / 1.15 Georgia,
+    serif;
+  margin: 0 0 8px;
+}
+.handoff-page p {
+  margin: 5px 0 12px;
+}
+.handoff-ledger {
+  overflow-x: auto;
+}
+.handoff-page .studio-ledger {
+  table-layout: fixed;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+.handoff-page .studio-ledger th:last-child {
+  width: 20%;
+}
+.handoff-page .studio-ledger input {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+}
+.handoff-page .studio-ledger td label {
+  display: inline-grid;
+  place-items: center;
+  min-height: 44px;
+  min-width: 44px;
+}
+.handoff-sign {
+  border-top: 1px solid #b8c5b5;
+  padding-top: 18px;
+}
+.handoff-sign > label {
+  display: block;
+  margin: 14px 0;
+}
+.handoff-sign input:not([type='checkbox']) {
+  display: block;
+  background: #fcfcf7;
+  color: inherit;
+  width: min(100%, 440px);
+  min-height: 44px;
+  border: 1px solid #8c9f90;
+  border-radius: 3px;
+  padding: 8px;
+}
+.handoff-page .handoff-consent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+}
+.handoff-consent input {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+.handoff-page .studio-action {
+  margin-top: 0;
+}

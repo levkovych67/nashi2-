@@ -1,3 +1,4 @@
+import {t} from '../proto/copy/t'
 import type * as GeoJSON from 'geojson'
 import { useEffect, useState } from 'react'
 
@@ -112,5 +113,4 @@ export function useAtlasData(withPins = false) {
   }
 }
 export const num = (n: number) => new Intl.NumberFormat('uk-UA').format(n)
-export const originNotice =
-  'Позначка — місце походження музиканта, а не те, де він зараз'
+export const originNotice = t('map.originNotice')

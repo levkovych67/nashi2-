@@ -11,7 +11,7 @@ test('a shared draft survives navigation and reload and opens its fullscreen QR'
   await expect(option.getByRole('button', { name: '✓ Обрано' })).toBeVisible()
   await option.getByRole('button', { name: 'QR-код' }).click()
   await expect(option.getByRole('img', { name: /QR-код для відкриття/ })).toBeVisible()
-  await option.getByRole('link', { name: 'На весь екран ↗' }).click()
+  await option.getByRole('link', { name: 'На весь екран' }).click()
   await expect(page.getByTestId('studio-chrome')).toHaveCount(0)
   await page.getByRole('combobox').selectOption('KYIV_CITY')
   await expect(page.getByRole('heading', { name: 'Київ', exact: true })).toBeVisible()

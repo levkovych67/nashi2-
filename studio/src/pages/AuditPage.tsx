@@ -1,23 +1,135 @@
-import { Link } from 'react-router-dom'
-
-const findings = [
-  { area: 'Карта', title: 'Одна точка приховує багатьох музикантів', text: 'У першій версії збіг координат відкривав довгий список «У цій точці». У Києві такий список міг охоплювати сотні людей. У студії перевіряємо три рівні наближення — область, населений пункт, музикант.', id: 'map.aggregation', link: 'Порівняти наближення' },
-  { area: 'Походження', title: 'Пін потребує пояснення', text: 'Картка V1 показувала місто, але карта не пояснювала значення позначки. Для V2 порівнюємо місця постійного підпису про походження музиканта.', id: 'map.origin-notice', link: 'Порівняти підписи' },
-  { area: 'Звук', title: 'Від карти до запису — ще один перехід', text: 'У V1 записи можна було слухати на сторінці митця та в радіо. Переглядаємо жести, які дозволяють запустити фрагмент на телефоні прямо з карти.', id: 'audio.mobile-trigger', link: 'Переглянути жести' },
-  { area: 'Мобільний екран', title: 'Шторка звільняє місце для карти', text: 'На комп’ютері панель фільтрів займала 360 пікселів ліворуч. На телефоні фільтри відкривалися зі смуги внизу. Це дає відправну точку для порівняння фільтра за регіоном.', id: 'filters.region', link: 'Порівняти фільтри' },
-  { area: 'Навігація', title: 'Карта ділить увагу з іншими розділами', text: 'Меню V1 вело також до подій, новин і радіо. Перша фаза V2 зосереджується на музикантах. Порівнюємо, як перейти з карти до профілю та форми пропозиції.', id: 'nav.structure', link: 'Порівняти навігацію' },
-  { area: 'Айдентика', title: 'Скло й анімація мають ціну на телефоні', text: 'Напрям Frutiger Aero зробив V1 впізнаваною завдяки прозорим панелям, розмиттю й анімації. На слабших пристроях ці ефекти обтяжують інтерфейс. Студія дає змогу порівняти напрям V1 з новими.', id: 'identity', link: 'Переглянути напрями' },
-]
+import { useEffect } from 'react'
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
+import {
+  areas,
+  captures,
+  FINDINGS,
+  severities,
+  sourceUrl,
+} from '../audit/findings'
+import { byId } from '../decisions/catalog'
+import '../audit/audit.css'
 
 export function AuditPage() {
-  return <main className="studio-page">
-    <h1>Аудит V1</h1>
-    <p className="studio-lead">Що показала перша версія «Наших» і які рішення для другої можна переглянути в студії.</p>
-    <div className="studio-observations">
-      {findings.map(f => <article key={f.id}>
-        <span className="studio-aside">{f.area}</span><h2>{f.title}</h2><p>{f.text}</p>
-        <Link className="studio-inline-link" to={'/d/' + f.id}>{f.link} ↗</Link>
-      </article>)}
-    </div>
-  </main>
+  const [query, setQuery] = useSearchParams()
+  const { hash } = useLocation()
+  const area = query.get('area') || ''
+  const severity = query.get('severity') || ''
+  const matches = FINDINGS.filter(
+    (f) => (!area || f.area === area) && (!severity || f.severity === severity),
+  )
+  useEffect(() => {
+    if (hash)
+      document
+        .getElementById(hash.slice(1))
+        ?.scrollIntoView?.({ block: 'start' })
+  }, [hash, area, severity])
+  function filter(key: string, value: string) {
+    const next = new URLSearchParams(query)
+    if (value) next.set(key, value)
+    else next.delete(key)
+    setQuery(next, { replace: true })
+  }
+  return (
+    <main className="studio-page audit">
+      <header>
+        <h1>Аудит V1</h1>
+        <p className="studio-lead">
+          Як перша версія «Наших» показує митців на карті та які рішення це
+          підказує для музичного атласу.
+        </p>
+        <p>
+          Знімки локальної V1 зроблено 18 листопада 2026 року. Кожне
+          спостереження має посилання на відповідний файл фронтенду.
+        </p>
+      </header>
+      <div className="audit-controls">
+        <label>
+          Розділ{' '}
+          <select value={area} onChange={(e) => filter('area', e.target.value)}>
+            <option value="">Усі розділи</option>
+            {Object.entries(areas).map(([key, title]) => (
+              <option key={key} value={key}>
+                {title}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Важливість{' '}
+          <select
+            value={severity}
+            onChange={(e) => filter('severity', e.target.value)}
+          >
+            <option value="">Будь-яка</option>
+            {Object.entries(severities).map(([key, title]) => (
+              <option key={key} value={key}>
+                {title}
+              </option>
+            ))}
+          </select>
+        </label>
+        {(area || severity) && (
+          <button onClick={() => setQuery({})}>Скинути</button>
+        )}
+        <span role="status">
+          Знайдено {matches.length} із {FINDINGS.length}
+        </span>
+      </div>
+      <div className="audit-findings">
+        {matches.map((f) => (
+          <article key={f.id} id={f.id}>
+            <header>
+              <small>
+                {f.id} · {areas[f.area]} · Важливість{' '}
+                {severities[f.severity].toLocaleLowerCase('uk')}
+              </small>
+              <h2>{f.title}</h2>
+            </header>
+            {f.evidence[0] && (
+              <figure>
+                <a
+                  aria-label={'Відкрити знімок. ' + f.title}
+                  href={f.evidence[0]}
+                >
+                  <img
+                    loading="lazy"
+                    src={f.evidence[0]}
+                    alt={
+                      captures[
+                        f.evidence[0].split('/').pop()!.replace('.png', '')
+                      ]
+                    }
+                  />
+                </a>
+              </figure>
+            )}
+            <p>{f.observation}</p>
+            <p>
+              <b>{f.keep ? 'Зберегти у V2' : 'Змінити у V2'}</b> ·{' '}
+              {f.recommendation}
+            </p>
+            <p className="audit-sources">
+              <a href={sourceUrl(f.v1Ref)}>
+                Код V1 · {f.v1Ref.split('/').pop()?.split('#')[0]}
+              </a>
+              {f.evidence.slice(1).map((e) => (
+                <a key={e} href={e}>
+                  {captures[e.split('/').pop()!.replace('.png', '')]}
+                </a>
+              ))}
+            </p>
+            <nav aria-label={'Рішення для ' + f.id}>
+              {f.affects.map((id) => (
+                <Link to={'/d/' + id} key={id}>
+                  {byId(id)?.title}
+                </Link>
+              ))}
+            </nav>
+          </article>
+        ))}
+      </div>
+      {!matches.length && <p>Для цих умов спостережень немає.</p>}
+    </main>
+  )
 }

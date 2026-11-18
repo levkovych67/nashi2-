@@ -1,20 +1,14 @@
-export interface Variant {
-  id: string
-  name: string
-  description: string
-  plus: string
-  minus: string
-}
-function option(
-  id: string,
-  name: string,
-  description: string,
-  plus: string,
-  minus: string,
-): Variant {
-  return { id, name, description, plus, minus }
-}
+import { navigationVariants } from './navigationVariants'
+import { mapVariants } from './mapVariants'
+import { artistVariants } from './artistVariants'
+import { submissionVariants } from './submissionVariants'
+import { option, type Variant } from './option'
+export type { Variant } from './option'
 export const variants: Record<string, Variant[]> = {
+  ...navigationVariants,
+  ...mapVariants,
+  ...artistVariants,
+  ...submissionVariants,
   identity: [
     option(
       'atlas',

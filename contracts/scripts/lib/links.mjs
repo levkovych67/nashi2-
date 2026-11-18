@@ -12,6 +12,6 @@ export function mapLinks(links = []) {
   return links.flatMap(link => {
     const platform = alias[link.platform] ?? link.platform;
     const group = groups[platform];
-    return group && safeUrl(link.url) ? [{platform,group,url:link.url}] : [];
+    return group && safeUrl(link.url) ? [{platform,group,url:new URL(link.url).href}] : [];
   });
 }

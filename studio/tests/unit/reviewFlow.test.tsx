@@ -51,7 +51,7 @@ describe('перегляд та фіксація дизайну', () => {
     expect((await atlas.findByAltText(/QR-код/)).getAttribute('src')).toMatch(
       /^data:image\/svg/,
     )
-    expect(atlas.getByText('На весь екран ↗').getAttribute('href')).toMatch(
+    expect(atlas.getByText('На весь екран').getAttribute('href')).toMatch(
       /\/v\/identity\/atlas\?identity=atlas$/,
     )
     fireEvent.click(atlas.getByRole('button', { name: /Профіль гурту/ }))
@@ -84,7 +84,7 @@ describe('перегляд та фіксація дизайну', () => {
       document.querySelector('[data-direction="nichna-karta"]'),
     ).toBeTruthy()
   })
-  it('показує стан підготовки і витримує пошкоджений маршрут', async () => {
+  it('відкриває живі варіанти онбордингу і витримує пошкоджений маршрут', async () => {
     const app = render(
       <MemoryRouter initialEntries={['/d/onboarding']}>
         <Routes>
@@ -93,7 +93,7 @@ describe('перегляд та фіксація дизайну', () => {
       </MemoryRouter>,
     )
     expect(
-      screen.getByRole('heading', { name: 'Прототипи в роботі' }),
+      await screen.findByRole('heading', { name: 'Три короткі підказки' }),
     ).toBeTruthy()
     app.unmount()
     render(

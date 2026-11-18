@@ -1,3 +1,5 @@
+import { known } from '../decisions/catalog'
+import { recordedDecisions } from './selection'
 import { useSyncExternalStore } from 'react'
 import {
   decodeSelection,
@@ -52,8 +54,19 @@ function subscribe(fn: () => void) {
 export function useDraft() {
   return useSyncExternalStore(subscribe, () => draft)
 }
-export function choose(id: string, variant: string) {
-  write({ ...draft, [id]: { variant } })
+export function choose(
+  id: string,
+  variant: string,
+  params?: Draft[string]['params'],
+) {
+  if (!known(id, variant)) return
+  const current = draft[id] ?? recordedDecisions[id]
+  const nextParams =
+    params ?? (current?.variant === variant ? current.params : undefined)
+  write({
+    ...draft,
+    [id]: nextParams ? { variant, params: nextParams } : { variant },
+  })
 }
 export function reset() {
   write({})

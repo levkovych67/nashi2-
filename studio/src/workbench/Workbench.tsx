@@ -2,18 +2,25 @@ import { lazy, Suspense, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { DECISIONS, byId } from '../decisions/catalog'
 import { variants, type Variant } from '../decisions/variants'
+import { DecisionEvidence } from '../audit/DecisionEvidence'
+import { useReviewed } from '../handoff/approvals'
+import { sendSelectionToTeam } from '../selection/webhook'
 import { choose, reset, useDraft } from '../selection/store'
-import {
-  decisionsFile,
-  encodeSelection,
-  recordedDecisions,
-} from '../selection/selection'
+import { encodeSelection, recordedDecisions } from '../selection/selection'
 import { DeviceFrame } from '../shell/DeviceFrame'
 import { QrCode } from '../shell/QrCode'
 import { variantUrl } from '../shell/urls'
 import { MusicianProfile } from './MusicianProfile'
 import { AtlasPlate, OriginNote } from './AtlasPlate'
 import { type AtlasData, num, useAtlasData } from './data'
+import { navigationVariants } from '../decisions/navigationVariants'
+import { mapVariants } from '../decisions/mapVariants'
+import { artistVariants } from '../decisions/artistVariants'
+import { IdentityShowcase } from '../identities/IdentityShowcase'
+import { NavigationStudy } from './NavigationStudy'
+import { MapStudies } from './MapStudies'
+import { ArtistStudies } from './ArtistStudies'
+import { SubmissionStudy } from './SubmissionStudy'
 import './workbench.css'
 
 const PinMap = lazy(() =>
@@ -38,8 +45,11 @@ function LoadState({ error, retry }: { error: boolean; retry: () => void }) {
 }
 function Tools() {
   const draft = useDraft()
+  const { file } = useReviewed(draft)
+  const currentFile = () => ({ ...file, generatedAt: new Date().toISOString() })
   const [msg, setMsg] = useState('')
   const [manual, setManual] = useState('')
+  const [sending, setSending] = useState(false)
   const [confirm, setConfirm] = useState(false)
   const count = Object.keys(draft).length
   async function share() {
@@ -56,7 +66,7 @@ function Tools() {
   }
   function download() {
     const url = URL.createObjectURL(
-      new Blob([JSON.stringify(decisionsFile(draft), null, 2) + '\n'], {
+      new Blob([JSON.stringify(currentFile(), null, 2) + '\n'], {
         type: 'application/json',
       }),
     )
@@ -89,6 +99,26 @@ function Tools() {
         <button disabled={!count} onClick={download}>
           Експортувати decisions.json
         </button>
+        {import.meta.env.VITE_DECISIONS_WEBHOOK && (
+          <button
+            disabled={!count || sending}
+            onClick={async () => {
+              setSending(true)
+              const result = await sendSelectionToTeam(
+                import.meta.env.VITE_DECISIONS_WEBHOOK,
+                currentFile(),
+              )
+              setSending(false)
+              setMsg(
+                result === 'sent'
+                  ? 'Вибір надіслано команді'
+                  : 'Не вдалося надіслати. Скористайтеся посиланням на чернетку.',
+              )
+            }}
+          >
+            {sending ? 'Надсилаємо…' : 'Надіслати команді'}
+          </button>
+        )}
         {confirm ? (
           <div>
             <button
@@ -125,6 +155,7 @@ export function Overview() {
   const { data, error, retry } = useAtlasData()
   const [filter, setFilter] = useState('Усі рішення')
   const draft = useDraft()
+  const { file, pending } = useReviewed(draft)
   const groups = ['Усі рішення', ...new Set(DECISIONS.map((d) => d.group))]
   return (
     <main className="wb">
@@ -141,7 +172,7 @@ export function Overview() {
             Вибрані варіанти можна зібрати в одну чернетку.
           </p>
           <Link className="ink-button" to="/d/identity">
-            Порівняти напрями <span aria-hidden="true">↗</span>
+            Порівняти напрями
           </Link>
         </div>
         <figure className="hero-plate">
@@ -166,13 +197,8 @@ export function Overview() {
           <div>
             <h2>Каталог рішень</h2>
             <p>
-              Затверджено{' '}
-              {
-                DECISIONS.filter(
-                  (d) => recordedDecisions[d.id]?.status === 'APPROVED',
-                ).length
-              }{' '}
-              з {DECISIONS.length}
+              Затверджено {DECISIONS.length - pending.length} з{' '}
+              {DECISIONS.length}
             </p>
           </div>
           <Tools />
@@ -192,27 +218,23 @@ export function Overview() {
           {DECISIONS.filter(
             (d) => filter === groups[0] || d.group === filter,
           ).map((d) => {
-            const count = variants[d.id]?.length ?? 0
+            const count = variants[d.id].length
+            const entry = file.decisions[d.id]
             const status =
-              draft[d.id] &&
-              draft[d.id].variant !== recordedDecisions[d.id]?.variant
-                ? 'PROPOSED'
-                : recordedDecisions[d.id]?.status ||
-                  (draft[d.id] ? 'PROPOSED' : '')
+              entry.status === 'APPROVED' ||
+              draft[d.id] ||
+              recordedDecisions[d.id]
+                ? entry.status
+                : undefined
             return (
               <Link to={'/d/' + d.id} key={d.id}>
                 <div>
                   <small>{d.group}</small>
                   <strong>{d.title}</strong>
+                  {status && <small>{pretty(d.id, entry.variant)}</small>}
                 </div>
                 <span className="variant-count">
-                  {count
-                    ? count +
-                      ' ' +
-                      (count === 2 || count === 3 || count === 4
-                        ? 'варіанти'
-                        : 'варіантів')
-                    : 'У плані'}
+                  {count} {count < 5 ? 'варіанти' : 'варіантів'}
                 </span>
                 <span className={'status ' + (status ? 'picked' : '')}>
                   {status === 'APPROVED'
@@ -221,7 +243,6 @@ export function Overview() {
                       ? 'Запропоновано'
                       : 'Не обрано'}
                 </span>
-                <span aria-hidden="true">↗</span>
               </Link>
             )
           })}
@@ -243,13 +264,51 @@ function Prototype({
   theme: string
 }) {
   const [selected, setSelected] = useState('')
+  const [showIdentity, setShowIdentity] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const region = data.regions.find((r) => r.code === selected)
   const identity = id === 'identity' ? variant.id : theme
   return (
-    <div className="proto" data-direction={identity}>
-      {profileOpen ? (
+    <div
+      className="proto"
+      data-direction={identity}
+      data-identity={identity}
+      data-decision={id}
+      data-variant={variant.id}
+    >
+      {id === 'identity' && (
+        <div className="brand-tabs">
+          <button
+            aria-pressed={!showIdentity}
+            onClick={() => setShowIdentity(false)}
+          >
+            Карта й профіль
+          </button>
+          <button
+            aria-pressed={showIdentity}
+            onClick={() => setShowIdentity(true)}
+          >
+            Знак, кольори й шрифти
+          </button>
+        </div>
+      )}
+      {id === 'identity' && showIdentity ? (
+        <IdentityShowcase id={identity} />
+      ) : profileOpen ? (
         <MusicianProfile slug="okean-elzy" back={() => setProfileOpen(false)} />
+      ) : Object.hasOwn(navigationVariants, id) ? (
+        <NavigationStudy id={id} variant={variant.id} data={data} />
+      ) : Object.hasOwn(mapVariants, id) ? (
+        <MapStudies id={id} variant={variant.id} data={data} theme={identity} />
+      ) : Object.hasOwn(artistVariants, id) ? (
+        <ArtistStudies
+          id={id}
+          variant={variant.id}
+          data={data}
+          theme={identity}
+        />
+      ) : id === 'submission.form' ? (
+        <SubmissionStudy variant={variant.id} data={data} />
       ) : id === 'map.pin' ? (
         <Suspense fallback={<p>Завантажуємо позначки…</p>}>
           <PinMap data={data} theme={theme} variant={variant.id} />
@@ -315,7 +374,7 @@ function Prototype({
                 className="study-profile"
                 onClick={() => setProfileOpen(true)}
               >
-                Профіль гурту «Океан Ельзи» ↗
+                Профіль гурту «Океан Ельзи»
               </button>
             )}
           </div>
@@ -331,15 +390,33 @@ export function Comparison() {
   const decision = byId(decisionId)
   const draft = useDraft()
   const [device, setDevice] = useState<'mobile' | 'desktop'>('mobile')
-  const [theme, setTheme] = useState(draft.identity?.variant || 'atlas')
+  const [query, setQuery] = useSearchParams()
+  const theme =
+    themes.find((t) => t.id === query.get('identity'))?.id ||
+    draft.identity?.variant ||
+    recordedDecisions.identity?.variant ||
+    'atlas'
+  function setTheme(id: string) {
+    choose('identity', id)
+    setQuery(
+      (prev) => {
+        prev.set('identity', id)
+        return prev
+      },
+      { replace: true },
+    )
+  }
   const [qr, setQr] = useState('')
-  const { data, error, retry } = useAtlasData(decisionId === 'map.pin')
+  const { data, error, retry } = useAtlasData(
+    !!decisionId &&
+      !['identity', 'map.cluster', 'submission.form'].includes(decisionId),
+  )
   if (!decision) return <Missing />
   const options = variants[decision.id] || []
   return (
     <main className="wb compare">
       <Link className="backlink" to="/">
-        ← Каталог рішень
+        Каталог рішень
       </Link>
       <div className="compare-title">
         <div>
@@ -349,113 +426,126 @@ export function Comparison() {
         </div>
         <Tools />
       </div>
-      {options.length > 0 ? (
-        <>
-          <div className="compare-controls">
-            <div aria-label="Розмір екрана">
-              {(['mobile', 'desktop'] as const).map((d) => (
-                <button
-                  key={d}
-                  aria-pressed={d === device}
-                  onClick={() => setDevice(d)}
-                >
-                  {d === 'mobile' ? 'Телефон' : 'Комп’ютер'}
-                </button>
-              ))}
-            </div>
-            {decision.id !== 'identity' && (
-              <label>
-                Айдентика{' '}
-                <select
-                  value={theme}
-                  onChange={(e) => setTheme(e.target.value)}
-                >
-                  {themes.map((t) => (
-                    <option key={t.id} value={t.id}>
-                      {t.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            )}
+      <DecisionEvidence id={decision.id} />
+      <>
+        <div className="compare-controls">
+          <div aria-label="Розмір екрана">
+            {(['mobile', 'desktop'] as const).map((d) => (
+              <button
+                key={d}
+                aria-pressed={d === device}
+                onClick={() => setDevice(d)}
+              >
+                {d === 'mobile' ? 'Телефон' : 'Комп’ютер'}
+              </button>
+            ))}
           </div>
-          <div className="comparisons">
-            {options.map((v) => {
-              const direction = decision.id === 'identity' ? v.id : theme
-              const url = variantUrl(
-                location.origin,
-                decision.id,
-                v.id,
-                direction,
-              )
-              const picked = draft[decision.id]?.variant === v.id
-              return (
-                <article className="option" key={v.id}>
-                  <h2>{v.name}</h2>
-                  <p>{v.description}</p>
-                  <div className={'demo-box ' + device}>
-                    <DeviceFrame device={device} identity={direction}>
-                      {data ? (
-                        <Prototype
-                          data={data}
-                          id={decision.id}
-                          variant={v}
-                          theme={direction}
-                        />
-                      ) : (
-                        <LoadState error={error} retry={retry} />
-                      )}
-                    </DeviceFrame>
-                  </div>
-                  <dl>
-                    <dt>Перевага</dt>
-                    <dd>{v.plus}</dd>
-                    <dt>Обмеження</dt>
-                    <dd>{v.minus}</dd>
-                  </dl>
-                  <div className="choice-actions">
-                    <button
-                      className="ink-button"
-                      aria-pressed={picked}
-                      onClick={() => choose(decision.id, v.id)}
-                    >
-                      {picked ? '✓ Обрано' : 'Обрати'}
-                    </button>
-                    <a href={url}>На весь екран ↗</a>
-                    <button
-                      aria-expanded={qr === url}
-                      onClick={() => setQr(qr === url ? '' : url)}
-                    >
-                      QR-код
-                    </button>
-                  </div>
-                  {qr === url && (
-                    <div className="qr-box">
-                      <QrCode value={url} />
-                      <p>
-                        {['localhost', '127.0.0.1', '[::1]'].includes(
-                          location.hostname,
-                        )
-                          ? 'Для телефону відкрийте студію за доступною з нього мережевою адресою.'
-                          : 'Відскануйте камерою телефона'}
-                      </p>
-                    </div>
-                  )}
-                </article>
-              )
-            })}
-          </div>
-        </>
-      ) : (
-        <div className="planned">
-          <h2>Прототипи в роботі</h2>
-          <p>
-            Заплановано варіантів для порівняння —{' '}
-            {decision.techVariantIds.length}.
-          </p>
-          <Link to="/d/map.pin">Переглянути готові позначки ↗</Link>
+          {decision.id !== 'identity' && (
+            <label>
+              Айдентика{' '}
+              <select value={theme} onChange={(e) => setTheme(e.target.value)}>
+                {themes.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
         </div>
-      )}
+        <div className="comparisons">
+          {options.map((v) => {
+            const direction = decision.id === 'identity' ? v.id : theme
+            const url = variantUrl(
+              location.origin,
+              decision.id,
+              v.id,
+              direction,
+            )
+            const picked =
+              (draft[decision.id] ?? recordedDecisions[decision.id])
+                ?.variant === v.id
+            return (
+              <article className="option" key={v.id}>
+                <h2>{v.name}</h2>
+                <p>{v.description}</p>
+                <div className={'demo-box ' + device}>
+                  <DeviceFrame device={device} identity={direction}>
+                    {data ? (
+                      <Prototype
+                        data={data}
+                        id={decision.id}
+                        variant={v}
+                        theme={direction}
+                      />
+                    ) : (
+                      <LoadState error={error} retry={retry} />
+                    )}
+                  </DeviceFrame>
+                </div>
+                <dl>
+                  <dt>Перевага</dt>
+                  <dd>{v.plus}</dd>
+                  <dt>Обмеження</dt>
+                  <dd>{v.minus}</dd>
+                </dl>
+                {decision.id === 'map.origin-notice' &&
+                  v.id !== 'PIN_CARD_LABEL' && (
+                    <label className="origin-choice">
+                      <input
+                        type="checkbox"
+                        checked={
+                          picked &&
+                          (draft[decision.id] ?? recordedDecisions[decision.id])
+                            ?.params?.includePinCardLabel === true
+                        }
+                        onChange={(e) =>
+                          choose(decision.id, v.id, {
+                            includePinCardLabel: e.target.checked,
+                          })
+                        }
+                      />
+                      Додати пояснення у картці музиканта
+                    </label>
+                  )}
+                <div className="choice-actions">
+                  <button
+                    className="ink-button"
+                    disabled={v.id === 'PIN_CARD_LABEL'}
+                    aria-pressed={picked}
+                    onClick={() => choose(decision.id, v.id)}
+                  >
+                    {v.id === 'PIN_CARD_LABEL'
+                      ? 'Доповнення до підпису'
+                      : picked
+                        ? '✓ Обрано'
+                        : 'Обрати'}
+                  </button>
+                  <a href={url}>На весь екран</a>
+                  <button
+                    aria-expanded={qr === url}
+                    onClick={() => setQr(qr === url ? '' : url)}
+                  >
+                    QR-код
+                  </button>
+                </div>
+                {qr === url && (
+                  <div className="qr-box">
+                    <QrCode value={url} />
+                    <p>
+                      {['localhost', '127.0.0.1', '[::1]'].includes(
+                        location.hostname,
+                      )
+                        ? 'Для телефону відкрийте студію за доступною з нього мережевою адресою.'
+                        : 'Відскануйте камерою телефона'}
+                    </p>
+                  </div>
+                )}
+              </article>
+            )
+          })}
+        </div>
+      </>
     </main>
   )
 }
@@ -477,12 +567,21 @@ export function Fullscreen() {
       : undefined
   const theme =
     themes.find((t) => t.id === query.get('identity'))?.id || 'atlas'
-  const { data, error, retry } = useAtlasData(decisionId === 'map.pin')
+  const { data, error, retry } = useAtlasData(
+    !!decisionId &&
+      !['identity', 'map.cluster', 'submission.form'].includes(decisionId),
+  )
   if (!option || !decisionId) return <Missing />
   return (
     <main className="full-demo">
       {data ? (
-        <Prototype data={data} id={decisionId} variant={option} theme={theme} />
+        <Prototype
+          key={decisionId + '/' + option.id}
+          data={data}
+          id={decisionId}
+          variant={option}
+          theme={decisionId === 'identity' ? option.id : theme}
+        />
       ) : (
         <LoadState error={error} retry={retry} />
       )}

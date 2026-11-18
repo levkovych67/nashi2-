@@ -67,7 +67,7 @@ export function decisionsFile(draft: Draft) {
   return {
     schemaVersion: 1,
     generatedAt: new Date().toISOString(),
-    studioCommit: import.meta.env.VITE_STUDIO_COMMIT ?? '',
+    studioCommit: import.meta.env?.VITE_STUDIO_COMMIT ?? '',
     decisions: {
       ...recordedDecisions,
       ...Object.fromEntries(

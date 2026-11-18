@@ -4,10 +4,11 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import Ajv2020 from 'ajv/dist/2020.js';
+import { parseFixtureResponse } from '../lib/fixture-response.mjs';
 import addFormats from 'ajv-formats';
 
 const contracts = new URL('../../',import.meta.url);
-const spec = fileURLToPath(new URL('openapi.yaml', contracts));
+const spec = process.env.NASHI_OPENAPI || fileURLToPath(new URL('openapi.yaml', contracts));
 const fixtures = new URL('fixtures/',contracts);
 const referenceBase = 'urn:nashi:v2:contract';
 
@@ -30,6 +31,14 @@ test('schema validator follows nested OpenAPI references and enforces array item
   validate([{point:{lat:50}}],'valid sample');
   assert.throws(()=>validate([{point:{lat:'50'}}],'invalid sample'),/invalid sample.*number/u);
 });
+test('fixture media URLs use the demo origin while all other values undergo schema validation as supplied', () => {
+  const origin = 'https://studio.example.test';
+  const sample = {url:'/fixtures/audio/clip-01.wav', images:[{thumbUrl:'/fixtures/img/extra-2.svg'}], links:[{url:'/other'},{url:'https://example.org/'}]};
+  const result = parseFixtureResponse(JSON.stringify(sample),origin);
+  assert.equal(result.url,origin+sample.url);
+  assert.equal(result.images[0].thumbUrl,origin+sample.images[0].thumbUrl);
+  assert.deepEqual(result.links,sample.links);
+});
 test('committed fixtures conform to the published V2 OpenAPI schemas', {skip:existsSync(spec) ? false : 'Технічна команда ще не створила contracts/openapi.yaml (T1).'}, async () => {
   const schema = await SwaggerParser.bundle(spec,{resolve:{http:false}});
   const getValidator = validatorFor(schema);
@@ -42,6 +51,6 @@ test('committed fixtures conform to the published V2 OpenAPI schemas', {skip:exi
   ];
   for (const [name,array,files] of groups) {
     const validate = getValidator(name,array);
-    for (const file of files) validate(JSON.parse(readFileSync(new URL(file,fixtures),'utf8')),file);
+    for (const file of files) validate(parseFixtureResponse(readFileSync(new URL(file,fixtures),'utf8'),'https://studio.example.test'),file);
   }
 });

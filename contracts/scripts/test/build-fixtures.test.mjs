@@ -43,6 +43,7 @@ test('pin formula distributes artists within settlement radius', () => {
 });
 test('only supported public HTTP links survive, with the V2 platform group', () => {
   const items = ['WIKI','MUSICBRAINZ','SPOTIFY','DISCOGS','YOUTUBE','INSTAGRAM'].map(platform => ({platform,url:'https://example.org'}));
+  assert.equal(mapLinks([{platform:'LASTFM',url:'https://www.last.fm/music/Абордаж'}])[0].url, new URL('https://www.last.fm/music/Абордаж').href);
   items.push({platform:'WEBSITE',url:'javascript:alert(1)'});
   assert.deepEqual(mapLinks(items).map(x=>[x.platform,x.group]),[['WIKIPEDIA','REFERENCE'],['SPOTIFY','MUSIC'],['OTHER','SOCIAL'],['YOUTUBE','VIDEO'],['INSTAGRAM','SOCIAL']]);
 });

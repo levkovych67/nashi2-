@@ -1,0 +1,9 @@
+@import '../identities/generated/identities.css';
+@font-face{font-family:'Source Sans 3';src:url('../identities/atlas/assets/fonts/source-sans-3.woff2') format('woff2');font-weight:200 900;font-display:swap}
+@font-face{font-family:'Lora';src:url('../identities/atlas/assets/fonts/lora.woff2') format('woff2');font-weight:400 700;font-display:swap}
+@font-face{font-family:'Unbounded';src:url('../identities/ornament/assets/fonts/unbounded.woff2') format('woff2');font-weight:200 900;font-display:swap}
+@theme inline {
+  --color-bg:var(--n-color-bg);--color-surface:var(--n-color-surface);--color-surface-raised:var(--n-color-surface-raised);
+  --color-text:var(--n-color-text);--color-muted:var(--n-color-text-muted);--color-accent:var(--n-color-accent);--color-on-accent:var(--n-color-on-accent);
+  --color-like:var(--n-color-like);--color-border:var(--n-color-border);--font-display:var(--n-font-family-display);--font-body:var(--n-font-family-body)
+}

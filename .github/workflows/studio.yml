@@ -23,8 +23,42 @@ jobs:
       - run: npm test -w studio
       - run: npx playwright install --with-deps chromium webkit
       - run: npm run e2e -w studio
+      - run: npm run handoff -w studio
+      - uses: actions/upload-artifact@v4
+        with:
+          name: design-handoff
+          path: studio/handoff
+          retention-days: 14
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: studio-playwright
           path: studio/playwright-report
+  deploy:
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.STUDIO_DEPLOY_ENABLED == 'true'
+    concurrency: studio-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build -w studio
+        env:
+          VITE_STUDIO_COMMIT: ${{ github.sha }}
+      - name: Publish private demo
+        shell: bash
+        env:
+          STUDIO_HOST: ${{ secrets.STUDIO_HOST }}
+          STUDIO_SSH_KEY: ${{ secrets.STUDIO_SSH_KEY }}
+          STUDIO_KNOWN_HOSTS: ${{ secrets.STUDIO_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          install -dm 700 ~/.ssh
+          printf '%s\n' "$STUDIO_SSH_KEY" > ~/.ssh/studio
+          chmod 600 ~/.ssh/studio
+          printf '%s\n' "$STUDIO_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          rsync -az --delay-updates -e 'ssh -i ~/.ssh/studio -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes' studio/dist/ "$STUDIO_HOST:/var/www/nashi-studio/"

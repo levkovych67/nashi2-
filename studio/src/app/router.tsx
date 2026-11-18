@@ -1,5 +1,6 @@
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import { importWarning } from '../selection/store'
+import { StatesGallery } from '../pages/StatesGallery'
 import { StudioLayout } from './StudioLayout'
 import { OverviewPage } from '../pages/OverviewPage'
 import { DecisionPage } from '../pages/DecisionPage'
@@ -9,7 +10,7 @@ import { HandoffPage } from '../pages/HandoffPage'
 import { AuditPage } from '../pages/AuditPage'
 
 function MissingPage() {
-  return <main className="studio-page"><h1>Сторінку не знайдено</h1><Link className="studio-action" to="/">До каталогу рішень →</Link></main>
+  return <main className="studio-page"><h1>Сторінку не знайдено</h1><Link className="studio-action" to="/">До каталогу рішень</Link></main>
 }
 
 export function StudioRouter() {
@@ -23,6 +24,7 @@ export function StudioRouter() {
           <Route path="d/:decisionId" element={<DecisionPage />} />
           <Route path="flow/:scenarioId" element={<FlowPage />} />
           <Route path="handoff" element={<HandoffPage />} />
+          <Route path="states" element={<StatesGallery/>} />
           <Route path="audit" element={<AuditPage />} />
           <Route path="*" element={<MissingPage />} />
         </Route>

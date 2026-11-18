@@ -10,7 +10,11 @@
     "test": "vitest run",
     "e2e": "playwright test",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "tokens": "node --import tsx scripts/build-tokens.ts",
+    "prebuild": "npm run tokens",
+    "predev": "npm run tokens",
+    "handoff": "node --import tsx scripts/handoff.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

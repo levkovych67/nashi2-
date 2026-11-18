@@ -6,6 +6,7 @@ const sections = [
   { path: '/', label: 'Каталог' },
   { path: '/audit', label: 'Аудит V1' },
   { path: '/flow/map-to-musician', label: 'Сценарії' },
+  { path: '/states', label: 'Стани' },
   { path: '/handoff', label: 'Передача' },
 ]
 

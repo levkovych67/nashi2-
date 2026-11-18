@@ -172,6 +172,8 @@ export function byId(id: string | undefined) {
 import { variants } from './variants'
 export function known(id: string, variant: string) {
   return (
-    Object.hasOwn(variants, id) && variants[id].some((v) => v.id === variant)
+    variant !== 'PIN_CARD_LABEL' &&
+    Object.hasOwn(variants, id) &&
+    variants[id].some((v) => v.id === variant)
   )
 }

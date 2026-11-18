@@ -1,0 +1,326 @@
+.submission-study {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: clamp(18px, 4%, 44px);
+  width: min(100%, 760px);
+  min-width: 0;
+  color: var(--map-text, #203c33);
+  background: var(--white, #fcfaf0);
+  font:
+    16px/1.45 Arial,
+    sans-serif;
+  overflow-wrap: anywhere;
+  container-type: inline-size;
+}
+.submission-study *,
+.submission-study *::before,
+.submission-study *::after {
+  box-sizing: border-box;
+}
+.submission-study h2 {
+  margin: 0 0 8px;
+  font: 700 clamp(32px, 7cqi, 48px) / 1.07 var(--title-font, Georgia, serif);
+  letter-spacing: -0.04em;
+}
+.submission-study header p,
+.sub-success p {
+  margin: 0 0 20px;
+  max-width: 58ch;
+}
+.submission-study h3 {
+  margin: 0 0 16px;
+  font: 600 24px/1.1 var(--title-font, Georgia, serif);
+  letter-spacing: -0.025em;
+}
+.submission-study :is(button, select, input, textarea) {
+  font: inherit;
+  color: inherit;
+}
+.submission-study
+  :is(
+    button,
+    select,
+    input:not([type='radio']):not([type='checkbox']),
+    textarea
+  ) {
+  min-height: 44px;
+  border: 1px solid var(--line, #859487);
+  border-radius: 3px;
+  background: var(--white, #fcfaf0);
+  padding: 9px 12px;
+}
+.submission-study :is(button, summary, select, input[type='file']) {
+  cursor: pointer;
+}
+.submission-study button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.submission-study :is(button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid var(--mark, #254578);
+  outline-offset: 3px;
+}
+.submission-study .sub-primary {
+  color: var(--on-mark, white);
+  background: var(--mark, #254578);
+  border-color: var(--mark, #254578);
+  font-weight: 650;
+}
+.submission-study .sub-scenarios {
+  border-block: 1px solid var(--line, #859487);
+  padding: 6px 0;
+  font-size: 14px;
+}
+.sub-scenarios summary {
+  width: fit-content;
+  align-content: center;
+  min-height: 44px;
+}
+.submission-study .sub-scenarios label {
+  display: block;
+  margin: 4px 0;
+}
+.submission-study .sub-scenarios select {
+  margin-bottom: 8px;
+  max-width: 100%;
+}
+.sub-steps {
+  margin-top: 16px;
+}
+.sub-steps p {
+  font-size: 14px;
+  margin: 0 0 6px;
+}
+.sub-steps > div {
+  display: flex;
+  gap: 4px;
+}
+.sub-steps span {
+  height: 4px;
+  flex: 1;
+  background: var(--land, #e1e6d6);
+}
+.sub-steps span[data-filled='true'] {
+  background: var(--mark, #254578);
+}
+.sub-main-fields,
+.sub-kind {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+.sub-section {
+  padding: 20px 0;
+}
+.sub-section + .sub-section {
+  border-top: 1px solid var(--line, #859487);
+}
+.sub-field {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  margin: 0 0 16px;
+  min-width: 0;
+}
+.sub-field:last-child {
+  margin-bottom: 0;
+}
+.submission-study .sub-field > label,
+.sub-kind legend {
+  display: block;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 650;
+}
+.sub-field input,
+.sub-field textarea {
+  width: 100%;
+  min-width: 0;
+}
+.sub-field textarea {
+  resize: vertical;
+}
+.sub-field > button {
+  align-self: start;
+}
+.sub-field small,
+.sub-places small {
+  display: block;
+  font-size: 13px;
+}
+.sub-field input[type='file'] {
+  max-width: 100%;
+  font-size: 14px;
+}
+.sub-field input::file-selector-button {
+  color: inherit;
+  background: var(--land, #e1e6d6);
+  border: 0;
+  margin-right: 8px;
+  padding: 4px 6px;
+}
+.sub-field input[aria-invalid='true'],
+.sub-field textarea[aria-invalid='true'] {
+  border-style: dashed;
+}
+.sub-error,
+.sub-server-error {
+  font-weight: 650;
+}
+.sub-server-error {
+  border-inline-start: 3px solid currentColor;
+  padding: 8px 12px;
+  margin: 8px 0;
+  background: var(--land, #e1e6d6);
+}
+.sub-server-error p {
+  font-weight: 400;
+  margin: 3px 0 7px;
+}
+.submission-study .sub-kind label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 4px 0 0;
+  padding: 7px 13px;
+  min-height: 44px;
+  border: 1px solid var(--line, #859487);
+  font-size: 15px;
+  cursor: pointer;
+}
+.sub-kind label + label {
+  border-inline-start: 0;
+}
+.sub-kind [data-selected='true'] {
+  background: var(--land, #e1e6d6);
+}
+.sub-kind input,
+.sub-field input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--mark, #254578);
+}
+.submission-study .sub-field label.sub-consent {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  align-items: flex-start;
+  font-weight: 500;
+  cursor: pointer;
+}
+.sub-consent input {
+  flex: 0 0 auto;
+  margin-top: 3px;
+}
+.sub-inline,
+.sub-actions,
+.sub-photo-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.sub-inline > input {
+  flex: 1 1 150px;
+}
+.sub-actions {
+  justify-content: space-between;
+}
+.sub-actions .sub-primary {
+  margin-inline-start: auto;
+}
+.sub-places,
+.sub-photos,
+.sub-genres {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sub-places li {
+  cursor: pointer;
+  min-height: 44px;
+  border: 1px solid var(--line, #859487);
+  padding: 5px 10px;
+}
+.sub-places li + li {
+  border-top: none;
+}
+.sub-places li:is(:hover, [aria-selected='true']) {
+  background: var(--land, #e1e6d6);
+}
+.sub-photos li {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  gap: 8px 12px;
+  align-items: center;
+  border-bottom: 1px solid var(--line, #859487);
+  padding: 8px 0;
+}
+.sub-photos img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+.sub-photo-actions {
+  grid-column: 1/-1;
+}
+.sub-photo-actions button {
+  font-size: 14px;
+}
+.sub-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.sub-genres li {
+  display: inline-flex;
+  align-items: center;
+  background: var(--land, #e1e6d6);
+  padding-left: 10px;
+  border-radius: 4px;
+}
+.sub-genres li button {
+  background: transparent;
+  border: 0;
+  min-width: 38px;
+}
+.sub-review {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px 12px;
+  margin: 0 0 20px;
+}
+.sub-review dt {
+  font-weight: 650;
+}
+.sub-review dd {
+  margin: 0;
+  min-width: 0;
+}
+.sub-review dd span,
+.sub-progress progress {
+  display: block;
+}
+.sub-progress progress {
+  width: 100%;
+  accent-color: var(--mark, #254578);
+}
+.submission-study .sub-visually-hidden {
+  position: absolute;
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  border: none;
+}
+@container (max-width: 340px) {
+  .sub-review {
+    grid-template-columns: 1fr;
+  }
+  .sub-review dd {
+    margin-bottom: 6px;
+  }
+}
