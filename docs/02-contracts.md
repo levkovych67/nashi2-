@@ -219,7 +219,7 @@
 
 ```json
 [
-  { "placeId": "Q465104", "name": "Броди", "type": "TOWN", "region": "LVIV", "regionName": "Львівська область", "lat": 50.078, "lon": 25.154 }
+  { "placeId": "Q465104", "name": "Броди", "type": "CITY", "region": "LVIV", "regionName": "Львівська область", "lat": 50.078055555, "lon": 25.154166666 }
 ]
 ```
 
@@ -309,7 +309,8 @@
 
 ### `places` — довідник населених пунктів України
 `_id` = Wikidata QID; `name`, `nameNormalized`, `type` (`PlaceType`), `region`, `point` (GeoJSON), `areaKm2?`,
-`population?`. Індекси: `nameNormalized_1_population_-1`, `region_1`. Наповнюється сидом із Вікіданих (≥ 25 тис. пунктів).
+`population?`. Індекси: `nameNormalized_1_population_-1`, `region_1`, `point_2dsphere`. Наповнюється сидом із
+Вікіданих (≥ 25 тис. пунктів).
 
 ### `submissions`
 `_id`, `status` (`PENDING` | `APPROVED` | `REJECTED` | `DISCARDED` — спрацювала пастка), усі поля з 2.10 (крім

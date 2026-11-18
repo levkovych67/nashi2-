@@ -71,6 +71,13 @@ class PlaceSeedFileTest {
     }
 
     @Test
+    void placesWikidataFilesUnderTheWrongRegionAreKeptWhereTheirCoordinatesAre() {
+        // Wikidata's P131 puts Златопіль under Mykolaiv oblast only; its coordinates are in Kharkiv oblast
+        assertThat(byQid.get("Q889579")).extracting(PlaceSeedRow::name, PlaceSeedRow::type, PlaceSeedRow::region)
+                .containsExactly("Златопіль", PlaceType.CITY, Region.KHARKIV);
+    }
+
+    @Test
     void rowsAreUniqueAndSortedByQidNumber() {
         assertThat(byQid).hasSameSizeAs(rows);
         assertThat(rows).isSortedAccordingTo(Comparator.comparing(PlaceSeedRow::qid, PlaceSeedGenerator.QID_ORDER));

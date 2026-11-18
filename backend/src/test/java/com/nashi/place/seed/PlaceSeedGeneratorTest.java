@@ -32,6 +32,8 @@ class PlaceSeedGeneratorTest {
 
     private static final String LVIV_OBLAST = "Q164193";
     private static final String VOLYN_OBLAST = "Q167859";
+    private static final String MYKOLAIV_OBLAST = "Q181633";
+    private static final String CHERKASY_OBLAST = "Q161808";
     private static final String EMPTY = response();
     private static final String CITY = "Q12131624";
     private static final String TOWN = "Q4100864";
@@ -255,13 +257,38 @@ class PlaceSeedGeneratorTest {
     }
 
     @Test
-    void dropsPlacesOutsideTheirRegion() {
-        // Lviv oblast's box ends near 25.6° E; a "Lviv oblast" village at 30° E is misplaced
-        String json = response(
-                binding("Q1", "Справжнє", "uk", "Point(24.0 49.8)", VILLAGE, null, null),
-                binding("Q2", "Заблукале", "uk", "Point(30.0 49.8)", VILLAGE, null, null));
+    void fallsBackToTheRegionWhoseBoxHoldsThePlace() {
+        // Recorded case: Wikidata files Златопіль (a city of Kharkiv oblast) only under Mykolaiv oblast, whose box
+        // ends at 33.2° E; its point lies in Kharkiv oblast's box and no other
+        String json = response(binding("Q889579", "Златопіль", "uk", "Point(36.214166666 49.386944444)", CITY,
+                null, "29573"));
+
+        List<PlaceSeedRow> rows = generator(q -> tree(q, MYKOLAIV_OBLAST) ? json : EMPTY).collect();
+
+        assertThat(rows).containsExactly(new PlaceSeedRow("Q889579", "Златопіль", PlaceType.CITY, Region.KHARKIV,
+                49.386944444, 36.214166666, null, 29573L));
+    }
+
+    @Test
+    void theFallbackPrefersTheNearestCentreAmongBoxesThatHoldThePlace() {
+        // 30.0° E 49.8° N lies in the boxes of Vinnytsia, Kyiv and Cherkasy oblasts; Kyiv oblast's centre is nearest
+        String json = response(binding("Q2", "Заблукале", "uk", "Point(30.0 49.8)", VILLAGE, null, null));
 
         List<PlaceSeedRow> rows = generator(q -> tree(q, LVIV_OBLAST) ? json : EMPTY).collect();
+
+        assertThat(rows).extracting(PlaceSeedRow::qid, PlaceSeedRow::region)
+                .containsExactly(tuple("Q2", Region.KYIV));
+    }
+
+    @Test
+    void dropsAPlaceThatNoRegionBoxHolds() {
+        // Recorded case: a village of Volgograd oblast (Russia) filed under Cherkasy oblast
+        String json = response(
+                binding("Q1", "Справжнє", "uk", "Point(32.0 49.4)", VILLAGE, null, null),
+                binding("Q24327821", "Пархоменко (Волгоградська область)", "uk", "Point(44.1422 48.5691)", VILLAGE,
+                        null, null));
+
+        List<PlaceSeedRow> rows = generator(q -> tree(q, CHERKASY_OBLAST) ? json : EMPTY).collect();
 
         assertThat(rows).extracting(PlaceSeedRow::qid).containsExactly("Q1");
     }

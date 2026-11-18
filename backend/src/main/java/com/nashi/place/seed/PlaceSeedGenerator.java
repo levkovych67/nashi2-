@@ -28,6 +28,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.EnumMap;
@@ -57,7 +58,9 @@ import java.util.zip.GZIPOutputStream;
  * Wikidata's {@code P131} trees overlap (Kharkiv oblast's tree reaches Poltava and Sumy places), so a place can come
  * back for several regions. Only regions whose bounding box (plus {@value #BOUNDS_MARGIN_DEGREES} degrees) holds the
  * place's coordinate count; a city region wins over the oblast around it, otherwise the region with the nearest
- * centre. A place no candidate region's box holds is dropped as misplaced. Areas too large for the kind of place
+ * centre. When no candidate region's box holds the place (Wikidata files Златопіль, a city of Kharkiv oblast, only
+ * under Mykolaiv oblast), every region whose box holds it is a candidate, with the same preference, and the
+ * fallback is logged; a place no region's box holds is dropped. Areas too large for the kind of place
  * ({@link #MAX_AREA_KM2}) are forgotten.
  * <p>
  * The User-Agent and the pause between requests come from the system properties {@code nashi.http.user-agent} and
@@ -163,6 +166,7 @@ public final class PlaceSeedGenerator {
     private int failuresInARow;
     private int outOfBounds;
     private int ambiguous;
+    private int fallbacks;
     private int implausibleAreas;
 
     PlaceSeedGenerator(WikiHttp http) {
@@ -185,7 +189,8 @@ public final class PlaceSeedGenerator {
             }
             Path dir = Path.of(args[1]);
             String version = write(rows, dir, LocalDate.now(ZoneId.of("Europe/Kyiv")));
-            System.out.println(summary(rows, generator.outOfBounds, generator.ambiguous, generator.implausibleAreas));
+            System.out.println(summary(rows, generator.outOfBounds, generator.fallbacks, generator.ambiguous,
+                    generator.implausibleAreas));
             System.out.printf("Wrote %d places to %s (version %s, %d bytes)%n", rows.size(), dir.resolve(SEED_FILE),
                     version, Files.size(dir.resolve(SEED_FILE)));
         } else {
@@ -229,22 +234,41 @@ public final class PlaceSeedGenerator {
         for (List<PlaceSeedRow> rows : byQid.values()) {
             List<PlaceSeedRow> inside = rows.stream().filter(this::insideRegion).toList();
             if (inside.isEmpty()) {
-                outOfBounds++;
                 PlaceSeedRow row = rows.getFirst();
-                log.info("[PLACES] {} {} ({}, {}) lies outside {}, dropped", row.qid(), row.name(), row.lat(),
-                        row.lon(), rows.stream().map(PlaceSeedRow::region).distinct().toList());
-                continue;
+                List<Region> said = rows.stream().map(PlaceSeedRow::region).distinct().toList();
+                inside = Arrays.stream(Region.values())
+                        .map(region -> withRegion(row, region))
+                        .filter(this::insideRegion)
+                        .toList();
+                if (inside.isEmpty()) {
+                    outOfBounds++;
+                    log.info("[PLACES] {} {} ({}, {}) lies outside every region, dropped (Wikidata: {})", row.qid(),
+                            row.name(), row.lat(), row.lon(), said);
+                    continue;
+                }
+                fallbacks++;
+                log.info("[PLACES] {} {} ({}, {}) lies outside {}, placed by its coordinates in {}", row.qid(),
+                        row.name(), row.lat(), row.lon(), said, preferred(inside).region());
             }
             if (inside.stream().map(PlaceSeedRow::region).distinct().count() > 1) {
                 ambiguous++;
             }
-            PlaceSeedRow chosen = inside.stream()
-                    .min(Comparator.comparingInt((PlaceSeedRow r) -> isCity(r.region()) ? 0 : 1)
-                            .thenComparingDouble(this::distanceToCentre))
-                    .orElseThrow();
-            resolved.add(plausibleArea(chosen));
+            resolved.add(plausibleArea(preferred(inside)));
         }
         return sortedByQid(resolved);
+    }
+
+    /** A city region over the oblast around it, otherwise the region with the nearest centre. */
+    private PlaceSeedRow preferred(List<PlaceSeedRow> inside) {
+        return inside.stream()
+                .min(Comparator.comparingInt((PlaceSeedRow r) -> isCity(r.region()) ? 0 : 1)
+                        .thenComparingDouble(this::distanceToCentre))
+                .orElseThrow();
+    }
+
+    private static PlaceSeedRow withRegion(PlaceSeedRow row, Region region) {
+        return new PlaceSeedRow(row.qid(), row.name(), row.type(), region, row.lat(), row.lon(), row.areaKm2(),
+                row.population());
     }
 
     /**
@@ -434,7 +458,8 @@ public final class PlaceSeedGenerator {
         }
     }
 
-    static String summary(List<PlaceSeedRow> rows, int outOfBounds, int ambiguous, int implausibleAreas) {
+    static String summary(List<PlaceSeedRow> rows, int outOfBounds, int fallbacks, int ambiguous,
+                          int implausibleAreas) {
         Map<Region, Long> perRegion = rows.stream().collect(Collectors.groupingBy(PlaceSeedRow::region,
                 () -> new EnumMap<>(Region.class), Collectors.counting()));
         Map<PlaceType, Long> perType = rows.stream().collect(Collectors.groupingBy(PlaceSeedRow::type,
@@ -443,8 +468,9 @@ public final class PlaceSeedGenerator {
         long withPopulation = rows.stream().filter(r -> r.population() != null).count();
         StringBuilder s = new StringBuilder();
         s.append("places: ").append(rows.size()).append(", with area: ").append(withArea)
-                .append(", with population: ").append(withPopulation).append(", dropped outside their region: ")
-                .append(outOfBounds).append(", in two regions' boxes: ").append(ambiguous)
+                .append(", with population: ").append(withPopulation).append(", dropped outside every region: ")
+                .append(outOfBounds).append(", placed by coordinates: ").append(fallbacks)
+                .append(", in two regions' boxes: ").append(ambiguous)
                 .append(", implausible areas forgotten: ").append(implausibleAreas).append('\n');
         perType.forEach((type, n) -> s.append("  ").append(type).append(": ").append(n).append('\n'));
         perRegion.forEach((region, n) -> s.append("  ").append(region).append(": ").append(n).append('\n'));
