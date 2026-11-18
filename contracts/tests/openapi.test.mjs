@@ -250,6 +250,11 @@ test('SubmissionRequest field constraints follow 2.10', () => {
   assert.equal(p.links.minItems, 1);
   assert.equal(p.links.maxItems, 10);
   assert.equal(p.contact.maxLength, 200);
+  assert.equal(p.links.items.maxLength, 2048);
+  assert.equal(p.youtubeChannelUrl.maxLength, 2048);
+  assert.equal(p.wikipediaUrl.maxLength, 2048);
+  assert.equal(p.originPlaceId.maxLength, 32);
+  assert.equal(p.birthPlaceId.maxLength, 32);
   assert.equal(p.consent.const ?? p.consent.enum?.[0], true);
   assert.equal(p.faxNumber.maxLength, 0);
 });

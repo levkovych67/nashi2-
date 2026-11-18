@@ -9,9 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.task.TaskRejectedException;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.time.Clock;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,6 +92,55 @@ class SubmissionServiceTest {
         assertThatThrownBy(this::submit).isInstanceOf(IllegalStateException.class);
 
         verify(storage, org.mockito.Mockito.times(4)).delete(anyString());
+        verify(events, never()).publishEvent(any(Object.class));
+    }
+
+    @Test
+    void fullTelegramQueueStillAccepts() {
+        doThrow(new TaskRejectedException("telegramExecutor queue is full")).when(events).publishEvent(any(Object.class));
+        when(repository.save(any())).thenAnswer(i -> i.getArgument(0));
+
+        SubmissionAccepted accepted = service.submit(SubmissionRequests.valid(), List.copyOf(files), "198.51.100.1");
+
+        // saved and kept: NotifyRetryJob sends it once the queue has room
+        assertThat(accepted.status()).isEqualTo("PENDING");
+        ArgumentCaptor<Submission> saved = ArgumentCaptor.forClass(Submission.class);
+        verify(repository).save(saved.capture());
+        assertThat(saved.getValue().getId()).isEqualTo(accepted.id());
+        assertThat(saved.getValue().getStatus()).isEqualTo(SubmissionStatus.PENDING);
+        verify(storage, never()).delete(anyString());
+    }
+
+    @Test
+    void honeypotKeepsOnlyStatusIpHashAndAShortName() {
+        when(repository.save(any())).thenAnswer(i -> i.getArgument(0));
+        List<String> genres = new ArrayList<>(List.of("спам"));
+        var bot = new SubmissionRequest("  " + "Б".repeat(150) + "  ", com.nashi.artist.MusicianKind.BAND, "Q36036",
+                "Q465104", "реклама ".repeat(20), genres, List.of("https://spam.example/x"),
+                "https://www.youtube.com/@spam", "https://uk.wikipedia.org/wiki/Spam", "spam@example.com", true,
+                "+380 00 000 00 00");
+
+        SubmissionAccepted accepted = service.submit(bot, List.copyOf(files), "198.51.100.1");
+
+        assertThat(accepted.status()).isEqualTo("PENDING");
+        ArgumentCaptor<Submission> saved = ArgumentCaptor.forClass(Submission.class);
+        verify(repository).save(saved.capture());
+        Submission s = saved.getValue();
+        assertThat(s.getStatus()).isEqualTo(SubmissionStatus.DISCARDED);
+        assertThat(s.getName()).isEqualTo("Б".repeat(100));
+        assertThat(s.getIpHash()).isEqualTo(new IpHasher("s").hash("198.51.100.1"));
+        assertThat(s.getSummary()).isNull();
+        assertThat(s.getLinks()).isNull();
+        assertThat(s.getGenres()).isNull();
+        assertThat(s.getYoutubeChannelUrl()).isNull();
+        assertThat(s.getWikipediaUrl()).isNull();
+        assertThat(s.getContact()).isNull();
+        assertThat(s.getOriginPlaceId()).isNull();
+        assertThat(s.getBirthPlaceId()).isNull();
+        assertThat(s.getKind()).isNull();
+        assertThat(s.getConsentAt()).isNull();
+        verify(processor, never()).process(any(), anyString());
+        verify(storage, never()).put(anyString(), any(), anyString());
         verify(events, never()).publishEvent(any(Object.class));
     }
 }

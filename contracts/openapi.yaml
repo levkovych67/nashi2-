@@ -939,9 +939,11 @@ components:
         kind: { $ref: '#/components/schemas/MusicianKind' }
         originPlaceId:
           type: string
+          maxLength: 32
           description: Існуючий `placeId` (з `searchPlaces`).
         birthPlaceId:
           type: [string, 'null']
+          maxLength: 32
           description: Існуючий `placeId` або `null`; лише для `PERSON`.
         summary: { type: string, minLength: 30, maxLength: 1000 }
         genres:
@@ -955,14 +957,16 @@ components:
           description: |
             Абсолютні `http(s)` URL; щонайменше одне з групи `MUSIC` або `VIDEO` (платформу визначає сервер),
             разом із `youtubeChannelUrl` теж зараховується.
-          items: { type: string, format: uri, pattern: '^https?://' }
+          items: { type: string, format: uri, pattern: '^https?://', maxLength: 2048 }
         youtubeChannelUrl:
           type: [string, 'null']
           format: uri
+          maxLength: 2048
           description: Домен `youtube.com` / `youtu.be`.
         wikipediaUrl:
           type: [string, 'null']
           format: uri
+          maxLength: 2048
           description: Домен `uk.wikipedia.org` або `en.wikipedia.org`.
         contact: { type: string, maxLength: 200 }
         consent:

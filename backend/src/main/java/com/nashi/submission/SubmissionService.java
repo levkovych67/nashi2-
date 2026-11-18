@@ -12,6 +12,7 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.task.TaskRejectedException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,13 +24,17 @@ import java.util.List;
 /**
  * Takes a suggested musician: rate limit, bot trap, validation, photo processing, upload, save, event (in this
  * order, so a flooding client is stopped before any work and a bot learns nothing). Photos are processed before any
- * is uploaded; if the upload or the save fails, the keys already uploaded are deleted.
+ * is uploaded; if the upload or the save fails, the keys already uploaded are deleted. A trapped bot's submission keeps
+ * only what shows the trap worked (status, time, {@code ipHash}, a name cut to {@value #DISCARDED_NAME_MAX}
+ * characters), never its free text. Once saved, the submission is accepted even when the notification cannot be
+ * queued ({@code telegramExecutor} full): {@code NotifyRetryJob} sends it later.
  */
 @Service
 public class SubmissionService {
 
     private static final Logger log = LoggerFactory.getLogger(SubmissionService.class);
     private static final String JPEG = "image/jpeg";
+    static final int DISCARDED_NAME_MAX = 100;
 
     private final RateLimiter limiter;
     private final SubmissionValidator validator;
@@ -58,8 +63,11 @@ public class SubmissionService {
     public SubmissionAccepted submit(SubmissionRequest r, List<MultipartFile> images, String clientIp) {
         limiter.check(RateLimitPolicy.SUBMISSIONS, clientIp);
         if (r.faxNumber() != null && !r.faxNumber().isBlank()) {
-            Submission discarded = base(r, clientIp).id(new ObjectId().toHexString())
-                    .status(SubmissionStatus.DISCARDED).build();
+            Submission discarded = Submission.builder().id(new ObjectId().toHexString())
+                    .status(SubmissionStatus.DISCARDED)
+                    .name(truncate(trim(r.name()), DISCARDED_NAME_MAX))
+                    .ipHash(ipHasher.hash(clientIp))
+                    .build();
             return SubmissionAccepted.pending(submissions.save(discarded).getId());
         }
         List<FieldViolation> violations = validator.validate(r, images);
@@ -88,7 +96,12 @@ public class SubmissionService {
             cleanUp(keys);
             throw e;
         }
-        events.publishEvent(new SubmissionCreatedEvent(id));
+        try {
+            events.publishEvent(new SubmissionCreatedEvent(id));
+        } catch (TaskRejectedException e) {
+            log.warn("Submission {} saved but its notification was not queued ({}); NotifyRetryJob will send it",
+                    id, e.getMessage());
+        }
         return SubmissionAccepted.pending(id);
     }
 
@@ -128,6 +141,14 @@ public class SubmissionService {
 
     private static String trim(String s) {
         return s == null ? null : s.trim();
+    }
+
+    /** At most {@code max} chars, never splitting a surrogate pair. */
+    private static String truncate(String s, int max) {
+        if (s == null || s.length() <= max) {
+            return s;
+        }
+        return s.substring(0, Character.isHighSurrogate(s.charAt(max - 1)) ? max - 1 : max);
     }
 
     private static String blankToNull(String s) {

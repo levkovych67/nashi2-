@@ -225,6 +225,15 @@ class SubmissionControllerIT extends MongoIT {
         Submission saved = submissions.findById(id).orElseThrow();
         assertThat(saved.getStatus()).isEqualTo(SubmissionStatus.DISCARDED);
         assertThat(saved.getImageKeys()).isNullOrEmpty();
+        // only what shows the trap worked: no free text of the bot is kept
+        assertThat(saved.getName()).isEqualTo("Бот");
+        assertThat(saved.getIpHash()).isNotBlank();
+        assertThat(saved.getCreatedAt()).isNotNull();
+        assertThat(saved.getSummary()).isNull();
+        assertThat(saved.getLinks()).isNull();
+        assertThat(saved.getGenres()).isNull();
+        assertThat(saved.getContact()).isNull();
+        assertThat(saved.getYoutubeChannelUrl()).isNull();
         assertThatThrownBy(() -> storage.get("submissions/" + id + "/0.jpg")).isInstanceOf(NoSuchKeyException.class);
         assertThat(events.submissionCreated()).isEmpty();
     }

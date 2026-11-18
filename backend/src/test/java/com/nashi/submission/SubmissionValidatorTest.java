@@ -161,4 +161,32 @@ class SubmissionValidatorTest {
         assertThat(validator.validate(r, List.of())).extracting(FieldViolation::field)
                 .contains("name", "kind", "originPlaceId", "summary", "genres[0]", "links", "consent", "images");
     }
+
+    @Test
+    void capsUrlAndPlaceIdLengths() {
+        String longUrl = "https://open.spotify.com/artist/" + "a".repeat(2048);
+        String youtube = "https://www.youtube.com/@" + "b".repeat(2048);
+        String wiki = "https://uk.wikipedia.org/wiki/" + "c".repeat(2048);
+        var r = new SubmissionRequest("Гурт", MusicianKind.PERSON, "Q" + "1".repeat(32), "Q" + "2".repeat(32),
+                valid().summary(), null, List.of("https://open.spotify.com/artist/abc", longUrl), youtube, wiki, null,
+                true, "");
+        List<FieldViolation> violations = check(r);
+        assertThat(violations).contains(
+                new FieldViolation("links[1]", "Максимум 2048 символів"),
+                new FieldViolation("youtubeChannelUrl", "Максимум 2048 символів"),
+                new FieldViolation("wikipediaUrl", "Максимум 2048 символів"),
+                new FieldViolation("originPlaceId", "Максимум 32 символів"),
+                new FieldViolation("birthPlaceId", "Максимум 32 символів"));
+        // an over-long id is not looked up as well
+        assertThat(violations).extracting(FieldViolation::field).containsOnlyOnce("originPlaceId", "birthPlaceId");
+    }
+
+    @Test
+    void urlsAtTheCapAreAccepted() {
+        String url = "https://open.spotify.com/artist/";
+        String atCap = url + "a".repeat(2048 - url.length());
+        var r = with(valid(), "Гурт", MusicianKind.BAND, "Q36036", null, valid().summary(), List.of(atCap), null, null,
+                true);
+        assertThat(check(r)).isEmpty();
+    }
 }

@@ -253,6 +253,7 @@
 або `null` (лише для `PERSON`); `summary` 30..1000; `genres` ≤ 5, кожен 2..40; `links` 1..10 абсолютних `http(s)` URL,
 щонайменше одне з групи `MUSIC` або `VIDEO` (платформу визначає сервер), разом із `youtubeChannelUrl` теж зараховується;
 `youtubeChannelUrl` — домен `youtube.com`/`youtu.be`; `wikipediaUrl` — домен `uk.wikipedia.org` або `en.wikipedia.org`;
+кожне посилання (`links[i]`, `youtubeChannelUrl`, `wikipediaUrl`) ≤ 2048 символів; `originPlaceId`, `birthPlaceId` ≤ 32;
 `contact` ≤ 200; `consent` = `true`; `faxNumber` — пастка для ботів: має бути порожнім, інакше сервер відповідає
 `202`, але заявку мовчки відкидає.
 
@@ -323,7 +324,8 @@
 `faxNumber` і `consent` → `consentAt`), `imageKeys[]`, `ipHash` (HMAC-SHA-256 з секретною сіллю), `duplicateOfArtistId?`,
 `telegram` (`chatId`, `threadId?`, `albumMessageIds[]`, `controlMessageId`), `moderationLog[]`
 (`{action: SENT|APPROVED|REJECTED|DUPLICATE_WARNING|FAILED, by?: {telegramUserId, username, displayName}, at, note?}`),
-`artistId?`, `createdAt`, `decidedAt?`.
+`artistId?`, `createdAt`, `decidedAt?`. Заявка `DISCARDED` зберігає лише `status`, `createdAt`, `ipHash` і `name`
+(обрізане до 100 символів) — без опису, посилань та іншого вільного тексту.
 
 ### `jobs_runs` (журнал фонових задач)
 `_id`, `job` (`WIKI_IMPORT` | `AUDIO_RESOLVE` | `SUBMISSION_CLEANUP` | `V1_MIGRATION`), `startedAt`, `finishedAt`,

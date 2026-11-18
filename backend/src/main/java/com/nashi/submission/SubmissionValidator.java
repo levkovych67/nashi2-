@@ -56,10 +56,11 @@ public class SubmissionValidator {
     }
 
     private void validatePlaces(SubmissionRequest r, List<FieldViolation> out) {
-        if (notBlank(r.originPlaceId()) && places.find(r.originPlaceId()).isEmpty()) {
+        // an id over the length cap already has its violation; it is not looked up
+        if (notBlank(r.originPlaceId()) && withinCap(r.originPlaceId()) && places.find(r.originPlaceId()).isEmpty()) {
             out.add(new FieldViolation("originPlaceId", "Невідоме місце"));
         }
-        if (notBlank(r.birthPlaceId())) {
+        if (notBlank(r.birthPlaceId()) && withinCap(r.birthPlaceId())) {
             if (r.kind() != null && r.kind() != MusicianKind.PERSON) {
                 out.add(new FieldViolation("birthPlaceId", "Місце народження лише для окремого виконавця"));
             } else if (places.find(r.birthPlaceId()).isEmpty()) {
@@ -138,6 +139,10 @@ public class SubmissionValidator {
         } catch (java.net.URISyntaxException e) {
             return null;
         }
+    }
+
+    private static boolean withinCap(String placeId) {
+        return placeId.length() <= SubmissionRequest.MAX_PLACE_ID;
     }
 
     private static boolean notBlank(String s) {
