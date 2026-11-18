@@ -1,6 +1,7 @@
 package com.nashi.admin;
 
 import com.nashi.artist.ArtistVisibilityService;
+import com.nashi.migration.V1MigrationJob;
 import com.nashi.telegram.ChatAdmins;
 import com.nashi.telegram.TelegramGateway;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,11 +26,12 @@ class AdminCommandHandlerTest {
     private final StatsService stats = mock(StatsService.class);
     private final ObjectProvider<JobTrigger> wiki = mock(ObjectProvider.class);
     private final ObjectProvider<JobTrigger> audio = mock(ObjectProvider.class);
+    private final ObjectProvider<V1MigrationJob> migration = mock(ObjectProvider.class);
     private AdminCommandHandler handler;
 
     @BeforeEach
     void setUp() {
-        handler = new AdminCommandHandler(admins, gateway, visibility, stats, wiki, audio);
+        handler = new AdminCommandHandler(admins, gateway, visibility, stats, wiki, audio, migration);
         when(admins.contains(1L)).thenReturn(true);
     }
 
@@ -129,5 +131,53 @@ class AdminCommandHandlerTest {
         when(stats.summary()).thenThrow(new IllegalStateException("secret mongo uri"));
         handler.handle(message(1L, "/stats"));
         verify(gateway).sendText("Не вдалося виконати команду, дивіться логи.");
+    }
+
+    @Test
+    void adminCommandRequiresDryOrRun() {
+        V1MigrationJob job = mock(V1MigrationJob.class);
+        when(job.isConfigured()).thenReturn(true);
+        when(migration.getIfAvailable()).thenReturn(job);
+
+        handler.handle(message(1L, "/migrate_v1"));
+        handler.handle(message(1L, "/migrate_v1 now"));
+
+        verify(gateway, org.mockito.Mockito.times(2)).sendText("Використання: /migrate_v1 dry|run");
+        verify(job, never()).startInBackground(org.mockito.ArgumentMatchers.anyBoolean());
+    }
+
+    @Test
+    void migrateStartsDryAndRealRuns() {
+        V1MigrationJob job = mock(V1MigrationJob.class);
+        when(job.isConfigured()).thenReturn(true);
+        when(job.startInBackground(true)).thenReturn(true);
+        when(job.startInBackground(false)).thenReturn(false);
+        when(migration.getIfAvailable()).thenReturn(job);
+
+        handler.handle(message(1L, "/migrate_v1 dry"));
+        handler.handle(message(1L, "/migrate_v1 run"));
+
+        verify(job).startInBackground(true);
+        verify(job).startInBackground(false);
+        verify(gateway).sendText("Запущено пробну міграцію з V1 (нічого не записується)…");
+        verify(gateway).sendText("Міграція вже йде");
+    }
+
+    @Test
+    void migrateNotConfigured() {
+        handler.handle(message(1L, "/migrate_v1 run"));
+        V1MigrationJob job = mock(V1MigrationJob.class);
+        when(job.isConfigured()).thenReturn(false);
+        when(migration.getIfAvailable()).thenReturn(job);
+        handler.handle(message(1L, "/migrate_v1 dry"));
+
+        verify(gateway, org.mockito.Mockito.times(2)).sendText("Міграція не налаштована");
+        verify(job, never()).startInBackground(org.mockito.ArgumentMatchers.anyBoolean());
+    }
+
+    @Test
+    void migrateIgnoredForNonAdmin() {
+        handler.handle(message(2L, "/migrate_v1 run"));
+        verifyNoInteractions(gateway, migration);
     }
 }

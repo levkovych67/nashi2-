@@ -2,6 +2,7 @@ package com.nashi.place;
 
 import com.nashi.artist.Names;
 import com.nashi.geo.Region;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -24,6 +25,13 @@ public class PlaceStore {
 
     public Optional<Place> find(String placeId) {
         return Optional.ofNullable(mongo.findById(placeId, Place.class));
+    }
+
+    /** The most populous place of the region whose {@code nameNormalized} is exactly this (a whole name, not a prefix). */
+    public Optional<Place> findExact(String nameNormalized, Region region) {
+        Query query = Query.query(Criteria.where("nameNormalized").is(nameNormalized).and("region").is(region))
+                .with(Sort.by(Sort.Order.desc("population"), Sort.Order.asc("_id"))).limit(1);
+        return Optional.ofNullable(mongo.findOne(query, Place.class));
     }
 
     /**

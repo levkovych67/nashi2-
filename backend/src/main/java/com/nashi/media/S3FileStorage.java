@@ -1,6 +1,7 @@
 package com.nashi.media;
 
 import jakarta.annotation.PreDestroy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -23,18 +24,39 @@ public class S3FileStorage implements FileStorage {
     private final String bucket;
     private final String publicBaseUrl;
 
+    @Autowired
     public S3FileStorage(S3Properties props) {
+        this(client(props.endpoint(), props.region(), props.accessKeyId(), props.secretAccessKey(),
+                props.pathStyleAccess()), props.bucket(), props.publicBaseUrl());
+    }
+
+    private S3FileStorage(S3Client s3, String bucket, String publicBaseUrl) {
+        this.s3 = s3;
+        this.bucket = bucket;
+        this.publicBaseUrl = publicBaseUrl;
+    }
+
+    /**
+     * Storage on another bucket than the application's own, for reading the V1 files in the migration. Not a bean:
+     * the caller closes it. Path-style addressing is used when an endpoint is given (MinIO). It has no public address.
+     */
+    public static S3FileStorage forBucket(String endpoint, String region, String bucket, String accessKeyId,
+                                          String secretAccessKey) {
+        boolean custom = endpoint != null && !endpoint.isBlank();
+        return new S3FileStorage(client(endpoint, region, accessKeyId, secretAccessKey, custom), bucket, null);
+    }
+
+    private static S3Client client(String endpoint, String region, String accessKeyId, String secretAccessKey,
+                                   boolean pathStyle) {
         S3ClientBuilder builder = S3Client.builder()
-                .region(Region.of(props.region()))
+                .region(Region.of(region))
                 .credentialsProvider(StaticCredentialsProvider.create(
-                        AwsBasicCredentials.create(props.accessKeyId(), props.secretAccessKey())))
-                .forcePathStyle(props.pathStyleAccess());
-        if (props.endpoint() != null && !props.endpoint().isBlank()) {
-            builder.endpointOverride(URI.create(props.endpoint()));
+                        AwsBasicCredentials.create(accessKeyId, secretAccessKey)))
+                .forcePathStyle(pathStyle);
+        if (endpoint != null && !endpoint.isBlank()) {
+            builder.endpointOverride(URI.create(endpoint));
         }
-        this.s3 = builder.build();
-        this.bucket = props.bucket();
-        this.publicBaseUrl = props.publicBaseUrl();
+        return builder.build();
     }
 
     @Override
@@ -67,7 +89,7 @@ public class S3FileStorage implements FileStorage {
     }
 
     @PreDestroy
-    void close() {
+    public void close() {
         s3.close();
     }
 }
