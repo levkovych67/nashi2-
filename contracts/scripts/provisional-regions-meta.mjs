@@ -52,8 +52,9 @@ const area = (ring) => {
 };
 
 async function ensureSource() {
-  if (existsSync(SRC)) return;
   const meta = await (await fetch(API)).json();
+  console.log('source license (boundaryLicense):', meta.boundaryLicense, '| source:', meta.boundarySource);
+  if (existsSync(SRC)) return;
   const url = meta.gjDownloadURL ?? meta.simplifiedGeometryGeoJSON;
   console.log('downloading', url, '(build', meta.buildDate + ')');
   const res = await fetch(url);

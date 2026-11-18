@@ -6,4 +6,12 @@
 wait. The design team's `build-geo.mjs` owns this file and will overwrite it in the same format.
 
 Source data (downloaded into git-ignored `geo/source/`): [geoBoundaries](https://www.geoboundaries.org/)
-gbOpen UKR ADM1, attribution "geoBoundaries (CC BY 4.0)". Regenerate: `node contracts/scripts/provisional-regions-meta.mjs`.
+gbOpen UKR ADM1 (build date Dec 12, 2023; boundary year 2017), derived from OpenStreetMap (Wambacher boundaries).
+License of the source: Open Data Commons Open Database License (ODbL) 1.0.
+Attribution: © OpenStreetMap contributors, https://www.openstreetmap.org/copyright.
+
+`regions-meta.json` is a derived database (centers and bounding boxes computed from that data) and is offered under
+ODbL 1.0 (https://opendatacommons.org/licenses/odbl/1-0/). The map UI must show "© OpenStreetMap contributors".
+The design team's `build-geo.mjs` must carry the same attribution when it overwrites this file.
+
+Regenerate: `node contracts/scripts/provisional-regions-meta.mjs`.
