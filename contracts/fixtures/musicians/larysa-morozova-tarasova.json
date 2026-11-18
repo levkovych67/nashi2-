@@ -1,0 +1,55 @@
+{
+  "id": "00d3e58529530bc751ba5855",
+  "slug": "larysa-morozova-tarasova",
+  "name": "Лариса Морозова-Тарасова",
+  "kind": "PERSON",
+  "tagline": "10 лютого 2020 року, Харків, Україна) — відома українська оперна співачка, Заслужена артистка УРСР, викладач, вокальний педагог, доцент Харківського національного університету мистецтв імені І",
+  "summary": "Лариса Всеволодівна Морозова-Тарасова (18 серпня 1931 року, Харків, УРСР, СРСР — 10 лютого 2020 року, Харків, Україна) — відома українська оперна співачка, Заслужена артистка УРСР, викладач, вокальний педагог, доцент Харківського національного університету мистецтв імені І. П. Котляревського.",
+  "description": "Лариса Всеволодівна Морозова-Тарасова (18 серпня 1931 року, Харків, УРСР, СРСР — 10 лютого 2020 року, Харків, Україна) — відома українська оперна співачка, Заслужена артистка УРСР, викладач, вокальний педагог, доцент Харківського національного університету мистецтв імені І. П. Котляревського.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Морозова-Тарасова Лариса Всеволодівна",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9C%D0%BE%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0-%D0%A2%D0%B0%D1%80%D0%B0%D1%81%D0%BE%D0%B2%D0%B0_%D0%9B%D0%B0%D1%80%D0%B8%D1%81%D0%B0_%D0%92%D1%81%D0%B5%D0%B2%D0%BE%D0%BB%D0%BE%D0%B4%D1%96%D0%B2%D0%BD%D0%B0",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q42308",
+    "placeName": "Харків",
+    "region": "KHARKIV",
+    "regionName": "Харківська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.98230066029777,
+    "lon": 36.26354953214924
+  },
+  "dates": {
+    "birth": "1931-08-18",
+    "death": "2020-02-10",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://esu.com.ua/search_articles.php?id=68524"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9C%D0%BE%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0-%D0%A2%D0%B0%D1%80%D0%B0%D1%81%D0%BE%D0%B2%D0%B0_%D0%9B%D0%B0%D1%80%D0%B8%D1%81%D0%B0_%D0%92%D1%81%D0%B5%D0%B2%D0%BE%D0%BB%D0%BE%D0%B4%D1%96%D0%B2%D0%BD%D0%B0"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 7257,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

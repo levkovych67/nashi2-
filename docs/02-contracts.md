@@ -474,5 +474,5 @@ contracts/
     build-geo.mjs              geoBoundaries UKR ADM1 → geo/           — план S, задача 2
 ```
 Джерело фікстур — `nashi-backend/build/wiki-dry-run.json` з V1 (реальні музиканти з Вікіпедії, 21,6 МБ; якщо файла
-немає — `./gradlew wikiDryRun` у `nashi-backend`). Джерело геоданих — geoBoundaries gbOpen UKR ADM1 (CC BY 4.0;
+немає — `./gradlew wikiDryRun` у `nashi-backend`). Джерело геоданих — geoBoundaries gbOpen UKR ADM1 (версія 9469f09, OpenStreetMap/Wambacher, ODbL 1.0 за метаданими набору;
 перевірити, що є 27 одиниць, включно з Кримом і Севастополем; атрибуція — у `contracts/geo/README.md`).

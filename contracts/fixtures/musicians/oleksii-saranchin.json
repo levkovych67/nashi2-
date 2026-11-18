@@ -1,0 +1,85 @@
+{
+  "id": "006297900c5ba9bf975a278d",
+  "slug": "oleksii-saranchin",
+  "name": "Олексій Саранчін",
+  "kind": "PERSON",
+  "tagline": "20 травня 2026, Київ) — український джазовий піаніст, композитор, аранжувальник і педагог, відомий за виступами в джаз-бенді «Схід-Side» та в гурті «Танок на майдані Конґо» (фортепіано, перкусія)",
+  "summary": "Олексій Тарасович Саранчін (Олексій «Льопа Тарасич» Саранчін; нар. 13 лютого 1972, Харків — 20 травня 2026, Київ) — український джазовий піаніст, композитор, аранжувальник і педагог, відомий за виступами в джаз-бенді «Схід-Side» та в гурті «Танок на майдані Конґо» (фортепіано, перкусія).",
+  "description": "Олексій Тарасович Саранчін (Олексій «Льопа Тарасич» Саранчін; нар. 13 лютого 1972, Харків — 20 травня 2026, Київ) — український джазовий піаніст, композитор, аранжувальник і педагог, відомий за виступами в джаз-бенді «Схід-Side» та в гурті «Танок на майдані Конґо» (фортепіано, перкусія).",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Саранчін Олексій Тарасович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A1%D0%B0%D1%80%D0%B0%D0%BD%D1%87%D1%96%D0%BD_%D0%9E%D0%BB%D0%B5%D0%BA%D1%81%D1%96%D0%B9_%D0%A2%D0%B0%D1%80%D0%B0%D1%81%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q42308",
+    "placeName": "Харків",
+    "region": "KHARKIV",
+    "regionName": "Харківська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.98107782829904,
+    "lon": 36.225426011888956
+  },
+  "dates": {
+    "birth": "1972-02-13",
+    "death": "2026-05-20",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_006297900c5ba9bf975a278d_1",
+        "title": "Демоетюд 3",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_006297900c5ba9bf975a278d_2",
+        "title": "Демоетюд 4",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "INSTAGRAM",
+      "group": "SOCIAL",
+      "url": "https://www.instagram.com/asaranchin/"
+    },
+    {
+      "platform": "FACEBOOK",
+      "group": "SOCIAL",
+      "url": "https://www.facebook.com/alexey.saranchin"
+    },
+    {
+      "platform": "SOUNDCLOUD",
+      "group": "MUSIC",
+      "url": "https://soundcloud.com/user-549746552"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/2143303"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A1%D0%B0%D1%80%D0%B0%D0%BD%D1%87%D1%96%D0%BD_%D0%9E%D0%BB%D0%B5%D0%BA%D1%81%D1%96%D0%B9_%D0%A2%D0%B0%D1%80%D0%B0%D1%81%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 7225,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

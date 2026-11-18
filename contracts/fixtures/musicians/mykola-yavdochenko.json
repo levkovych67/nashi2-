@@ -1,0 +1,50 @@
+{
+  "id": "01e3a76bff57dc3cdebb58d1",
+  "slug": "mykola-yavdochenko",
+  "name": "Микола Явдоченко",
+  "kind": "PERSON",
+  "tagline": "?) — український кобзар",
+  "summary": "Микола Іванович Явдоченко (18 грудня 1908, Миргород, тепер Полтавської області — ?) — український кобзар. Чоловік Марії Шевченко.",
+  "description": "Микола Іванович Явдоченко (18 грудня 1908, Миргород, тепер Полтавської області — ?) — український кобзар. Чоловік Марії Шевченко.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Явдоченко Микола Іванович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%AF%D0%B2%D0%B4%D0%BE%D1%87%D0%B5%D0%BD%D0%BA%D0%BE_%D0%9C%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0_%D0%86%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q161961",
+    "placeName": "Миргород",
+    "region": "POLTAVA",
+    "regionName": "Полтавська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.96337416997199,
+    "lon": 33.59742549940907
+  },
+  "dates": {
+    "birth": "1908-12-18",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%AF%D0%B2%D0%B4%D0%BE%D1%87%D0%B5%D0%BD%D0%BA%D0%BE_%D0%9C%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0_%D0%86%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 3339,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

@@ -1,0 +1,62 @@
+{
+  "id": "0ad9936f8196255e672fc912",
+  "slug": "adam-soltys",
+  "name": "Адам Солтис",
+  "kind": "PERSON",
+  "tagline": "6 липня 1968, Львів) — польський композитор, диригент, педагог",
+  "summary": "Адам Мечиславович Солтис (пол. Adam Sołtys; 4 липня 1890, Львів — 6 липня 1968, Львів) — польський композитор, диригент, педагог.",
+  "description": "Адам Мечиславович Солтис (пол. Adam Sołtys; 4 липня 1890, Львів — 6 липня 1968, Львів) — польський композитор, диригент, педагог.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Солтис Адам Мечиславович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A1%D0%BE%D0%BB%D1%82%D0%B8%D1%81_%D0%90%D0%B4%D0%B0%D0%BC_%D0%9C%D0%B5%D1%87%D0%B8%D1%81%D0%BB%D0%B0%D0%B2%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/73/Adam_So%C5%82tys_%28-1936%29.JPG",
+      "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/7/73/Adam_So%C5%82tys_%28-1936%29.JPG",
+      "alt": "Адам Солтис",
+      "credit": {
+        "author": "Unknown author Unknown author",
+        "license": "Public domain",
+        "licenseUrl": null,
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Adam_So%C5%82tys_(-1936).JPG"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q36036",
+    "placeName": "Львів",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.83053180690946,
+    "lon": 24.001960616330294
+  },
+  "dates": {
+    "birth": "1890-07-04",
+    "death": "1968-07-06",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A1%D0%BE%D0%BB%D1%82%D0%B8%D1%81_%D0%90%D0%B4%D0%B0%D0%BC_%D0%9C%D0%B5%D1%87%D0%B8%D1%81%D0%BB%D0%B0%D0%B2%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 6548,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

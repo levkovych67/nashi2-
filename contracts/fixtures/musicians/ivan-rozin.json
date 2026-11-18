@@ -1,0 +1,50 @@
+{
+  "id": "0082725621b0a7cb52682a09",
+  "slug": "ivan-rozin",
+  "name": "Іван Розін",
+  "kind": "PERSON",
+  "tagline": "український актор театру, кіно та дубляжу, музикант, засновник та вокаліст музичного гурту «Gouache» (2006—2012), з 2013 року групи «US»",
+  "summary": "Іван Мойсейович Розін (нар. 28 лютого 1978, Харків, Українська РСР) — український актор театру, кіно та дубляжу, музикант, засновник та вокаліст музичного гурту «Gouache» (2006—2012), з 2013 року групи «US». Офіційний голос Леонардо Ді Капріо та Раяна Ґослінґа.",
+  "description": "Іван Мойсейович Розін (нар. 28 лютого 1978, Харків, Українська РСР) — український актор театру, кіно та дубляжу, музикант, засновник та вокаліст музичного гурту «Gouache» (2006—2012), з 2013 року групи «US». Офіційний голос Леонардо Ді Капріо та Раяна Ґослінґа.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Розін Іван Мойсейович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A0%D0%BE%D0%B7%D1%96%D0%BD_%D0%86%D0%B2%D0%B0%D0%BD_%D0%9C%D0%BE%D0%B9%D1%81%D0%B5%D0%B9%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q42308",
+    "placeName": "Харків",
+    "region": "KHARKIV",
+    "regionName": "Харківська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.97071720475513,
+    "lon": 36.22136651661703
+  },
+  "dates": {
+    "birth": "1978-02-28",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A0%D0%BE%D0%B7%D1%96%D0%BD_%D0%86%D0%B2%D0%B0%D0%BD_%D0%9C%D0%BE%D0%B9%D1%81%D0%B5%D0%B9%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 5610,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

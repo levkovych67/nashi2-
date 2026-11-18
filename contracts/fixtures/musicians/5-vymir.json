@@ -1,0 +1,98 @@
+{
+  "id": "3d981e58a395ef61b9245e90",
+  "slug": "5-vymir",
+  "name": "5 Vymir",
+  "kind": "BAND",
+  "tagline": "український музичний гурт з Києва",
+  "summary": "5 Vymir (П'ятий вимір) — український музичний гурт з Києва. Грає на зламі інді-року, бритпопу та психоделічного року. У своїй музиці органічно поєднує британські традиції звуку та україномовні тексти. У дискографії групи є два студійні альбоми : Містолінія (2014) і Нові Імена (2017).",
+  "description": "5 Vymir (П'ятий вимір) — український музичний гурт з Києва. Грає на зламі інді-року, бритпопу та психоделічного року. У своїй музиці органічно поєднує британські традиції звуку та україномовні тексти. У дискографії групи є два студійні альбоми : Містолінія (2014) і Нові Імена (2017).",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "5 Vymir",
+    "url": "https://uk.wikipedia.org/wiki/5_Vymir",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q1899",
+    "placeName": "Київ",
+    "region": "KYIV_CITY",
+    "regionName": "Київ",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 50.46959860186564,
+    "lon": 30.527101281378915
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_3d981e58a395ef61b9245e90_1",
+        "title": "Демоетюд 3",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "INSTAGRAM",
+      "group": "SOCIAL",
+      "url": "https://www.instagram.com/5vymir/"
+    },
+    {
+      "platform": "FACEBOOK",
+      "group": "SOCIAL",
+      "url": "https://www.facebook.com/5Vymir"
+    },
+    {
+      "platform": "X",
+      "group": "SOCIAL",
+      "url": "https://x.com/5vymir"
+    },
+    {
+      "platform": "YOUTUBE",
+      "group": "VIDEO",
+      "url": "https://www.youtube.com/channel/UC5fJ8osWGxKn-muzgxwDw_w"
+    },
+    {
+      "platform": "SPOTIFY",
+      "group": "MUSIC",
+      "url": "https://open.spotify.com/artist/6dCIsrM4buxz5VFqfrktF5"
+    },
+    {
+      "platform": "DEEZER",
+      "group": "MUSIC",
+      "url": "https://www.deezer.com/artist/7269526"
+    },
+    {
+      "platform": "SOUNDCLOUD",
+      "group": "MUSIC",
+      "url": "https://soundcloud.com/5vymir"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.last.fm/music/5+vymir"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/5_Vymir"
+    }
+  ],
+  "youtubeChannelUrl": "https://www.youtube.com/channel/UC5fJ8osWGxKn-muzgxwDw_w",
+  "likesCount": 4272,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

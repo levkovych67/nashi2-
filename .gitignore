@@ -6,3 +6,9 @@ node_modules/
 .env
 .env.*
 !.env.example
+dist/
+.npm-cache/
+.vite/
+*.tsbuildinfo
+playwright-report/
+test-results/

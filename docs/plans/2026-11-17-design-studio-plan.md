@@ -263,7 +263,7 @@ git commit -m "feat(studio): scaffold studio app with device frames and QR"
 - Create: `contracts/package.json` (якщо є — додати скрипти й devDependencies), `contracts/.gitignore` (`geo/source/`)
 - Create: `contracts/scripts/lib/regions.mjs`, `translit.mjs`, `text.mjs`, `pin.mjs`, `links.mjs`, `audio.mjs`, `wav.mjs`, `select.mjs`, `shapes.mjs`, `fixtures.mjs`, `geo.mjs`
 - Create: `contracts/scripts/build-fixtures.mjs`, `contracts/scripts/build-geo.mjs`, `contracts/scripts/fixture-extras.json`
-- Create: `contracts/geo/README.md` (джерело, ліцензія CC BY 4.0, атрибуція geoBoundaries)
+- Create: `contracts/geo/README.md` (джерело, ліцензія конкретного набору ODbL 1.0, атрибуція OpenStreetMap і geoBoundaries)
 - Create (вихід): `contracts/fixtures/**`, `contracts/geo/regions.geojson`, `ukraine-outline.geojson`, `regions-meta.json`
 - Test: `contracts/scripts/test/translit.test.mjs`, `text.test.mjs`, `pin.test.mjs`, `links.test.mjs`, `wav.test.mjs`, `build-fixtures.test.mjs`, `build-geo.test.mjs`, `fixtures-match-openapi.test.mjs`, `contracts/scripts/test/sample-dry-run.json`
 
@@ -290,15 +290,15 @@ git commit -m "feat(studio): scaffold studio app with device frames and QR"
 
 | Контракт | З dry-run V1 |
 |---|---|
-| відбір | лише записи, де `categories` містить `MUSICIAN` або `BAND`, і є `place` з `lat/lon` |
+| відбір | лише музиканти з координатами місця народження (`BIRTH`) та гурти з координатами місця заснування (`FORMATION`). Місце роботи або проживання з V1 не підтверджує походження (T19) |
 | `id` | `fixtureId(qid)` |
 | `slug` | `slugify(name)` (КМУ 2010, `-2`, `-3` при збігу) |
 | `kind` | `BAND`, якщо `ensemble === true` або `categories` містить `BAND`, інакше `PERSON` |
 | `region` | `regionOf(place)`: `Q1899` (Київ) → `KYIV_CITY`; `Q7525` (Севастополь) → `SEVASTOPOL_CITY`; інакше `place.region` |
 | `placeId`, `placeName` | `place.qid`, `place.labelUk` |
 | `PlaceType` | `CITY`, якщо з цього пункту ≥ 5 музикантів у наборі, інакше `TOWN` (dry-run не має типу; у продукті тип — з довідника `places`) |
-| `origin.basis` | `BIRTH` → `BIRTH`; `FORMATION` → `FORMATION`; `RESIDENCE`, `WORK`, `null` → `ORIGIN` |
-| `origin.precision` | `BIRTH`, `FORMATION` → `SETTLEMENT`; інакше `CITY` |
+| `origin.basis` | у записах з Вікіпедії — лише `BIRTH` або `FORMATION`. Для `RESIDENCE`, `WORK` та невідомої підстави піна немає. `ORIGIN` доступний для місця походження, вказаного заявником |
+| `origin.precision` | `BIRTH`, `FORMATION` → `SETTLEMENT`; походження зі слів заявника → `CITY` |
 | `origin.lat/lon`, піни | `pinFor(id, place, precision)` |
 | `summary` | `summarize(cleanBiography(biography), 300)` |
 | `description` | `summarize(cleanBiography(biography), 2000)` |

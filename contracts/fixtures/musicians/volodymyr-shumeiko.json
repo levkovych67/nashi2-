@@ -1,0 +1,50 @@
+{
+  "id": "016d7abdd1ccb38e3248f41b",
+  "slug": "volodymyr-shumeiko",
+  "name": "Володимир Шумейко",
+  "kind": "PERSON",
+  "tagline": "український композитор",
+  "summary": "Шумейко Володимир Вікторович — український композитор. Член Національної спілки композиторів України.",
+  "description": "Шумейко Володимир Вікторович — український композитор. Член Національної спілки композиторів України.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Шумейко Володимир Вікторович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A8%D1%83%D0%BC%D0%B5%D0%B9%D0%BA%D0%BE_%D0%92%D0%BE%D0%BB%D0%BE%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%92%D1%96%D0%BA%D1%82%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q2634118",
+    "placeName": "Криворізький район",
+    "region": "DNIPROPETROVSK",
+    "regionName": "Дніпропетровська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 47.90986119274156,
+    "lon": 33.35027882480728
+  },
+  "dates": {
+    "birth": "1949-01-21",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A8%D1%83%D0%BC%D0%B5%D0%B9%D0%BA%D0%BE_%D0%92%D0%BE%D0%BB%D0%BE%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%92%D1%96%D0%BA%D1%82%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 3366,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

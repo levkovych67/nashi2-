@@ -1,0 +1,100 @@
+{
+  "id": "9f77083e3af09c0016796c3a",
+  "slug": "oneiroid",
+  "name": "«Онейроїд»",
+  "kind": "BAND",
+  "tagline": "альтернативна група, утворена в Полтаві 25 грудня 1992 року з ініціативи медиків Андрія Боркунова (вокал, гітара) та Анатолія Воліка (тексти, бас)",
+  "summary": "Онейроїд (група) — альтернативна група, утворена в Полтаві 25 грудня 1992 року з ініціативи медиків Андрія Боркунова (вокал, гітара) та Анатолія Воліка (тексти, бас).",
+  "description": "Онейроїд (група) — альтернативна група, утворена в Полтаві 25 грудня 1992 року з ініціативи медиків Андрія Боркунова (вокал, гітара) та Анатолія Воліка (тексти, бас).",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Онейроїд (гурт)",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9E%D0%BD%D0%B5%D0%B9%D1%80%D0%BE%D1%97%D0%B4_%28%D0%B3%D1%83%D1%80%D1%82%29",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q156747",
+    "placeName": "Полтава",
+    "region": "POLTAVA",
+    "regionName": "Полтавська область",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 49.59342693981149,
+    "lon": 34.542911536778824
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": "1992",
+    "activeTo": null
+  },
+  "genres": [
+    "рок-музика"
+  ],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_9f77083e3af09c0016796c3a_1",
+        "title": "Демоетюд 3",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "http://www.oneyroid.com/"
+    },
+    {
+      "platform": "FACEBOOK",
+      "group": "SOCIAL",
+      "url": "https://www.facebook.com/oneyroid"
+    },
+    {
+      "platform": "YOUTUBE",
+      "group": "VIDEO",
+      "url": "https://www.youtube.com/channel/UCcAooF3iG-s0RUv8QyR4o7g"
+    },
+    {
+      "platform": "DEEZER",
+      "group": "MUSIC",
+      "url": "https://www.deezer.com/artist/888046"
+    },
+    {
+      "platform": "SOUNDCLOUD",
+      "group": "MUSIC",
+      "url": "https://soundcloud.com/oneyroid"
+    },
+    {
+      "platform": "BANDCAMP",
+      "group": "MUSIC",
+      "url": "https://oneyroid.bandcamp.com"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/3679793"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.last.fm/music/Онейроїд"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9E%D0%BD%D0%B5%D0%B9%D1%80%D0%BE%D1%97%D0%B4_%28%D0%B3%D1%83%D1%80%D1%82%29"
+    }
+  ],
+  "youtubeChannelUrl": "https://www.youtube.com/channel/UCcAooF3iG-s0RUv8QyR4o7g",
+  "likesCount": 4906,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

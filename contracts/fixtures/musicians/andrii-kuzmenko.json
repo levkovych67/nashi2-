@@ -1,0 +1,123 @@
+{
+  "id": "619b21273c66ad8f86fe8c89",
+  "slug": "andrii-kuzmenko",
+  "name": "Андрій Кузьменко",
+  "kind": "PERSON",
+  "tagline": "Кузьма, Кузьма Скрябін; 17 серпня 1968, Самбір, Львівська область, Українська РСР, СРСР — 2 лютого 2015, Лозуватка, Криворізький район, Дніпропетровська область, Україна) — український співак, композитор, поет, письменник, телеведучий, продюсер, актор",
+  "summary": "|знання мов= Андрій Вікторович Кузьменко (псевдонім — Кузьма, Кузьма Скрябін; 17 серпня 1968, Самбір, Львівська область, Українська РСР, СРСР — 2 лютого 2015, Лозуватка, Криворізький район, Дніпропетровська область, Україна) — український співак, композитор, поет, письменник, телеведучий, продюсер,…",
+  "description": "|знання мов= Андрій Вікторович Кузьменко (псевдонім — Кузьма, Кузьма Скрябін; 17 серпня 1968, Самбір, Львівська область, Українська РСР, СРСР — 2 лютого 2015, Лозуватка, Криворізький район, Дніпропетровська область, Україна) — український співак, композитор, поет, письменник, телеведучий, продюсер, актор. Лідер гурту «Скрябін». Герой України (2020, посмертно), кавалер Ордена «За заслуги» I ст. (2015, посмертно). Заслужений артист Автономної Республіки Крим (2008).",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Кузьма Скрябін",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9A%D1%83%D0%B7%D1%8C%D0%BC%D0%B0_%D0%A1%D0%BA%D1%80%D1%8F%D0%B1%D1%96%D0%BD",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Kuzma_Skriabin_2014.jpg/500px-Kuzma_Skriabin_2014.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Kuzma_Skriabin_2014.jpg/500px-Kuzma_Skriabin_2014.jpg",
+      "alt": "Андрій Кузьменко",
+      "credit": {
+        "author": "DENAMAX",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kuzma_Skriabin_2014.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q156593",
+    "placeName": "Самбір",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.50004880099234,
+    "lon": 23.19380086586905
+  },
+  "dates": {
+    "birth": "1968-08-17",
+    "death": "2015-02-02",
+    "activeFrom": "1989",
+    "activeTo": null
+  },
+  "genres": [
+    "рок-музика",
+    "техно",
+    "Готичний рок",
+    "попрок",
+    "синтпоп"
+  ],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_619b21273c66ad8f86fe8c89_1",
+        "title": "Демоетюд 4",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [
+      {
+        "title": "Я, Побєда і Берлін",
+        "year": 2006,
+        "type": "OTHER",
+        "url": "https://uk.wikipedia.org/wiki/%D0%AF%2C_%C2%AB%D0%9F%D0%BE%D0%B1%D1%94%D0%B4%D0%B0%C2%BB_%D1%96_%D0%91%D0%B5%D1%80%D0%BB%D1%96%D0%BD"
+      }
+    ],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "http://skryabinfund.com"
+    },
+    {
+      "platform": "INSTAGRAM",
+      "group": "SOCIAL",
+      "url": "https://www.instagram.com/kuzma_skryabin/"
+    },
+    {
+      "platform": "FACEBOOK",
+      "group": "SOCIAL",
+      "url": "https://www.facebook.com/skryabinofficial"
+    },
+    {
+      "platform": "X",
+      "group": "SOCIAL",
+      "url": "https://x.com/kuzmaskryabin"
+    },
+    {
+      "platform": "YOUTUBE",
+      "group": "VIDEO",
+      "url": "https://www.youtube.com/channel/UCM-nxR-OkVDuMJw82YBRrnA"
+    },
+    {
+      "platform": "SOUNDCLOUD",
+      "group": "MUSIC",
+      "url": "https://soundcloud.com/skryabin"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/774905"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://esu.com.ua/search_articles.php?id=1503"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9A%D1%83%D0%B7%D1%8C%D0%BC%D0%B0_%D0%A1%D0%BA%D1%80%D1%8F%D0%B1%D1%96%D0%BD"
+    }
+  ],
+  "youtubeChannelUrl": "https://www.youtube.com/channel/UCM-nxR-OkVDuMJw82YBRrnA",
+  "likesCount": 734,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

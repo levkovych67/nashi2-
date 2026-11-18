@@ -1,0 +1,50 @@
+{
+  "id": "0064e4ce56b79660c5f69589",
+  "slug": "yevhen-turula",
+  "name": "Євген Турула",
+  "kind": "PERSON",
+  "tagline": "3 грудня 1951, Вінніпег, Канада) — український диригент, педагог і композитор, український греко-католицький священик (до 1934 року)",
+  "summary": "Євген Теодорович Турула (4 січня 1882, Бережани — 3 грудня 1951, Вінніпег, Канада) — український диригент, педагог і композитор, український греко-католицький священик (до 1934 року).",
+  "description": "Євген Теодорович Турула (4 січня 1882, Бережани — 3 грудня 1951, Вінніпег, Канада) — український диригент, педагог і композитор, український греко-католицький священик (до 1934 року).",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Турула Євген Теодорович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A2%D1%83%D1%80%D1%83%D0%BB%D0%B0_%D0%84%D0%B2%D0%B3%D0%B5%D0%BD_%D0%A2%D0%B5%D0%BE%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q793424",
+    "placeName": "Бережани",
+    "region": "TERNOPIL",
+    "regionName": "Тернопільська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.44428813097894,
+    "lon": 24.958926960822172
+  },
+  "dates": {
+    "birth": "1882-01-04",
+    "death": "1951-12-03",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A2%D1%83%D1%80%D1%83%D0%BB%D0%B0_%D0%84%D0%B2%D0%B3%D0%B5%D0%BD_%D0%A2%D0%B5%D0%BE%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 4588,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

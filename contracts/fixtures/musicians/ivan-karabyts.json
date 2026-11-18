@@ -1,0 +1,77 @@
+{
+  "id": "02e7d232ed794e67cae34b81",
+  "slug": "ivan-karabyts",
+  "name": "Іван Карабиць",
+  "kind": "PERSON",
+  "tagline": "20 січня 2002) — український композитор, диригент, музично-громадський діяч",
+  "summary": "Іван Федорович Карабиць (17 січня 1945, Ялта, Донецька область — 20 січня 2002) — український композитор, диригент, музично-громадський діяч. Народний артист Української РСР (1991). Почесний громадянин Торецька.",
+  "description": "Іван Федорович Карабиць (17 січня 1945, Ялта, Донецька область — 20 січня 2002) — український композитор, диригент, музично-громадський діяч. Народний артист Української РСР (1991). Почесний громадянин Торецька.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Карабиць Іван Федорович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9A%D0%B0%D1%80%D0%B0%D0%B1%D0%B8%D1%86%D1%8C_%D0%86%D0%B2%D0%B0%D0%BD_%D0%A4%D0%B5%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/%D0%86._%D0%9A%D0%B0%D1%80%D0%B0%D0%B1%D0%B8%D1%86%D1%8C_1986.jpg/500px-%D0%86._%D0%9A%D0%B0%D1%80%D0%B0%D0%B1%D0%B8%D1%86%D1%8C_1986.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/%D0%86._%D0%9A%D0%B0%D1%80%D0%B0%D0%B1%D0%B8%D1%86%D1%8C_1986.jpg/500px-%D0%86._%D0%9A%D0%B0%D1%80%D0%B0%D0%B1%D0%B8%D1%86%D1%8C_1986.jpg",
+      "alt": "Іван Карабиць",
+      "credit": {
+        "author": "Ю. Мосенжник",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:%D0%86._%D0%9A%D0%B0%D1%80%D0%B0%D0%B1%D0%B8%D1%86%D1%8C_1986.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q4537455",
+    "placeName": "Ялта",
+    "region": "DONETSK",
+    "regionName": "Донецька область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 46.97318099960505,
+    "lon": 37.26360467291336
+  },
+  "dates": {
+    "birth": "1945-01-17",
+    "death": "2002-01-20",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "http://www.karabits.com"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/5091811"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://esu.com.ua/search_articles.php?id=9552"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9A%D0%B0%D1%80%D0%B0%D0%B1%D0%B8%D1%86%D1%8C_%D0%86%D0%B2%D0%B0%D0%BD_%D0%A4%D0%B5%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 2800,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

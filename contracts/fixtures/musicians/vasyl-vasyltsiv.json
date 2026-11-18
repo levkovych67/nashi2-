@@ -1,0 +1,67 @@
+{
+  "id": "033d5ccb7b212b131a6d5f5a",
+  "slug": "vasyl-vasyltsiv",
+  "name": "Василь Васильців",
+  "kind": "PERSON",
+  "tagline": null,
+  "summary": "Василь Васильців (*26 червня 1987, Львів) – український музикант, поет, композитор,кінолог, астроном , повар, власник тату студії, ведучий на ютуб, каменяр, водій, саунд-продюсер та кліпмейкер, маркетолог, кандидат економічних наук.",
+  "description": "Василь Васильців (*26 червня 1987, Львів) – український музикант, поет, композитор,кінолог, астроном , повар, власник тату студії, ведучий на ютуб, каменяр, водій, саунд-продюсер та кліпмейкер, маркетолог, кандидат економічних наук. Васильціва вважають першим українським музичним Інтернет-мемом (2005).",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Васильців Василь Григорович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D1%86%D1%96%D0%B2_%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D1%8C_%D0%93%D1%80%D0%B8%D0%B3%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Vasyl_Vasyltsiv.jpg/500px-Vasyl_Vasyltsiv.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Vasyl_Vasyltsiv.jpg/500px-Vasyl_Vasyltsiv.jpg",
+      "alt": "Василь Васильців",
+      "credit": {
+        "author": "Olexandr Kravchuk",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vasyl_Vasyltsiv.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q36036",
+    "placeName": "Львів",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.842291022801795,
+    "lon": 24.066348230210096
+  },
+  "dates": {
+    "birth": "1987-06-26",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "https://vasylvasyltsiv2.wixsite.com/mysite"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D1%86%D1%96%D0%B2_%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D1%8C_%D0%93%D1%80%D0%B8%D0%B3%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 9256,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

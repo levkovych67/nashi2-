@@ -1,0 +1,62 @@
+{
+  "id": "0152546f7f98ad516f3eb9e6",
+  "slug": "mykhailo-starytskyi",
+  "name": "Михайло Старицький",
+  "kind": "PERSON",
+  "tagline": "радянський і український композитор, скрипаль",
+  "summary": "Старицький Михайло Федорович (1957—2014) — радянський і український композитор, скрипаль.",
+  "description": "Старицький Михайло Федорович (1957—2014) — радянський і український композитор, скрипаль.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Старицький Михайло Федорович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A1%D1%82%D0%B0%D1%80%D0%B8%D1%86%D1%8C%D0%BA%D0%B8%D0%B9_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE_%D0%A4%D0%B5%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/29/M.Staritskiy.jpg",
+      "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/2/29/M.Staritskiy.jpg",
+      "alt": "Михайло Старицький",
+      "credit": {
+        "author": "М.Баст",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:M.Staritskiy.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q134279",
+    "placeName": "Луганськ",
+    "region": "LUHANSK",
+    "regionName": "Луганська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 48.55909354592668,
+    "lon": 39.263953759941266
+  },
+  "dates": {
+    "birth": "1957-10-05",
+    "death": "2014-04-09",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A1%D1%82%D0%B0%D1%80%D0%B8%D1%86%D1%8C%D0%BA%D0%B8%D0%B9_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE_%D0%A4%D0%B5%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 6930,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

@@ -1,0 +1,72 @@
+{
+  "id": "00adc3b0598b9768016e3a05",
+  "slug": "artur-lohai",
+  "name": "Артур Логай",
+  "kind": "PERSON",
+  "tagline": "український актор театру і кіно, співак та автор пісень, учасник п'ятого сезону талант-шоу «X-Фактор»",
+  "summary": "Артур Сергійович Логай (нар. 12 вересня 1993, Мелітополь, Запорізька область) — український актор театру і кіно, співак та автор пісень, учасник п'ятого сезону талант-шоу «X-Фактор». Переможець 8-го сезону українського телешоу «Танці з зірками» на телеканалі «1+1».",
+  "description": "Артур Сергійович Логай (нар. 12 вересня 1993, Мелітополь, Запорізька область) — український актор театру і кіно, співак та автор пісень, учасник п'ятого сезону талант-шоу «X-Фактор». Переможець 8-го сезону українського телешоу «Танці з зірками» на телеканалі «1+1». Актор Київського академічного театру драми і комедії на лівому березі Дніпра.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Логай Артур Сергійович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9B%D0%BE%D0%B3%D0%B0%D0%B9_%D0%90%D1%80%D1%82%D1%83%D1%80_%D0%A1%D0%B5%D1%80%D0%B3%D1%96%D0%B9%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/53/%D0%90%D1%80%D1%82%D1%83%D1%80_%D0%9B%D0%BE%D0%B3%D0%B0%D0%B9_%28cropped%29.jpg",
+      "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/5/53/%D0%90%D1%80%D1%82%D1%83%D1%80_%D0%9B%D0%BE%D0%B3%D0%B0%D0%B9_%28cropped%29.jpg",
+      "alt": "Артур Логай",
+      "credit": {
+        "author": "Максим Стоялов",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:%D0%90%D1%80%D1%82%D1%83%D1%80_%D0%9B%D0%BE%D0%B3%D0%B0%D0%B9_(cropped).jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q33349",
+    "placeName": "Мелітополь",
+    "region": "ZAPORIZHZHIA",
+    "regionName": "Запорізька область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 46.85531919963213,
+    "lon": 35.370992062256796
+  },
+  "dates": {
+    "birth": "1993-09-12",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "INSTAGRAM",
+      "group": "SOCIAL",
+      "url": "https://www.instagram.com/logai.arthur/"
+    },
+    {
+      "platform": "FACEBOOK",
+      "group": "SOCIAL",
+      "url": "https://www.facebook.com/arthur.logai"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9B%D0%BE%D0%B3%D0%B0%D0%B9_%D0%90%D1%80%D1%82%D1%83%D1%80_%D0%A1%D0%B5%D1%80%D0%B3%D1%96%D0%B9%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 6955,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

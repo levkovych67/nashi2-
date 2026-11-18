@@ -1,0 +1,72 @@
+{
+  "id": "023960cc53686862f466a7cd",
+  "slug": "marko-karminskyi",
+  "name": "Марко Кармінський",
+  "kind": "PERSON",
+  "tagline": "19 жовтня 1995, Харків, Україна) — радянський і український композитор",
+  "summary": "Кармінський Марко Веніамінович (30 січня 1930, Харків, УРСР, СРСР — 19 жовтня 1995, Харків, Україна) — радянський і український композитор. Заслужений діяч мистецтв Української РСР (1980).",
+  "description": "Кармінський Марко Веніамінович (30 січня 1930, Харків, УРСР, СРСР — 19 жовтня 1995, Харків, Україна) — радянський і український композитор. Заслужений діяч мистецтв Української РСР (1980).",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Кармінський Марк Веніамінович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9A%D0%B0%D1%80%D0%BC%D1%96%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9_%D0%9C%D0%B0%D1%80%D0%BA_%D0%92%D0%B5%D0%BD%D1%96%D0%B0%D0%BC%D1%96%D0%BD%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Karminski_6.jpg/500px-Karminski_6.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Karminski_6.jpg/500px-Karminski_6.jpg",
+      "alt": "Марко Кармінський",
+      "credit": {
+        "author": "Щербинин Юрий",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Karminski_6.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q42308",
+    "placeName": "Харків",
+    "region": "KHARKIV",
+    "regionName": "Харківська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 50.00070683002301,
+    "lon": 36.25122493711965
+  },
+  "dates": {
+    "birth": "1930-01-30",
+    "death": "1995-10-19",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/1522594"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://esu.com.ua/search_articles.php?id=9887"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9A%D0%B0%D1%80%D0%BC%D1%96%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9_%D0%9C%D0%B0%D1%80%D0%BA_%D0%92%D0%B5%D0%BD%D1%96%D0%B0%D0%BC%D1%96%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 7920,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

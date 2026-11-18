@@ -1,0 +1,50 @@
+{
+  "id": "00f485c04dd84f804f7e2885",
+  "slug": "anton-klimik",
+  "name": "Антон Клімік",
+  "kind": "PERSON",
+  "tagline": "співак, автор пісень, модель, актор",
+  "summary": "Антон Клімік (Антон Володимирович Климик, нар. 8 лютого 1993 у Чуднові, Житомирська область) — співак, автор пісень, модель, актор.",
+  "description": "Антон Клімік (Антон Володимирович Климик, нар. 8 лютого 1993 у Чуднові, Житомирська область) — співак, автор пісень, модель, актор. Фіналіст музикального телепроєкту Фабрика зірок-4, переможець вокального телеконкурсу «Крок до зірок», фіналіст відбору дитячого конкурсу Євробачення у складі гурту «Fresh Time», лідер гурту «Супермени».",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Антон Клімік",
+    "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%BD%D1%82%D0%BE%D0%BD_%D0%9A%D0%BB%D1%96%D0%BC%D1%96%D0%BA",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q149271",
+    "placeName": "Чуднів",
+    "region": "ZHYTOMYR",
+    "regionName": "Житомирська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 50.059775658283556,
+    "lon": 28.097660975048843
+  },
+  "dates": {
+    "birth": "1993-02-08",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%BD%D1%82%D0%BE%D0%BD_%D0%9A%D0%BB%D1%96%D0%BC%D1%96%D0%BA"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 9292,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

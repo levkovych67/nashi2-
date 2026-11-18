@@ -1,0 +1,62 @@
+{
+  "id": "02c3b7fc2fb03d6f5d220595",
+  "slug": "tytus-voitsekhovskyi",
+  "name": "Титус Войцеховський",
+  "kind": "PERSON",
+  "tagline": "23 березня 1879, Потурин) — польський політичний діяч, агроном, землевласник, меценат, товариш і ймовірний коханець Фридерика Шопена",
+  "summary": "Титус Сильвестр Войцеховський (пол. Tytus Sylwester Woyciechowski, нар. 31 грудня 1808, Львів — 23 березня 1879, Потурин) — польський політичний діяч, агроном, землевласник, меценат, товариш і ймовірний коханець Фридерика Шопена",
+  "description": "Титус Сильвестр Войцеховський (пол. Tytus Sylwester Woyciechowski, нар. 31 грудня 1808, Львів — 23 березня 1879, Потурин) — польський політичний діяч, агроном, землевласник, меценат, товариш і ймовірний коханець Фридерика Шопена",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Титус Войцеховський",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A2%D0%B8%D1%82%D1%83%D1%81_%D0%92%D0%BE%D0%B9%D1%86%D0%B5%D1%85%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B8%D0%B9",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Tytus_Woyciechowski_ante_1970_%285565288%29_%28cropped%29.jpg/500px-Tytus_Woyciechowski_ante_1970_%285565288%29_%28cropped%29.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Tytus_Woyciechowski_ante_1970_%285565288%29_%28cropped%29.jpg/500px-Tytus_Woyciechowski_ante_1970_%285565288%29_%28cropped%29.jpg",
+      "alt": "Титус Войцеховський",
+      "credit": {
+        "author": "Unknown author Unknown author",
+        "license": "Public domain",
+        "licenseUrl": null,
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tytus_Woyciechowski_ante_1970_(5565288)_(cropped).jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q36036",
+    "placeName": "Львів",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.82478140433796,
+    "lon": 24.024356168923365
+  },
+  "dates": {
+    "birth": "1808-12-31",
+    "death": "1879-03-23",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A2%D0%B8%D1%82%D1%83%D1%81_%D0%92%D0%BE%D0%B9%D1%86%D0%B5%D1%85%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B8%D0%B9"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 6385,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

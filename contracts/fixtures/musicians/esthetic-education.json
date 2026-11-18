@@ -1,0 +1,87 @@
+{
+  "id": "01088b1802dee217ea4c6934",
+  "slug": "esthetic-education",
+  "name": "Esthetic Education",
+  "kind": "BAND",
+  "tagline": "український гурт з інтернаціональним складом, заснований в 2004 році екс-учасниками рок-групи «Океан Ельзи» Юрієм Хусточкою (бас-гітара), Дмитром Шуровим (клавіші) і бельгійським режисером та фотографом з Лондона Луї Франком (вокал)",
+  "summary": "Esthetic Education — український гурт з інтернаціональним складом, заснований в 2004 році екс-учасниками рок-групи «Океан Ельзи» Юрієм Хусточкою (бас-гітара), Дмитром Шуровим (клавіші) і бельгійським режисером та фотографом з Лондона Луї Франком (вокал).",
+  "description": "Esthetic Education — український гурт з інтернаціональним складом, заснований в 2004 році екс-учасниками рок-групи «Океан Ельзи» Юрієм Хусточкою (бас-гітара), Дмитром Шуровим (клавіші) і бельгійським режисером та фотографом з Лондона Луї Франком (вокал).",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Esthetic Education",
+    "url": "https://uk.wikipedia.org/wiki/Esthetic_Education",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Esthetic_Education.jpg/500px-Esthetic_Education.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Esthetic_Education.jpg/500px-Esthetic_Education.jpg",
+      "alt": "Esthetic Education",
+      "credit": {
+        "author": "sama_ja",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Esthetic_Education.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q1899",
+    "placeName": "Київ",
+    "region": "KYIV_CITY",
+    "regionName": "Київ",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 50.444865236860764,
+    "lon": 30.500113953938204
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": "2004",
+    "activeTo": null
+  },
+  "genres": [
+    "інді-рок"
+  ],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_01088b1802dee217ea4c6934_1",
+        "title": "Демоетюд 5",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "http://www.estheticeducation.com/"
+    },
+    {
+      "platform": "DEEZER",
+      "group": "MUSIC",
+      "url": "https://www.deezer.com/artist/96297"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/880668"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/Esthetic_Education"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 1579,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

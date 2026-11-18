@@ -1,0 +1,32 @@
+[
+  {
+    "qid": "submission-demo-1",
+    "name": "Мідний папір",
+    "ensemble": true,
+    "biography": "Вигадана заявка для студії «Наші». Дует поєднує акустичну гітару з електронною перкусією.",
+    "genres": ["інді", "електроніка"],
+    "place": {"qid":"Q156747","labelUk":"Полтава","region":"POLTAVA","lat":49.589444444444446,"lon":34.55138888888889},
+    "imageUrl": "/fixtures/img/extra-1.svg",
+    "demoAudio": true
+  },
+  {
+    "qid": "submission-demo-2",
+    "name": "Тиха лінія",
+    "ensemble": false,
+    "biography": "Вигадана заявка для студії «Наші». Сольний проєкт досліджує польові записи та повільні фортепіанні композиції.",
+    "genres": ["ембієнт"],
+    "place": {"qid":"Q158292","labelUk":"Кропивницький","region":"KIROVOHRAD","lat":48.510277777778,"lon":32.266666666667},
+    "imageUrl": "/fixtures/img/extra-2.svg",
+    "demoAudio": false
+  },
+  {
+    "qid": "submission-demo-3",
+    "name": "Чотири береги",
+    "ensemble": true,
+    "biography": "Вигадана заявка для студії «Наші». Інструментальне тріо створює імпровізації для контрабаса, альта і кларнета.",
+    "genres": ["джаз"],
+    "place": {"qid":"Q157725","labelUk":"Чернівці","region":"CHERNIVTSI","lat":48.290833333333,"lon":25.934444444444},
+    "imageUrl": "/fixtures/img/extra-3.svg",
+    "demoAudio": true
+  }
+]

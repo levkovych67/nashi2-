@@ -1,0 +1,129 @@
+{
+  "id": "2de6a438a2f8a3ab64ab18c4",
+  "slug": "dakhabrakha",
+  "name": "ДахаБраха",
+  "kind": "BAND",
+  "tagline": "український музичний етногурт, організатором і художнім керівником якого є Владислав Троїцький",
+  "summary": "«ДахаБраха» (анг. DakhaBrakha ) — український музичний етногурт, організатором і художнім керівником якого є Владислав Троїцький. У репертуарі гурту — пісні українською, кримськотатарською, англійською, німецькою мовами. Лавреати Шевченківської премії 2020.",
+  "description": "«ДахаБраха» (анг. DakhaBrakha ) — український музичний етногурт, організатором і художнім керівником якого є Владислав Троїцький. У репертуарі гурту — пісні українською, кримськотатарською, англійською, німецькою мовами. Лавреати Шевченківської премії 2020. До складу групи входять Олена Цибульська, Ірина Коваленко, Ніна Гаренецька та Марко Галаневич.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "ДахаБраха",
+    "url": "https://uk.wikipedia.org/wiki/%D0%94%D0%B0%D1%85%D0%B0%D0%91%D1%80%D0%B0%D1%85%D0%B0",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/DakhaBrakha_in_Lviv.JPG/500px-DakhaBrakha_in_Lviv.JPG",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/DakhaBrakha_in_Lviv.JPG/500px-DakhaBrakha_in_Lviv.JPG",
+      "alt": "ДахаБраха",
+      "credit": {
+        "author": "Lyudmyla Dobrynina",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:DakhaBrakha_in_Lviv.JPG"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q1899",
+    "placeName": "Київ",
+    "region": "KYIV_CITY",
+    "regionName": "Київ",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 50.46584521451679,
+    "lon": 30.52272035029273
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": "2004",
+    "activeTo": null
+  },
+  "genres": [
+    "етнічна музика"
+  ],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_2de6a438a2f8a3ab64ab18c4_1",
+        "title": "Демоетюд 6",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_2de6a438a2f8a3ab64ab18c4_2",
+        "title": "Демоетюд 1",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "https://www.dakhabrakha.com.ua/"
+    },
+    {
+      "platform": "FACEBOOK",
+      "group": "SOCIAL",
+      "url": "https://www.facebook.com/DakhaBrakha"
+    },
+    {
+      "platform": "X",
+      "group": "SOCIAL",
+      "url": "https://x.com/DakhaBrakha"
+    },
+    {
+      "platform": "YOUTUBE",
+      "group": "VIDEO",
+      "url": "https://www.youtube.com/channel/UCiK8ixVCuaNWmC_xVGr8qCQ"
+    },
+    {
+      "platform": "SPOTIFY",
+      "group": "MUSIC",
+      "url": "https://open.spotify.com/artist/5hQYZqZaPcRceL82mFZTO5"
+    },
+    {
+      "platform": "DEEZER",
+      "group": "MUSIC",
+      "url": "https://www.deezer.com/artist/5492952"
+    },
+    {
+      "platform": "SOUNDCLOUD",
+      "group": "MUSIC",
+      "url": "https://soundcloud.com/dakhabrakha"
+    },
+    {
+      "platform": "BANDCAMP",
+      "group": "MUSIC",
+      "url": "https://dakhabrakha.bandcamp.com"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/1963802"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.last.fm/music/Дахабраха"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%94%D0%B0%D1%85%D0%B0%D0%91%D1%80%D0%B0%D1%85%D0%B0"
+    }
+  ],
+  "youtubeChannelUrl": "https://www.youtube.com/channel/UCiK8ixVCuaNWmC_xVGr8qCQ",
+  "likesCount": 6992,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

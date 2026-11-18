@@ -1,0 +1,55 @@
+{
+  "id": "3cbc2859d549e7a5604feb01",
+  "slug": "abzdolts",
+  "name": "Абздольц",
+  "kind": "BAND",
+  "tagline": "український рок-гурт, створений 1999 року у Києві",
+  "summary": "«Абздольц» — український рок-гурт, створений 1999 року у Києві. Лідер гурту - Міхуїл Абздольц.",
+  "description": "«Абздольц» — український рок-гурт, створений 1999 року у Києві. Лідер гурту - Міхуїл Абздольц.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Абздольц",
+    "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B1%D0%B7%D0%B4%D0%BE%D0%BB%D1%8C%D1%86",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q1899",
+    "placeName": "Київ",
+    "region": "KYIV_CITY",
+    "regionName": "Київ",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 50.463112690471014,
+    "lon": 30.50562893125031
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/5404793"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B1%D0%B7%D0%B4%D0%BE%D0%BB%D1%8C%D1%86"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 4740,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

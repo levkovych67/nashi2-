@@ -1,0 +1,55 @@
+{
+  "id": "010e8a8b8927958c89034a60",
+  "slug": "viktor-vakulovych",
+  "name": "Віктор Вакулович",
+  "kind": "PERSON",
+  "tagline": "26 травня 1992, Донецьк) — український хоровий диригент, педагог",
+  "summary": "Віктор Овсійович Вакулович (7 листопада 1921, Довгалівка — 26 травня 1992, Донецьк) — український хоровий диригент, педагог.",
+  "description": "Віктор Овсійович Вакулович (7 листопада 1921, Довгалівка — 26 травня 1992, Донецьк) — український хоровий диригент, педагог.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Вакулович Віктор Овсійович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%92%D0%B0%D0%BA%D1%83%D0%BB%D0%BE%D0%B2%D0%B8%D1%87_%D0%92%D1%96%D0%BA%D1%82%D0%BE%D1%80_%D0%9E%D0%B2%D1%81%D1%96%D0%B9%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q4163972",
+    "placeName": "Довгалівка",
+    "region": "CHERNIHIV",
+    "regionName": "Чернігівська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 50.75905560738428,
+    "lon": 32.89705520238436
+  },
+  "dates": {
+    "birth": "1921-11-07",
+    "death": "1992-05-26",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://esu.com.ua/search_articles.php?id=32949"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%92%D0%B0%D0%BA%D1%83%D0%BB%D0%BE%D0%B2%D0%B8%D1%87_%D0%92%D1%96%D0%BA%D1%82%D0%BE%D1%80_%D0%9E%D0%B2%D1%81%D1%96%D0%B9%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 8856,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

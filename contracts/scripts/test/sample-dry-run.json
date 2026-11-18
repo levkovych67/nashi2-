@@ -1,0 +1,10 @@
+[
+  {"qid":"Q2017541","name":"Оксана Линів","categories":["MUSICIAN"],"wikiTitle":"Линів Оксана Ярославівна","biography":"Оксана Линів (нар. 1978(19780106)) — українська диригентка.","place":{"qid":"Q465104","labelUk":"Броди","region":"LVIV","lat":50.078,"lon":25.154},"locationBasis":"BIRTH","imageUrl":"https://upload.wikimedia.org/lyniv.jpg","imageCredit":{"author":"Mykola Swarnyk","license":"CC BY-SA 4.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/4.0","filePageUrl":"https://commons.wikimedia.org/wiki/File:Oksana_Lyniv_2023_(facecrop).jpg"}},
+  {"qid":"Q2","name":"Київський виконавець","categories":["MUSICIAN"],"wikiTitle":"Другий","place":{"qid":"Q1899","labelUk":"Київ","region":"KYIV","lat":50.45,"lon":30.52},"locationBasis":"BIRTH"},
+  {"qid":"Q3","name":"Співак із Севастополя","categories":["MUSICIAN"],"wikiTitle":"Третій","place":{"qid":"Q7525","labelUk":"Севастополь","region":"CRIMEA","lat":44.6,"lon":33.53},"locationBasis":"BIRTH"},
+  {"qid":"Q1008489","name":"Океан Ельзи","categories":["BAND"],"wikiTitle":"Океан Ельзи","ensemble":true,"place":{"qid":"Q36036","labelUk":"Львів","region":"LVIV","lat":49.8419,"lon":24.0316},"locationBasis":"FORMATION","foundationYear":1994,"socialLinks":[{"platform":"SPOTIFY","url":"https://open.spotify.com/artist/fixture"}]},
+  {"qid":"Q5","name":"Письменник","categories":["WRITER"],"place":{"qid":"Q156747","labelUk":"Полтава","region":"POLTAVA","lat":49.58,"lon":34.55},"locationBasis":"BIRTH"},
+  {"qid":"Q6","name":"Без координат","categories":["MUSICIAN"]},
+  {"qid":"Q7","name":"Поет і музикант","categories":["WRITER","MUSICIAN"],"wikiTitle":"Сьомий","place":{"qid":"Q1874","labelUk":"Одеса","region":"ODESA","lat":46.48,"lon":30.73},"locationBasis":"BIRTH"},
+  {"qid":"Q8","name":"Пустий гурт","categories":["BAND"],"wikiTitle":"Восьмий","place":{"qid":"Q42308","labelUk":"Харків","region":"KHARKIV","lat":49.99,"lon":36.23},"locationBasis":"FORMATION","biography":""}
+]

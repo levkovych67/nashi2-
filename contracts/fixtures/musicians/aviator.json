@@ -1,0 +1,121 @@
+{
+  "id": "c13ae200035358e1a0b1a5c8",
+  "slug": "aviator",
+  "name": "Авіатор",
+  "kind": "BAND",
+  "tagline": "український музичний колектив, створений 2005 року в місті Київ",
+  "summary": "AVIÁTOR (також «Авіáтор», «Авиáтор») — український музичний колектив, створений 2005 року в місті Київ. Гурт одразу зайняв нішу в поп-музиці романтичного спрямування.",
+  "description": "AVIÁTOR (також «Авіáтор», «Авиáтор») — український музичний колектив, створений 2005 року в місті Київ. Гурт одразу зайняв нішу в поп-музиці романтичного спрямування. Вихід дебютного альбому «В эфире» став помітною подією в шоу-бізнесі: за перший тиждень було продано понад 50 тис. примірників, а загалом альбом розійшовся тиражем більш ніж 200 тис. копій. Головними учасниками гурту є Андрій Сторож, Дмитро Тодорюк та Ігор Воєвуцький (до 20 червня 2018 року).",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Авіатор (гурт)",
+    "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B2%D1%96%D0%B0%D1%82%D0%BE%D1%80_%28%D0%B3%D1%83%D1%80%D1%82%29",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/%D0%90%D0%B2%D1%96%D0%B0%D1%82%D0%BE%D1%80_-_%D1%84%D0%BE%D1%82%D0%BE.JPG/500px-%D0%90%D0%B2%D1%96%D0%B0%D1%82%D0%BE%D1%80_-_%D1%84%D0%BE%D1%82%D0%BE.JPG",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/%D0%90%D0%B2%D1%96%D0%B0%D1%82%D0%BE%D1%80_-_%D1%84%D0%BE%D1%82%D0%BE.JPG/500px-%D0%90%D0%B2%D1%96%D0%B0%D1%82%D0%BE%D1%80_-_%D1%84%D0%BE%D1%82%D0%BE.JPG",
+      "alt": "Авіатор",
+      "credit": {
+        "author": "Прес-центр",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:%D0%90%D0%B2%D1%96%D0%B0%D1%82%D0%BE%D1%80_-_%D1%84%D0%BE%D1%82%D0%BE.JPG"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q1899",
+    "placeName": "Київ",
+    "region": "KYIV_CITY",
+    "regionName": "Київ",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 50.47362286584088,
+    "lon": 30.505810260464436
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": "2005",
+    "activeTo": null
+  },
+  "genres": [
+    "поп"
+  ],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_c13ae200035358e1a0b1a5c8_1",
+        "title": "Демоетюд 3",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_c13ae200035358e1a0b1a5c8_2",
+        "title": "Демоетюд 4",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_c13ae200035358e1a0b1a5c8_3",
+        "title": "Демоетюд 5",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "http://www.aviatorgroup.ua/"
+    },
+    {
+      "platform": "INSTAGRAM",
+      "group": "SOCIAL",
+      "url": "https://www.instagram.com/aviatorofficial/"
+    },
+    {
+      "platform": "FACEBOOK",
+      "group": "SOCIAL",
+      "url": "https://www.facebook.com/GruppaAviator"
+    },
+    {
+      "platform": "X",
+      "group": "SOCIAL",
+      "url": "https://x.com/AviatorOfficial"
+    },
+    {
+      "platform": "YOUTUBE",
+      "group": "VIDEO",
+      "url": "https://www.youtube.com/channel/UCQb_rJ6x-i4bFsq4vCT34sA"
+    },
+    {
+      "platform": "SOUNDCLOUD",
+      "group": "MUSIC",
+      "url": "https://soundcloud.com/aviatorofficial-1"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.last.fm/music/Авиатор"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B2%D1%96%D0%B0%D1%82%D0%BE%D1%80_%28%D0%B3%D1%83%D1%80%D1%82%29"
+    }
+  ],
+  "youtubeChannelUrl": "https://www.youtube.com/channel/UCQb_rJ6x-i4bFsq4vCT34sA",
+  "likesCount": 6327,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

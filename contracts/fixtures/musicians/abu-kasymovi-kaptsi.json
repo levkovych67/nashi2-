@@ -1,0 +1,50 @@
+{
+  "id": "3ad29a55de3b0c48b26cb147",
+  "slug": "abu-kasymovi-kaptsi",
+  "name": "Абу-Касимові Капці",
+  "kind": "BAND",
+  "tagline": "український ска-панк-гурт з міста Львова",
+  "summary": "Абу-Касимові Капці — український ска-панк-гурт з міста Львова.",
+  "description": "Абу-Касимові Капці — український ска-панк-гурт з міста Львова.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Абу-Касимові капці (гурт)",
+    "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B1%D1%83-%D0%9A%D0%B0%D1%81%D0%B8%D0%BC%D0%BE%D0%B2%D1%96_%D0%BA%D0%B0%D0%BF%D1%86%D1%96_%28%D0%B3%D1%83%D1%80%D1%82%29",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q36036",
+    "placeName": "Львів",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 49.86523620455951,
+    "lon": 24.041595642843966
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B1%D1%83-%D0%9A%D0%B0%D1%81%D0%B8%D0%BC%D0%BE%D0%B2%D1%96_%D0%BA%D0%B0%D0%BF%D1%86%D1%96_%28%D0%B3%D1%83%D1%80%D1%82%29"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 1784,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

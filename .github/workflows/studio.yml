@@ -1,0 +1,30 @@
+name: Design studio
+on:
+  push:
+    branches: [main]
+    paths: ['studio/**', 'contracts/**', 'infra/nginx/studio.conf', 'package*.json', '.github/workflows/studio.yml']
+  pull_request:
+    paths: ['studio/**', 'contracts/**', 'infra/nginx/studio.conf', 'package*.json', '.github/workflows/studio.yml']
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test -w contracts
+      - run: npm run lint -w studio
+      - run: npm run typecheck -w studio
+      - run: npm test -w studio
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npm run e2e -w studio
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: studio-playwright
+          path: studio/playwright-report

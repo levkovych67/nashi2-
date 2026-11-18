@@ -1,0 +1,50 @@
+{
+  "id": "02000c48187c0b5ae4fde124",
+  "slug": "nadiia-shpachenko",
+  "name": "Надія Шпаченко",
+  "kind": "PERSON",
+  "tagline": "українсько-американська піаністка і композиторка, лавреатка премії Греммі 2020 за найкращу класичну збірку, перша володарка премії Греммі українського походження",
+  "summary": "Надія Шпаченко (англ. Nadia Shpachenko; нар.24 лютого 1979 (?), Харків, Україна) — українсько-американська піаністка і композиторка, лавреатка премії Греммі 2020 за найкращу класичну збірку, перша володарка премії Греммі українського походження.",
+  "description": "Надія Шпаченко (англ. Nadia Shpachenko; нар.24 лютого 1979 (?), Харків, Україна) — українсько-американська піаністка і композиторка, лавреатка премії Греммі 2020 за найкращу класичну збірку, перша володарка премії Греммі українського походження.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Надія Шпаченко",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9D%D0%B0%D0%B4%D1%96%D1%8F_%D0%A8%D0%BF%D0%B0%D1%87%D0%B5%D0%BD%D0%BA%D0%BE",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q42308",
+    "placeName": "Харків",
+    "region": "KHARKIV",
+    "regionName": "Харківська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.9965410048446,
+    "lon": 36.26257923687396
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9D%D0%B0%D0%B4%D1%96%D1%8F_%D0%A8%D0%BF%D0%B0%D1%87%D0%B5%D0%BD%D0%BA%D0%BE"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 7165,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

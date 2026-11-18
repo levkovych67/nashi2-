@@ -1,0 +1,126 @@
+{
+  "id": "020d9e19dd8b642cea9f52b0",
+  "slug": "mertvyi-piven",
+  "name": "Мертвий Півень",
+  "kind": "BAND",
+  "tagline": "український рок-гурт",
+  "summary": "«Мертвий півень» — український рок-гурт. Заснований у Львові у 1989 році, вважається одним з основоположників українського рок-н-роллу[джерело?].",
+  "description": "«Мертвий півень» — український рок-гурт. Заснований у Львові у 1989 році, вважається одним з основоположників українського рок-н-роллу[джерело?].",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Мертвий півень",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9C%D0%B5%D1%80%D1%82%D0%B2%D0%B8%D0%B9_%D0%BF%D1%96%D0%B2%D0%B5%D0%BD%D1%8C",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Mertvyi_Piven.jpg/500px-Mertvyi_Piven.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Mertvyi_Piven.jpg/500px-Mertvyi_Piven.jpg",
+      "alt": "Мертвий Півень",
+      "credit": {
+        "author": "keymaster",
+        "license": "GFDL",
+        "licenseUrl": "http://www.gnu.org/copyleft/fdl.html",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mertvyi_Piven.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q36036",
+    "placeName": "Львів",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 49.8189742609845,
+    "lon": 24.0209390252118
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": "1989",
+    "activeTo": null
+  },
+  "genres": [
+    "рок-музика"
+  ],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_020d9e19dd8b642cea9f52b0_1",
+        "title": "Демоетюд 1",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_020d9e19dd8b642cea9f52b0_2",
+        "title": "Демоетюд 2",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_020d9e19dd8b642cea9f52b0_3",
+        "title": "Демоетюд 3",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "http://deadrooster.org.ua"
+    },
+    {
+      "platform": "FACEBOOK",
+      "group": "SOCIAL",
+      "url": "https://www.facebook.com/pivni"
+    },
+    {
+      "platform": "X",
+      "group": "SOCIAL",
+      "url": "https://x.com/deadroosterband"
+    },
+    {
+      "platform": "YOUTUBE",
+      "group": "VIDEO",
+      "url": "https://www.youtube.com/channel/UCHaQMayMwRbFtxIEp5O9fHA"
+    },
+    {
+      "platform": "SPOTIFY",
+      "group": "MUSIC",
+      "url": "https://open.spotify.com/artist/62V9PGJyCd8DyWyXSLzdpC"
+    },
+    {
+      "platform": "APPLE_MUSIC",
+      "group": "MUSIC",
+      "url": "https://music.apple.com/artist/360867046"
+    },
+    {
+      "platform": "DEEZER",
+      "group": "MUSIC",
+      "url": "https://www.deezer.com/artist/5841778"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/851881"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9C%D0%B5%D1%80%D1%82%D0%B2%D0%B8%D0%B9_%D0%BF%D1%96%D0%B2%D0%B5%D0%BD%D1%8C"
+    }
+  ],
+  "youtubeChannelUrl": "https://www.youtube.com/channel/UCHaQMayMwRbFtxIEp5O9fHA",
+  "likesCount": 6920,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

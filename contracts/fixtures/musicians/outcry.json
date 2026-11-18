@@ -1,0 +1,55 @@
+{
+  "id": "03c76de7b70f4767f14babd9",
+  "slug": "outcry",
+  "name": "Outcry",
+  "kind": "BAND",
+  "tagline": null,
+  "summary": "OUTCRY - український рок-гурт створений 1998 року в місті Луцьку.",
+  "description": "OUTCRY - український рок-гурт створений 1998 року в місті Луцьку.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Outcry",
+    "url": "https://uk.wikipedia.org/wiki/Outcry",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q7550",
+    "placeName": "Луцьк",
+    "region": "VOLYN",
+    "regionName": "Волинська область",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 50.74644995623895,
+    "lon": 25.313564072043608
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/733975"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/Outcry"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 5583,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

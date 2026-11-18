@@ -1,0 +1,19 @@
+{
+  "name": "nashi-contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:fixtures": "node scripts/build-fixtures.mjs",
+    "build:geo": "node scripts/build-geo.mjs",
+    "test": "node --test scripts/test/*.test.mjs"
+  },
+  "devDependencies": {
+    "@apidevtools/swagger-parser": "12.1.0",
+    "@turf/boolean-point-in-polygon": "7.2.0",
+    "mapshaper": "0.6.121",
+    "polylabel": "2.1.0",
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1"
+  }
+}

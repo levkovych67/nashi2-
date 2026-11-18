@@ -1,0 +1,7 @@
+{
+  "name": "nashi-v2",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": ["contracts", "studio"],
+  "engines": {"node": ">=24"}
+}

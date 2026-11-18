@@ -1,0 +1,75 @@
+{
+  "id": "7babdc1721cd8bb78f8112d5",
+  "slug": "taras-chubai",
+  "name": "Тарас Чубай",
+  "kind": "PERSON",
+  "tagline": "український автор-виконавець, рок-музикант та композитор",
+  "summary": "Тарас Григорович Чубай (нар. 21 червня 1970, Львів) — український автор-виконавець, рок-музикант та композитор. Заслужейни артист України (2008), Народний артист України (2017). Лідер гурту «Плач Єремії» (керівник, автор музики і текстів, вокаліст, музикант).",
+  "description": "Тарас Григорович Чубай (нар. 21 червня 1970, Львів) — український автор-виконавець, рок-музикант та композитор. Заслужейни артист України (2008), Народний артист України (2017). Лідер гурту «Плач Єремії» (керівник, автор музики і текстів, вокаліст, музикант). За роки своєї творчої діяльності написав декілька десятків пісень та видав 11 музичних альбомів. Також написав увертюру до поезо-опери «Крайслер-Імперіал» для симфонічного оркестру.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Чубай Тарас Григорович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A7%D1%83%D0%B1%D0%B0%D0%B9_%D0%A2%D0%B0%D1%80%D0%B0%D1%81_%D0%93%D1%80%D0%B8%D0%B3%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/%D0%A2%D0%B0%D1%80%D0%B0%D1%81_%D0%A7%D1%83%D0%B1%D0%B0%D0%B9_%28%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C_05.11.2011%29.JPG/500px-%D0%A2%D0%B0%D1%80%D0%B0%D1%81_%D0%A7%D1%83%D0%B1%D0%B0%D0%B9_%28%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C_05.11.2011%29.JPG",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/%D0%A2%D0%B0%D1%80%D0%B0%D1%81_%D0%A7%D1%83%D0%B1%D0%B0%D0%B9_%28%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C_05.11.2011%29.JPG/500px-%D0%A2%D0%B0%D1%80%D0%B0%D1%81_%D0%A7%D1%83%D0%B1%D0%B0%D0%B9_%28%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C_05.11.2011%29.JPG",
+      "alt": "Тарас Чубай",
+      "credit": {
+        "author": "Terek",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:%D0%A2%D0%B0%D1%80%D0%B0%D1%81_%D0%A7%D1%83%D0%B1%D0%B0%D0%B9_(%D0%9B%D1%8C%D0%B2%D1%96%D0%B2,_05.11.2011).JPG"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q36036",
+    "placeName": "Львів",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.85400278135752,
+    "lon": 24.021237670885686
+  },
+  "dates": {
+    "birth": "1970-06-21",
+    "death": null,
+    "activeFrom": "1984",
+    "activeTo": null
+  },
+  "genres": [
+    "рок-музика",
+    "авторська пісня"
+  ],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "FACEBOOK",
+      "group": "SOCIAL",
+      "url": "https://www.facebook.com/TarasChubai"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/1126707"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A7%D1%83%D0%B1%D0%B0%D0%B9_%D0%A2%D0%B0%D1%80%D0%B0%D1%81_%D0%93%D1%80%D0%B8%D0%B3%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 9515,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}
