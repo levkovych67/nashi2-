@@ -35,6 +35,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.query.Query;
@@ -55,7 +56,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
@@ -357,6 +360,42 @@ class V1MigrationJobIT extends MongoIT {
         assertThat(artist.getAudio()).extracting(AudioClip::clipId).containsExactly("up_0");
     }
 
+    @Test
+    void aFailingEventListenerLeavesTheMigratedArtistAndItsFilesAlone() throws IOException {
+        putV1("artists/v1/demo.mp3", resource("/audio/sample.mp3"));
+        v1Artist("З демо", "APPROVED", null).append("demoTrackKeys", List.of("artists/v1/demo.mp3"));
+        insertAll();
+        ApplicationEventPublisher failing = event -> {
+            throw new IllegalStateException("listener broke");
+        };
+
+        MigrationReport report = jobWith(artists, failing).run(false);
+
+        assertThat(report.migrated()).isEqualTo(1);
+        assertThat(report.errors()).isEmpty();
+        Artist artist = byName("З демо");
+        assertThat(storage.get(artist.getAudio().get(0).key())).isEqualTo(resource("/audio/sample.mp3"));
+        assertThat(jobWith(artists, events).run(false).skippedExisting()).isEqualTo(1);
+    }
+
+    @Test
+    void aFailedInsertRemovesTheFilesItCopied() throws IOException {
+        putV1("artists/v1/one.jpg", resource("/images/tiny.jpg"));
+        putV1("artists/v1/demo.mp3", resource("/audio/sample.mp3"));
+        v1Artist("Не вставиться", "APPROVED", null).append("imageKeys", List.of("artists/v1/one.jpg"))
+                .append("demoTrackKeys", List.of("artists/v1/demo.mp3"));
+        insertAll();
+        ArtistRepository broken = mock(ArtistRepository.class);
+        when(broken.insert(any(Artist.class))).thenThrow(new DuplicateKeyException("slug_unique"));
+        int objectsBefore = countObjects(BUCKET, "artists/");
+
+        MigrationReport report = jobWith(broken, events).run(false);
+
+        assertThat(report.migrated()).isZero();
+        assertThat(report.errors()).hasSize(1);
+        assertThat(countObjects(BUCKET, "artists/")).isEqualTo(objectsBefore);
+    }
+
     // ---- background run ----
 
     @Test
@@ -386,6 +425,13 @@ class V1MigrationJobIT extends MongoIT {
     }
 
     // ---- helpers ----
+
+    private V1MigrationJob jobWith(ArtistRepository repository, ApplicationEventPublisher publisher) {
+        return new V1MigrationJob(new V1MigrationProperties(MONGO.getReplicaSetUrl(V1_DATABASE), V1_BUCKET,
+                "us-east-1", MINIO.getS3URL(), MINIO.getUserName(), MINIO.getPassword()),
+                repository, places, placeSearch, storage, images, mongo, publisher,
+                new JobRunLog(mongo, clock, gateway), gateway, Runnable::run, clock);
+    }
 
     private final List<Document> pending = new ArrayList<>();
 

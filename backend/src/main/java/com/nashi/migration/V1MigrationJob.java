@@ -236,25 +236,36 @@ public class V1MigrationJob {
             return;
         }
         List<String> uploaded = new ArrayList<>();
+        String id = new ObjectId().toHexString();
+        Place place;
         try {
-            Place place = placeOf(v1).orElse(null);
-            String id = new ObjectId().toHexString();
+            place = placeOf(v1).orElse(null);
             Artist artist = V1ArtistMapper.map(v1, place, id, SlugAllocator.allocate(name, artists::existsBySlug));
             if (!dryRun) {
                 artist.setImages(copyImages(v1, id, name, v1Files, uploaded, counters));
                 artist.setAudio(copyDemoTracks(v1, id, v1Files, uploaded, counters));
                 artist.setPublishedAt(clock.instant());
                 artists.insert(artist);
-                events.publishEvent(new ArtistChangedEvent(id));
-            }
-            counters.migrated++;
-            if (place == null) {
-                counters.withoutPlace++;
             }
         } catch (RuntimeException e) {
+            // only a failure up to and including the insert removes the files: the artist is not in V2
             log.warn("[V1] could not migrate artist {}", v1Id, e);
             counters.errors.add(v1Id + ": artist not migrated (" + e.getClass().getSimpleName() + ")");
             uploaded.forEach(this::deleteQuietly);
+            return;
+        }
+        counters.migrated++;
+        if (place == null) {
+            counters.withoutPlace++;
+        }
+        if (!dryRun) {
+            try {
+                events.publishEvent(new ArtistChangedEvent(id));
+            } catch (RuntimeException e) {
+                // the artist is saved with its files; only the map refresh was missed
+                log.warn("[V1] a listener of ArtistChangedEvent failed for artist {} ({})", id,
+                        e.getClass().getSimpleName());
+            }
         }
     }
 
