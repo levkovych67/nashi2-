@@ -1,0 +1,96 @@
+# Local stack for backend development. Credentials below are LOCAL ONLY (never used in production).
+# Host ports are bound to 127.0.0.1 and overridable (see infra/LOCAL.md).
+name: nashi-v2
+
+services:
+  mongo:
+    image: mongo:8
+    ports:
+      - "127.0.0.1:${NASHI_MONGO_PORT:-27019}:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # pgsty/* is the community fork: the official minio/minio and minio/mc images are no longer on Docker Hub
+  # (same image the backend tests use via Testcontainers).
+  minio:
+    image: pgsty/minio:RELEASE.2026-08-04T00-00-00Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin # local only
+      MINIO_ROOT_PASSWORD: minioadmin # local only
+    ports:
+      - "127.0.0.1:${NASHI_MINIO_PORT:-9000}:9000"
+      - "127.0.0.1:${NASHI_MINIO_CONSOLE_PORT:-9001}:9001"
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9000/minio/health/live || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio-init:
+    image: pgsty/mc:RELEASE.2026-08-04T00-00-00Z
+    depends_on:
+      minio:
+        condition: service_healthy
+    restart: "no"
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        set -e
+        mc alias set local http://minio:9000 minioadmin minioadmin
+        mc mb --ignore-existing local/nashi-v2
+        mc anonymous set download local/nashi-v2/artists
+
+  backend:
+    build:
+      context: ..
+      dockerfile: infra/backend.Dockerfile
+    depends_on:
+      mongo:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+      SPRING_MONGODB_URI: mongodb://mongo:27017/nashi_v2
+      NASHI_S3_ENDPOINT: http://minio:9000
+      NASHI_S3_REGION: us-east-1
+      NASHI_S3_BUCKET: nashi-v2
+      NASHI_S3_ACCESS_KEY_ID: minioadmin # local only
+      NASHI_S3_SECRET_ACCESS_KEY: minioadmin # local only
+      NASHI_S3_PATH_STYLE_ACCESS: "true"
+      # The browser loads photos from the host-published MinIO port
+      NASHI_S3_PUBLIC_BASE_URL: http://localhost:${NASHI_MINIO_PORT:-9000}/nashi-v2
+      NASHI_TELEGRAM_POLLING_ENABLED: "false"
+      NASHI_TELEGRAM_SENDING_ENABLED: "false"
+      NASHI_CORS_ALLOWED_ORIGINS: http://localhost:${NASHI_WEB_PORT:-4175},http://127.0.0.1:${NASHI_WEB_PORT:-4175},http://localhost:5173
+      NASHI_SITE_BASE_URL: http://localhost:${NASHI_WEB_PORT:-4175}
+    ports:
+      - "127.0.0.1:${NASHI_BACKEND_PORT:-8081}:8080"
+
+  # Not started by default: web/ does not exist yet (Task 3). Start with `local-up.sh --with-web`.
+  web:
+    profiles: ["web"]
+    build:
+      context: ..
+      dockerfile: infra/web.Dockerfile
+      args:
+        VITE_API_BASE_URL: /api/v2
+        VITE_SITE_BASE_URL: http://localhost:${NASHI_WEB_PORT:-4175}
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${NASHI_WEB_PORT:-4175}:80"
+
+volumes:
+  mongo-data:
+  minio-data:

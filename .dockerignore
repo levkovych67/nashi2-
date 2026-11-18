@@ -1,0 +1,14 @@
+.git
+.gitignore
+.superpowers
+.idea
+.DS_Store
+**/node_modules
+**/dist
+**/build
+**/.gradle
+**/.env
+**/.env.*
+!**/.env.example
+docs
+infra/secrets
