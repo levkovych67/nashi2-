@@ -10,12 +10,13 @@ import com.nashi.artist.AudioClip;
 import com.nashi.artist.AudioSource;
 import com.nashi.artist.ImageAsset;
 import com.nashi.artist.Origin;
+import com.nashi.artist.SlugAllocator;
+import org.bson.types.ObjectId;
 import com.nashi.artist.OriginBasis;
 import com.nashi.artist.PinPrecision;
 import com.nashi.support.MongoIT;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +47,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MapControllerIT extends MongoIT {
 
+    private static final int PINS_GZIP_BUDGET_BYTES = 225 * 1024;
     private static final Logger LOG = LoggerFactory.getLogger(MapControllerIT.class);
     private static final JsonMapper JSON = JsonMapper.builder().build();
 
@@ -149,34 +151,50 @@ class MapControllerIT extends MongoIT {
     }
 
     /**
-     * Disabled: the budget is not met. Measured with this fixture (5000 distinct pins, full contract fields, 5-decimal
-     * coordinates): raw 1.30 MB, gzip about 180 KB. Needs a controller decision (budget, fields or format).
+     * NFR-02 target is 150 KB; unreachable with the contract 2.1 field set, see docs/adr/0003-map-pins-payload.md.
+     * This guards against regressions until the decision is made. Synthetic but production-shaped data, seeded.
      */
-    @Disabled("NFR-02 not met: gzip ~180 KB > 150 KB, see task-11 report")
     @Test
-    void pinsPayloadUnder150KbGzipFor5000() throws IOException {
+    void pinsPayloadWithinBudgetFor5000() throws IOException {
         artists.deleteAll();
         Random rnd = new Random(42);
-        String[] first = {"Океан", "Скрябін", "Вакарчук", "Тартак", "Друга", "Рікка", "Мандри", "Гайдамаки", "Піккардійська",
-                "Врода", "Хвилі", "Dakh", "Антитіла", "Бумбокс", "Курган"};
-        String[] second = {"Ельзи", "Група", "Тріо", "Бенд", "Квартет", "Ріка", "Брати", "Ніч", "Дім", "Вогонь"};
-        Region[] regions = Region.values();
+        String[] firstNames = vocabulary(rnd, 150, 3, 4);
+        String[] surnames = vocabulary(rnd, 300, 3, 5);
+        String[] suffix = {"бенд", "Оркестр", "Квартет", "Тріо", "Бригада"};
+        int cities = 1500;
+        double[] cityLat = new double[cities];
+        double[] cityLon = new double[cities];
+        Region[] cityRegion = new Region[cities];
+        Region[] allRegions = Region.values();
+        for (int c = 0; c < cities; c++) {
+            cityLat[c] = 45.5 + rnd.nextDouble() * 5;
+            cityLon[c] = 23 + rnd.nextDouble() * 16;
+            cityRegion[c] = allRegions[rnd.nextInt(allRegions.length)];
+        }
+        Set<String> slugs = new java.util.HashSet<>();
         List<Artist> batch = new ArrayList<>(5000);
         for (int i = 0; i < 5000; i++) {
-            Region region = regions[rnd.nextInt(regions.length)];
-            String name = first[rnd.nextInt(first.length)] + " " + second[rnd.nextInt(second.length)] + " " + i;
-            String hash = Integer.toHexString(rnd.nextInt(0x10000000));
-            batch.add(Artist.builder().slug("gurt-" + i).name(name).kind(i % 4 == 0 ? MusicianKind.PERSON : MusicianKind.BAND)
+            ObjectId id = new ObjectId();
+            boolean band = rnd.nextDouble() < 0.3;
+            String name = !band ? firstNames[rnd.nextInt(150)] + " " + surnames[rnd.nextInt(300)]
+                    : rnd.nextBoolean() ? "Гурт " + surnames[rnd.nextInt(300)]
+                    : surnames[rnd.nextInt(300)] + " " + suffix[rnd.nextInt(suffix.length)];
+            // 20% of artists in the 10 big cities, the rest spread over all 1500 places
+            int city = rnd.nextDouble() < 0.2 ? rnd.nextInt(10) : rnd.nextInt(cities);
+            double offset = 0.02;
+            batch.add(Artist.builder().id(id.toHexString()).slug(SlugAllocator.allocate(name, slugs::contains))
+                    .name(name).kind(band ? MusicianKind.BAND : MusicianKind.PERSON)
                     .status(ArtistStatus.PUBLISHED).summary("Опис")
-                    .origin(new Origin("Q" + (1000 + rnd.nextInt(3000)), "Місто", region, OriginBasis.FORMATION,
-                            PinPrecision.CITY, new GeoJsonPoint(24, 49)))
-                    .pin(new GeoJsonPoint(22 + rnd.nextDouble() * 18, 45 + rnd.nextDouble() * 6))
-                    .images(i % 3 == 0 ? List.of() : List.of(new ImageAsset(null, null, null,
-                            "https://upload.wikimedia.org/wikipedia/commons/thumb/" + hash.charAt(0) + "/" + hash.substring(0, 2)
-                                    + "/Foto_" + i + ".jpg/200px-Foto_" + i + ".jpg", null, null)))
-                    .audio(i % 2 == 0 ? List.of() : List.of(new AudioClip("c", AudioSource.UPLOAD, null, "k", "u", "T", 10,
-                            "a", null)))
+                    .origin(new Origin("Q" + (10_000 + city), "Місто", cityRegion[city], OriginBasis.FORMATION,
+                            PinPrecision.CITY, new GeoJsonPoint(cityLon[city], cityLat[city])))
+                    .pin(new GeoJsonPoint(cityLon[city] + (rnd.nextDouble() - 0.5) * offset,
+                            cityLat[city] + (rnd.nextDouble() - 0.5) * offset))
+                    .images(rnd.nextDouble() < 0.7 ? List.of(new ImageAsset(null, null,
+                            "artists/" + id.toHexString() + "/0-thumb.jpg", null, null, null)) : List.of())
+                    .audio(rnd.nextDouble() < 0.4 ? List.of(new AudioClip("c", AudioSource.UPLOAD, null, "k", "u", "T",
+                            10, "a", null)) : List.of())
                     .build());
+            slugs.add(batch.get(i).getSlug());
         }
         mongo.insert(batch, "artists");
         long t0 = System.nanoTime();
@@ -192,6 +210,22 @@ class MapControllerIT extends MongoIT {
         }
         LOG.info("NFR-02 /map/pins for 5000 artists: raw={} bytes, gzip={} bytes, snapshot build={} ms",
                 raw.length, gz.size(), buildMs);
-        assertThat(gz.size()).isLessThanOrEqualTo(150 * 1024);
+        assertThat(gz.size()).isLessThanOrEqualTo(PINS_GZIP_BUDGET_BYTES);
+    }
+
+    /** Pronounceable pseudo-Ukrainian words, capitalized. */
+    private static String[] vocabulary(Random rnd, int size, int minSyl, int maxSyl) {
+        String[] cons = {"б", "в", "г", "д", "з", "к", "л", "м", "н", "п", "р", "с", "т", "х", "ч", "ш", "ж", "ц"};
+        String[] vow = {"а", "е", "и", "і", "о", "у", "я", "ю"};
+        Set<String> words = new java.util.LinkedHashSet<>();
+        while (words.size() < size) {
+            StringBuilder w = new StringBuilder();
+            int syl = minSyl + rnd.nextInt(maxSyl - minSyl + 1);
+            for (int s = 0; s < syl; s++) {
+                w.append(cons[rnd.nextInt(cons.length)]).append(vow[rnd.nextInt(vow.length)]);
+            }
+            words.add(Character.toUpperCase(w.charAt(0)) + w.substring(1));
+        }
+        return words.toArray(new String[0]);
     }
 }

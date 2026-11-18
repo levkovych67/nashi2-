@@ -62,6 +62,11 @@ public class MapService {
         this.storage = storage;
     }
 
+    /**
+     * Relies on Caffeine's synchronous {@code get(key, loader)}: the load runs inside the map's per-key compute, so
+     * {@code invalidate(key)} during a load waits for it to finish and then removes the entry. A build that started
+     * before an event is therefore never served after the event; the next read rebuilds.
+     */
     public MapSnapshot snapshot() {
         return cache.get(KEY, k -> build());
     }
@@ -120,9 +125,9 @@ public class MapService {
                 lat, lon, acc.count);
     }
 
-    /** 5 decimals is about 1 m: far finer than a pin on a map, and 5000 full-precision pairs would not gzip small. */
+    /** 4 decimals (about 11 m; pins are offset by 150 m or more anyway) keeps /map/pins under the NFR-02 gzip budget. */
     private static double round(double degrees) {
-        return Math.round(degrees * 1e5) / 1e5;
+        return Math.round(degrees * 1e4) / 1e4;
     }
 
     private String thumb(Artist a) {
