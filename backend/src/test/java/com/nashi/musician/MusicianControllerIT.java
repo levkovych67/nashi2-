@@ -87,6 +87,19 @@ class MusicianControllerIT extends MongoIT {
     }
 
     @Test
+    void artistWithoutOriginIsListedWithNullPlaceAndRegion() {
+        artists.save(Artist.builder().slug("abroad").name("Аброд").kind(MusicianKind.PERSON)
+                .status(ArtistStatus.PUBLISHED).summary("Опис").publishedAt(Instant.parse("2026-05-01T00:00:00Z"))
+                .build());
+
+        get("?q=аброд").expectStatus().isOk().expectBody()
+                .jsonPath("$.totalItems").isEqualTo(1)
+                .jsonPath("$.items[0].slug").isEqualTo("abroad")
+                .jsonPath("$.items[0].placeName").value(v -> assertThat(v).isNull())
+                .jsonPath("$.items[0].region").value(v -> assertThat(v).isNull());
+    }
+
+    @Test
     void filtersByRepeatedRegion() {
         get("?region=LVIV&region=KYIV_CITY").expectStatus().isOk().expectBody()
                 .jsonPath("$.totalItems").isEqualTo(3);

@@ -713,8 +713,11 @@ components:
           type: string
           format: uri
           description: Може бути відсутнім.
-        placeName: { type: string }
-        region: { $ref: '#/components/schemas/Region' }
+        placeName: { type: [string, 'null'] }
+        region:
+          anyOf:
+            - $ref: '#/components/schemas/Region'
+            - type: 'null'
         likesCount: { type: integer, format: int64, minimum: 0 }
         hasAudio: { type: boolean }
     MusicianPage:
@@ -853,7 +856,11 @@ components:
           type: array
           description: Може бути порожнім.
           items: { $ref: '#/components/schemas/Image' }
-        origin: { $ref: '#/components/schemas/Origin' }
+        origin:
+          description: '`null`, якщо музикант не на карті (місце поза Україною або без піна)'
+          anyOf:
+            - $ref: '#/components/schemas/Origin'
+            - type: 'null'
         dates: { $ref: '#/components/schemas/LifeDates' }
         genres:
           type: array

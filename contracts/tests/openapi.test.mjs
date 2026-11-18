@@ -313,3 +313,15 @@ test('test vectors: links.json covers every LinkPlatform at least twice and spec
 test('test vectors: names.json is an array', () => {
   assert.ok(Array.isArray(JSON.parse(readFileSync(here('../test-vectors/names.json'), 'utf8'))));
 });
+
+test('origin, placeName and region are required but nullable (musician outside Ukraine)', () => {
+  const anyNull = (x) => x.anyOf?.some((y) => y.type === 'null');
+  assert.ok(S.MusicianDetails.required.includes('origin'));
+  assert.ok(anyNull(S.MusicianDetails.properties.origin), 'origin nullable');
+  assert.ok(S.MusicianDetails.properties.origin.anyOf.some((y) => y.$ref === '#/components/schemas/Origin'));
+  assert.ok(S.MusicianListItem.required.includes('placeName'));
+  assert.ok(nullable(S.MusicianListItem.properties.placeName), 'placeName nullable');
+  assert.ok(S.MusicianListItem.required.includes('region'));
+  assert.ok(anyNull(S.MusicianListItem.properties.region), 'region nullable');
+  assert.ok(S.MusicianListItem.properties.region.anyOf.some((y) => y.$ref === '#/components/schemas/Region'));
+});
