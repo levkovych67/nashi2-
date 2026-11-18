@@ -11,3 +11,4 @@ build/
 .gradle/
 *.env
 /infra/secrets/
+/contracts/geo/source/

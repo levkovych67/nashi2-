@@ -25,11 +25,11 @@ test('document is OpenAPI 3.1 with /api/v2 server', () => {
   assert.equal(spec.servers[0].url, '/api/v2');
 });
 
-test('Region enum has exactly 27 values incl. KYIV_CITY and SEVASTOPOL_CITY', () => {
-  const r = S.Region.enum;
-  assert.equal(r.length, 27);
-  assert.equal(new Set(r).size, 27);
-  assert.ok(r.includes('KYIV_CITY') && r.includes('SEVASTOPOL_CITY') && r.includes('CRIMEA'));
+test('Region enum is the 27 codes of 02-contracts section 2 in contract order', () => {
+  assert.deepEqual(S.Region.enum, ['CRIMEA', 'VINNYTSIA', 'VOLYN', 'DNIPROPETROVSK', 'DONETSK', 'ZHYTOMYR',
+    'ZAKARPATTIA', 'ZAPORIZHZHIA', 'IVANO_FRANKIVSK', 'KYIV', 'KIROVOHRAD', 'LUHANSK', 'LVIV', 'MYKOLAIV', 'ODESA',
+    'POLTAVA', 'RIVNE', 'SUMY', 'TERNOPIL', 'KHARKIV', 'KHERSON', 'KHMELNYTSKYI', 'CHERKASY', 'CHERNIVTSI',
+    'CHERNIHIV', 'KYIV_CITY', 'SEVASTOPOL_CITY']);
 });
 
 test('all agreed schemas and enums exist', () => {
