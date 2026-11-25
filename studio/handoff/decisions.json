@@ -1,92 +1,92 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-18T16:23:46.292Z",
-  "studioCommit": "670ec2c674ede24772fd1a39356ef79c0d6008a5",
+  "generatedAt": "2026-11-25T14:43:20.207Z",
+  "studioCommit": "add2a12b032c2c39bae71c46553619158faeb2b8",
   "decisions": {
     "identity": {
-      "variant": "atlas",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "nichna-karta",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "map.basemap": {
-      "variant": "light-minimal",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "night",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "map.initial-view": {
-      "variant": "UKRAINE",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "UKRAINE_WITH_NEAR_ME_PROMPT",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "map.aggregation": {
-      "variant": "REGION_PLACE_PIN",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "CHOROPLETH_PLACE_PIN",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "map.pin": {
-      "variant": "AVATAR_RING",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "AVATAR_RING",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "map.cluster": {
-      "variant": "BUBBLE_COUNT",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "BUBBLE_COUNT",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "map.origin-notice": {
-      "variant": "PERSISTENT_CHIP",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "LEGEND_BAR",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "audio.mobile-trigger": {
-      "variant": "TAP_PREVIEW_AND_PLAY",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "TAP_PREVIEW_AND_PLAY",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "audio.desktop-hover": {
-      "variant": "RING_PROGRESS",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "EQUALIZER_BADGE",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "audio.player": {
-      "variant": "MINI_BAR",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "IN_CARD",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "musician.preview": {
-      "variant": "BOTTOM_SHEET",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "BOTTOM_SHEET",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "musician.page": {
-      "variant": "HERO",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "EDITORIAL",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "like.button": {
-      "variant": "HEART_BURST",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "HEART_BURST",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "filters.region": {
-      "variant": "SHEET_LIST",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "SHEET_LIST",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "submission.form": {
-      "variant": "SINGLE_PAGE",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "WIZARD",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "nav.structure": {
-      "variant": "MAP_ONLY_SHEETS",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "TOP_BAR_MENU",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     },
     "onboarding": {
-      "variant": "NONE",
       "status": "PROPOSED",
-      "note": "Пропозиція за замовчуванням. Потребує погодження."
+      "variant": "NONE",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
     }
   }
 }

@@ -1,25 +1,25 @@
 # Передача дизайну «Наші V2»
 
-Згенеровано 2026-11-18T16:23:46.292Z. Версія студії `670ec2c674ede24772fd1a39356ef79c0d6008a5`.
+Згенеровано 2026-11-25T14:43:20.207Z. Версія студії `add2a12b032c2c39bae71c46553619158faeb2b8`.
 
 | Рішення | Варіант | Стан |
 | --- | --- | --- |
-| identity | atlas | Запропоновано |
-| map.basemap | light-minimal | Запропоновано |
-| map.initial-view | UKRAINE | Запропоновано |
-| map.aggregation | REGION_PLACE_PIN | Запропоновано |
+| identity | nichna-karta | Запропоновано |
+| map.basemap | night | Запропоновано |
+| map.initial-view | UKRAINE_WITH_NEAR_ME_PROMPT | Запропоновано |
+| map.aggregation | CHOROPLETH_PLACE_PIN | Запропоновано |
 | map.pin | AVATAR_RING | Запропоновано |
 | map.cluster | BUBBLE_COUNT | Запропоновано |
-| map.origin-notice | PERSISTENT_CHIP | Запропоновано |
+| map.origin-notice | LEGEND_BAR | Запропоновано |
 | audio.mobile-trigger | TAP_PREVIEW_AND_PLAY | Запропоновано |
-| audio.desktop-hover | RING_PROGRESS | Запропоновано |
-| audio.player | MINI_BAR | Запропоновано |
+| audio.desktop-hover | EQUALIZER_BADGE | Запропоновано |
+| audio.player | IN_CARD | Запропоновано |
 | musician.preview | BOTTOM_SHEET | Запропоновано |
-| musician.page | HERO | Запропоновано |
+| musician.page | EDITORIAL | Запропоновано |
 | like.button | HEART_BURST | Запропоновано |
 | filters.region | SHEET_LIST | Запропоновано |
-| submission.form | SINGLE_PAGE | Запропоновано |
-| nav.structure | MAP_ONLY_SHEETS | Запропоновано |
+| submission.form | WIZARD | Запропоновано |
+| nav.structure | TOP_BAR_MENU | Запропоновано |
 | onboarding | NONE | Запропоновано |
 
 ## Готовність до передачі
@@ -46,73 +46,82 @@
 
 ## Відмінності від початкової конфігурації
 
-Вибрано початкові варіанти без додаткових параметрів.
+- identity · atlas / обрано nichna-karta
+- map.basemap · light-minimal / обрано night
+- map.initial-view · UKRAINE / обрано UKRAINE_WITH_NEAR_ME_PROMPT
+- map.aggregation · REGION_PLACE_PIN / обрано CHOROPLETH_PLACE_PIN
+- map.origin-notice · PERSISTENT_CHIP / обрано LEGEND_BAR
+- audio.desktop-hover · RING_PROGRESS / обрано EQUALIZER_BADGE
+- audio.player · MINI_BAR / обрано IN_CARD
+- musician.page · HERO / обрано EDITORIAL
+- submission.form · SINGLE_PAGE / обрано WIZARD
+- nav.structure · MAP_ONLY_SHEETS / обрано TOP_BAR_MENU
 
 ## identity
 
 ### Візуальний напрям
 
-**Редакційний атлас** · технічний ID `atlas`
+**Нічна карта звуку** · технічний ID `nichna-karta`
 
-Синє друкарське чорнило, молочний папір і заголовки з антиквою.
+Бурштинові позначки на темному тлі, як індикатори на звуковому пульті.
 
 Перевірте обкладинку, карту, профіль та форму на мобільному і широкому екранах. Дизайн-токени, локальні шрифти й знаки додано до пакета.
 
 Параметри `{}`.
 
-Перевага. Географічні назви й імена легко розрізнити.
+Перевага. Окремий виконавець відразу привертає увагу.
 
-Обмеження. Акцент на читанні може приглушити музичний характер.
+Обмеження. Темну карту складніше читати на сонці.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-01 · Навігація, кнопки й маркери повторюють блиск і градієнти Frutiger Aero. На телефоні та сама палітра поєднує шторку з картою.
 
-- [Комп’ютер](screens/identity/atlas--desktop.png)
-- [Телефон](screens/identity/atlas--mobile.png)
+- [Телефон](screens/identity/nichna-karta--mobile.png)
+- [Комп’ютер](screens/identity/nichna-karta--desktop.png)
 
 ## map.basemap
 
 ### Основа карти
 
-**Світла карта** · технічний ID `light-minimal`
+**Нічне місто** · технічний ID `night`
 
-Світлий фон, стримані дороги та великі міста українською.
+Темно-синя суша, холодна вода й освітлені вулиці.
 
 Стиль MapLibre містить території, воду, дороги, підписи місць і межі України. Підставте адресу TileJSON та шаблон гліфів під час конфігурації продукту.
 
 Параметри `{}`.
 
-Перевага. Позначки легко знайти серед географічних деталей.
+Перевага. Світлі маркери виразні на темній карті.
 
-Обмеження. Дрібні дороги з’являються пізніше.
+Обмеження. Контур дрібного села складніше побачити на сонці.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-02 · Стиль dataviz-light бере name:uk, а за його відсутності показує основну назву. Вода і рослинність мають різні кольори.
 
 A-03 · Фронтенд додає GeoJSON державного контуру. Візуальне представлення території залежить також від шарів тайлового провайдера.
 
-- [Комп’ютер](screens/map.basemap/light-minimal--desktop.png)
-- [Телефон](screens/map.basemap/light-minimal--mobile.png)
+- [Телефон](screens/map.basemap/night--mobile.png)
+- [Комп’ютер](screens/map.basemap/night--desktop.png)
 
 ## map.initial-view
 
 ### Перше відкриття карти
 
-**Уся Україна** · технічний ID `UKRAINE`
+**Почати поруч** · технічний ID `UKRAINE_WITH_NEAR_ME_PROMPT`
 
-Карта відкриває всі області, Київ, Крим і Севастополь.
+Загальний огляд доповнює кнопка «Біля мене».
 
 Камера охоплює межі України. Запит координат потребує явної дії користувача. Відмова дозволу зберігає доступ до карти.
 
 Параметри `{}`.
 
-Перевага. Відразу видно географію всієї колекції.
+Перевага. Одним дотиком можна відкрити свою область.
 
-Обмеження. До своєї області потрібно наблизитися.
+Обмеження. Потрібен доступ браузера до геолокації.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-04 · Карта стартує з фіксованого центру й zoom 6. На вузькому екрані частина території виходить за краї видимої ділянки.
 
@@ -120,26 +129,26 @@ A-13 · Параметр ?artist=999 одразу відкриває картк�
 
 A-20 · Хук useMapPins отримує /api/v1/map/pins одним запитом і кешує результат на десять хвилин. Фільтрування й побудова просторового індексу відбуваються у браузері.
 
-- [Комп’ютер](screens/map.initial-view/UKRAINE--desktop.png)
-- [Телефон](screens/map.initial-view/UKRAINE--mobile.png)
+- [Телефон](screens/map.initial-view/UKRAINE_WITH_NEAR_ME_PROMPT--mobile.png)
+- [Комп’ютер](screens/map.initial-view/UKRAINE_WITH_NEAR_ME_PROMPT--desktop.png)
 
 ## map.aggregation
 
 ### Від області до музиканта
 
-**Область, місто, музикант** · технічний ID `REGION_PLACE_PIN`
+**Області за насиченістю** · технічний ID `CHOROPLETH_PLACE_PIN`
 
-Кожне наближення уточнює географію й кількість.
+Колір області й число показують кількість музикантів.
 
 Пороги за замовчуванням становлять 7 та 10. Вибір області або населеного пункту наближає карту. Кількість у кластері є сумою музикантів.
 
 Параметри `{}`.
 
-Перевага. Від загальної кількості легко перейти до імен.
+Перевага. Різницю між регіонами видно ще до наближення.
 
-Обмеження. Щоб побачити піни, потрібно пройти два рівні.
+Обмеження. Для точного порівняння слід прочитати числа.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-08 · Поле «Пошук за ім’ям» стоїть перед переліком фільтрів, а вибір результату переміщує камеру до людини.
 
@@ -149,8 +158,8 @@ A-10 · Маркер оголошує «Дмитро Антонюк та ще 10
 
 A-20 · Хук useMapPins отримує /api/v1/map/pins одним запитом і кешує результат на десять хвилин. Фільтрування й побудова просторового індексу відбуваються у браузері.
 
-- [Комп’ютер](screens/map.aggregation/REGION_PLACE_PIN--desktop.png)
-- [Телефон](screens/map.aggregation/REGION_PLACE_PIN--mobile.png)
+- [Телефон](screens/map.aggregation/CHOROPLETH_PLACE_PIN--mobile.png)
+- [Комп’ютер](screens/map.aggregation/CHOROPLETH_PLACE_PIN--desktop.png)
 
 ## map.pin
 
@@ -168,7 +177,7 @@ A-20 · Хук useMapPins отримує /api/v1/map/pins одним запит�
 
 Обмеження. Без фотографії кілька виконавців можуть мати однакові ініціали.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-01 · Навігація, кнопки й маркери повторюють блиск і градієнти Frutiger Aero. На телефоні та сама палітра поєднує шторку з картою.
 
@@ -176,8 +185,8 @@ A-10 · Маркер оголошує «Дмитро Антонюк та ще 10
 
 A-21 · Окремий маркер називає артиста, а стек також повідомляє кількість інших людей і дію. Бульбашки мають доступну назву для наближення.
 
-- [Комп’ютер](screens/map.pin/AVATAR_RING--desktop.png)
 - [Телефон](screens/map.pin/AVATAR_RING--mobile.png)
+- [Комп’ютер](screens/map.pin/AVATAR_RING--desktop.png)
 
 ## map.cluster
 
@@ -195,7 +204,7 @@ A-21 · Окремий маркер називає артиста, а стек �
 
 Обмеження. Для назви потрібно вибрати область.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-09 · Supercluster підсумовує людей у точках. Кругла кнопка показує скорочене число для великих груп і наближає карту.
 
@@ -203,31 +212,31 @@ A-10 · Маркер оголошує «Дмитро Антонюк та ще 10
 
 A-21 · Окремий маркер називає артиста, а стек також повідомляє кількість інших людей і дію. Бульбашки мають доступну назву для наближення.
 
-- [Комп’ютер](screens/map.cluster/BUBBLE_COUNT--desktop.png)
 - [Телефон](screens/map.cluster/BUBBLE_COUNT--mobile.png)
+- [Комп’ютер](screens/map.cluster/BUBBLE_COUNT--desktop.png)
 
 ## map.origin-notice
 
 ### Пояснення походження
 
-**Чип на карті** · технічний ID `PERSISTENT_CHIP`
+**Смуга легенди** · технічний ID `LEGEND_BAR`
 
-Короткий підпис розгортається у пояснення походження.
+Під картою постійно видно повний текст пояснення.
 
 Пояснення походження постійно доступне на карті, у картці та у профілі музиканта.
 
 Параметри `{}`.
 
-Перевага. Пояснення завжди під рукою.
+Перевага. Значення позначки зрозуміле без дотику.
 
-Обмеження. Повний текст відкривається натисканням.
+Обмеження. На вузькому екрані легенда займає кілька рядків.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-11 · У картці гурту «999» видно Львів та тип «Гурт». На оглядовій карті відсутня постійна легенда, яка пояснює зв’язок між містом і артистом.
 
-- [Комп’ютер](screens/map.origin-notice/PERSISTENT_CHIP--desktop.png)
-- [Телефон](screens/map.origin-notice/PERSISTENT_CHIP--mobile.png)
+- [Телефон](screens/map.origin-notice/LEGEND_BAR--mobile.png)
+- [Комп’ютер](screens/map.origin-notice/LEGEND_BAR--desktop.png)
 
 ## audio.mobile-trigger
 
@@ -245,60 +254,60 @@ A-11 · У картці гурту «999» видно Львів та тип «�
 
 Обмеження. Випадковий дотик теж запускає звук.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-14 · Картка веде у профіль. Розділ «Слухати» у профілі пропонує джерела залежно від матеріалів артиста, а радіо має окремий маршрут.
 
-- [Комп’ютер](screens/audio.mobile-trigger/TAP_PREVIEW_AND_PLAY--desktop.png)
 - [Телефон](screens/audio.mobile-trigger/TAP_PREVIEW_AND_PLAY--mobile.png)
+- [Комп’ютер](screens/audio.mobile-trigger/TAP_PREVIEW_AND_PLAY--desktop.png)
 
 ## audio.desktop-hover
 
 ### Наведення на позначку
 
-**Кільце тривалості** · технічний ID `RING_PROGRESS`
+**Еквалайзер** · технічний ID `EQUALIZER_BADGE`
 
-Після наведення кільце навколо позначки показує, скільки фрагмента вже прозвучало.
+Під час відтворення біля активної позначки рухаються три смужки.
 
 Наведення запускає фрагмент після затримки 250 мс. Вихід за межі позначки завершує прослуховування.
 
 Параметри `{}`.
 
-Перевага. Тривалість читабельна прямо на карті.
+Перевага. Помітно, який виконавець зараз звучить.
 
-Обмеження. На малому екрані тонку дугу складніше помітити.
+Обмеження. Смужки показують активність без точної тривалості.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-14 · Картка веде у профіль. Розділ «Слухати» у профілі пропонує джерела залежно від матеріалів артиста, а радіо має окремий маршрут.
 
 A-21 · Окремий маркер називає артиста, а стек також повідомляє кількість інших людей і дію. Бульбашки мають доступну назву для наближення.
 
-- [Комп’ютер](screens/audio.desktop-hover/RING_PROGRESS--desktop.png)
-- [Телефон](screens/audio.desktop-hover/RING_PROGRESS--mobile.png)
+- [Телефон](screens/audio.desktop-hover/EQUALIZER_BADGE--mobile.png)
+- [Комп’ютер](screens/audio.desktop-hover/EQUALIZER_BADGE--desktop.png)
 
 ## audio.player
 
 ### Керування звуком
 
-**Нижній програвач** · технічний ID `MINI_BAR`
+**Програвач у картці** · технічний ID `IN_CARD`
 
-Окрема смуга під картою показує назву фрагмента, джерело та керування.
+Назва фрагмента, пауза й вибір наступного запису розміщені поруч із виконавцем.
 
 Керування охоплює запуск, паузу, продовження та зміну доступного фрагмента. Підпис містить джерело аудіо.
 
 Параметри `{}`.
 
-Перевага. Керування завжди в одному місці.
+Перевага. Зв’язок звуку з виконавцем очевидний.
 
-Обмеження. Смуга забирає частину висоти карти.
+Обмеження. Закриття картки прибирає керування зі сцени.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-14 · Картка веде у профіль. Розділ «Слухати» у профілі пропонує джерела залежно від матеріалів артиста, а радіо має окремий маршрут.
 
-- [Комп’ютер](screens/audio.player/MINI_BAR--desktop.png)
-- [Телефон](screens/audio.player/MINI_BAR--mobile.png)
+- [Телефон](screens/audio.player/IN_CARD--mobile.png)
+- [Комп’ютер](screens/audio.player/IN_CARD--desktop.png)
 
 ## musician.preview
 
@@ -316,7 +325,7 @@ A-14 · Картка веде у профіль. Розділ «Слухати»
 
 Обмеження. У розгорнутому стані вона закриває частину карти.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-11 · У картці гурту «999» видно Львів та тип «Гурт». На оглядовій карті відсутня постійна легенда, яка пояснює зв’язок між містом і артистом.
 
@@ -324,26 +333,26 @@ A-12 · Мобільна картка «999» з’являється внизу
 
 A-13 · Параметр ?artist=999 одразу відкриває картку гурту. У профілі посилання «Показати на карті» повертає до цієї самої точки.
 
-- [Комп’ютер](screens/musician.preview/BOTTOM_SHEET--desktop.png)
 - [Телефон](screens/musician.preview/BOTTOM_SHEET--mobile.png)
+- [Комп’ютер](screens/musician.preview/BOTTOM_SHEET--desktop.png)
 
 ## musician.page
 
 ### Сторінка музиканта
 
-**Портрет на обкладинці** · технічний ID `HERO`
+**Журнальна сторінка** · технічний ID `EDITORIAL`
 
-Ім’я накладено на велике фото. Нижче розміщені біографія, походження та музика.
+Ім’я та біографія відкривають сторінку, поруч розміщено портрет і підпис автора.
 
 Профіль містить біографію, місце походження, матеріали, посилання й атрибуцію фото та тексту. Повернення відновлює контекст карти.
 
 Параметри `{}`.
 
-Перевага. Фото одразу знайомить із виконавцем.
+Перевага. Біографію легко читати послідовно.
 
-Обмеження. Без фотографії на обкладинці залишаються лише ініціали.
+Обмеження. До музичних матеріалів треба прокрутити сторінку.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-12 · Мобільна картка «999» з’являється внизу поверх карти. Кнопка «Переглянути профіль» відкриває окрему сторінку.
 
@@ -351,8 +360,8 @@ A-15 · Профіль «999» містить місто, короткі фак�
 
 A-16 · Сторінка показує посилання на карту, джерела та платформи, але користувач не може додати лайк артисту.
 
-- [Комп’ютер](screens/musician.page/HERO--desktop.png)
-- [Телефон](screens/musician.page/HERO--mobile.png)
+- [Телефон](screens/musician.page/EDITORIAL--mobile.png)
+- [Комп’ютер](screens/musician.page/EDITORIAL--desktop.png)
 
 ## like.button
 
@@ -370,12 +379,12 @@ A-16 · Сторінка показує посилання на карту, дж
 
 Обмеження. При частих дотиках анімація привертає увагу.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-16 · Сторінка показує посилання на карту, джерела та платформи, але користувач не може додати лайк артисту.
 
-- [Комп’ютер](screens/like.button/HEART_BURST--desktop.png)
 - [Телефон](screens/like.button/HEART_BURST--mobile.png)
+- [Комп’ютер](screens/like.button/HEART_BURST--desktop.png)
 
 ## filters.region
 
@@ -393,7 +402,7 @@ A-16 · Сторінка показує посилання на карту, дж
 
 Обмеження. Панель займає частину карти.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-03 · Фронтенд додає GeoJSON державного контуру. Візуальне представлення території залежить також від шарів тайлового провайдера.
 
@@ -405,26 +414,26 @@ A-07 · Поряд із назвами типів та періодів видн
 
 A-08 · Поле «Пошук за ім’ям» стоїть перед переліком фільтрів, а вибір результату переміщує камеру до людини.
 
-- [Комп’ютер](screens/filters.region/SHEET_LIST--desktop.png)
 - [Телефон](screens/filters.region/SHEET_LIST--mobile.png)
+- [Комп’ютер](screens/filters.region/SHEET_LIST--desktop.png)
 
 ## submission.form
 
 ### Пропозиція музиканта
 
-**Одна сторінка** · технічний ID `SINGLE_PAGE`
+**Покрокова форма** · технічний ID `WIZARD`
 
-Усі поля згруповано в одній анкеті. До будь-якого розділу можна повернутися прокручуванням.
+Шість кроків ведуть від імені виконавця до перевірки анкети та згоди.
 
 Контракт 2.10. Валідація на blur і при надсиланні, географічне автодоповнення, 1–5 фото JPEG/PNG/WebP по 10 МБ, локальне зменшення до 2048 px. Після помилки дані збережено для повторної спроби.
 
 Параметри `{}`.
 
-Перевага. Легко звірити дані про виконавця перед надсиланням.
+Перевага. Поточний крок підказує, що заповнити далі.
 
-Обмеження. На телефоні доведеться прокрутити кілька екранів.
+Обмеження. Для редагування попередніх відповідей потрібно повернутися на відповідний крок.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-17 · Email, стиль і біографія обов’язкові. Вибір міста заповнює координати. Учасники, соціальні мережі й демотреки мають окремі необов’язкові секції.
 
@@ -432,26 +441,26 @@ A-18 · Глобальний віджет читає стан завантаже
 
 A-19 · Великий екран показує окремі пункти «Артисти», «Події», «Радіо», «Новини». Нижня навігація телефону та вибір між артистом і подією повторюють ширший обсяг V1.
 
-- [Комп’ютер](screens/submission.form/SINGLE_PAGE--desktop.png)
-- [Телефон](screens/submission.form/SINGLE_PAGE--mobile.png)
+- [Телефон](screens/submission.form/WIZARD--mobile.png)
+- [Комп’ютер](screens/submission.form/WIZARD--desktop.png)
 
 ## nav.structure
 
 ### Розділи застосунку
 
-**Карта зі шторками** · технічний ID `MAP_ONLY_SHEETS`
+**Верхнє меню** · технічний ID `TOP_BAR_MENU`
 
-Карта лишається під рукою. Пошук, фільтр і заявка відкриваються поверх неї.
+Розділи відкриваються з меню в шапці карти.
 
 З карти доступні список і форма. Повернення дає продовжити перегляд виконавців.
 
 Параметри `{}`.
 
-Перевага. Закриття шторки повертає до тієї самої області.
+Перевага. Для карти лишається більше місця.
 
-Обмеження. Висока шторка перекриває частину карти.
+Обмеження. Для переходу між розділами потрібен додатковий дотик.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-05 · Ліва скляна панель має ширину 360 px і власне прокручування. Після вибору регіону змінюються результати та камера.
 
@@ -461,8 +470,8 @@ A-13 · Параметр ?artist=999 одразу відкриває картк�
 
 A-19 · Великий екран показує окремі пункти «Артисти», «Події», «Радіо», «Новини». Нижня навігація телефону та вибір між артистом і подією повторюють ширший обсяг V1.
 
-- [Комп’ютер](screens/nav.structure/MAP_ONLY_SHEETS--desktop.png)
-- [Телефон](screens/nav.structure/MAP_ONLY_SHEETS--mobile.png)
+- [Телефон](screens/nav.structure/TOP_BAR_MENU--mobile.png)
+- [Комп’ютер](screens/nav.structure/TOP_BAR_MENU--desktop.png)
 
 ## onboarding
 
@@ -480,7 +489,7 @@ A-19 · Великий екран показує окремі пункти «А�
 
 Обмеження. Жест для прослуховування треба знайти самостійно.
 
-Примітка · Пропозиція за замовчуванням. Потребує погодження.
+Примітка · Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»
 
 A-04 · Карта стартує з фіксованого центру й zoom 6. На вузькому екрані частина території виходить за краї видимої ділянки.
 
@@ -488,52 +497,52 @@ A-11 · У картці гурту «999» видно Львів та тип «�
 
 A-19 · Великий екран показує окремі пункти «Артисти», «Події», «Радіо», «Новини». Нижня навігація телефону та вибір між артистом і подією повторюють ширший обсяг V1.
 
-- [Комп’ютер](screens/onboarding/NONE--desktop.png)
 - [Телефон](screens/onboarding/NONE--mobile.png)
+- [Комп’ютер](screens/onboarding/NONE--desktop.png)
 
 ## Наскрізні сценарії
 
-- [map-to-musician/01-ukraine--desktop](screens/flows/map-to-musician/01-ukraine--desktop.png)
 - [map-to-musician/01-ukraine--mobile](screens/flows/map-to-musician/01-ukraine--mobile.png)
-- [map-to-musician/02-region--desktop](screens/flows/map-to-musician/02-region--desktop.png)
 - [map-to-musician/02-region--mobile](screens/flows/map-to-musician/02-region--mobile.png)
-- [map-to-musician/03-places--desktop](screens/flows/map-to-musician/03-places--desktop.png)
 - [map-to-musician/03-places--mobile](screens/flows/map-to-musician/03-places--mobile.png)
-- [map-to-musician/04-lviv--desktop](screens/flows/map-to-musician/04-lviv--desktop.png)
 - [map-to-musician/04-lviv--mobile](screens/flows/map-to-musician/04-lviv--mobile.png)
-- [map-to-musician/05-pins--desktop](screens/flows/map-to-musician/05-pins--desktop.png)
 - [map-to-musician/05-pins--mobile](screens/flows/map-to-musician/05-pins--mobile.png)
-- [map-to-musician/06-audio--desktop](screens/flows/map-to-musician/06-audio--desktop.png)
 - [map-to-musician/06-audio--mobile](screens/flows/map-to-musician/06-audio--mobile.png)
-- [map-to-musician/07-preview--desktop](screens/flows/map-to-musician/07-preview--desktop.png)
 - [map-to-musician/07-preview--mobile](screens/flows/map-to-musician/07-preview--mobile.png)
-- [map-to-musician/08-profile--desktop](screens/flows/map-to-musician/08-profile--desktop.png)
 - [map-to-musician/08-profile--mobile](screens/flows/map-to-musician/08-profile--mobile.png)
-- [map-to-musician/09-likes--desktop](screens/flows/map-to-musician/09-likes--desktop.png)
 - [map-to-musician/09-likes--mobile](screens/flows/map-to-musician/09-likes--mobile.png)
-- [map-to-musician/10-return--desktop](screens/flows/map-to-musician/10-return--desktop.png)
 - [map-to-musician/10-return--mobile](screens/flows/map-to-musician/10-return--mobile.png)
-- [suggest-musician/01-navigation--desktop](screens/flows/suggest-musician/01-navigation--desktop.png)
 - [suggest-musician/01-navigation--mobile](screens/flows/suggest-musician/01-navigation--mobile.png)
-- [suggest-musician/02-form--desktop](screens/flows/suggest-musician/02-form--desktop.png)
 - [suggest-musician/02-form--mobile](screens/flows/suggest-musician/02-form--mobile.png)
-- [suggest-musician/03-validation--desktop](screens/flows/suggest-musician/03-validation--desktop.png)
 - [suggest-musician/03-validation--mobile](screens/flows/suggest-musician/03-validation--mobile.png)
-- [suggest-musician/04-origin--desktop](screens/flows/suggest-musician/04-origin--desktop.png)
 - [suggest-musician/04-origin--mobile](screens/flows/suggest-musician/04-origin--mobile.png)
-- [suggest-musician/05-music--desktop](screens/flows/suggest-musician/05-music--desktop.png)
 - [suggest-musician/05-music--mobile](screens/flows/suggest-musician/05-music--mobile.png)
-- [suggest-musician/06-links--desktop](screens/flows/suggest-musician/06-links--desktop.png)
 - [suggest-musician/06-links--mobile](screens/flows/suggest-musician/06-links--mobile.png)
-- [suggest-musician/07-photo--desktop](screens/flows/suggest-musician/07-photo--desktop.png)
 - [suggest-musician/07-photo--mobile](screens/flows/suggest-musician/07-photo--mobile.png)
-- [suggest-musician/08-review--desktop](screens/flows/suggest-musician/08-review--desktop.png)
 - [suggest-musician/08-review--mobile](screens/flows/suggest-musician/08-review--mobile.png)
-- [suggest-musician/09-sending--desktop](screens/flows/suggest-musician/09-sending--desktop.png)
 - [suggest-musician/09-sending--mobile](screens/flows/suggest-musician/09-sending--mobile.png)
-- [suggest-musician/10-error-413--desktop](screens/flows/suggest-musician/10-error-413--desktop.png)
 - [suggest-musician/10-error-413--mobile](screens/flows/suggest-musician/10-error-413--mobile.png)
-- [suggest-musician/11-replace-photo--desktop](screens/flows/suggest-musician/11-replace-photo--desktop.png)
 - [suggest-musician/11-replace-photo--mobile](screens/flows/suggest-musician/11-replace-photo--mobile.png)
-- [suggest-musician/12-success--desktop](screens/flows/suggest-musician/12-success--desktop.png)
 - [suggest-musician/12-success--mobile](screens/flows/suggest-musician/12-success--mobile.png)
+- [map-to-musician/01-ukraine--desktop](screens/flows/map-to-musician/01-ukraine--desktop.png)
+- [map-to-musician/02-region--desktop](screens/flows/map-to-musician/02-region--desktop.png)
+- [map-to-musician/03-places--desktop](screens/flows/map-to-musician/03-places--desktop.png)
+- [map-to-musician/04-lviv--desktop](screens/flows/map-to-musician/04-lviv--desktop.png)
+- [map-to-musician/05-pins--desktop](screens/flows/map-to-musician/05-pins--desktop.png)
+- [map-to-musician/06-audio--desktop](screens/flows/map-to-musician/06-audio--desktop.png)
+- [map-to-musician/07-preview--desktop](screens/flows/map-to-musician/07-preview--desktop.png)
+- [map-to-musician/08-profile--desktop](screens/flows/map-to-musician/08-profile--desktop.png)
+- [map-to-musician/09-likes--desktop](screens/flows/map-to-musician/09-likes--desktop.png)
+- [map-to-musician/10-return--desktop](screens/flows/map-to-musician/10-return--desktop.png)
+- [suggest-musician/01-navigation--desktop](screens/flows/suggest-musician/01-navigation--desktop.png)
+- [suggest-musician/02-form--desktop](screens/flows/suggest-musician/02-form--desktop.png)
+- [suggest-musician/03-validation--desktop](screens/flows/suggest-musician/03-validation--desktop.png)
+- [suggest-musician/04-origin--desktop](screens/flows/suggest-musician/04-origin--desktop.png)
+- [suggest-musician/05-music--desktop](screens/flows/suggest-musician/05-music--desktop.png)
+- [suggest-musician/06-links--desktop](screens/flows/suggest-musician/06-links--desktop.png)
+- [suggest-musician/07-photo--desktop](screens/flows/suggest-musician/07-photo--desktop.png)
+- [suggest-musician/08-review--desktop](screens/flows/suggest-musician/08-review--desktop.png)
+- [suggest-musician/09-sending--desktop](screens/flows/suggest-musician/09-sending--desktop.png)
+- [suggest-musician/10-error-413--desktop](screens/flows/suggest-musician/10-error-413--desktop.png)
+- [suggest-musician/11-replace-photo--desktop](screens/flows/suggest-musician/11-replace-photo--desktop.png)
+- [suggest-musician/12-success--desktop](screens/flows/suggest-musician/12-success--desktop.png)
