@@ -117,7 +117,10 @@ test('empty state: musician page without a fragment', async ({ page }) => {
   await withoutAudio(page, 'musician')
   await page.goto('/m/okean-elzy')
   await expect(page.getByText(text('musician.noAudio'))).toBeVisible()
-  await page.locator('.n-musician').evaluate((el) => (el.scrollTop = 0))
+  // the hero is covered by musician-page.png; here the audio area with the empty state is scrolled into view
+  const none = page.getByText(text('musician.noAudio'))
+  await none.scrollIntoViewIfNeeded()
+  await expect.poll(() => none.evaluate((el) => el.getBoundingClientRect().top < innerHeight)).toBe(true)
   await shot(page, 'empty-no-fragment-page.png', likes(page))
 })
 
