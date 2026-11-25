@@ -11,6 +11,8 @@ export interface LikeBatcher {
   tap(id: string): void
   /** Taps not yet confirmed by the server: queued plus in flight (so the UI count never dips mid-request). */
   pending(id: string): number
+  /** Last count the server confirmed for `id` (0 until the first response); survives hook unmounts. */
+  confirmed(id: string): number
   flushAll(opts: { keepalive: boolean }): void
   onServerCount(l: (id: string, likesCount: number) => void): () => void
 }
@@ -30,6 +32,7 @@ interface Slot {
 export function createLikeBatcher(deps: LikeBatcherDeps, cfg: { flushMs: number; max: number }): LikeBatcher {
   const { send, clock } = deps
   const slots = new Map<string, Slot>()
+  const confirmedCounts = new Map<string, number>()
   const listeners = new Set<(id: string, likesCount: number) => void>()
 
   const slot = (id: string): Slot => {
@@ -65,6 +68,7 @@ export function createLikeBatcher(deps: LikeBatcherDeps, cfg: { flushMs: number;
   function succeeded(id: string, s: Slot, likesCount: number) {
     s.failures = 0
     s.blockedUntil = 0
+    confirmedCounts.set(id, Math.max(confirmedCounts.get(id) ?? 0, likesCount))
     emit(id, likesCount)
   }
 
@@ -122,6 +126,7 @@ export function createLikeBatcher(deps: LikeBatcherDeps, cfg: { flushMs: number;
       const s = slots.get(id)
       return s ? s.queued + s.inFlight : 0
     },
+    confirmed: (id) => confirmedCounts.get(id) ?? 0,
     flushAll({ keepalive }) {
       for (const [id, s] of slots) {
         if (keepalive) {

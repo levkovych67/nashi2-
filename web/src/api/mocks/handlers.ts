@@ -28,7 +28,23 @@ const publicConfig: Schemas['PublicConfig'] = {
   turnstileSiteKey: null,
 }
 
-const likes = new Map<string, number>()
+// Kept in sessionStorage when there is one, so a page reload in the browser mock still sees the likes sent earlier.
+const LIKES_KEY = 'nashi-mock-likes'
+const stored = (): [string, number][] => {
+  try {
+    return JSON.parse(globalThis.sessionStorage?.getItem(LIKES_KEY) ?? '[]')
+  } catch {
+    return []
+  }
+}
+const likes = new Map<string, number>(stored())
+const saveLikes = () => {
+  try {
+    globalThis.sessionStorage?.setItem(LIKES_KEY, JSON.stringify([...likes]))
+  } catch {
+    // storage blocked: the counter then lives until the next reload
+  }
+}
 const likesOf = (m: Schemas['MusicianDetails']) => m.likesCount + (likes.get(m.id) ?? 0)
 
 const norm = (s: string) =>
@@ -100,6 +116,7 @@ export const handlers = [
       return problem(400, 'VALIDATION_FAILED', 'Некоректні дані')
     }
     likes.set(m.id, (likes.get(m.id) ?? 0) + count)
+    saveLikes()
     return HttpResponse.json({ likesCount: likesOf(m) })
   }),
 

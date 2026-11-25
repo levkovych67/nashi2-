@@ -43,4 +43,27 @@ describe('useLike', () => {
   it('throws outside LikesRoot', () => {
     expect(() => renderHook(() => useLike('m1', 0))).toThrow(/LikesRoot/)
   })
+
+  it('keeps the confirmed count per musician: switching musicianId does not leak another musician\'s count', async () => {
+    const { wrapper, release } = setup()
+    const { result, rerender } = renderHook(({ id, n }) => useLike(id, n), { wrapper, initialProps: { id: 'm1', n: 10 } })
+    for (let i = 0; i < 3; i++) act(() => result.current.tap())
+    await act(async () => release({ ok: true, likesCount: 500 }))
+    expect(result.current.count).toBe(500)
+    rerender({ id: 'm2', n: 7 })
+    expect(result.current.count).toBe(7)
+    rerender({ id: 'm1', n: 10 })
+    expect(result.current.count).toBe(500)
+  })
+
+  it('unmount and remount keep the confirmed count even if the cached page data is stale', async () => {
+    const { wrapper, release } = setup()
+    const first = renderHook(() => useLike('m1', 10), { wrapper })
+    for (let i = 0; i < 3; i++) act(() => first.result.current.tap())
+    await act(async () => release({ ok: true, likesCount: 13 }))
+    expect(first.result.current.count).toBe(13)
+    first.unmount()
+    const second = renderHook(() => useLike('m1', 10), { wrapper })
+    expect(second.result.current.count).toBe(13)
+  })
 })
