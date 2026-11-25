@@ -11,9 +11,11 @@ export interface SubmissionLimits {
   maxImageMb: number
   summaryMin: number
   summaryMax: number
+  /** Whole-request cap for photos (02-contracts 2.10: 55 MB); not part of the public config. */
+  maxTotalMb?: number
 }
 
-export const DEFAULT_LIMITS: SubmissionLimits = { maxImages: 5, maxImageMb: 10, summaryMin: 30, summaryMax: 1000 }
+export const DEFAULT_LIMITS: SubmissionLimits = { maxImages: 5, maxImageMb: 10, summaryMin: 30, summaryMax: 1000, maxTotalMb: 55 }
 
 export const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const
 
@@ -46,6 +48,7 @@ const E = {
   imageType: 'submit.error.imageType',
   imageSize: 'submit.error.imageSize',
   imageEmpty: 'submit.error.imageEmpty',
+  imagesTotal: 'submit.error.imagesTotal',
 } as const
 
 const blank = (s: string | null | undefined) => s == null || s.trim() === ''
@@ -120,6 +123,8 @@ export function createSubmissionSchema(limits: SubmissionLimits): z.ZodType<Subm
         else if (f.size === 0) add(['images', i], E.imageEmpty)
         else if (f.size > limits.maxImageMb * MB) add(['images', i], E.imageSize)
       })
+      const total = images.reduce((sum, f) => sum + f.size, 0)
+      if (total > (limits.maxTotalMb ?? DEFAULT_LIMITS.maxTotalMb!) * MB) add(['images'], E.imagesTotal)
     }
   })
 }

@@ -25,7 +25,7 @@ const MAX_GENRES = 5
 export function SuggestForm() {
   const t = useCopy()
   const config = usePublicConfig().data?.submission
-  const limits = config ?? DEFAULT_LIMITS
+  const limits = useMemo(() => ({ ...DEFAULT_LIMITS, ...config }), [config])
   const schema = useMemo(() => createSubmissionSchema(limits), [limits])
 
   const [state, setState] = useState<FormState>(() => loadDraft() ?? emptyState())
@@ -363,6 +363,7 @@ export function SuggestForm() {
             onBusy={setBusy}
             max={limits.maxImages}
             maxMb={limits.maxImageMb}
+            maxTotalMb={limits.maxTotalMb ?? 55}
             error={err('images')}
             rowErrors={rows('images')}
           />

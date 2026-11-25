@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { fieldErrors, submissionSchema, type SubmissionFormValues } from './schema'
+import { createSubmissionSchema, DEFAULT_LIMITS, fieldErrors, submissionSchema, type SubmissionFormValues } from './schema'
 
 const photo = (name = 'p.jpg', type = 'image/jpeg', size = 3) =>
   new File([new Uint8Array(size)], name, { type })
@@ -119,5 +119,35 @@ describe('submissionSchema mirrors the backend SubmissionValidator', () => {
     const s = createSubmissionSchema({ maxImages: 2, maxImageMb: 1, summaryMin: 10, summaryMax: 100 })
     expect(Object.keys(fieldErrors(s, { ...valid(), images: [photo(), photo(), photo()] }))).toEqual(['images'])
     expect(Object.keys(fieldErrors(s, { ...valid(), summary: 'x'.repeat(101) }))).toEqual(['summary'])
+  })
+
+  it('genres: at most 5, each 2..40', () => {
+    expect(keys({ ...valid(), genres: ['а', 'б', 'в', 'г', 'д', 'е'].map((g) => g + g) })).toEqual(['genres'])
+    expect(keys({ ...valid(), genres: ['а'] })).toEqual(['genres[0]'])
+    expect(keys({ ...valid(), genres: ['а'.repeat(41)] })).toEqual(['genres[0]'])
+    expect(keys({ ...valid(), genres: ['аб', 'а'.repeat(40)] })).toEqual([])
+  })
+
+  it('links: 1..10', () => {
+    const many = Array.from({ length: 11 }, (_, i) => `https://open.spotify.com/artist/${i}`)
+    expect(keys({ ...valid(), links: many })).toEqual(['links'])
+    expect(keys({ ...valid(), links: many.slice(0, 10) })).toEqual([])
+  })
+
+  it('name 2..100 and not blank, contact up to 200', () => {
+    expect(keys({ ...valid(), name: '   ' })).toEqual(['name'])
+    expect(keys({ ...valid(), name: 'аб' })).toEqual([])
+    expect(keys({ ...valid(), name: 'а'.repeat(100), contact: 'c'.repeat(200) })).toEqual([])
+  })
+
+  it('place ids up to 32 characters', () => {
+    expect(keys({ ...valid(), kind: 'PERSON', originPlaceId: 'Q'.repeat(32), birthPlaceId: 'Q'.repeat(32) })).toEqual([])
+  })
+
+  it('caps the whole photo set at 55 MB', () => {
+    const big = () => photo('b.jpg', 'image/jpeg', 9 * 1024 * 1024)
+    expect(keys({ ...valid(), images: Array.from({ length: 5 }, big) })).toEqual([]) // 45 MB
+    const six = createSubmissionSchema({ ...DEFAULT_LIMITS, maxImages: 7 })
+    expect(Object.keys(fieldErrors(six, { ...valid(), images: Array.from({ length: 7 }, big) }))).toEqual(['images']) // 63 MB
   })
 })

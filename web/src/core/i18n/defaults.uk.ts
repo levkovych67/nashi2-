@@ -122,6 +122,7 @@ export const DEFAULT_COPY = {
   "submit.error.imagesCount": "Додайте від 1 до 5 фото.",
   "submit.error.imageType": "Підходять лише JPEG, PNG або WebP.",
   "submit.error.imageSize": "Файл завеликий. Максимум 10 МБ.",
+  "submit.error.imagesTotal": "Фото разом завеликі. Максимум 55 МБ на всі фото.",
   "submit.error.imageEmpty": "Порожній файл.",
   "submit.error.imageUnreadable": "Не вдалося відкрити фото. Оберіть інший файл.",
   "submit.step.progress": "Крок {n} із {total}",

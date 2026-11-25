@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useCopy, type CopyKey } from '../../core/i18n/copy'
+import { useCopy } from '../../core/i18n/copy'
 import { compressImage } from '../../core/submission/compressImage'
 import { IMAGE_TYPES } from '../../core/submission/schema'
 import { describe, Field, FieldError } from './Field'
@@ -15,6 +15,7 @@ interface Props {
   onBusy: (busy: boolean) => void
   max: number
   maxMb: number
+  maxTotalMb: number
   /** Message for the whole set. */
   error?: string
   /** Messages by photo index (client or server). */
@@ -32,7 +33,7 @@ function Thumb({ file }: { file: File }) {
 }
 
 /** 1..max photos: type and size are checked at pick time, then each is downscaled to 2048 px in the browser. */
-export function ImagesField({ id, label, hint, images, onChange, onBusy, max, maxMb, error, rowErrors }: Props) {
+export function ImagesField({ id, label, hint, images, onChange, onBusy, max, maxMb, maxTotalMb, error, rowErrors }: Props) {
   const t = useCopy()
   const [busy, setBusy] = useState(false)
   const [problems, setProblems] = useState<string[]>([])
@@ -51,18 +52,21 @@ export function ImagesField({ id, label, hint, images, onChange, onBusy, max, ma
     onBusy(true)
     const accepted: File[] = []
     const rejected: string[] = []
+    let total = images.reduce((sum, f) => sum + f.size, 0)
     for (const file of files) {
-      const issue: CopyKey | null = !(IMAGE_TYPES as readonly string[]).includes(file.type)
-        ? 'submit.error.imageType'
-        : file.size > maxMb * MB
-          ? 'submit.error.imageSize'
-          : null
-      if (issue) {
-        rejected.push(`${file.name}: ${t(issue)}`)
+      if (!(IMAGE_TYPES as readonly string[]).includes(file.type)) {
+        rejected.push(`${file.name}: ${t('submit.error.imageType')}`)
         continue
       }
       try {
-        accepted.push(await compressImage(file))
+        // the limits bound what is uploaded, so they apply to the downscaled file, not the original
+        const small = await compressImage(file)
+        if (small.size > maxMb * MB) rejected.push(`${file.name}: ${t('submit.error.imageSize')}`)
+        else if (total + small.size > maxTotalMb * MB) rejected.push(`${file.name}: ${t('submit.error.imagesTotal')}`)
+        else {
+          accepted.push(small)
+          total += small.size
+        }
       } catch {
         rejected.push(`${file.name}: ${t('submit.error.imageUnreadable')}`)
       }
