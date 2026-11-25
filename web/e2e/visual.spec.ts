@@ -1,5 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test'
-import { bubble, mapEl, openFilters, openLvivPins, settled, text } from './helpers/map'
+import { approveMapProposal, bubble, mapEl, openFilters, openLvivPins, settled, text } from './helpers/map'
 
 // Visual baselines of the key screens on phone and desktop. MSW fixtures and the blank map style keep them deterministic.
 // Remote photos are answered locally with a flat SVG, animations are frozen, and the likes count is masked.
@@ -50,6 +50,18 @@ test('map: region level', async ({ page }) => {
   await expect(first).toBeVisible()
   await settled(first)
   await shot(page, 'map-region.png')
+})
+
+test('map: region level with the approved proposal (choropleth key, near-me prompt)', async ({ page }) => {
+  await approveMapProposal(page)
+  await page.goto('/')
+  await expect(mapEl(page)).toHaveAttribute('data-level', 'REGION')
+  await expect(page.getByTestId('choropleth-legend')).toBeVisible()
+  await expect(page.getByTestId('near-me-hint')).toBeVisible()
+  const first = bubble(page, 'Львівська область')
+  await expect(first).toBeVisible()
+  await settled(first)
+  await shot(page, 'map-region-approved.png')
 })
 
 test('map: place level', async ({ page }) => {
