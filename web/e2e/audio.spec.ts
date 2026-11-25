@@ -67,7 +67,7 @@ test.describe('mobile tap', () => {
   test('tap opens the preview and plays, a second tap stops', async ({ page }) => {
     await openAudioPin(page)
     // the controls cover the top of the map and the preview sheet the bottom: tap the highest pin between them
-    // (the first-visit near-me prompt stacks more controls over the map, so a pin must also be the topmost element at its centre)
+    // (the first-visit near-me prompt stacks more controls over the map, so a pin must also be the topmost element at its centre and clear of the sheet)
     const pins = await page.locator('[data-testid="pin"][data-has-audio="true"]').all()
     const tops = await Promise.all(
       pins.map((p) =>
@@ -78,7 +78,7 @@ test.describe('mobile tap', () => {
         }),
       ),
     )
-    const free = tops.map((y, i) => ({ y, i })).filter(({ y }) => y > 130)
+    const free = tops.map((y, i) => ({ y, i })).filter(({ y }) => y > 130 && y < 400) // above the preview sheet, which opens over the lower half
     const pin = pins[free.sort((a, b) => a.y - b.y)[0].i]
     await pin.tap()
     await expect(page.getByTestId('musician-preview')).toBeVisible()
