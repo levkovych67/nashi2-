@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { components } from '../../api/types.gen'
+import { loadGeo } from '../../core/map/geo'
 import { useMapController } from './useMapController'
 
 type MapPin = components['schemas']['MapPin']
@@ -133,7 +134,7 @@ describe('useMapController', () => {
       stubPosition(-0.12, 51.5)
       const { result } = setup()
       act(() => result.current.handlers.nearMe())
-      expect(result.current.toast).toBe('Не вдалося визначити область. Виберіть її на карті.')
+      await waitFor(() => expect(result.current.toast).toBe('Не вдалося визначити область. Виберіть її на карті.'))
     })
 
     it('shows the toast when the position is refused', () => {
@@ -148,6 +149,10 @@ describe('useMapController', () => {
       const { result } = setup()
       await waitFor(() => expect(result.current.resultsCount).toBe(3661)) // every query has answered
       act(() => result.current.handlers.nearMe())
+      await act(async () => {
+        await loadGeo() // the lookup waits for the geometry
+        await Promise.resolve()
+      })
       expect(result.current.toast).toBeNull()
       expect(search).toBe('')
     })

@@ -185,10 +185,14 @@ export function useMapController() {
         }
         navigator.geolocation.getCurrentPosition(
           ({ coords }) => {
-            const code = regionAt(coords.longitude, coords.latitude)
-            const region = code ? now().regions?.find((r) => r.code === code) : undefined
-            if (region) openRegions([region], true)
-            else refuse()
+            regionAt(coords.longitude, coords.latitude).then(
+              (code) => {
+                const region = code ? now().regions?.find((r) => r.code === code) : undefined
+                if (region) openRegions([region], true)
+                else refuse()
+              },
+              refuse,
+            )
           },
           refuse,
           { timeout: 10_000, maximumAge: 60_000 },

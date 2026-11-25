@@ -3,7 +3,7 @@ import { test } from 'node:test'
 import { analyze } from './check-bundle.mjs'
 
 const KB = 1024
-const sizes = { 'a/index.js': 100 * KB, 'a/vendor.js': 50 * KB, 'a/maplibre-x.js': 300 * KB, 'a/MapPage.js': 40 * KB, 'a/Musician.js': 5 * KB }
+const sizes = { 'a/index.js': 100 * KB, 'a/vendor.js': 50 * KB, 'a/maplibre-x.js': 300 * KB, 'a/MapPage.js': 10 * KB, 'a/Musician.js': 5 * KB }
 const sizeOf = (f) => sizes[f] ?? 0
 const base = () => ({
   'index.html': { file: 'a/index.js', imports: ['v'] },
@@ -18,9 +18,14 @@ test('a clean build passes and excludes maplibre from the sizes', () => {
   const r = analyze(base(), sizeOf, { routes })
   assert.deepEqual(r.errors, [])
   assert.equal(r.startKb, 150)
-  assert.equal(r.perRoute['/'].kb, 190)
+  assert.equal(r.perRoute['/'].kb, 160)
   assert.equal(r.perRoute['/'].withMap, true)
   assert.equal(r.perRoute['/m/:slug'].withMap, false)
+})
+
+test('a route over the first-load budget fails', () => {
+  const s = { ...sizes, 'a/MapPage.js': 40 * KB }
+  assert.match(analyze(base(), (f) => s[f] ?? 0, { routes }).errors[0], /route \/:/)
 })
 
 test('start JS over budget fails', () => {

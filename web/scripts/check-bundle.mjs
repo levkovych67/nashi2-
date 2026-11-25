@@ -2,15 +2,14 @@
 //  - start JS (the static import graph of index.html, which every route loads) <= 180 KB gzip, with no maplibre in it;
 //  - the `maplibre` chunk (maplibre-gl + react-map-gl) is reachable from the map route `/` only, never from
 //    `/m/:slug`, `/suggest`, `/about` or the not-found page;
-//  - a route's whole JS (start + its page chunk and what that imports) without maplibre stays under ROUTE_BUDGET_KB.
+//  - first-load JS of every route (start + its page chunk and what that imports) without maplibre stays under
+//    START_BUDGET_KB too, `/` included (the Ukraine geometry is fetched from /geo at runtime, not bundled).
 import { readFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { gzipSync } from 'node:zlib'
 
 export const START_BUDGET_KB = 180
-// Guard against regressions on top of the brief: the map route carries the Ukraine geometry the core bundles (~90 KB gzip).
-export const ROUTE_BUDGET_KB = 250
 export const MAP_CHUNK = 'maplibre'
 
 export const ROUTES = {
@@ -61,7 +60,7 @@ export function analyze(manifest, sizeOf, { entry = 'index.html', routes = ROUTE
     perRoute[route] = { kb: kb(withoutMap), mapKb: withMap ? kb([mapKey]) : 0, withMap }
     if (route === '/' && mapKey && !withMap) errors.push('route /: the map route does not load the maplibre chunk')
     if (route !== '/' && withMap) errors.push(`route ${route}: loads the maplibre chunk, only "/" may`)
-    if (perRoute[route].kb > ROUTE_BUDGET_KB) errors.push(`route ${route}: ${perRoute[route].kb.toFixed(1)} KB gzip without maplibre, budget ${ROUTE_BUDGET_KB} KB`)
+    if (perRoute[route].kb > START_BUDGET_KB) errors.push(`route ${route}: ${perRoute[route].kb.toFixed(1)} KB gzip without maplibre, budget ${START_BUDGET_KB} KB`)
   }
   return { startKb, mapKb: mapKey ? kb([mapKey]) : 0, perRoute, errors }
 }
