@@ -1,6 +1,7 @@
 import type { components } from '../../api/types.gen'
 import type { MapItem } from '../../core/map/aggregation'
-import { pixelDistance } from './mercator'
+import { pixelDistance, TILE_SIZE } from './mercator'
+import type { PointIndex } from './pointIndex'
 import { MAX_ZOOM } from './viewport'
 
 type MapPin = components['schemas']['MapPin']
@@ -37,16 +38,6 @@ const squaredDistance = (lon: number, lat: number, p: { lon: number; lat: number
   return ((p.lon - lon) * k) ** 2 + (p.lat - lat) ** 2
 }
 
-export function nearestPin(pins: MapPin[], lon: number, lat: number): MapPin | null {
-  let best: MapPin | null = null
-  let bestDistance = Infinity
-  for (const p of pins) {
-    const d = squaredDistance(lon, lat, p)
-    if (d < bestDistance) [best, bestDistance] = [p, d]
-  }
-  return best
-}
-
 /** Members of a pin cluster that cannot be split any more: the `count` pins closest to its centre. */
 export function stackPins(pins: MapPin[], lon: number, lat: number, count: number): MapPin[] {
   return pins
@@ -61,20 +52,41 @@ export function stackPins(pins: MapPin[], lon: number, lat: number, count: numbe
  * `standalone` places have their own bubble at this zoom, so they cannot be members.
  */
 export function largestPlaceNear(
-  places: PlaceStat[],
+  places: PointIndex<PlaceStat>,
   lon: number,
   lat: number,
   zoom: number,
   standalone: ReadonlySet<string> = new Set(),
 ): PlaceStat | null {
+  const lonRadius = (CLUSTER_NAME_RADIUS_PX * 360) / (TILE_SIZE * 2 ** zoom)
   let largest: PlaceStat | null = null
-  let nearest: PlaceStat | null = null
-  let nearestDistance = Infinity
-  for (const p of places) {
-    if (standalone.has(p.placeId)) continue
-    const d = pixelDistance(lon, lat, p.lon, p.lat, zoom)
-    if (d <= CLUSTER_NAME_RADIUS_PX && (!largest || p.count > largest.count)) largest = p
-    if (d < nearestDistance) [nearest, nearestDistance] = [p, d]
+  for (const p of places.nearLon(lon, lonRadius)) {
+    if (standalone.has(p.placeId) || pixelDistance(lon, lat, p.lon, p.lat, zoom) > CLUSTER_NAME_RADIUS_PX) continue
+    if (!largest || p.count > largest.count) largest = p
   }
-  return largest ?? nearest
+  return largest ?? places.nearest(lon, lat, (p) => standalone.has(p.placeId))
+}
+
+/**
+ * Names for the cluster bubbles in `items` (by `itemKey`), computed once per set of items: a place cluster after its
+ * largest place, a pin cluster after the place of its nearest pin. `zoom` is the zoom the clusters were built at.
+ */
+export function clusterNames(
+  items: MapItem[],
+  places: PointIndex<PlaceStat>,
+  pins: PointIndex<MapPin>,
+  placeName: ReadonlyMap<string, string>,
+  zoom: number,
+): Map<string, string> {
+  const standalone = new Set(items.flatMap((i) => (i.kind === 'place' ? [i.placeId] : [])))
+  const names = new Map<string, string>()
+  for (const item of items) {
+    if (item.kind === 'placeCluster') {
+      names.set(itemKey(item), largestPlaceNear(places, item.lon, item.lat, zoom, standalone)?.name ?? '')
+    } else if (item.kind === 'pinCluster') {
+      const near = pins.nearest(item.lon, item.lat)
+      names.set(itemKey(item), (near && placeName.get(near.placeId)) ?? '')
+    }
+  }
+  return names
 }

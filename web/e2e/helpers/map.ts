@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test'
+import { expect, type Locator, type Page } from '@playwright/test'
 import copy from '../../src/design/copy.uk.json' with { type: 'json' }
 
 export const originNoticeText = copy['map.originNotice']
@@ -29,4 +29,10 @@ export async function openLvivPins(page: Page) {
   await expect(mapEl(page)).toHaveAttribute('data-level', 'PLACE')
   await drillInto(page, 'Львів', 'PIN')
   await expect(page.getByTestId('pin').first()).toBeVisible()
+}
+
+/** Phones tap (touch → audio gesture), desktops click with the mouse (hover plays, click opens the preview). */
+export async function activatePin(pin: Locator, isMobile: boolean) {
+  if (isMobile) await pin.tap()
+  else await pin.click()
 }

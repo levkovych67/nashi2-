@@ -1,14 +1,17 @@
-import { useDesign } from '../../core/design/config'
+import { memo, type ComponentType } from 'react'
 import { useCopy } from '../../core/i18n/copy'
 import type { MapItem } from '../../core/map/aggregation'
-import { resolveVariant } from '../variants'
 import type { BubbleSkinProps } from './variants/BubbleCount'
 
-type RegionItem = Extract<MapItem, { kind: 'region' }>
+export type RegionItem = Extract<MapItem, { kind: 'region' }>
 
-export function RegionBubble({ item, choropleth, onSelect }: { item: RegionItem; choropleth: boolean; onSelect(item: RegionItem): void }) {
+export const RegionBubble = memo(function RegionBubble({ item, choropleth, skin: Skin, onSelect }: {
+  item: RegionItem
+  choropleth: boolean
+  skin: ComponentType<BubbleSkinProps> | null
+  onSelect(item: RegionItem): void
+}) {
   const t = useCopy()
-  const Skin = resolveVariant<BubbleSkinProps>('map.cluster', useDesign())
   return (
     <button
       type="button"
@@ -20,4 +23,4 @@ export function RegionBubble({ item, choropleth, onSelect }: { item: RegionItem;
       {Skin && <Skin count={item.count} tone={choropleth ? 'numeral' : 'count'} />}
     </button>
   )
-}
+})

@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
-import { bubble, drillInto, mapEl, originNoticeText } from './helpers/map'
+import { activatePin, bubble, drillInto, mapEl, originNoticeText } from './helpers/map'
 
-test('origin notice stays visible on every level', async ({ page }) => {
+test('origin notice stays visible on every level', async ({ page, isMobile }) => {
   await page.goto('/')
   const notice = page.getByTestId('origin-notice')
 
@@ -17,7 +17,7 @@ test('origin notice stays visible on every level', async ({ page }) => {
   await expect(notice).toBeVisible()
 
   // the musician preview repeats the explanation and does not hide the legend
-  await page.getByTestId('pin').first().click()
+  await activatePin(page.getByTestId('pin').first(), isMobile)
   await expect(page.getByTestId('musician-preview')).toContainText(originNoticeText)
   await expect(notice).toBeVisible()
 })

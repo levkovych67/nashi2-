@@ -1,14 +1,16 @@
-import { useDesign } from '../../core/design/config'
+import { memo, type ComponentType } from 'react'
 import { useCopy } from '../../core/i18n/copy'
 import type { MapItem } from '../../core/map/aggregation'
-import { resolveVariant } from '../variants'
 import type { BubbleSkinProps } from './variants/BubbleCount'
 
-type PlaceItem = Extract<MapItem, { kind: 'place' }>
+export type PlaceItem = Extract<MapItem, { kind: 'place' }>
 
-export function PlaceBubble({ item, onSelect }: { item: PlaceItem; onSelect(item: PlaceItem): void }) {
+export const PlaceBubble = memo(function PlaceBubble({ item, skin: Skin, onSelect }: {
+  item: PlaceItem
+  skin: ComponentType<BubbleSkinProps> | null
+  onSelect(item: PlaceItem): void
+}) {
   const t = useCopy()
-  const Skin = resolveVariant<BubbleSkinProps>('map.cluster', useDesign())
   return (
     <button
       type="button"
@@ -20,4 +22,4 @@ export function PlaceBubble({ item, onSelect }: { item: PlaceItem; onSelect(item
       {Skin && <Skin count={item.count} tone="count" label={item.name} />}
     </button>
   )
-}
+})

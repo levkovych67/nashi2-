@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import { regionsGeoJson, ukraineOutline } from '../../core/map/geo'
 import { fillOpacityExpression } from './fill'
@@ -6,7 +6,7 @@ import { fillOpacityExpression } from './fill'
 const token = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim()
 
 /** Our GeoJSON on top of the basemap: region fill, region lines and the outline of Ukraine (with Crimea). */
-export function MapOverlays({ fillOpacity }: { fillOpacity: Record<string, number> }) {
+export const MapOverlays = memo(function MapOverlays({ fillOpacity }: { fillOpacity: Record<string, number> }) {
   const colors = useMemo(
     () => ({
       fill: token('--n-color-map-region-fill-active'),
@@ -32,4 +32,4 @@ export function MapOverlays({ fillOpacity }: { fillOpacity: Record<string, numbe
       </Source>
     </>
   )
-}
+})

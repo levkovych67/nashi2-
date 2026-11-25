@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { bubble, drillInto, mapEl, openLvivPins } from './helpers/map'
+import { activatePin, bubble, drillInto, mapEl, openLvivPins } from './helpers/map'
 
 test('opens on all of Ukraine with region bubbles and origin notice', async ({ page }) => {
   await page.goto('/')
@@ -36,11 +36,12 @@ test('deep link ?region=LVIV opens the region', async ({ page }) => {
   await expect(page).toHaveURL(/[?&]region=LVIV\b/)
 })
 
-test('tapping a pin opens the musician preview', async ({ page }) => {
+test('tapping a pin opens the musician preview', async ({ page, isMobile }) => {
   await openLvivPins(page)
   const pin = page.getByTestId('pin').first()
   const name = (await pin.getAttribute('aria-label'))!.split(', ')[0]
-  await pin.click()
+  await activatePin(pin, isMobile)
+  await expect(pin).toHaveAttribute('aria-pressed', 'true')
   const preview = page.getByTestId('musician-preview')
   await expect(preview).toBeVisible()
   await expect(preview).toContainText(name)

@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import type { components } from '../../api/types.gen'
 import type { MapItem } from '../../core/map/aggregation'
-import { capMarkers, isUnsplittableStack, itemKey, largestPlaceNear, nearestPin, stackPins } from './markers'
+import { capMarkers, clusterNames, isUnsplittableStack, itemKey, largestPlaceNear, stackPins } from './markers'
+import { createPointIndex } from './pointIndex'
 
 type MapPin = components['schemas']['MapPin']
 type PlaceStat = components['schemas']['PlaceStat']
@@ -60,15 +61,8 @@ describe('stackPins', () => {
   })
 })
 
-describe('nearestPin', () => {
-  it('finds the closest pin, or null without pins', () => {
-    expect(nearestPin([pin('x', 30, 50), pin('y', 24.01, 49.01)], 24, 49)?.id).toBe('y')
-    expect(nearestPin([], 24, 49)).toBeNull()
-  })
-})
-
 describe('largestPlaceNear', () => {
-  const places = [place('village', 24.001, 49.001, 2), place('city', 24.02, 49.02, 270), place('other-city', 26, 49, 900)]
+  const places = createPointIndex([place('village', 24.001, 49.001, 2), place('city', 24.02, 49.02, 270), place('other-city', 26, 49, 900)])
 
   it('names a cluster after the largest place within the radius around its centre', () => {
     // at zoom 9 one pixel is ~0.0014° of longitude, so 60 px cover the city but not the other city
@@ -81,7 +75,28 @@ describe('largestPlaceNear', () => {
 
   it('falls back to the nearest place when none is within the radius', () => {
     expect(largestPlaceNear(places, 24, 49, 16)?.placeId).toBe('village')
-    expect(largestPlaceNear([], 24, 49, 9)).toBeNull()
+    expect(largestPlaceNear(createPointIndex([]), 24, 49, 9)).toBeNull()
+  })
+})
+
+describe('clusterNames', () => {
+  it('names place clusters after their largest place and pin clusters after the place of the nearest pin', () => {
+    const places = createPointIndex([
+      { ...place('lviv', 24.03, 49.84, 270), name: 'Львів' },
+      { ...place('vynnyky', 24.13, 49.81, 3), name: 'Винники' },
+    ])
+    const pins = createPointIndex([pin('x', 24.031, 49.841, 'lviv'), pin('y', 24.13, 49.81, 'vynnyky')])
+    const placeName = new Map([['lviv', 'Львів'], ['vynnyky', 'Винники']])
+    const items: MapItem[] = [
+      { kind: 'placeCluster', id: 1, lon: 24.05, lat: 49.83, count: 273 },
+      { kind: 'pinCluster', id: 2, lon: 24.129, lat: 49.811, count: 2 },
+      { kind: 'place', placeId: 'vynnyky', name: 'Винники', lon: 24.13, lat: 49.81, count: 3 },
+      single('z'),
+    ]
+    const names = clusterNames(items, places, pins, placeName, 8)
+    expect(names.get('pc:1')).toBe('Львів')
+    expect(names.get('c:2')).toBe('Винники')
+    expect(names.size).toBe(2)
   })
 })
 
