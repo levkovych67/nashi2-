@@ -1,4 +1,4 @@
-# Needs web/ (Task 3); the compose service sits under the "web" profile until then.
+# Production build of web/ behind nginx (compose service "web", profile "web"). No VITE_API_MOCK: no test files in dist.
 FROM node:24 AS build
 WORKDIR /src
 ARG VITE_API_BASE_URL=/api/v2

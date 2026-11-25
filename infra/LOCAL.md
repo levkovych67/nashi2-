@@ -1,6 +1,7 @@
 # Local stack
 
-Mongo 8, MinIO and the backend in Docker Compose (project `nashi-v2`, separate from the V1 containers).
+Mongo 8, MinIO, the backend and (optionally) the web app in Docker Compose (project `nashi-v2`, separate from the V1
+containers).
 
 ```bash
 infra/scripts/local-up.sh              # mongo, minio, minio-init (bucket), backend
@@ -28,6 +29,24 @@ The defaults avoid V1 (Mongo on 27018, frontend on 4173, backend on 8080).
 - The backend runs with profile `local` (Telegram polling and sending off) and reaches `mongo` and `minio` by service name.
 - Running the backend from Gradle on the host uses `application-local.properties`, which points at `localhost:27019` and `localhost:9000`.
 
-## Web (not available yet)
+## Web
 
-The `web` service (nginx on `NASHI_WEB_PORT`, proxying `/api/` to the backend) is under compose profile `web` and is not started by default, because `web/` does not exist until Task 3. After Task 3: `infra/scripts/local-up.sh --with-web`, then `curl -fsS http://127.0.0.1:4175/ | grep -q '<div id="root">'`. That check was skipped in Task 4.
+`infra/scripts/local-up.sh --with-web` also builds and starts the `web` service: nginx on `NASHI_WEB_PORT` (default
+4175) serving the production build of `web/` and proxying `/api/` to the backend.
+
+```bash
+infra/scripts/local-up.sh --with-web
+curl -fsS http://127.0.0.1:4175/ | grep -q '<div id="root">' && echo "web is up"
+curl -fsS http://127.0.0.1:4175/api/v2/health                     # {"status":"UP"} through nginx
+curl -sI http://127.0.0.1:4175/ | grep -i cache-control            # no-cache (the SPA shell)
+curl -sI -H 'Accept-Encoding: gzip' http://127.0.0.1:4175/geo/regions.geojson | grep -i -E 'content-(type|encoding)'
+                                                                   # application/geo+json, gzip
+```
+
+- Hashed `/assets/` are cached for a year (`immutable`); `index.html`, every SPA route and `/geo/` are `no-cache`
+  (revalidated by ETag). JS, CSS, JSON and GeoJSON are gzipped.
+- The image holds no test files: the MSW worker and the fixture audio/images go only into mock builds
+  (`VITE_API_MOCK=1`), and `npm run check:bundle -w web` fails a production `dist` that contains them.
+- For development use the Vite dev server instead (`web/README.md`): `npm run dev -w web` on 127.0.0.1:5174 proxies
+  `/api` to the backend on 8081 and drops `Origin`, so POSTs (likes, submissions) pass the backend's CORS check. The
+  compose CORS list also names `http://localhost:5174` and `http://127.0.0.1:5174`.

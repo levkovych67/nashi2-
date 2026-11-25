@@ -50,11 +50,22 @@ nashi_v2/
 Потрібен Node.js 24 (`.nvmrc`).
 
 ```bash
-npm install            # залежності всіх workspace-ів (contracts, web, studio — ті, що вже існують)
+npm install            # залежності всіх workspace-ів (contracts, web, studio)
 npm test               # тести в усіх workspace-ах
 npm run lint:api       # лінт contracts/openapi.yaml (Redocly)
 npm run dev -w studio  # дизайн-студія на http://127.0.0.1:5173
+
+VITE_API_MOCK=1 npm run dev -w web     # продукт на http://127.0.0.1:5174 на фікстурах, без backend
+infra/scripts/local-up.sh              # backend у Docker на http://127.0.0.1:8081 (mongo, minio)
+npm run dev -w web                     # продукт проти цього backend (проксі /api)
+npm run e2e -w web                     # Playwright; порт 5174 має бути вільним
+npm run build -w web && npm run check:bundle -w web   # продакшен-збірка і бюджети
+infra/scripts/local-up.sh --with-web   # backend і web (nginx) у Docker, web на http://127.0.0.1:4175
 ```
+
+Подробиці: [web/README.md](web/README.md) (змінні, e2e, візуальні еталони, дизайн, Lighthouse) ·
+[infra/LOCAL.md](infra/LOCAL.md) (локальний стек, порти, перевірка web).
+
 
 Контракт API — `contracts/openapi.yaml` (опис і тест-вектори: `contracts/README.md`). Рішення щодо версій і
 архітектури — `docs/adr/`.

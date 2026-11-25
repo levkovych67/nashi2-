@@ -77,7 +77,7 @@ services:
     ports:
       - "127.0.0.1:${NASHI_BACKEND_PORT:-8081}:8080"
 
-  # Not started by default: web/ does not exist yet (Task 3). Start with `local-up.sh --with-web`.
+  # Not started by default (the backend alone serves API work). Start with `local-up.sh --with-web`; see LOCAL.md.
   web:
     profiles: ["web"]
     build:
