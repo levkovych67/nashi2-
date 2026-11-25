@@ -17,8 +17,8 @@ export function AvatarRing({ name, thumbUrl, hasAudio, playing, selected }: PinS
   const classes = ['n-avatar', hasAudio && 'n-avatar--audio', playing && 'n-avatar--playing', selected && 'n-avatar--selected']
   return (
     <span className={classes.filter(Boolean).join(' ')} aria-hidden="true">
-      <span className="n-avatar__face">
-        {initials(name)}
+      {/* initials come from CSS so the pin's visible text does not have to be part of its accessible name */}
+      <span className="n-avatar__face" data-initials={initials(name)}>
         {thumbUrl && !broken && (
           <img src={thumbUrl} alt="" loading="lazy" decoding="async" referrerPolicy="no-referrer" onError={() => setBroken(true)} />
         )}

@@ -22,6 +22,7 @@ export function ImageGallery({ images, name }: { images: Image[]; name: string }
             src={current.url}
             alt={current.alt || name}
             decoding="async"
+            fetchPriority="high"
             referrerPolicy="no-referrer"
             onError={() => setBroken((prev) => new Set(prev).add(current.url))}
           />

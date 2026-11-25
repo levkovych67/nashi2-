@@ -186,9 +186,9 @@ export function SuggestForm() {
     >
       <StepIndicator step={step} total={STEPS.length} />
       <fieldset className="n-suggest__step" disabled={sending}>
-        <h3 ref={headingRef} tabIndex={-1} data-testid="step-title">
+        <h2 ref={headingRef} tabIndex={-1} data-testid="step-title">
           {t(`submit.step.${stepId}`)}
-        </h3>
+        </h2>
 
         {stepId === 'who' && (
           <>
@@ -444,19 +444,19 @@ export function SuggestForm() {
           </p>
         )}
         {sending && <SubmitProgress ratio={progress} />}
-
-        {/* mousedown must not blur the focused field: its error line would appear and shift the button before the click lands */}
-        <div className="n-suggest__actions" onMouseDown={(e) => e.preventDefault()}>
-          {step > 0 && (
-            <button type="button" className="n-suggest__btn" disabled={sending || busy} onClick={() => goTo(step - 1)}>
-              {t('submit.back')}
-            </button>
-          )}
-          <button type="submit" className="n-suggest__btn n-suggest__btn--primary" disabled={sending || busy}>
-            {submitLabel}
-          </button>
-        </div>
       </fieldset>
+
+      {/* mousedown must not blur the focused field: its error line would appear and shift the button before the click lands */}
+      <div className="n-suggest__actions" onMouseDown={(e) => e.preventDefault()}>
+        {step > 0 && (
+          <button type="button" className="n-suggest__btn" aria-disabled={sending || busy} onClick={() => !(sending || busy) && goTo(step - 1)}>
+            {t('submit.back')}
+          </button>
+        )}
+        <button type="submit" className="n-suggest__btn n-suggest__btn--primary" aria-disabled={sending || busy} onClick={(e) => (sending || busy) && e.preventDefault()}>
+          {submitLabel}
+        </button>
+      </div>
     </form>
   )
 }

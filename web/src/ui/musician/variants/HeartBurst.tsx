@@ -31,7 +31,8 @@ export function HeartBurst({ count, onTap }: LikeSkinProps) {
 
   return (
     <div className="n-like">
-      <button type="button" className="n-like__button" data-testid="like-button" aria-label={t('musician.likeAria')} onClick={tap}>
+      {/* the name starts with the visible text (WCAG 2.5.3 label in name) */}
+      <button type="button" className="n-like__button" data-testid="like-button" aria-label={`${t('musician.likeLabel')}. ${t('musician.likeAria')}`} onClick={tap}>
         <span className="n-like__heart" aria-hidden="true">
           <span className="n-icon n-icon--heart" />
           {bursts.map((id) => (

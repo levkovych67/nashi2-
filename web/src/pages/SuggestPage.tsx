@@ -7,7 +7,7 @@ export default function SuggestPage() {
   const t = useCopy()
   const Form = resolveVariant<object>('submission.form', useDesign())
   return (
-    <div className="n-suggest">
+    <main className="n-suggest">
       <div className="n-suggest__page">
         <header>
           <h1>{t('submit.title')}</h1>
@@ -15,6 +15,6 @@ export default function SuggestPage() {
         </header>
         {Form && <Form />}
       </div>
-    </div>
+    </main>
   )
 }

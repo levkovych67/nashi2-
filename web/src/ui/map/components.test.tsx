@@ -90,7 +90,8 @@ describe('PinMarker', () => {
   it('shows initials and drops a portrait that fails to load', () => {
     renderPin({ pin: pin({ thumbUrl: 'https://example.org/a.jpg' }) })
     const button = screen.getByTestId('pin')
-    expect(button.textContent).toContain('ОЕ')
+    // initials are drawn by CSS from the attribute, so they are not part of the button's text
+    expect(button.querySelector('[data-initials]')?.getAttribute('data-initials')).toBe('ОЕ')
     fireEvent.error(button.querySelector('img')!)
     expect(button.querySelector('img')).toBeNull()
   })
@@ -121,7 +122,8 @@ describe('PinStackList', () => {
     render(<PinStackList title="Київ, музикантів: 2" pins={[b, a]} onSelect={onSelect} />)
     expect(screen.getByRole('heading', { name: 'Київ, музикантів: 2' })).toBeTruthy()
     const items = screen.getAllByRole('button')
-    expect(items.map((i) => i.textContent)).toEqual(['ААнтитіла', 'ББумбокс'])
+    expect(items.map((i) => i.textContent)).toEqual(['Антитіла', 'Бумбокс'])
+    expect(items.map((i) => i.querySelector('[data-initials]')?.getAttribute('data-initials'))).toEqual(['А', 'Б'])
     fireEvent.pointerDown(items[1], { pointerType: 'mouse' })
     fireEvent.click(items[1])
     expect(onSelect).toHaveBeenCalledWith(b, 'mouse')

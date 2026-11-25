@@ -71,7 +71,7 @@
   border: 0;
 }
 
-.n-suggest__step h3 {
+.n-suggest__step h2 {
   margin: 0 0 var(--n-space-4);
   font-family: var(--n-font-family-display);
   font-size: var(--n-font-size-xl);
@@ -218,7 +218,8 @@
   cursor: pointer;
 }
 
-.n-suggest__btn:disabled {
+.n-suggest__btn:disabled,
+.n-suggest__btn[aria-disabled='true'] {
   opacity: 0.55;
   cursor: default;
 }
@@ -230,7 +231,7 @@
   font-weight: var(--n-font-weight-bold);
 }
 
-.n-suggest__btn--primary:not(:disabled):hover {
+.n-suggest__btn--primary:not(:disabled, [aria-disabled='true']):hover {
   background: var(--n-color-accent-hover);
 }
 

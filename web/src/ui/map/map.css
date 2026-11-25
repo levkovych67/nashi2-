@@ -130,6 +130,10 @@
   box-shadow: var(--n-shadow-sm);
 }
 
+.n-avatar__face::before {
+  content: attr(data-initials);
+}
+
 .n-avatar__face img {
   position: absolute;
   inset: 0;
