@@ -1,8 +1,16 @@
 {
   "version": 8,
-  "name": "skeleton-grey",
+  "name": "night",
   "glyphs": "{{GLYPHS_URL}}",
   "sources": {
+    "regions": {
+      "type": "geojson",
+      "data": "/geo/regions.geojson"
+    },
+    "outline": {
+      "type": "geojson",
+      "data": "/geo/ukraine-outline.geojson"
+    },
     "openmaptiles": {
       "type": "vector",
       "url": "{{TILES_URL}}",
@@ -10,21 +18,168 @@
     }
   },
   "layers": [
-    { "id": "background", "type": "background", "paint": { "background-color": "#ececec" } },
-    { "id": "water", "type": "fill", "source": "openmaptiles", "source-layer": "water", "paint": { "fill-color": "#d6d6d6" } },
     {
-      "id": "roads", "type": "line", "source": "openmaptiles", "source-layer": "transportation", "minzoom": 8,
-      "paint": { "line-color": "#bdbdbd", "line-width": 1 }
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "#151d2a"
+      }
     },
     {
-      "id": "boundary", "type": "line", "source": "openmaptiles", "source-layer": "boundary",
-      "filter": ["<=", ["get", "admin_level"], 4],
-      "paint": { "line-color": "#8c8c8c", "line-width": 1 }
+      "id": "territory",
+      "type": "fill",
+      "source": "regions",
+      "paint": {
+        "fill-color": "#263447"
+      }
     },
     {
-      "id": "places", "type": "symbol", "source": "openmaptiles", "source-layer": "place",
-      "layout": { "text-field": ["coalesce", ["get", "name:uk"], ["get", "name"]], "text-font": ["Noto Sans Regular"], "text-size": 12 },
-      "paint": { "text-color": "#333333", "text-halo-color": "#ffffff", "text-halo-width": 1 }
+      "id": "parks",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "landcover",
+      "paint": {
+        "fill-color": "#2d413e",
+        "fill-opacity": 0.65
+      }
+    },
+    {
+      "id": "water",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "water",
+      "paint": {
+        "fill-color": "#122535"
+      }
+    },
+    {
+      "id": "rivers",
+      "type": "line",
+      "minzoom": 6,
+      "source": "openmaptiles",
+      "source-layer": "waterway",
+      "paint": {
+        "line-color": "#122535",
+        "line-width": 1.4
+      }
+    },
+    {
+      "id": "roads",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "minzoom": 5,
+      "filter": [
+        "any",
+        [
+          ">=",
+          [
+            "zoom"
+          ],
+          11
+        ],
+        [
+          "in",
+          [
+            "get",
+            "class"
+          ],
+          [
+            "literal",
+            [
+              "motorway",
+              "trunk",
+              "primary"
+            ]
+          ]
+        ]
+      ],
+      "paint": {
+        "line-color": "#656057",
+        "line-width": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          5,
+          0.5,
+          12,
+          1.6,
+          17,
+          5
+        ]
+      }
+    },
+    {
+      "id": "place-names",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "minzoom": 5,
+      "layout": {
+        "text-field": [
+          "coalesce",
+          [
+            "get",
+            "name:uk"
+          ],
+          [
+            "get",
+            "name"
+          ]
+        ],
+        "text-font": [
+          "Noto Sans Regular"
+        ],
+        "text-size": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          5,
+          10,
+          12,
+          14
+        ]
+      },
+      "paint": {
+        "text-color": "#d3d2cd",
+        "text-halo-color": "#263447",
+        "text-halo-width": 1.4
+      }
+    },
+    {
+      "id": "region-color",
+      "type": "fill",
+      "source": "regions",
+      "paint": {
+        "fill-color": "#ffbd60",
+        "fill-opacity": 0
+      }
+    },
+    {
+      "id": "region-line",
+      "type": "line",
+      "source": "regions",
+      "paint": {
+        "line-color": "#607288",
+        "line-width": 1
+      }
+    },
+    {
+      "id": "ua-outline-line",
+      "type": "line",
+      "source": "outline",
+      "paint": {
+        "line-color": "#e0b26c",
+        "line-width": 1.8
+      }
     }
   ]
 }

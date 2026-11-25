@@ -1,6 +1,15 @@
 @import "tailwindcss";
 @import "./design/tokens.css";
 
+/* Identity font from the studio handoff (OFL, Cyrillic). Family name must match --n-font-family-*. */
+@font-face {
+  font-family: "Source Sans 3";
+  src: url("./design/assets/fonts/source-sans-3.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   --color-bg: var(--n-color-bg);
   --color-surface: var(--n-color-surface);

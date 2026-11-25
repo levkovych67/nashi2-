@@ -1,1 +1,92 @@
-{"schemaVersion":1,"decisions":{}}
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-25T14:43:20.207Z",
+  "studioCommit": "add2a12b032c2c39bae71c46553619158faeb2b8",
+  "decisions": {
+    "identity": {
+      "status": "PROPOSED",
+      "variant": "nichna-karta",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "map.basemap": {
+      "status": "PROPOSED",
+      "variant": "night",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "map.initial-view": {
+      "status": "PROPOSED",
+      "variant": "UKRAINE_WITH_NEAR_ME_PROMPT",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "map.aggregation": {
+      "status": "PROPOSED",
+      "variant": "CHOROPLETH_PLACE_PIN",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "map.pin": {
+      "status": "PROPOSED",
+      "variant": "AVATAR_RING",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "map.cluster": {
+      "status": "PROPOSED",
+      "variant": "BUBBLE_COUNT",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "map.origin-notice": {
+      "status": "PROPOSED",
+      "variant": "LEGEND_BAR",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "audio.mobile-trigger": {
+      "status": "PROPOSED",
+      "variant": "TAP_PREVIEW_AND_PLAY",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "audio.desktop-hover": {
+      "status": "PROPOSED",
+      "variant": "EQUALIZER_BADGE",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "audio.player": {
+      "status": "PROPOSED",
+      "variant": "IN_CARD",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "musician.preview": {
+      "status": "PROPOSED",
+      "variant": "BOTTOM_SHEET",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "musician.page": {
+      "status": "PROPOSED",
+      "variant": "EDITORIAL",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "like.button": {
+      "status": "PROPOSED",
+      "variant": "HEART_BURST",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "filters.region": {
+      "status": "PROPOSED",
+      "variant": "SHEET_LIST",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "submission.form": {
+      "status": "PROPOSED",
+      "variant": "WIZARD",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "nav.structure": {
+      "status": "PROPOSED",
+      "variant": "TOP_BAR_MENU",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    },
+    "onboarding": {
+      "status": "PROPOSED",
+      "variant": "NONE",
+      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+    }
+  }
+}
