@@ -105,6 +105,12 @@ test('each step validates its own fields; going back keeps the values', async ({
   await next(page)
   await expect(page.getByRole('alert').filter({ hasText: text('submit.error.placePick') })).toBeVisible()
   await stepTitle(page, 'where')
+  // the error focus returns to the field, whose suggestions open over the buttons once they arrive: close them first
+  const place = page.getByRole('combobox', { name: text('submit.field.originPlaceId.label') })
+  await expect(place).toBeFocused()
+  await expect(page.getByRole('option').first()).toBeVisible()
+  await place.press('Escape')
+  await expect(page.getByRole('option')).toHaveCount(0)
   await page.getByRole('button', { name: text('submit.back') }).click()
   await expect(page.getByLabel(text('submit.field.name.label'))).toHaveValue('Тарас')
 })
