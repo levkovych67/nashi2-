@@ -27,11 +27,16 @@ function design(id: DecisionId, variant: string, status: 'APPROVED' | 'PROPOSED'
 afterEach(() => vi.restoreAllMocks())
 
 describe('variant registry', () => {
-  it('every APPROVED variant in src/design/decisions.json is registered, core config or a free identity/basemap id', () => {
+  it('every APPROVED variant in src/design/decisions.json is registered, core config, NONE (no UI) or a free identity/basemap id', () => {
     const file = decisions as DecisionsFile
     for (const [id, entry] of Object.entries(file.decisions)) {
       if (entry.status !== 'APPROVED') continue
       if (FREE_ID.includes(id as DecisionId) || CORE_CONFIG_DECISIONS.includes(id as DecisionId)) continue
+      // "no UI" is a legitimate approved choice (onboarding = NONE): nothing to register, resolveVariant gives null
+      if (entry.variant === 'NONE') {
+        expect(VARIANTS[id as DecisionId], `${id} = NONE`).toBeUndefined()
+        continue
+      }
       expect(VARIANTS[id as DecisionId]?.[entry.variant], `${id} = ${entry.variant}`).toBeDefined()
     }
   })
