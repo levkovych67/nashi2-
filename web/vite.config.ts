@@ -1,5 +1,6 @@
 import react from '@vitejs/plugin-react'
 import tailwind from '@tailwindcss/vite'
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
@@ -16,6 +17,9 @@ export default defineConfig({
       ],
     }),
   ],
+  resolve: {
+    alias: { '@contracts': fileURLToPath(new URL('../contracts', import.meta.url)) },
+  },
   server: {
     port: 5174,
     strictPort: true,
