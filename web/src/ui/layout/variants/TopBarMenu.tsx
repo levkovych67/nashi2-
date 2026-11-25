@@ -1,8 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useCopy } from '../../../core/i18n/copy'
-import logoUrl from '../../../design/assets/logo.svg'
-import logoMarkUrl from '../../../design/assets/logo-mark.svg'
 import '../layout.css'
 
 /** nav.structure = TOP_BAR_MENU: a top bar with the identity logo and a «Меню» button that opens the app sections. */
@@ -35,11 +33,8 @@ export function TopBarMenu() {
 
   return (
     <header className="n-topbar">
-      <Link to="/" className="n-topbar__brand">
-        <picture>
-          <source media="(max-width: 359px)" srcSet={logoMarkUrl} />
-          <img src={logoUrl} alt={t('app.name')} className="n-topbar__logo" />
-        </picture>
+      <Link to="/" className="n-topbar__brand" aria-label={t('app.name')}>
+        <span className="n-topbar__logo" aria-hidden="true" />
       </Link>
       <p className="n-topbar__tagline">{t('app.tagline')}</p>
       <nav ref={root} className="n-topbar__nav" aria-label={t('nav.menu')}>
