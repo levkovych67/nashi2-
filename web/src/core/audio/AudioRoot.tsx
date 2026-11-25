@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState, type ReactNode } from 'react'
-import { onFirstActivation } from './activation'
 import { createAudioEngine, isVolumeWritable, type AudioEngine, type Clock, type EngineState } from './engine'
 
 declare global {
@@ -27,7 +26,17 @@ const PUBLISH = import.meta.env.DEV || import.meta.env.VITE_API_MOCK === '1'
 
 export function AudioRoot({ children }: { children: ReactNode }) {
   const [engine] = useState(createBrowserEngine)
-  useEffect(() => onFirstActivation(document, () => engine.unlock()), [engine])
+  // pointerdown is not reliably a media-activating gesture on iOS; keep trying until unlock really succeeds.
+  useEffect(() => {
+    const events = ['touchend', 'click', 'keydown'] as const
+    const opts = { capture: true, passive: true }
+    const off = () => events.forEach((e) => document.removeEventListener(e, onGesture, opts))
+    function onGesture() {
+      void engine.unlock().then((ok) => ok && off())
+    }
+    events.forEach((e) => document.addEventListener(e, onGesture, opts))
+    return off
+  }, [engine])
   useEffect(() => {
     if (!PUBLISH) return
     window.__nashiAudioState = engine.getState()

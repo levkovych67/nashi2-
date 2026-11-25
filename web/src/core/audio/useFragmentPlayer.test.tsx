@@ -29,7 +29,7 @@ function fakeEngine() {
       plays.push({ id, f })
       set({ status: 'playing', musicianId: id, clipId: f.clipId })
     },
-    unlock() {},
+    unlock: async () => true,
     stop(o) {
       stops.push(o)
       set({ status: 'idle', musicianId: null, clipId: null })

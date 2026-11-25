@@ -28,8 +28,11 @@ export interface EngineState {
 export interface AudioEngine {
   play(musicianId: string, f: Fragment): Promise<void>
   stop(opts?: { fade?: boolean }): void
-  /** Call from a user gesture: primes the shared element so later async play() is allowed (iOS). */
-  unlock(): void
+  /**
+   * Call from a user gesture: primes the shared element so later async play() is allowed (iOS).
+   * Resolves true once primed (or already primed); false if still locked or the engine is busy, so retry on a later gesture.
+   */
+  unlock(): Promise<boolean>
   getState(): EngineState
   subscribe(l: (s: EngineState) => void): () => void
 }
@@ -184,19 +187,30 @@ export function createAudioEngine(deps: { audio: AudioLike; clock: Clock; volume
   }
 
   let unlocked = false
-  function unlock() {
-    if (unlocked || state.status !== 'idle') return
-    unlocked = true
+  let pendingUnlock: Promise<boolean> | null = null
+  function unlock(): Promise<boolean> {
+    if (unlocked) return Promise.resolve(true)
+    if (pendingUnlock) return pendingUnlock
+    if (state.status !== 'idle') return Promise.resolve(false)
+    let p: Promise<void> | undefined
     try {
       audio.src = SILENT_WAV
-      const p = audio.play() as Promise<void> | undefined
+      p = audio.play() as Promise<void> | undefined
       audio.pause()
-      p?.catch((e: unknown) => {
-        if ((e as { name?: string })?.name === 'NotAllowedError') unlocked = false
-      })
     } catch {
-      unlocked = false
+      return Promise.resolve(false)
     }
+    // Only NotAllowedError means "still locked"; the AbortError caused by the immediate pause() is expected.
+    const settled = Promise.resolve(p).then(
+      () => true,
+      (e: unknown) => (e as { name?: string })?.name !== 'NotAllowedError',
+    )
+    pendingUnlock = settled.then((ok) => {
+      pendingUnlock = null
+      unlocked = ok
+      return ok
+    })
+    return pendingUnlock
   }
 
   return {
