@@ -1,92 +1,109 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-25T14:43:10.249Z",
+  "generatedAt": "2026-11-25T19:17:20.774Z",
   "studioCommit": "",
   "decisions": {
     "identity": {
+      "status": "APPROVED",
       "variant": "nichna-karta",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "map.basemap": {
+      "status": "APPROVED",
       "variant": "night",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "map.initial-view": {
+      "status": "APPROVED",
       "variant": "UKRAINE_WITH_NEAR_ME_PROMPT",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "map.aggregation": {
+      "status": "APPROVED",
       "variant": "CHOROPLETH_PLACE_PIN",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "map.pin": {
+      "status": "APPROVED",
       "variant": "AVATAR_RING",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "map.cluster": {
+      "status": "APPROVED",
       "variant": "BUBBLE_COUNT",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "map.origin-notice": {
+      "status": "APPROVED",
       "variant": "LEGEND_BAR",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "audio.mobile-trigger": {
+      "status": "APPROVED",
       "variant": "TAP_PREVIEW_AND_PLAY",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "audio.desktop-hover": {
+      "status": "APPROVED",
       "variant": "EQUALIZER_BADGE",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "audio.player": {
+      "status": "APPROVED",
       "variant": "IN_CARD",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "musician.preview": {
+      "status": "APPROVED",
       "variant": "BOTTOM_SHEET",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "musician.page": {
+      "status": "APPROVED",
       "variant": "EDITORIAL",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "like.button": {
+      "status": "APPROVED",
       "variant": "HEART_BURST",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "filters.region": {
+      "status": "APPROVED",
       "variant": "SHEET_LIST",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "submission.form": {
+      "status": "APPROVED",
       "variant": "WIZARD",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "nav.structure": {
+      "status": "APPROVED",
       "variant": "TOP_BAR_MENU",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     },
     "onboarding": {
+      "status": "APPROVED",
       "variant": "NONE",
-      "status": "PROPOSED",
-      "note": "Вибір замовника у студії 25.11.2026 (чернетка); очікує затвердження у вкладці «Передача»"
+      "approvedBy": "Bohdan Levkovych",
+      "approvedAt": "2026-11-25"
     }
   }
 }
