@@ -65,20 +65,13 @@ test.describe('mobile tap', () => {
   test.beforeEach(({ isMobile }) => test.skip(!isMobile, 'tap is a phone gesture'))
 
   test('tap opens the preview and plays, a second tap stops', async ({ page }) => {
+    // not the first visit: the approved near-me prompt stacks extra controls over the map, and this test is about the pins
+    await page.addInitScript(() => window.localStorage.setItem('nashi.nearMeSeen', '1'))
     await openAudioPin(page)
     // the controls cover the top of the map and the preview sheet the bottom: tap the highest pin between them
-    // (the first-visit near-me prompt stacks more controls over the map, so a pin must also be the topmost element at its centre and clear of the sheet)
     const pins = await page.locator('[data-testid="pin"][data-has-audio="true"]').all()
-    const tops = await Promise.all(
-      pins.map((p) =>
-        p.evaluate((el) => {
-          const r = el.getBoundingClientRect()
-          const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2)
-          return hit && el.contains(hit) ? r.y : -1
-        }),
-      ),
-    )
-    const free = tops.map((y, i) => ({ y, i })).filter(({ y }) => y > 130 && y < 400) // above the preview sheet, which opens over the lower half
+    const tops = await Promise.all(pins.map(async (p) => (await p.boundingBox())!.y))
+    const free = tops.map((y, i) => ({ y, i })).filter(({ y }) => y > 130)
     const pin = pins[free.sort((a, b) => a.y - b.y)[0].i]
     await pin.tap()
     await expect(page.getByTestId('musician-preview')).toBeVisible()
