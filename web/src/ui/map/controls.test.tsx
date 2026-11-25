@@ -8,6 +8,7 @@ import { Toast, useToast } from '../layout/Toast'
 import { TopBarMenu } from '../layout/variants/TopBarMenu'
 import { FilterSheet } from './FilterSheet'
 import { MapStatus } from './MapStatus'
+import { ZoomButtons } from './ZoomButtons'
 import { NearMeButton } from './NearMeButton'
 import { RegionFilter } from './RegionFilter'
 import { SoundToggle } from './SoundToggle'
@@ -249,5 +250,32 @@ describe('MapStatus', () => {
   it('renders nothing when the map is ready', () => {
     const { container } = render(<MapStatus loading={false} error={null} onRetry={() => {}} />)
     expect(container.textContent).toBe('')
+  })
+})
+
+describe('ZoomButtons', () => {
+  const props = { minZoom: 5, maxZoom: 17, onZoomIn: vi.fn(), onZoomOut: vi.fn() }
+
+  it('is a named group of two labelled buttons that zoom in and out', () => {
+    render(<ZoomButtons zoom={8} {...props} />)
+    expect(screen.getByRole('group', { name: 'Масштаб карти' })).toBeTruthy()
+    fireEvent.click(screen.getByRole('button', { name: 'Збільшити масштаб' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Зменшити масштаб' }))
+    expect(props.onZoomIn).toHaveBeenCalledTimes(1)
+    expect(props.onZoomOut).toHaveBeenCalledTimes(1)
+  })
+
+  it('disables the direction that is at its limit', () => {
+    const { rerender } = render(<ZoomButtons zoom={17} {...props} />)
+    expect((screen.getByRole('button', { name: 'Збільшити масштаб' }) as HTMLButtonElement).disabled).toBe(true)
+    expect((screen.getByRole('button', { name: 'Зменшити масштаб' }) as HTMLButtonElement).disabled).toBe(false)
+    rerender(<ZoomButtons zoom={5} {...props} />)
+    expect((screen.getByRole('button', { name: 'Збільшити масштаб' }) as HTMLButtonElement).disabled).toBe(false)
+    expect((screen.getByRole('button', { name: 'Зменшити масштаб' }) as HTMLButtonElement).disabled).toBe(true)
+  })
+
+  it('draws its symbols, so there is no text to translate', () => {
+    render(<ZoomButtons zoom={8} {...props} />)
+    expect(screen.getByRole('group').textContent).toBe('')
   })
 })

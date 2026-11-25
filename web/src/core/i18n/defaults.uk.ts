@@ -182,4 +182,7 @@ export const DEFAULT_COPY = {
   "errors.retry": "Спробувати ще",
   "errors.page": "Не вдалося показати сторінку.",
   "errors.reload": "Оновити сторінку",
+  "map.zoomGroup": "Масштаб карти",
+  "map.zoomIn": "Збільшити масштаб",
+  "map.zoomOut": "Зменшити масштаб",
 } as const

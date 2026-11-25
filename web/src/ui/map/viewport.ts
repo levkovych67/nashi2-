@@ -19,12 +19,20 @@ export function fitZoom([west, south, east, north]: BBox, size: Size, padding: I
   return Math.min(zoomX, zoomY)
 }
 
+/** Lowest zoom at which a `size` viewport still lies inside `bbox` (MapLibre zooms in to keep it there). */
+function coverZoom([west, south, east, north]: BBox, size: Size): number {
+  const spanX = (mercatorX(east) - mercatorX(west)) * TILE_SIZE
+  const spanY = (mercatorY(south) - mercatorY(north)) * TILE_SIZE
+  return Math.max(Math.log2(size.width / spanX), Math.log2(size.height / spanY))
+}
+
 /**
  * Zoom and pan limits: zoom 5…17 and UKRAINE_BBOX ± 1°. On a phone the whole country (D-10) only fits below
  * zoom 5 and needs more room than ± 1° (MapLibre zooms in until the viewport lies inside maxBounds), so the minimum
- * zoom drops to the overview's and the bounds widen to hold the overview viewport.
+ * zoom drops to the overview's and the bounds widen to hold the overview viewport. `reachableMinZoom` is how far
+ * out the map really goes: on a wide screen the bounds stop it above `minZoom`.
  */
-export function mapLimits(size: Size, padding: Insets): { minZoom: number; maxBounds: BBox } {
+export function mapLimits(size: Size, padding: Insets): { minZoom: number; maxBounds: BBox; reachableMinZoom: number } {
   const overviewZoom = fitZoom(UKRAINE_BBOX, size, padding)
   const world = TILE_SIZE * 2 ** overviewZoom
   const [west, south, east, north] = UKRAINE_BBOX
@@ -39,10 +47,9 @@ export function mapLimits(size: Size, padding: Insets): { minZoom: number; maxBo
     cy - mercatorY(north + BOUNDS_MARGIN_DEG),
     (size.height + Math.abs(padding.top - padding.bottom)) / 2 / world,
   ) * SLACK
-  return {
-    minZoom: Math.min(MIN_ZOOM, overviewZoom),
-    maxBounds: [lonOfX(cx - halfX), latOfY(cy + halfY), lonOfX(cx + halfX), latOfY(cy - halfY)],
-  }
+  const minZoom = Math.min(MIN_ZOOM, overviewZoom)
+  const maxBounds: BBox = [lonOfX(cx - halfX), latOfY(cy + halfY), lonOfX(cx + halfX), latOfY(cy - halfY)]
+  return { minZoom, maxBounds, reachableMinZoom: Math.max(minZoom, coverZoom(maxBounds, size)) }
 }
 
 type CameraTarget = Pick<MaplibreMap, 'flyTo' | 'fitBounds' | 'cameraForBounds'>
@@ -60,6 +67,16 @@ export function moveCamera(map: CameraTarget, move: CameraMove, minZoom?: number
   const fit = map.cameraForBounds(move.bounds, { padding: move.padding })
   if (!fit) return
   map.flyTo({ center: fit.center, zoom: Math.max(fit.zoom ?? minZoom, minZoom), duration: move.duration, essential: true })
+}
+
+const ZOOM_STEP_MS = 300
+
+type ZoomTarget = Pick<MaplibreMap, 'getZoom' | 'getMinZoom' | 'getMaxZoom' | 'easeTo'>
+
+/** One zoom step around the centre (the +/− buttons), inside the map limits; instant when motion is reduced. */
+export function zoomBy(map: ZoomTarget, delta: number, reducedMotion: boolean) {
+  const zoom = Math.min(map.getMaxZoom(), Math.max(map.getMinZoom(), map.getZoom() + delta))
+  map.easeTo({ zoom, duration: reducedMotion ? 0 : ZOOM_STEP_MS, essential: true })
 }
 
 export const prefersReducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false

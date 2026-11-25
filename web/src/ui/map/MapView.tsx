@@ -4,7 +4,8 @@ import Map, { type MapInstance, type MapLayerMouseEvent, type MapRef } from 'rea
 import type { BBox, MapLevel } from '../../core/map/aggregation'
 import { ukraineCamera, type CameraMove } from '../../core/map/camera'
 import { baseMapStyle } from './baseStyle'
-import { mapLimits, MAX_ZOOM, type Size } from './viewport'
+import { mapLimits, MAX_ZOOM, prefersReducedMotion, zoomBy, type Size } from './viewport'
+import { ZoomButtons } from './ZoomButtons'
 import './map.css'
 
 export interface Viewport { zoom: number; bbox: BBox }
@@ -37,8 +38,9 @@ function useElementSize(ref: RefObject<HTMLElement | null>): Size | null {
 }
 
 /**
- * MapLibre map with an uncontrolled camera that opens on the whole of Ukraine. Reports the viewport after load and
- * after every move; `level` is exposed as `data-level` for tests and the skin.
+ * MapLibre map with an uncontrolled camera that opens on the whole of Ukraine, with +/− zoom buttons. Reports the
+ * viewport after load and after every move; `level` and the zoom are exposed as `data-level` / `data-zoom` for tests
+ * and the skin.
  */
 export function MapView({ ref, level, onViewport, onBackgroundClick, children }: {
   ref?: Ref<MapRef>
@@ -53,14 +55,18 @@ export function MapView({ ref, level, onViewport, onBackgroundClick, children }:
   const mapStyle = useMemo(() => baseMapStyle(import.meta.env as Record<string, string | undefined>), [])
   const overview = useMemo(overviewCamera, [])
   const limits = useMemo(() => (size ? mapLimits(size, overview.padding) : null), [size, overview])
+  const [map, setMap] = useState<MapInstance | null>(null)
+  const [zoom, setZoom] = useState<number | null>(null)
 
   const report = ({ target }: { target: MapInstance }) => {
     const b = target.getBounds()
+    setZoom(target.getZoom())
     onViewport({ zoom: target.getZoom(), bbox: [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()] })
   }
   const onLoad = ({ target }: { target: MapInstance }) => {
     target.touchZoomRotate.disableRotation()
     target.keyboard.disableRotation()
+    setMap(target)
     report({ target })
   }
   const onClick = (e: MapLayerMouseEvent) => {
@@ -70,7 +76,7 @@ export function MapView({ ref, level, onViewport, onBackgroundClick, children }:
   }
 
   return (
-    <div ref={box} className="n-map" data-testid="map" data-level={level ?? undefined}>
+    <div ref={box} className="n-map" data-testid="map" data-level={level ?? undefined} data-zoom={zoom?.toFixed(2)}>
       {limits && (
         <Map
           ref={ref}
@@ -91,6 +97,15 @@ export function MapView({ ref, level, onViewport, onBackgroundClick, children }:
         >
           {children}
         </Map>
+      )}
+      {limits && map && zoom !== null && (
+        <ZoomButtons
+          zoom={zoom}
+          minZoom={limits.reachableMinZoom}
+          maxZoom={MAX_ZOOM}
+          onZoomIn={() => zoomBy(map, 1, prefersReducedMotion())}
+          onZoomOut={() => zoomBy(map, -1, prefersReducedMotion())}
+        />
       )}
     </div>
   )

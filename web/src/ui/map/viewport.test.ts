@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { UKRAINE_BBOX, type CameraMove } from '../../core/map/camera'
-import { fitZoom, mapLimits, moveCamera, MIN_ZOOM } from './viewport'
+import { mercatorX, mercatorY } from './mercator'
+import { fitZoom, mapLimits, moveCamera, MAX_ZOOM, MIN_ZOOM, zoomBy } from './viewport'
 
 const pad = { top: 40, right: 40, bottom: 40, left: 40 }
 const none = { top: 0, right: 0, bottom: 0, left: 0 }
@@ -24,6 +25,20 @@ describe('mapLimits', () => {
     expect(minZoom).toBeCloseTo(fitZoom(UKRAINE_BBOX, phone, pad), 6)
     // MapLibre zooms in when the viewport is larger than maxBounds: the bounds must hold the overview viewport
     expect(lonSpanPx(maxBounds, minZoom)).toBeGreaterThanOrEqual(phone.width)
+  })
+
+  it('reachableMinZoom: on desktop the bounds stop zooming out above 5, on a phone the overview is the floor', () => {
+    const desktop = { width: 1080, height: 780 }
+    const wide = mapLimits(desktop, pad)
+    expect(wide.reachableMinZoom).toBeGreaterThan(MIN_ZOOM)
+    // at that zoom the viewport is exactly as large as maxBounds in one direction and smaller in the other
+    const [w, s, e, n] = wide.maxBounds
+    const world = worldPx(wide.reachableMinZoom)
+    const fillX = desktop.width / ((mercatorX(e) - mercatorX(w)) * world)
+    const fillY = desktop.height / ((mercatorY(s) - mercatorY(n)) * world)
+    expect(Math.max(fillX, fillY)).toBeCloseTo(1, 6)
+    const phone = { width: 390, height: 540 }
+    expect(mapLimits(phone, pad).reachableMinZoom).toBeCloseTo(mapLimits(phone, pad).minZoom, 2)
   })
 
   it('on desktop keeps the configured minimum zoom', () => {
@@ -68,5 +83,32 @@ describe('moveCamera', () => {
     expect(map.cameraForBounds).toHaveBeenCalledWith([[22, 48], [25, 50]], { padding: pad })
     expect(map.flyTo).toHaveBeenCalledWith({ center: { lng: 24, lat: 49.7 }, zoom: 7, duration: 1200, essential: true })
     expect(map.fitBounds).not.toHaveBeenCalled()
+  })
+})
+
+describe('zoomBy', () => {
+  const map = (zoom: number, minZoom = MIN_ZOOM) => ({
+    getZoom: () => zoom,
+    getMinZoom: () => minZoom,
+    getMaxZoom: () => MAX_ZOOM,
+    easeTo: vi.fn(),
+  })
+
+  it('zooms one step in or out around the centre, animated unless motion is reduced', () => {
+    const m = map(6.3)
+    zoomBy(m, 1, false)
+    expect(m.easeTo).toHaveBeenLastCalledWith(expect.objectContaining({ zoom: 7.3, essential: true }))
+    expect(m.easeTo.mock.lastCall![0].duration).toBeGreaterThan(0)
+    zoomBy(m, -1, true)
+    expect(m.easeTo).toHaveBeenLastCalledWith(expect.objectContaining({ zoom: 5.3, duration: 0 }))
+  })
+
+  it('stays inside the map limits (zoom 5..17, or the phone overview below 5)', () => {
+    const top = map(16.6)
+    zoomBy(top, 1, true)
+    expect(top.easeTo.mock.lastCall![0].zoom).toBe(MAX_ZOOM)
+    const phone = map(4.6, 4.2)
+    zoomBy(phone, -1, true)
+    expect(phone.easeTo.mock.lastCall![0].zoom).toBe(4.2)
   })
 })
