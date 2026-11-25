@@ -15,7 +15,7 @@ export interface SubmissionLimits {
   maxTotalMb?: number
 }
 
-export const DEFAULT_LIMITS: SubmissionLimits = { maxImages: 5, maxImageMb: 10, summaryMin: 30, summaryMax: 1000, maxTotalMb: 55 }
+export const DEFAULT_LIMITS: Required<SubmissionLimits> = { maxImages: 5, maxImageMb: 10, summaryMin: 30, summaryMax: 1000, maxTotalMb: 55 }
 
 export const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const
 
@@ -124,7 +124,7 @@ export function createSubmissionSchema(limits: SubmissionLimits): z.ZodType<Subm
         else if (f.size > limits.maxImageMb * MB) add(['images', i], E.imageSize)
       })
       const total = images.reduce((sum, f) => sum + f.size, 0)
-      if (total > (limits.maxTotalMb ?? DEFAULT_LIMITS.maxTotalMb!) * MB) add(['images'], E.imagesTotal)
+      if (total > (limits.maxTotalMb ?? DEFAULT_LIMITS.maxTotalMb) * MB) add(['images'], E.imagesTotal)
     }
   })
 }

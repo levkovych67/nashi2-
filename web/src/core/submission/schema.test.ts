@@ -151,3 +151,63 @@ describe('submissionSchema mirrors the backend SubmissionValidator', () => {
     expect(Object.keys(fieldErrors(six, { ...valid(), images: Array.from({ length: 7 }, big) }))).toEqual(['images']) // 63 MB
   })
 })
+
+// Rejection just past each limit of SubmissionRequest.java (acceptance at the limit is covered above too).
+describe('limits of SubmissionRequest.java: just past each one is rejected', () => {
+  const url = (prefix: string, total: number) => prefix + 'a'.repeat(total - prefix.length)
+  const SPOTIFY = 'https://open.spotify.com/artist/'
+  const YT = 'https://www.youtube.com/@'
+  const WIKI = 'https://uk.wikipedia.org/wiki/'
+
+  it('originPlaceId: 32 ok, 33 rejected, blank or missing rejected', () => {
+    expect(keys({ ...valid(), originPlaceId: 'Q' + '1'.repeat(31) })).toEqual([])
+    expect(keys({ ...valid(), originPlaceId: 'Q' + '1'.repeat(32) })).toEqual(['originPlaceId'])
+    expect(keys({ ...valid(), originPlaceId: '' })).toEqual(['originPlaceId'])
+    expect(keys({ ...valid(), originPlaceId: '  ' })).toEqual(['originPlaceId'])
+    expect(keys({ ...valid(), originPlaceId: undefined })).toEqual(['originPlaceId'])
+  })
+
+  it('birthPlaceId: 32 ok, 33 rejected', () => {
+    const person = { ...valid(), kind: 'PERSON' as const }
+    expect(keys({ ...person, birthPlaceId: 'Q' + '2'.repeat(31) })).toEqual([])
+    expect(keys({ ...person, birthPlaceId: 'Q' + '2'.repeat(32) })).toEqual(['birthPlaceId'])
+  })
+
+  it('youtubeChannelUrl and wikipediaUrl: 2048 ok, 2049 rejected', () => {
+    expect(keys({ ...valid(), youtubeChannelUrl: url(YT, 2048), wikipediaUrl: url(WIKI, 2048) })).toEqual([])
+    expect(keys({ ...valid(), youtubeChannelUrl: url(YT, 2049) })).toEqual(['youtubeChannelUrl'])
+    expect(keys({ ...valid(), wikipediaUrl: url(WIKI, 2049) })).toEqual(['wikipediaUrl'])
+  })
+
+  it('a link: 2048 ok, 2049 rejected', () => {
+    expect(keys({ ...valid(), links: [url(SPOTIFY, 2049)] })).toEqual(['links[0]'])
+  })
+
+  it('name: 1 and 101 characters and whitespace only are rejected, 2 and 100 accepted', () => {
+    expect(keys({ ...valid(), name: 'а' })).toEqual(['name'])
+    expect(keys({ ...valid(), name: 'а'.repeat(101) })).toEqual(['name'])
+    expect(keys({ ...valid(), name: '   ' })).toEqual(['name'])
+    expect(keys({ ...valid(), name: 'аб' })).toEqual([])
+    expect(keys({ ...valid(), name: 'а'.repeat(100) })).toEqual([])
+  })
+
+  it('links: an empty list is rejected', () => {
+    expect(keys({ ...valid(), links: [] })).toEqual(['links'])
+  })
+
+  it('contact: 200 ok, 201 rejected', () => {
+    expect(keys({ ...valid(), contact: 'c'.repeat(200) })).toEqual([])
+    expect(keys({ ...valid(), contact: 'c'.repeat(201) })).toEqual(['contact'])
+  })
+
+  it('summary: 29 and 1001 rejected, 30 and 1000 accepted', () => {
+    expect(keys({ ...valid(), summary: 'я'.repeat(29) })).toEqual(['summary'])
+    expect(keys({ ...valid(), summary: 'я'.repeat(30) })).toEqual([])
+    expect(keys({ ...valid(), summary: 'я'.repeat(1000) })).toEqual([])
+    expect(keys({ ...valid(), summary: 'я'.repeat(1001) })).toEqual(['summary'])
+  })
+
+  it('consent: false, missing and null are rejected', () => {
+    for (const consent of [false, undefined, null]) expect(keys({ ...valid(), consent })).toEqual(['consent'])
+  })
+})

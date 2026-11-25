@@ -363,7 +363,7 @@ export function SuggestForm() {
             onBusy={setBusy}
             max={limits.maxImages}
             maxMb={limits.maxImageMb}
-            maxTotalMb={limits.maxTotalMb ?? 55}
+            maxTotalMb={limits.maxTotalMb}
             error={err('images')}
             rowErrors={rows('images')}
           />
