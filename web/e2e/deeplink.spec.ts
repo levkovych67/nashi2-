@@ -18,6 +18,24 @@ test('?musician=<slug> flies to the pin and opens its preview', async ({ page })
   expect(Math.abs(box.y + box.height / 2 - (map.y + map.height / 2))).toBeLessThan(map.height * 0.1)
 })
 
+test.describe('with reduced motion (the camera jumps instead of flying)', () => {
+  test.use({ contextOptions: { reducedMotion: 'reduce' } })
+
+  test('?musician=<slug> is handled once: no render loop on a slow device', async ({ page }) => {
+    const loops: string[] = []
+    page.on('console', (m) => m.type() === 'error' && /Maximum update depth/.test(m.text()) && loops.push(m.text()))
+    const cdp = await page.context().newCDPSession(page)
+    await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 })
+    await page.goto('/?musician=okean-elzy')
+    await expect(page.getByTestId('musician-preview')).toBeVisible({ timeout: 30_000 })
+    await expect(page).not.toHaveURL(/musician=/)
+    await expect(mapEl(page)).toHaveAttribute('data-level', 'PIN')
+    // the page still answers (a loop would keep the main thread busy) and logged no loop on the way
+    expect(await page.evaluate(() => document.readyState)).toBe('complete')
+    expect(loops).toEqual([])
+  })
+})
+
 test('?musician=<unknown> shows the not-found toast and keeps the overview', async ({ page }) => {
   await page.goto('/?musician=does-not-exist')
   await expect(page.getByTestId('toast')).toHaveText(text('errors.notFound'))

@@ -244,6 +244,29 @@ describe('useMapController', () => {
       await waitFor(() => expect(search).toBe(''))
     })
 
+    it('handles the slug once although a reduced-motion jump reports the new viewport at once (no render loop)', async () => {
+      const errors = vi.spyOn(console, 'error').mockImplementation(() => {})
+      const { result, flyTo } = setupAt('/?musician=okean-elzy')
+      // like MapLibre with duration 0: moveend, hence onViewport, fires inside flyTo, before the URL drops ?musician=
+      flyTo.mockImplementation(({ center, zoom }: { center: [number, number]; zoom: number }) =>
+        result.current.handlers.onViewport({ zoom, center, bbox: [center[0] - 0.01, center[1] - 0.01, center[0] + 0.01, center[1] + 0.01] }),
+      )
+      await waitFor(() => expect(result.current.previewPin?.slug).toBe('okean-elzy'))
+      await waitFor(() => expect(search).toBe(''))
+      expect(flyTo).toHaveBeenCalledTimes(1)
+      expect(errors.mock.calls.filter(([m]) => /Maximum update depth/.test(String(m)))).toEqual([])
+      errors.mockRestore()
+    })
+
+    it('an equal viewport does not re-render (the same camera reported twice)', () => {
+      const { result } = setupAt('/')
+      const view = { zoom: 5.5, bbox: [22, 44, 41, 53] as [number, number, number, number], center: [31.5, 48.5] as [number, number] }
+      act(() => result.current.handlers.onViewport({ ...view }))
+      const first = result.current
+      act(() => result.current.handlers.onViewport({ zoom: 5.5, bbox: [22, 44, 41, 53], center: [31.5, 48.5] }))
+      expect(result.current).toBe(first) // no new render: the hook still returns the same object
+    })
+
     it('unknown slug: toast errors.notFound, no camera move, no preview', async () => {
       const { result, flyTo } = setupAt('/?musician=does-not-exist')
       await waitFor(() => expect(result.current.toast).toBe('Цю сторінку не знайдено.'))

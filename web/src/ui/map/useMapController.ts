@@ -48,6 +48,9 @@ const NO_INSETS = { top: 0, right: 0, bottom: 0, left: 0 }
 const WORLD: BBox = [-180, -85, 180, 85]
 const NO_MARKERS = { items: [] as MapItem[], capped: false }
 
+const sameViewport = (a: Viewport | null, b: Viewport) =>
+  a !== null && a.zoom === b.zoom && a.bbox.every((v, i) => v === b.bbox[i]) && a.center.every((v, i) => v === b.center[i])
+
 /**
  * State and actions of the map screen: what to draw (level, markers, names, fill, sheets) and stable handlers for
  * camera moves, pins and sheets. The handlers never change identity, so memoized markers do not re-render; they
@@ -138,7 +141,8 @@ export function useMapController() {
       if (open) send({ type: 'closePreview', musicianId: open })
     }
     return {
-      onViewport: setViewport,
+      // the same camera reported again (a jump to where the map already is) is not a change
+      onViewport: (next) => setViewport((prev) => (sameViewport(prev, next) ? prev : next)),
       openRegions,
       closeSheets,
       onRegion(item) {
@@ -251,8 +255,16 @@ export function useMapController() {
 
   // ?musician=<slug>: fly to the pin and open its preview; an unknown slug or a musician without a pin gets a toast.
   const wantedSlug = searchParams.get('musician')
+  // Once per slug: with reduced motion the camera jump reports a new viewport inside this effect, before the router has
+  // dropped ?musician= from the URL, and running again on that viewport would loop.
+  const handledSlug = useRef<string | null>(null)
   useEffect(() => {
-    if (!wantedSlug || !viewport || !pins) return
+    if (!wantedSlug) {
+      handledSlug.current = null
+      return
+    }
+    if (handledSlug.current === wantedSlug || !viewport || !pins) return
+    handledSlug.current = wantedSlug
     const pin = pins.find((p) => p.slug === wantedSlug)
     if (pin) {
       if (mapRef.current) moveCamera(mapRef.current, { ...placeCamera(pin.lon, pin.lat, prefersReducedMotion()), zoom: PIN_ZOOM })
