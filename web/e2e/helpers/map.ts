@@ -67,14 +67,16 @@ export async function settled(locator: Locator) {
 }
 
 /**
- * Test-only: the studio's proposal for the map (CHOROPLETH_PLACE_PIN, UKRAINE_WITH_NEAR_ME_PROMPT) as APPROVED, without
- * touching src/design/decisions.json. The app reads window.__nashiDecisions in mock / dev mode only.
+ * Test-only: the core's plain defaults for the map (REGION_PLACE_PIN, UKRAINE: bubbles with numerals, no colour key, no
+ * near-me prompt), injected as APPROVED. The approved decisions.json now selects CHOROPLETH_PLACE_PIN and
+ * UKRAINE_WITH_NEAR_ME_PROMPT, but the core still supports the plain modes, so they stay covered. The app reads
+ * window.__nashiDecisions in mock / dev mode only.
  */
-export async function approveMapProposal(page: Page) {
+export async function useRegionPlaceDefaults(page: Page) {
   await page.addInitScript(() => {
     window.__nashiDecisions = {
-      'map.aggregation': { variant: 'CHOROPLETH_PLACE_PIN', status: 'APPROVED' },
-      'map.initial-view': { variant: 'UKRAINE_WITH_NEAR_ME_PROMPT', status: 'APPROVED' },
+      'map.aggregation': { variant: 'REGION_PLACE_PIN', status: 'APPROVED' },
+      'map.initial-view': { variant: 'UKRAINE', status: 'APPROVED' },
     }
   })
 }

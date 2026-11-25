@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test'
-import { approveMapProposal, bubble, mapEl, text } from './helpers/map'
+import { useRegionPlaceDefaults, bubble, mapEl, text } from './helpers/map'
 
-// What the map does once the studio's proposal is APPROVED (injected for the test, decisions.json stays PROPOSED).
+// What the map does with the customer's approved decisions (decisions.json: all 17 APPROVED on 2026-11-25), and, via an
+// injected override, with the core's plain defaults that the approval replaced.
 
-test('CHOROPLETH_PLACE_PIN: numerals and the «Менше — Більше» key at region level only', async ({ page }) => {
-  await approveMapProposal(page)
+test('approved CHOROPLETH_PLACE_PIN: numerals and the «Менше — Більше» key at region level only', async ({ page }) => {
   await page.goto('/')
   await expect(mapEl(page)).toHaveAttribute('data-level', 'REGION')
   const legend = page.getByTestId('choropleth-legend')
@@ -16,10 +16,9 @@ test('CHOROPLETH_PLACE_PIN: numerals and the «Менше — Більше» key
   await expect(legend).toHaveCount(0)
 })
 
-test('UKRAINE_WITH_NEAR_ME_PROMPT: the prompt with its caption until it is pressed', async ({ page, context }) => {
+test('approved UKRAINE_WITH_NEAR_ME_PROMPT: the prompt with its caption until it is pressed', async ({ page, context }) => {
   await context.grantPermissions(['geolocation'])
   await context.setGeolocation({ longitude: 24.03, latitude: 49.84 })
-  await approveMapProposal(page)
   await page.goto('/')
   const button = page.getByTestId('near-me')
   await expect(button).toHaveAttribute('data-prompt', 'true')
@@ -30,7 +29,8 @@ test('UKRAINE_WITH_NEAR_ME_PROMPT: the prompt with its caption until it is press
   await expect(mapEl(page)).toHaveAttribute('data-level', 'PLACE')
 })
 
-test('without the override the PROPOSED decisions keep the defaults: no key, no prompt', async ({ page }) => {
+test('the plain core defaults (REGION_PLACE_PIN, UKRAINE) still work when injected: no key, no prompt', async ({ page }) => {
+  await useRegionPlaceDefaults(page)
   await page.goto('/')
   await expect(mapEl(page)).toHaveAttribute('data-level', 'REGION')
   await expect(page.getByTestId('region-bubble').first()).toBeVisible()

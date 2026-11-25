@@ -1,5 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test'
-import { approveMapProposal, bubble, mapEl, openFilters, openLvivPins, settled, text } from './helpers/map'
+import { useRegionPlaceDefaults, bubble, mapEl, openFilters, openLvivPins, settled, text } from './helpers/map'
 
 // Visual baselines of the key screens on phone and desktop. MSW fixtures and the blank map style keep them deterministic.
 // Remote photos are answered locally with a flat SVG, animations are frozen, and the likes count is masked.
@@ -43,17 +43,7 @@ async function shot(page: Page, name: string, mask: Locator[] = []) {
   await expect(page).toHaveScreenshot(name, { ...SHOT, mask })
 }
 
-test('map: region level', async ({ page }) => {
-  await page.goto('/')
-  await expect(mapEl(page)).toHaveAttribute('data-level', 'REGION')
-  const first = bubble(page, 'Львівська область')
-  await expect(first).toBeVisible()
-  await settled(first)
-  await shot(page, 'map-region.png')
-})
-
-test('map: region level with the approved proposal (choropleth key, near-me prompt)', async ({ page }) => {
-  await approveMapProposal(page)
+test('map: region level (approved: choropleth key, near-me prompt)', async ({ page }) => {
   await page.goto('/')
   await expect(mapEl(page)).toHaveAttribute('data-level', 'REGION')
   await expect(page.getByTestId('choropleth-legend')).toBeVisible()
@@ -61,7 +51,19 @@ test('map: region level with the approved proposal (choropleth key, near-me prom
   const first = bubble(page, 'Львівська область')
   await expect(first).toBeVisible()
   await settled(first)
-  await shot(page, 'map-region-approved.png')
+  await shot(page, 'map-region.png')
+})
+
+test('map: region level with the core defaults (REGION_PLACE_PIN, no key, no prompt)', async ({ page }) => {
+  await useRegionPlaceDefaults(page)
+  await page.goto('/')
+  await expect(mapEl(page)).toHaveAttribute('data-level', 'REGION')
+  await expect(page.getByTestId('choropleth-legend')).toHaveCount(0)
+  await expect(page.getByTestId('near-me-hint')).toHaveCount(0)
+  const first = bubble(page, 'Львівська область')
+  await expect(first).toBeVisible()
+  await settled(first)
+  await shot(page, 'map-region-default.png')
 })
 
 test('map: place level', async ({ page }) => {
