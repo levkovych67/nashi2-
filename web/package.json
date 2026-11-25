@@ -8,6 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest run",
+    "test:scripts": "node --test scripts/*.test.mjs",
+    "design:sync": "node scripts/design-sync.mjs ../studio/handoff src/design",
     "e2e": "playwright test",
     "typecheck": "tsc --noEmit",
     "gen:api": "openapi-typescript ../contracts/openapi.yaml -o src/api/types.gen.ts"
