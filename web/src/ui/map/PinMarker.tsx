@@ -7,12 +7,14 @@ import type { PinSkinProps } from './variants/AvatarRing'
 type MapPin = components['schemas']['MapPin']
 
 /** A musician's pin. Hover is reported only for a mouse pointer; a click says whether a mouse or a tap made it. */
-export const PinMarker = memo(function PinMarker({ pin, placeName, playing, selected, skin: Skin, onActivate, onHoverStart, onHoverEnd }: {
+export const PinMarker = memo(function PinMarker({ pin, placeName, playing, selected, skin: Skin, badge: Badge = null, onActivate, onHoverStart, onHoverEnd }: {
   pin: MapPin
   placeName: string
   playing: boolean
   selected: boolean
   skin: ComponentType<PinSkinProps> | null
+  /** audio.desktop-hover skin, drawn next to the pin while it plays */
+  badge?: ComponentType | null
   onActivate(pin: MapPin, input: PinInput): void
   onHoverStart(id: string): void
   onHoverEnd(id: string): void
@@ -38,6 +40,7 @@ export const PinMarker = memo(function PinMarker({ pin, placeName, playing, sele
       }}
     >
       {Skin && <Skin name={pin.name} thumbUrl={pin.thumbUrl} hasAudio={pin.hasAudio} playing={playing} selected={selected} />}
+      {playing && Badge && <Badge />}
     </button>
   )
 })

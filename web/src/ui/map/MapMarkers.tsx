@@ -25,7 +25,11 @@ export interface MarkerHandlers {
   onHoverEnd(id: string): void
 }
 
-interface Skins { pin: ComponentType<PinSkinProps> | null; bubble: ComponentType<BubbleSkinProps> | null }
+interface Skins {
+  pin: ComponentType<PinSkinProps> | null
+  bubble: ComponentType<BubbleSkinProps> | null
+  badge: ComponentType | null
+}
 
 /**
  * The map's markers. Each one is memoized on its own props (the item object, its name and its pin's
@@ -45,6 +49,7 @@ export function MapMarkers({ items, names, placeName, numeralRegions, playingId,
     () => ({
       pin: resolveVariant<PinSkinProps>('map.pin', design),
       bubble: resolveVariant<BubbleSkinProps>('map.cluster', design),
+      badge: resolveVariant<object>('audio.desktop-hover', design),
     }),
     [design],
   )
@@ -91,6 +96,7 @@ const ItemMarker = memo(function ItemMarker({ item, name, placeName, playing, se
           playing={playing}
           selected={selected}
           skin={skins.pin}
+          badge={skins.badge}
           onActivate={handlers.onPin}
           onHoverStart={handlers.onHoverStart}
           onHoverEnd={handlers.onHoverEnd}

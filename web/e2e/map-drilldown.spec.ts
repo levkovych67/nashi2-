@@ -54,6 +54,11 @@ test('touch targets are at least 44px on mobile', async ({ page, isMobile }) => 
   await page.goto('/')
   const region = page.getByTestId('region-bubble').first()
   await expect(region).toBeVisible()
+  for (const id of ['filters-open', 'near-me', 'sound-toggle']) {
+    const box = (await page.getByTestId(id).boundingBox())!
+    expect(box.width, id).toBeGreaterThanOrEqual(44)
+    expect(box.height, id).toBeGreaterThanOrEqual(44)
+  }
   const regionBox = (await region.boundingBox())!
   expect(regionBox.width).toBeGreaterThanOrEqual(44)
   expect(regionBox.height).toBeGreaterThanOrEqual(44)

@@ -1,6 +1,8 @@
 import type { ComponentType } from 'react'
 import type { DecisionId, DesignConfig } from '../core/design/types'
+import { FilterSheet } from './map/FilterSheet'
 import { TopBarMenu } from './layout/variants/TopBarMenu'
+import { EqualizerBadge } from './map/variants/EqualizerBadge'
 import { AvatarRing } from './map/variants/AvatarRing'
 import { BubbleCount } from './map/variants/BubbleCount'
 import { LegendBar } from './map/variants/LegendBar'
@@ -13,6 +15,8 @@ export type VariantRegistry = Partial<Record<DecisionId, Record<string, Componen
 
 export const VARIANTS: VariantRegistry = {
   'map.pin': { AVATAR_RING: AvatarRing },
+  'audio.desktop-hover': { EQUALIZER_BADGE: EqualizerBadge },
+  'filters.region': { SHEET_LIST: FilterSheet },
   'map.cluster': { BUBBLE_COUNT: BubbleCount },
   'map.origin-notice': { LEGEND_BAR: LegendBar },
   'nav.structure': { TOP_BAR_MENU: TopBarMenu },

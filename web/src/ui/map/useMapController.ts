@@ -4,16 +4,19 @@ import { useFilters, useMapPins, useMapPlaces, useMapRegions, usePublicConfig } 
 import type { components } from '../../api/types.gen'
 import { useFragmentPlayer } from '../../core/audio/useFragmentPlayer'
 import { useDesign } from '../../core/design/config'
-import { applyFilters } from '../../core/filters/filterState'
+import { activeFilterCount, applyFilters } from '../../core/filters/filterState'
 import { useCopy } from '../../core/i18n/copy'
 import type { AggregationMode, BBox, MapItem } from '../../core/map/aggregation'
 import { clusterCamera, placeCamera, regionsCamera, ukraineCamera, type CameraMove } from '../../core/map/camera'
+import { regionAt } from '../../core/map/geo'
 import { useMapModel } from '../../core/map/useMapModel'
+import { useToast } from '../layout/Toast'
 import { regionFillOpacity } from './fill'
 import type { MarkerHandlers } from './MapMarkers'
 import type { Viewport } from './MapView'
 import { capMarkers, clusterNames, isUnsplittableStack, itemKey, MAX_DOM_MARKERS, stackPins } from './markers'
 import { createPointIndex } from './pointIndex'
+import { readMuted, writeMuted } from './soundPref'
 import { moveCamera, prefersReducedMotion } from './viewport'
 
 type MapPin = components['schemas']['MapPin']
@@ -27,6 +30,11 @@ export interface MapHandlers extends MarkerHandlers {
   openRegions(regions: RegionStat[], animate: boolean): void
   closeSheets(): void
   backToUkraine(): void
+  /** Writes the region filter (?region=) and moves the camera to the chosen regions, or back to all of Ukraine. */
+  applyRegions(codes: string[]): void
+  /** Position → region → camera. Does not write ?region. A refusal or a position outside Ukraine shows a toast. */
+  nearMe(): void
+  toggleSound(): void
 }
 
 const NO_INSETS = { top: 0, right: 0, bottom: 0, left: 0 }
@@ -43,17 +51,21 @@ export function useMapController() {
   const mode = useDesign().variant('map.aggregation') as AggregationMode
   // indexes exist as soon as the server counts do; the pins query may still be loading
   const { indexes, filters, setFilters } = useMapModel()
-  const { state: audio, previewId: tapPreview, gesture, pointerEnter, pointerLeave } = useFragmentPlayer()
+  const { state: audio, previewId: tapPreview, gesture, pointerEnter, pointerLeave, stop } = useFragmentPlayer()
+  const toast = useToast()
   const pins = useMapPins().data?.pins
   const places = useMapPlaces().data
   const regions = useMapRegions().data
-  const filtersReady = useFilters().isSuccess
+  const filtersQuery = useFilters()
+  const filtersReady = filtersQuery.isSuccess
+  const filterDefs = filtersQuery.data
   const regionMaxZoom = usePublicConfig().data?.map.regionMaxZoom
 
   const mapRef = useRef<MapRef>(null)
   const [viewport, setViewport] = useState<Viewport | null>(null)
   const [stack, setStack] = useState<StackSheet | null>(null)
   const [mousePreview, setMousePreview] = useState<string | null>(null)
+  const [muted, setMuted] = useState(readMuted)
 
   const level = indexes && viewport ? indexes.level(viewport.zoom) : null
   const { items, capped } = useMemo(
@@ -89,9 +101,9 @@ export function useMapController() {
   const previewId = mousePreview ?? tapPreview
   const playingId = audio.status === 'playing' ? audio.musicianId : null
 
-  const latest = useRef({ indexes, viewport, regions, filters, setFilters, regionMaxZoom, names, visiblePins, t, tapPreview, gesture, pointerEnter, pointerLeave })
+  const latest = useRef({ indexes, viewport, regions, filters, setFilters, regionMaxZoom, names, visiblePins, t, tapPreview, gesture, pointerEnter, pointerLeave, stop, muted, blocked: false, notify: toast.show })
   useLayoutEffect(() => {
-    latest.current = { indexes, viewport, regions, filters, setFilters, regionMaxZoom, names, visiblePins, t, tapPreview, gesture, pointerEnter, pointerLeave }
+    latest.current = { indexes, viewport, regions, filters, setFilters, regionMaxZoom, names, visiblePins, t, tapPreview, gesture, pointerEnter, pointerLeave, stop, muted, blocked: audio.status === 'blocked', notify: toast.show }
   })
 
   const handlers = useMemo<MapHandlers>(() => {
@@ -138,16 +150,57 @@ export function useMapController() {
           setMousePreview(pin.id)
           return
         }
+        if (now().muted) {
+          setMousePreview(pin.id)
+          return
+        }
         setMousePreview(null)
         now().gesture({ type: 'tap', musicianId: pin.id })
       },
-      onHoverStart: (id) => now().pointerEnter(id),
+      onHoverStart(id) {
+        if (!now().muted) now().pointerEnter(id)
+      },
       onHoverEnd: (id) => now().pointerLeave(id),
       backToUkraine() {
         closeSheets()
         const { filters: current, setFilters: write } = now()
         if (current.region?.length) write({ ...current, region: [] })
         camera(ukraineCamera(NO_INSETS, prefersReducedMotion()))
+      },
+      applyRegions(codes) {
+        const { filters: current, setFilters: write, regions: all } = now()
+        write({ ...current, region: codes })
+        const selected = all?.filter((r) => codes.includes(r.code)) ?? []
+        if (selected.length > 0) openRegions(selected, true)
+        else camera(ukraineCamera(NO_INSETS, prefersReducedMotion()))
+      },
+      nearMe() {
+        const refuse = () => now().notify(now().t('map.nearMeDenied'))
+        if (!navigator.geolocation) {
+          refuse()
+          return
+        }
+        navigator.geolocation.getCurrentPosition(
+          ({ coords }) => {
+            const code = regionAt(coords.longitude, coords.latitude)
+            const region = code ? now().regions?.find((r) => r.code === code) : undefined
+            if (region) openRegions([region], true)
+            else refuse()
+          },
+          refuse,
+          { timeout: 10_000, maximumAge: 60_000 },
+        )
+      },
+      toggleSound() {
+        const { muted: wasMuted, blocked, stop: stopAudio } = now()
+        if (blocked && !wasMuted) {
+          // the press itself is the gesture that lets the browser play; clear the blocked state
+          stopAudio()
+          return
+        }
+        setMuted(!wasMuted)
+        writeMuted(!wasMuted)
+        if (!wasMuted) stopAudio()
       },
     }
   }, [])
@@ -169,6 +222,14 @@ export function useMapController() {
     placeName,
     numeralRegions: mode === 'CHOROPLETH_PLACE_PIN',
     fillOpacity,
+    muted,
+    blocked: audio.status === 'blocked',
+    toast: toast.message,
+    /** Musicians matching the filters; null until the pins have loaded. */
+    resultsCount: pins ? visiblePins.length : null,
+    activeFilterCount: activeFilterCount(filters),
+    selectedRegions: filters.region ?? [],
+    regionOptions: filterDefs?.find((d) => d.key === 'region')?.options,
     showBack: indexes !== null && level !== null && (level !== indexes.level(0) || Boolean(filters.region?.length)),
     previewPin: previewId ? pinById.get(previewId) : undefined,
     previewId,

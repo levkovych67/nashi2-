@@ -71,4 +71,8 @@ export const DEFAULT_COPY = {
   "errors.notFound": "Цю сторінку не знайдено.",
   "errors.rateLimited": "Забагато запитів. Повторіть трохи пізніше.",
   "errors.generic": "Не вдалося завершити дію. Спробуйте ще раз.",
+  "nav.menu": "Меню",
+  "nav.map": "Карта",
+  "nav.about": "Про проєкт",
+  "common.close": "Закрити",
 } as const

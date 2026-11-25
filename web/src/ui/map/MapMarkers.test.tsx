@@ -39,10 +39,11 @@ function CountingBubble() {
 }
 
 const registry = VARIANTS as Record<string, Record<string, ComponentType<never>>>
-const saved = { pin: registry['map.pin'], cluster: registry['map.cluster'] }
+const saved = { pin: registry['map.pin'], cluster: registry['map.cluster'], badge: registry['audio.desktop-hover'] }
 beforeEach(() => {
   registry['map.pin'] = { AVATAR_RING: CountingPin }
   registry['map.cluster'] = { BUBBLE_COUNT: CountingBubble }
+  registry['audio.desktop-hover'] = { RING_PROGRESS: () => null } // the default variant, so no fallback warning
   pinRenders.clear()
   bubbleRenders = 0
 })
@@ -50,6 +51,7 @@ afterEach(() => {
   cleanup()
   registry['map.pin'] = saved.pin
   registry['map.cluster'] = saved.cluster
+  registry['audio.desktop-hover'] = saved.badge
 })
 
 const markers = (playingId: string | null, selectedId: string | null) => (

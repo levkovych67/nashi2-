@@ -11,6 +11,7 @@ import { PinStackList } from './PinStackList'
 import { RegionBubble } from './RegionBubble'
 import { AvatarRing, initials } from './variants/AvatarRing'
 import { BubbleCount } from './variants/BubbleCount'
+import { EqualizerBadge } from './variants/EqualizerBadge'
 
 type MapPin = components['schemas']['MapPin']
 
@@ -43,6 +44,17 @@ function renderPin(over: Partial<ComponentProps<typeof PinMarker>> = {}) {
 }
 
 describe('PinMarker', () => {
+  it('draws the playing badge next to the pin only while it plays', () => {
+    const { rerender } = render(
+      <PinMarker pin={pin()} placeName="Львів" playing={false} selected={false} skin={AvatarRing} badge={EqualizerBadge} onActivate={vi.fn()} onHoverStart={vi.fn()} onHoverEnd={vi.fn()} />,
+    )
+    expect(screen.queryByTestId('playing-badge')).toBeNull()
+    rerender(
+      <PinMarker pin={pin()} placeName="Львів" playing selected={false} skin={AvatarRing} badge={EqualizerBadge} onActivate={vi.fn()} onHoverStart={vi.fn()} onHoverEnd={vi.fn()} />,
+    )
+    expect(screen.getByTestId('pin').contains(screen.getByTestId('playing-badge'))).toBe(true)
+  })
+
   it('carries the e2e contract and names the musician and the place', () => {
     const { button } = renderPin()
     expect(button).toBe(screen.getByRole('button', { name: 'Океан Ельзи, Львів' }))

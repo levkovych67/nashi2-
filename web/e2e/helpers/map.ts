@@ -1,5 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test'
 import copy from '../../src/design/copy.uk.json' with { type: 'json' }
+import { DEFAULT_COPY as defaults } from '../../src/core/i18n/defaults.uk'
 
 export const originNoticeText = copy['map.originNotice']
 
@@ -35,4 +36,19 @@ export async function openLvivPins(page: Page) {
 export async function activatePin(pin: Locator, isMobile: boolean) {
   if (isMobile) await pin.tap()
   else await pin.click()
+}
+
+/** UI copy as the app shows it: studio overrides over the defaults. */
+export const text = (key: keyof typeof defaults) => ({ ...defaults, ...copy })[key as keyof typeof copy] ?? defaults[key]
+
+/** Number in the `results-count` element. */
+export async function resultsCount(page: Page): Promise<number> {
+  const count = await page.getByTestId('results-count').getAttribute('data-count')
+  return Number(count)
+}
+
+/** Phones open the filters in a sheet; desktops show them in a left panel. */
+export async function openFilters(page: Page, isMobile: boolean) {
+  if (isMobile) await page.getByTestId('filters-open').click()
+  await expect(page.getByRole('button', { name: text('filters.apply') })).toBeVisible()
 }
