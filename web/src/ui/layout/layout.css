@@ -129,9 +129,9 @@
   bottom: 0;
   left: 0;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   max-height: 60%;
-  overflow: auto;
-  overscroll-behavior: contain;
   padding: var(--n-space-2) var(--n-space-5) var(--n-space-5);
   border: 1px solid var(--n-color-border);
   border-bottom: 0;
@@ -142,6 +142,7 @@
 }
 
 .n-sheet__handle {
+  flex: none;
   display: block;
   width: var(--n-space-10);
   height: var(--n-space-1);
@@ -150,14 +151,31 @@
   background: var(--n-color-border);
 }
 
+/* Fixed header; the single scroller is the body */
+.n-sheet__head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--n-space-3);
+}
+
+.n-sheet__body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
 .n-sheet:focus {
   outline: none;
 }
 
 .n-sheet__close {
-  position: absolute;
-  top: var(--n-space-2);
-  right: var(--n-space-3);
+  flex: none;
+  margin-left: auto;
   min-height: var(--n-size-touch-min);
   padding: 0 var(--n-space-4);
   border: 1px solid var(--n-color-border);
@@ -201,7 +219,6 @@
 
 .n-sheet__title {
   margin: 0;
-  padding-right: 96px;
   color: var(--n-color-text);
   font: var(--n-font-weight-bold) var(--n-font-size-2xl) / var(--n-font-line-height-tight) var(--n-font-family-display);
 }

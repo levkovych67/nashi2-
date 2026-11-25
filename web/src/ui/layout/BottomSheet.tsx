@@ -6,8 +6,10 @@ import './layout.css'
  * Non-modal sheet anchored to the bottom of its positioned parent. Focus moves into it on open and returns to the
  * element that had it (the trigger) on close; Escape and the visible close button close it.
  */
-export function BottomSheet({ label, testId, onClose, children }: {
+export function BottomSheet({ label, title, testId, onClose, children }: {
   label: string
+  /** Heading kept in the fixed header next to the close button */
+  title?: string
   testId?: string
   onClose(): void
   children: ReactNode
@@ -31,10 +33,13 @@ export function BottomSheet({ label, testId, onClose, children }: {
   return (
     <section ref={sheet} tabIndex={-1} className="n-sheet" role="dialog" aria-label={label} data-testid={testId}>
       <span className="n-sheet__handle" aria-hidden="true" />
-      <button type="button" className="n-sheet__close" onClick={onClose}>
-        {t('common.close')}
-      </button>
-      {children}
+      <div className="n-sheet__head">
+        {title && <h2 className="n-sheet__title">{title}</h2>}
+        <button type="button" className="n-sheet__close" onClick={onClose}>
+          {t('common.close')}
+        </button>
+      </div>
+      <div className="n-sheet__body">{children}</div>
     </section>
   )
 }

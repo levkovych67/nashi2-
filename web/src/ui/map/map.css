@@ -278,6 +278,7 @@
 
 /* filters.region = SHEET_LIST */
 .n-region-filter {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: var(--n-space-3);
@@ -304,8 +305,14 @@
 }
 
 .n-region-filter__list {
+  flex: 1 1 auto;
+  min-height: 0;
   overflow: auto;
-  max-height: 40vh;
+}
+
+.n-region-filter__search,
+.n-region-filter__actions {
+  flex: none;
 }
 
 .n-region-filter__option {
@@ -356,18 +363,10 @@
   box-sizing: border-box;
   width: 360px;
   padding: var(--n-space-5);
-  overflow: auto;
+  overflow: hidden;
   border-right: 1px solid var(--n-color-border);
   background: var(--n-color-surface);
   color: var(--n-color-text);
-}
-
-.n-filter-panel .n-sheet__title {
-  padding-right: 0;
-}
-
-.n-filter-panel .n-region-filter__list {
-  max-height: none;
 }
 
 /* audio.desktop-hover = EQUALIZER_BADGE */

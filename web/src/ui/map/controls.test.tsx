@@ -67,6 +67,18 @@ describe('BottomSheet', () => {
     expect(document.activeElement).toBe(trigger)
   })
 
+  it('keeps the title and the close button in a fixed header, apart from the scrolling body', () => {
+    render(
+      <BottomSheet label="Фільтри" title="Фільтри" onClose={() => {}}>
+        <p>content</p>
+      </BottomSheet>,
+    )
+    const body = screen.getByText('content').parentElement!
+    expect(body.className).toBe('n-sheet__body')
+    expect(body.contains(screen.getByRole('button', { name: 'Закрити' }))).toBe(false)
+    expect(body.contains(screen.getByRole('heading', { name: 'Фільтри' }))).toBe(false)
+  })
+
   it('closes on Escape', () => {
     const onClose = vi.fn()
     render(

@@ -52,8 +52,7 @@ export function FilterSheet({ slot, options, selected, activeCount, onApply }: {
         {activeCount > 0 && ` (${activeCount})`}
       </button>
       {open && (
-        <BottomSheet label={t('filters.title')} testId="filters-sheet" onClose={close}>
-          <h2 className="n-sheet__title">{t('filters.title')}</h2>
+        <BottomSheet label={t('filters.title')} title={t('filters.title')} testId="filters-sheet" onClose={close}>
           {filter}
         </BottomSheet>
       )}

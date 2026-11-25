@@ -46,3 +46,23 @@ test('the region list is searchable and several regions combine', async ({ page,
   const expected = pins.filter((p) => p.region === 'LVIV' || p.region === 'KYIV').length
   await expect.poll(() => resultsCount(page)).toBe(expected)
 })
+
+test('on a phone the filter sheet keeps close, apply and reset on screen', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'the sheet is a phone layout')
+  await page.goto('/')
+  await openFilters(page, true)
+  const close = page.getByRole('button', { name: text('common.close') })
+  const apply = page.getByRole('button', { name: text('filters.apply') })
+  const reset = page.getByRole('button', { name: text('filters.reset') })
+  for (const button of [close, apply, reset]) await expect(button).toBeInViewport({ ratio: 1 })
+
+  // one scroller: the region list scrolls, the sheet does not
+  const list = page.getByRole('group', { name: text('filters.region') })
+  await list.evaluate((el) => el.scrollTo(0, el.scrollHeight))
+  await expect(page.getByRole('checkbox').last()).toBeInViewport()
+  for (const button of [close, apply, reset]) await expect(button).toBeInViewport({ ratio: 1 })
+  const sheet = page.getByTestId('filters-sheet')
+  expect(await sheet.evaluate((el) => el.scrollHeight <= el.clientHeight + 1)).toBe(true)
+  const body = sheet.locator('.n-sheet__body')
+  expect(await body.evaluate((el) => el.scrollHeight <= el.clientHeight + 1)).toBe(true)
+})
