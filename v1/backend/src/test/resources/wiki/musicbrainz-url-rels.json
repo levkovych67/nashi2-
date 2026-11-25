@@ -1,0 +1,105 @@
+{
+ "id": "5054c983-297a-43ef-8522-6ac073ade892",
+ "name": "Natural Spirit",
+ "type": "Group",
+ "relations": [
+  {
+   "type": "bandcamp",
+   "target-type": "url",
+   "url": {
+    "resource": "https://naturalspirit.bandcamp.com/"
+   }
+  },
+  {
+   "type": "discogs",
+   "target-type": "url",
+   "url": {
+    "resource": "https://www.discogs.com/artist/1649250"
+   }
+  },
+  {
+   "type": "free streaming",
+   "target-type": "url",
+   "url": {
+    "resource": "https://open.spotify.com/artist/0VFXuZuPmwQ3YyLyuLBhF7"
+   }
+  },
+  {
+   "type": "free streaming",
+   "target-type": "url",
+   "url": {
+    "resource": "https://www.deezer.com/artist/309548"
+   }
+  },
+  {
+   "type": "myspace",
+   "target-type": "url",
+   "url": {
+    "resource": "https://myspace.com/naturalspiritmetal"
+   }
+  },
+  {
+   "type": "official homepage",
+   "target-type": "url",
+   "url": {
+    "resource": "http://naturalspirit.com.ua/"
+   }
+  },
+  {
+   "type": "other databases",
+   "target-type": "url",
+   "url": {
+    "resource": "https://www.metal-archives.com/bands/Natural_Spirit/22789"
+   }
+  },
+  {
+   "type": "social network",
+   "target-type": "url",
+   "url": {
+    "resource": "https://twitter.com/naturalspiritua"
+   }
+  },
+  {
+   "type": "social network",
+   "target-type": "url",
+   "url": {
+    "resource": "https://www.facebook.com/naturalspiritmetal"
+   }
+  },
+  {
+   "type": "social network",
+   "target-type": "url",
+   "url": {
+    "resource": "https://vk.ru/naturalspirit"
+   }
+  },
+  {
+   "type": "streaming",
+   "target-type": "url",
+   "url": {
+    "resource": "https://music.apple.com/us/artist/1605995193"
+   }
+  },
+  {
+   "type": "streaming",
+   "target-type": "url",
+   "url": {
+    "resource": "https://tidal.com/artist/4525980"
+   }
+  },
+  {
+   "type": "youtube",
+   "target-type": "url",
+   "url": {
+    "resource": "https://www.youtube.com/channel/UCIBrOaQCEcmtUGyanu360Xg"
+   }
+  },
+  {
+   "type": "youtube music",
+   "target-type": "url",
+   "url": {
+    "resource": "https://music.youtube.com/channel/UC3wO9-AUG8Pzs0DohfEDVFw"
+   }
+  }
+ ]
+}

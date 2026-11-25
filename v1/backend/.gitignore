@@ -1,0 +1,12 @@
+.gradle/
+build/
+
+# Local-only config and credentials (application-local.properties holds no secrets and is tracked).
+# Anchored to the repo root: a bare "config/" would also hide src/main/java/com/nashi/config/.
+src/main/resources/application-dev.properties
+/aws/
+/config/
+out/
+*.iml
+.idea/
+.DS_Store

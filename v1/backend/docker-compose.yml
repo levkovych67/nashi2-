@@ -1,0 +1,52 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: nashi-mongo
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${NASHI_MONGO_PORT:-27017}:27017"
+    environment:
+      MONGO_INITDB_DATABASE: nashi
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ping:1}).ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build: .
+    container_name: nashi-backend
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/nashi
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/api/v1/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+      start_period: 20s
+
+  frontend:
+    build:
+      context: ../nashi-frontend
+      args:
+        VITE_API_BASE_URL: http://localhost:8080
+        VITE_CDN_URL: http://localhost:8080
+        VITE_MAPTILER_API_KEY: ${VITE_MAPTILER_API_KEY:-}
+    container_name: nashi-frontend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:4173:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:

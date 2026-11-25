@@ -1,0 +1,74 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.nashi'
+version = '0.0.1-SNAPSHOT'
+
+def javaVersion = JavaLanguageVersion.of(17)
+
+java {
+    toolchain {
+        languageVersion = javaVersion
+    }
+}
+
+repositories {
+    mavenCentral()
+    // Needed because Spring AI BOM is currently a milestone release
+    maven { url = 'https://repo.spring.io/milestone' }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Swagger / OpenAPI (keep a single version; 2.x is compatible with Spring Boot 3.x)
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+
+    implementation platform("org.springframework.ai:spring-ai-bom:1.0.0-M6")
+    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+
+    // AWS SDK v2 for S3
+    implementation platform('software.amazon.awssdk:bom:2.25.60')
+    implementation 'software.amazon.awssdk:s3'
+    implementation 'software.amazon.awssdk:sts'
+
+    // Geohash
+    implementation 'ch.hsr:geohash:1.4.0'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.mapstruct:mapstruct:1.6.2'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.2'
+
+    implementation group: 'org.telegram', name: 'telegrambots-springboot-longpolling-starter', version: '8.2.0'
+    implementation group: 'org.telegram', name: 'telegrambots-client', version: '8.2.0'
+
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.12.1'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.12.2'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    // SwaggerContractTest reads it, so editing only swagger.json must re-run the tests
+    inputs.file('swagger.json')
+}
+
+// Collects artists from Wikipedia without starting the app; writes build/wiki-dry-run.json.
+// Usage: ./gradlew wikiDryRun   or   ./gradlew wikiDryRun -Plimit=50
+tasks.register('wikiDryRun', JavaExec) {
+    group = 'application'
+    description = 'Collects artists from Wikipedia without Spring, the database or Telegram'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.nashi.wiki.WikiDryRun'
+    if (project.hasProperty('limit')) {
+        args '--limit', project.property('limit')
+    }
+}

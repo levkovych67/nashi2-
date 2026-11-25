@@ -1,0 +1,28 @@
+{
+  "head" : {
+    "vars" : [ "item", "title" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1008489"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Океан Ельзи"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q172425"
+      },
+      "title" : {
+        "xml:lang" : "uk",
+        "type" : "literal",
+        "value" : "Лисенко Микола Віталійович"
+      }
+    } ]
+  }
+}

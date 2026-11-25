@@ -1,0 +1,49 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: Run tests
+        run: ./gradlew test --no-daemon
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.2.5
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script: |
+            set -e
+            test -f /etc/nashi/nashi-backend.properties || { echo "Missing /etc/nashi/nashi-backend.properties — see RELEASE.md"; exit 1; }
+            test -r /etc/nashi/nashi-backend.properties || { echo "Cannot read /etc/nashi/nashi-backend.properties as $(whoami) — see RELEASE.md"; exit 1; }
+            for k in spring.data.mongodb.uri spring.ai.openai.api-key aws.s3.access-key-id aws.s3.secret-access-key telegram.bot-token telegram.admin-chat-id telegram.channel-id; do grep -q "^$k=" /etc/nashi/nashi-backend.properties || { echo "Missing key $k in /etc/nashi/nashi-backend.properties — see RELEASE.md"; exit 1; }; done
+            cd /var/www/nashi/nashi-backend
+            git pull origin main
+            ./gradlew clean build -x test
+            systemctl restart nashi-backend
+            for i in $(seq 1 45); do curl -fsS http://localhost:8080/api/v1/health >/dev/null && exit 0; sleep 2; done
+            echo "Backend did not become healthy"; exit 1

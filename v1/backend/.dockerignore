@@ -1,0 +1,12 @@
+build/
+.gradle/
+aws/
+config/
+*.csv
+.env*
+.git/
+.github/
+docs/
+src/test/
+.superpowers/
+.idea/

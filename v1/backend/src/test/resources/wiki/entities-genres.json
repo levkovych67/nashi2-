@@ -1,0 +1,193 @@
+{
+ "entities": {
+  "Q11366": {
+   "type": "item",
+   "id": "Q11366",
+   "labels": {
+    "en": {
+     "language": "en",
+     "value": "alternative rock"
+    },
+    "uk": {
+     "language": "uk",
+     "value": "альтернативний рок"
+    }
+   },
+   "claims": {},
+   "sitelinks": {
+    "ukwiki": {
+     "site": "ukwiki",
+     "title": "Альтернативний рок",
+     "badges": []
+    }
+   }
+  },
+  "Q1344": {
+   "type": "item",
+   "id": "Q1344",
+   "labels": {
+    "en": {
+     "language": "en",
+     "value": "opera"
+    },
+    "uk": {
+     "language": "uk",
+     "value": "опера"
+    }
+   },
+   "claims": {},
+   "sitelinks": {
+    "ukwiki": {
+     "site": "ukwiki",
+     "title": "Опера",
+     "badges": []
+    }
+   }
+  },
+  "Q183504": {
+   "type": "item",
+   "id": "Q183504",
+   "labels": {
+    "en": {
+     "language": "en",
+     "value": "indie rock"
+    },
+    "uk": {
+     "language": "uk",
+     "value": "інді-рок"
+    }
+   },
+   "claims": {},
+   "sitelinks": {
+    "ukwiki": {
+     "site": "ukwiki",
+     "title": "Інді-рок",
+     "badges": []
+    }
+   }
+  },
+  "Q217467": {
+   "type": "item",
+   "id": "Q217467",
+   "labels": {
+    "en": {
+     "language": "en",
+     "value": "art rock"
+    },
+    "uk": {
+     "language": "uk",
+     "value": "артрок"
+    }
+   },
+   "claims": {},
+   "sitelinks": {
+    "ukwiki": {
+     "site": "ukwiki",
+     "title": "Артрок",
+     "badges": []
+    }
+   }
+  },
+  "Q2472420": {
+   "type": "item",
+   "id": "Q2472420",
+   "labels": {
+    "uk": {
+     "language": "uk",
+     "value": "естрада"
+    },
+    "en": {
+     "language": "en",
+     "value": "estrada"
+    }
+   },
+   "claims": {},
+   "sitelinks": {
+    "ukwiki": {
+     "site": "ukwiki",
+     "title": "Естрада",
+     "badges": []
+    }
+   }
+  },
+  "Q3328774": {
+   "type": "item",
+   "id": "Q3328774",
+   "labels": {
+    "uk": {
+     "language": "uk",
+     "value": "симфонічна музика"
+    },
+    "en": {
+     "language": "en",
+     "value": "symphonic music"
+    }
+   },
+   "claims": {},
+   "sitelinks": {
+    "ukwiki": {
+     "site": "ukwiki",
+     "title": "Симфонічна музика",
+     "badges": []
+    }
+   }
+  },
+  "Q43343": {
+   "type": "item",
+   "id": "Q43343",
+   "labels": {
+    "uk": {
+     "language": "uk",
+     "value": "національна музика"
+    },
+    "en": {
+     "language": "en",
+     "value": "folk music"
+    }
+   },
+   "claims": {},
+   "sitelinks": {
+    "ukwiki": {
+     "site": "ukwiki",
+     "title": "Національна музика",
+     "badges": []
+    }
+   }
+  },
+  "Q4797274": {
+   "type": "item",
+   "id": "Q4797274",
+   "labels": {
+    "en": {
+     "language": "en",
+     "value": "art song"
+    }
+   },
+   "claims": {},
+   "sitelinks": {}
+  },
+  "Q484641": {
+   "type": "item",
+   "id": "Q484641",
+   "labels": {
+    "en": {
+     "language": "en",
+     "value": "pop rock"
+    },
+    "uk": {
+     "language": "uk",
+     "value": "попрок"
+    }
+   },
+   "claims": {},
+   "sitelinks": {
+    "ukwiki": {
+     "site": "ukwiki",
+     "title": "Попрок",
+     "badges": []
+    }
+   }
+  }
+ },
+ "success": 1
+}
