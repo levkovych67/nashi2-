@@ -12,9 +12,29 @@ import { reducePinGesture, type MobileTrigger, type PinGesture } from './mobileT
 type Fragment = components['schemas']['Fragment']
 
 const HOVER_INTENT_MS = 250
-// Fragments handed to an engine, so every consumer (map controller, in-card player) sees what is playing.
-const played = new WeakMap<object, Map<string, Fragment>>()
 const IDLE: EngineState = { status: 'idle', musicianId: null, clipId: null }
+
+/**
+ * What every consumer of one engine (map controller, in-card player) shares: what was played, and the request in
+ * flight. A play request or a stop from any consumer supersedes the fetches the others still wait for.
+ */
+interface Session {
+  /** Fragments handed to the engine, by clipId, so every consumer sees what is playing. */
+  played: Map<string, Fragment>
+  /** Last clip per musician: the next request for the musician excludes it («Інший фрагмент»). */
+  lastClip: Map<string, string>
+  /** Bumped by every play request and every stop; a fetch from an older epoch never starts playback. */
+  epoch: number
+  /** The musician whose fragment is being fetched; for the tap reducer it counts as playing. */
+  pending: { id: string; epoch: number; owner: object } | null
+}
+const sessions = new WeakMap<object, Session>()
+function sessionOf(engine: object): Session {
+  let s = sessions.get(engine)
+  if (!s) sessions.set(engine, (s = { played: new Map(), lastClip: new Map(), epoch: 0, pending: null }))
+  return s
+}
+const fragmentKey = (id: string, exclude?: string) => ['fragment', id, exclude ?? null]
 const isDesktop = () => window.matchMedia?.('(hover: hover) and (pointer: fine)').matches ?? false
 
 function usePathname(): string | null {
@@ -30,8 +50,10 @@ export function useFragmentPlayer() {
   const mode = useDesign().variant('audio.mobile-trigger') as MobileTrigger
   const [previewId, setPreviewId] = useState<string | null>(null)
   const [noAudio, setNoAudio] = useState<Set<string>>(() => new Set())
-  const lastClip = useRef(new Map<string, string>())
+  const session = useMemo(() => (engine ? sessionOf(engine) : null), [engine])
+  // this consumer's own requests: its unmount or pointer leave cancels only those
   const token = useRef(0)
+  const [owner] = useState(() => ({}))
   const hover = useMemo(() => createHoverIntent(HOVER_INTENT_MS, realClock), [])
 
   const state = useSyncExternalStore(
@@ -40,64 +62,83 @@ export function useFragmentPlayer() {
   )
 
   // Fragment of the current engine state (also while it is loading); null when idle or unknown.
-  const fragment = (engine && state.clipId && state.status !== 'idle' ? played.get(engine)?.get(state.clipId) : undefined) ?? null
+  const fragment = (session && state.clipId && state.status !== 'idle' ? session.played.get(state.clipId) : undefined) ?? null
 
   const fetchFragment = useCallback(
     (id: string, exclude?: string): Promise<Fragment | null> =>
       queryClient.fetchQuery({
-        queryKey: ['fragment', id, exclude ?? null],
+        queryKey: fragmentKey(id, exclude),
         queryFn: () => getFragment(id, exclude),
-        staleTime: 30_000,
+        staleTime: 30_000, // a hover prefetch is reused by the play that follows it
       }),
     [queryClient],
   )
+
+  /** Cancels this consumer's own fetch (unmount, pointer leave); other consumers' requests go on. */
+  const cancelOwn = useCallback(() => {
+    token.current++
+    if (session?.pending?.owner === owner) session.pending = null
+  }, [owner, session])
 
   const stop = useCallback(
     (opts?: { fade?: boolean }) => {
       token.current++
       hover.cancel()
+      if (session) {
+        session.epoch++ // whichever consumer started a fetch, it must not start playback now
+        session.pending = null
+      }
       engine?.stop(opts)
     },
-    [engine, hover],
+    [engine, hover, session],
   )
 
   const playMusician = useCallback(
     async (id: string) => {
-      if (!engine) return
+      if (!engine || !session) return
       const my = ++token.current
-      let exclude = lastClip.current.get(id)
-      for (let attempt = 0; attempt < 2; attempt++) {
-        let f: Fragment | null
-        try {
-          f = await fetchFragment(id, exclude)
-        } catch {
-          return
+      const epoch = ++session.epoch
+      const live = () => my === token.current && epoch === session.epoch
+      let exclude = session.lastClip.get(id)
+      try {
+        for (let attempt = 0; attempt < 2; attempt++) {
+          session.pending = { id, epoch, owner }
+          let f: Fragment | null
+          try {
+            f = await fetchFragment(id, exclude)
+          } catch {
+            return
+          }
+          if (!live()) return
+          session.pending = null
+          // a response plays once: the next request for this musician asks the server again (a new clip or start)
+          queryClient.removeQueries({ queryKey: fragmentKey(id, exclude), exact: true })
+          if (!f) {
+            setNoAudio((prev) => (prev.has(id) ? prev : new Set(prev).add(id)))
+            return
+          }
+          session.lastClip.set(id, f.clipId)
+          session.played.set(f.clipId, f)
+          await engine.play(id, f)
+          if (!live()) return
+          const s = engine.getState()
+          if (s.status !== 'error' || s.clipId !== f.clipId) return
+          exclude = f.clipId // one retry with a different clip
         }
-        if (my !== token.current) return
-        if (!f) {
-          setNoAudio((prev) => (prev.has(id) ? prev : new Set(prev).add(id)))
-          return
-        }
-        lastClip.current.set(id, f.clipId)
-        if (!played.has(engine)) played.set(engine, new Map())
-        played.get(engine)!.set(f.clipId, f)
-        await engine.play(id, f)
-        if (my !== token.current) return
-        const s = engine.getState()
-        if (s.status !== 'error' || s.clipId !== f.clipId) return
-        exclude = f.clipId // one retry with a different clip
+      } finally {
+        if (session.pending?.epoch === epoch) session.pending = null
       }
     },
-    [engine, fetchFragment],
+    [engine, fetchFragment, owner, queryClient, session],
   )
 
   const pointerEnter = useCallback(
     (id: string) => {
       if (!isDesktop() || noAudio.has(id)) return
-      void fetchFragment(id, lastClip.current.get(id)).catch(() => {}) // prefetch while hover-intent waits
+      void fetchFragment(id, session?.lastClip.get(id)).catch(() => {}) // prefetch while hover-intent waits
       hover.enter(id, () => void playMusician(id))
     },
-    [fetchFragment, hover, noAudio, playMusician],
+    [fetchFragment, hover, noAudio, playMusician, session],
   )
 
   const pointerLeave = useCallback(
@@ -106,21 +147,22 @@ export function useFragmentPlayer() {
       hover.leave(id)
       const s = engine?.getState()
       if (s?.musicianId === id && s.status !== 'idle') stop({ fade: true })
-      else token.current++ // cancel a fetch that is still in flight
+      else cancelOwn() // a fetch that is still in flight
     },
-    [engine, hover, stop],
+    [cancelOwn, engine, hover, stop],
   )
 
   const gesture = useCallback(
     (g: PinGesture) => {
       const s = engine?.getState() ?? IDLE
-      const playingId = s.status === 'playing' || s.status === 'loading' ? s.musicianId : null
+      // a fragment still being fetched counts as playing: closing the preview or tapping the pin again stops it
+      const playingId = session?.pending?.id ?? (s.status === 'playing' || s.status === 'loading' ? s.musicianId : null)
       const action = reducePinGesture(mode, { previewId, playingId }, g)
       if (action.preview !== undefined) setPreviewId(action.preview)
       if (action.stop) stop({ fade: true })
       if (action.play) void playMusician(action.play)
     },
-    [engine, mode, playMusician, previewId, stop],
+    [engine, mode, playMusician, previewId, session, stop],
   )
 
   const pathname = usePathname()
@@ -142,11 +184,11 @@ export function useFragmentPlayer() {
 
   useEffect(
     () => () => {
-      token.current++ // cancel any in-flight fetch so it cannot start playback after unmount
+      cancelOwn() // an in-flight fetch of this consumer cannot start playback after unmount
       hover.cancel()
       engine?.stop({ fade: true })
     },
-    [engine, hover],
+    [cancelOwn, engine, hover],
   )
 
   return { state, fragment, previewId, noAudio, pointerEnter, pointerLeave, gesture, playMusician: (id: string) => void playMusician(id), stop: () => stop({ fade: true }) }
