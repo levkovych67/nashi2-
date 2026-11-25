@@ -1,0 +1,22 @@
+/* Identity icons (stroke SVGs from the handoff) drawn as a CSS mask, so they take the surrounding text colour. */
+.n-icon {
+  display: inline-block;
+  flex: none;
+  width: 1em;
+  height: 1em;
+  background: currentColor;
+  -webkit-mask: var(--n-icon) center / contain no-repeat;
+  mask: var(--n-icon) center / contain no-repeat;
+}
+
+.n-icon--heart {
+  --n-icon: url("../design/assets/icons/heart.svg");
+}
+
+.n-icon--pin {
+  --n-icon: url("../design/assets/icons/pin.svg");
+}
+
+.n-icon--sound {
+  --n-icon: url("../design/assets/icons/sound.svg");
+}

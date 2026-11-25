@@ -1,4 +1,5 @@
 import { useCopy } from '../../core/i18n/copy'
+import '../icon.css'
 
 /** Mutes or unmutes the fragments (hover and tap). While the browser blocks sound, a hint says what to do. */
 export function SoundToggle({ muted, blocked, onToggle }: { muted: boolean; blocked: boolean; onToggle(): void }) {
@@ -6,6 +7,7 @@ export function SoundToggle({ muted, blocked, onToggle }: { muted: boolean; bloc
   return (
     <div className="n-sound">
       <button type="button" className="n-map-button" data-testid="sound-toggle" data-muted={muted} onClick={onToggle}>
+        <span className="n-icon n-icon--sound" aria-hidden="true" />
         {muted ? t('map.soundOff') : t('map.soundOn')}
       </button>
       {blocked && !muted && (

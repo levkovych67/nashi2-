@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useCopy } from '../../../core/i18n/copy'
 import { formatLikes } from '../LikesCountLabel'
 import type { LikeSkinProps } from '../LikeButton'
+import '../../icon.css'
 import '../musician.css'
 
 const MAX_BURSTS = 6
@@ -32,7 +33,7 @@ export function HeartBurst({ count, onTap }: LikeSkinProps) {
     <div className="n-like">
       <button type="button" className="n-like__button" data-testid="like-button" aria-label={t('musician.likeAria')} onClick={tap}>
         <span className="n-like__heart" aria-hidden="true">
-          ♥
+          <span className="n-icon n-icon--heart" />
           {bursts.map((id) => (
             <i key={id} data-burst="" onAnimationEnd={() => done(id)}>
               +1

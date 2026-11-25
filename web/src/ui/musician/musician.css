@@ -304,6 +304,7 @@
 .n-like__heart {
   position: relative;
   color: var(--n-color-like);
+  display: inline-flex;
   font-size: var(--n-font-size-xl);
   line-height: 1;
   transition: transform var(--n-motion-duration-fast) var(--n-motion-easing-emphasized);

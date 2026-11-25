@@ -168,5 +168,12 @@ export const DEFAULT_COPY = {
   "nav.menu": "Меню",
   "nav.map": "Карта",
   "nav.about": "Про проєкт",
+  "about.title": "Про проєкт",
+  "about.intro": "Інтерактивна карта українських музикантів за місцем походження. На першому етапі на карті лише музиканти: окремі виконавці та гурти.",
+  "about.suggest": "Знаєте музиканта, якого тут немає? Запропонуйте його.",
+  "about.sourcesTitle": "Джерела даних",
+  "about.source.wikipedia": "Тексти та дані про музикантів: Вікіпедія (ліцензія CC BY-SA 4.0) і Вікідані.",
+  "about.source.map": "Основа карти: OpenStreetMap, OpenMapTiles, OpenFreeMap.",
+  "about.source.borders": "Межі областей: geoBoundaries.",
   "common.close": "Закрити",
 } as const

@@ -28,10 +28,15 @@
 }
 
 .n-topbar__brand {
-  color: var(--n-color-text);
-  font: var(--n-font-weight-bold) var(--n-font-size-3xl) / var(--n-font-line-height-tight) var(--n-font-family-display);
-  letter-spacing: -0.06em;
-  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--n-size-touch-min);
+}
+
+.n-topbar__logo {
+  display: block;
+  height: var(--n-space-8);
+  width: auto;
 }
 
 .n-topbar__tagline {

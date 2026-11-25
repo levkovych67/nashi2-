@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useDesign } from '../../core/design/config'
 import { useCopy } from '../../core/i18n/copy'
+import '../icon.css'
 
 const SEEN_KEY = 'nashi.nearMeSeen'
 
@@ -41,6 +42,7 @@ export function NearMeButton({ onClick }: { onClick(): void }) {
         onClick()
       }}
     >
+      <span className="n-icon n-icon--pin" aria-hidden="true" />
       {t('map.nearMe')}
     </button>
   )
