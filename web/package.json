@@ -1,0 +1,42 @@
+{
+  "name": "nashi-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5174 --strictPort",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "e2e": "playwright test",
+    "typecheck": "tsc --noEmit",
+    "gen:api": "openapi-typescript ../contracts/openapi.yaml -o src/api/types.gen.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.59.1",
+    "@tailwindcss/vite": "~4.1.18",
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^24.19.4",
+    "@types/react": "^19.3.2",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "jsdom": "^25.0.1",
+    "msw": "^2.15.0",
+    "openapi-typescript": "^7.13.0",
+    "tailwindcss": "~4.1.18",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.8",
+    "vite-plugin-static-copy": "^3.4.0",
+    "vitest": "^3.2.7"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.108.4",
+    "intl-messageformat": "^10.7.18",
+    "maplibre-gl": "^5.24.1",
+    "react": "~19.2.0",
+    "react-dom": "~19.2.0",
+    "react-map-gl": "^8.1.3",
+    "react-router-dom": "^7.18.7",
+    "zustand": "^5.1.0"
+  }
+}

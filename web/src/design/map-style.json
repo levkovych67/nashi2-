@@ -1,0 +1,30 @@
+{
+  "version": 8,
+  "name": "skeleton-grey",
+  "glyphs": "{{GLYPHS_URL}}",
+  "sources": {
+    "openmaptiles": {
+      "type": "vector",
+      "url": "{{TILES_URL}}",
+      "attribution": "© OpenStreetMap · OpenMapTiles · OpenFreeMap"
+    }
+  },
+  "layers": [
+    { "id": "background", "type": "background", "paint": { "background-color": "#ececec" } },
+    { "id": "water", "type": "fill", "source": "openmaptiles", "source-layer": "water", "paint": { "fill-color": "#d6d6d6" } },
+    {
+      "id": "roads", "type": "line", "source": "openmaptiles", "source-layer": "transportation", "minzoom": 8,
+      "paint": { "line-color": "#bdbdbd", "line-width": 1 }
+    },
+    {
+      "id": "boundary", "type": "line", "source": "openmaptiles", "source-layer": "boundary",
+      "filter": ["<=", ["get", "admin_level"], 4],
+      "paint": { "line-color": "#8c8c8c", "line-width": 1 }
+    },
+    {
+      "id": "places", "type": "symbol", "source": "openmaptiles", "source-layer": "place",
+      "layout": { "text-field": ["coalesce", ["get", "name:uk"], ["get", "name"]], "text-font": ["Noto Sans Regular"], "text-size": 12 },
+      "paint": { "text-color": "#333333", "text-halo-color": "#ffffff", "text-halo-width": 1 }
+    }
+  ]
+}

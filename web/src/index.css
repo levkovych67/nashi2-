@@ -1,0 +1,46 @@
+@import "tailwindcss";
+@import "./design/tokens.css";
+
+@theme inline {
+  --color-bg: var(--n-color-bg);
+  --color-surface: var(--n-color-surface);
+  --color-surface-raised: var(--n-color-surface-raised);
+  --color-overlay: var(--n-color-overlay);
+  --color-border: var(--n-color-border);
+  --color-text: var(--n-color-text);
+  --color-text-muted: var(--n-color-text-muted);
+  --color-text-inverse: var(--n-color-text-inverse);
+  --color-accent: var(--n-color-accent);
+  --color-accent-hover: var(--n-color-accent-hover);
+  --color-on-accent: var(--n-color-on-accent);
+  --color-like: var(--n-color-like);
+  --color-on-like: var(--n-color-on-like);
+  --color-success: var(--n-color-success);
+  --color-danger: var(--n-color-danger);
+  --color-focus: var(--n-color-focus);
+  --color-map-land: var(--n-color-map-land);
+  --color-map-water: var(--n-color-map-water);
+  --color-map-road: var(--n-color-map-road);
+  --color-map-label: var(--n-color-map-label);
+  --color-map-label-halo: var(--n-color-map-label-halo);
+  --color-map-ua-border: var(--n-color-map-ua-border);
+  --color-map-region-line: var(--n-color-map-region-line);
+  --color-map-region-fill-active: var(--n-color-map-region-fill-active);
+  --color-pin-ring: var(--n-color-pin-ring);
+  --color-pin-ring-audio: var(--n-color-pin-ring-audio);
+  --color-pin-ring-playing: var(--n-color-pin-ring-playing);
+  --color-pin-fallback-bg: var(--n-color-pin-fallback-bg);
+  --color-pin-fallback-text: var(--n-color-pin-fallback-text);
+  --color-cluster-bg: var(--n-color-cluster-bg);
+  --color-cluster-text: var(--n-color-cluster-text);
+  --color-cluster-ring: var(--n-color-cluster-ring);
+  --font-display: var(--n-font-family-display);
+  --font-body: var(--n-font-family-body);
+}
+
+body {
+  margin: 0;
+  background: var(--n-color-bg);
+  color: var(--n-color-text);
+  font-family: var(--n-font-family-body);
+}
