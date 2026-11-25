@@ -8,7 +8,8 @@ import { mapLimits, MAX_ZOOM, prefersReducedMotion, zoomBy, type Size } from './
 import { ZoomButtons } from './ZoomButtons'
 import './map.css'
 
-export interface Viewport { zoom: number; bbox: BBox }
+export interface Viewport { zoom: number; bbox: BBox; center: [lon: number, lat: number] }
+export interface InitialCamera { center: [lon: number, lat: number]; zoom: number }
 
 const NO_INSETS = { top: 0, right: 0, bottom: 0, left: 0 }
 
@@ -38,13 +39,16 @@ function useElementSize(ref: RefObject<HTMLElement | null>): Size | null {
 }
 
 /**
- * MapLibre map with an uncontrolled camera that opens on the whole of Ukraine, with +/− zoom buttons. Reports the
+ * MapLibre map with an uncontrolled camera that opens on the whole of Ukraine (or a remembered camera), with +/− zoom
+ * buttons. Reports the
  * viewport after load and after every move; `level` and the zoom are exposed as `data-level` / `data-zoom` for tests
  * and the skin.
  */
-export function MapView({ ref, level, onViewport, onBackgroundClick, children }: {
+export function MapView({ ref, level, initialCamera, onViewport, onBackgroundClick, children }: {
   ref?: Ref<MapRef>
   level: MapLevel | null
+  /** Where to open instead of the whole of Ukraine (Back to a remembered camera). Read once, on mount. */
+  initialCamera?: InitialCamera | null
   onViewport(viewport: Viewport): void
   onBackgroundClick(): void
   children?: ReactNode
@@ -60,8 +64,9 @@ export function MapView({ ref, level, onViewport, onBackgroundClick, children }:
 
   const report = ({ target }: { target: MapInstance }) => {
     const b = target.getBounds()
+    const c = target.getCenter()
     setZoom(target.getZoom())
-    onViewport({ zoom: target.getZoom(), bbox: [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()] })
+    onViewport({ zoom: target.getZoom(), bbox: [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()], center: [c.lng, c.lat] })
   }
   const onLoad = ({ target }: { target: MapInstance }) => {
     target.touchZoomRotate.disableRotation()
@@ -81,7 +86,11 @@ export function MapView({ ref, level, onViewport, onBackgroundClick, children }:
         <Map
           ref={ref}
           mapStyle={mapStyle}
-          initialViewState={{ bounds: overview.bounds, fitBoundsOptions: { padding: overview.padding } }}
+          initialViewState={
+            initialCamera
+              ? { longitude: initialCamera.center[0], latitude: initialCamera.center[1], zoom: initialCamera.zoom }
+              : { bounds: overview.bounds, fitBoundsOptions: { padding: overview.padding } }
+          }
           minZoom={limits.minZoom}
           maxZoom={MAX_ZOOM}
           maxBounds={limits.maxBounds}

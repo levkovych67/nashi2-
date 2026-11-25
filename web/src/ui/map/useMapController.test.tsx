@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import type { ReactNode } from 'react'
-import { MemoryRouter, useLocation } from 'react-router-dom'
+import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { server } from '../../api/mocks/node'
 import type { components } from '../../api/types.gen'
@@ -212,7 +212,7 @@ describe('useMapController', () => {
   })
 
   describe('?musician= deep link', () => {
-    const VIEWPORT = { bbox: [22, 44, 41, 53] as [number, number, number, number], zoom: 5.5 }
+    const VIEWPORT = { bbox: [22, 44, 41, 53] as [number, number, number, number], zoom: 5.5, center: [31.5, 48.5] as [number, number] }
     function setupAt(url: string) {
       const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
       const wrapper = ({ children }: { children: ReactNode }) => (
@@ -259,5 +259,68 @@ describe('useMapController', () => {
     await waitFor(() => expect(result.current.resultsCount).toBe(3661))
     act(() => result.current.handlers.applyRegions(['LVIV']))
     await waitFor(() => expect(result.current.resultsCount).toBe(484))
+  })
+
+  describe('back from another page', () => {
+    // The controller lives on "/" only, like MapPage: going to a profile unmounts it, Back mounts it again.
+    function setupRoutes(url = '/') {
+      const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+      const out: { map: ReturnType<typeof useMapController> | null; navigate: ReturnType<typeof useNavigate> | null } = { map: null, navigate: null }
+      function MapScreen() {
+        out.map = useMapController()
+        return null
+      }
+      function Nav() {
+        out.navigate = useNavigate()
+        return null
+      }
+      const view = renderHook(() => null, {
+        wrapper: () => (
+          <QueryClientProvider client={client}>
+            <MemoryRouter initialEntries={[url]}>
+              <Probe />
+              <Nav />
+              <Routes>
+                <Route path="/" element={<MapScreen />} />
+                <Route path="/m/:slug" element={null} />
+              </Routes>
+            </MemoryRouter>
+          </QueryClientProvider>
+        ),
+      })
+      return { ...view, out }
+    }
+    const HERE = { bbox: [23.9, 49.8, 24.1, 49.9] as [number, number, number, number], zoom: 13.25, center: [24.0, 49.85] as [number, number] }
+
+    it('a fresh visit opens on the overview (no remembered camera)', () => {
+      const { out } = setupRoutes()
+      expect(out.map!.initialCamera).toBeNull()
+    })
+
+    it('restores the camera and the open preview of this history entry', async () => {
+      const { out } = setupRoutes()
+      act(() => out.map!.handlers.onViewport(HERE))
+      act(() => out.map!.handlers.onPin(okeanElzy, 'mouse'))
+      await waitFor(() => expect(out.map!.previewPin?.slug).toBe('okean-elzy'))
+      act(() => out.navigate!('/m/okean-elzy'))
+      expect(out.map).not.toBeNull()
+      out.map = null
+      act(() => out.navigate!(-1))
+      await waitFor(() => expect(out.map).not.toBeNull())
+      expect(out.map!.initialCamera).toEqual({ center: HERE.center, zoom: HERE.zoom })
+      await waitFor(() => expect(out.map!.previewPin?.slug).toBe('okean-elzy'))
+      expect(player.gesture).not.toHaveBeenCalled() // the preview comes back without playing
+    })
+
+    it('a remembered camera wins over ?region= (the user had moved on from it)', async () => {
+      const { out } = setupRoutes('/?region=LVIV')
+      act(() => out.map!.handlers.onViewport(HERE))
+      act(() => out.navigate!('/m/okean-elzy'))
+      out.map = null
+      act(() => out.navigate!(-1))
+      await waitFor(() => expect(out.map).not.toBeNull())
+      expect(out.map!.initialCamera).toEqual({ center: HERE.center, zoom: HERE.zoom })
+      expect(search).toBe('?region=LVIV')
+    })
   })
 })

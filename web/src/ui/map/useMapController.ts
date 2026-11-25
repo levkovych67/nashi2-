@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { MapRef } from 'react-map-gl/maplibre'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useFilters, useMapPins, useMapPlaces, useMapRegions, usePublicConfig } from '../../api/queries'
 import type { components } from '../../api/types.gen'
 import { useFragmentPlayer } from '../../core/audio/useFragmentPlayer'
@@ -11,6 +11,7 @@ import { loadErrorKey } from '../../core/i18n/loadError'
 import type { AggregationMode, BBox, MapItem } from '../../core/map/aggregation'
 import { clusterCamera, placeCamera, regionsCamera, ukraineCamera, type CameraMove } from '../../core/map/camera'
 import { regionAt } from '../../core/map/geo'
+import { readMapMemory, saveMapMemory } from '../../core/map/mapMemory'
 import { useMapModel } from '../../core/map/useMapModel'
 import { useToast } from '../layout/Toast'
 import { regionFillOpacity } from './fill'
@@ -68,10 +69,18 @@ export function useMapController() {
   const filterDefs = filtersQuery.data
   const regionMaxZoom = usePublicConfig().data?.map.regionMaxZoom
 
+  const location = useLocation()
+  const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
+  // Back to this history entry (or a reload): the camera and preview it had, unless ?musician= asks for a musician.
+  const [restored] = useState(() => (searchParams.has('musician') ? null : readMapMemory(location.key)))
+  const initialCamera = useMemo(() => (restored ? { center: restored.center, zoom: restored.zoom } : null), [restored])
+
   const mapRef = useRef<MapRef>(null)
   const [viewport, setViewport] = useState<Viewport | null>(null)
   const [stack, setStack] = useState<StackSheet | null>(null)
-  const [mousePreview, setMousePreview] = useState<string | null>(null)
+  // a restored preview opens without playing, like a mouse click
+  const [mousePreview, setMousePreview] = useState<string | null>(restored?.previewId ?? null)
   const [muted, setMuted] = useState(readMuted)
 
   const level = indexes && viewport ? indexes.level(viewport.zoom) : null
@@ -222,8 +231,17 @@ export function useMapController() {
     }
   }, [])
 
-  // ?region= on load opens the region (D-10), once the map and the filter definitions are there.
-  const deepLinkDone = useRef(false)
+  // Every new document's first entry has the key "default"; give it its own so its camera can be remembered.
+  useEffect(() => {
+    if (location.key === 'default') navigate(location, { replace: true, state: location.state })
+  }, [location, navigate])
+  useEffect(() => {
+    if (viewport) saveMapMemory(location.key, { center: viewport.center, zoom: viewport.zoom, previewId })
+  }, [viewport, previewId, location.key])
+
+  // ?region= on load opens the region (D-10), once the map and the filter definitions are there. A restored camera
+  // already shows where the user was within it.
+  const deepLinkDone = useRef(restored !== null)
   useEffect(() => {
     if (deepLinkDone.current || !viewport || !regions || !filtersReady || regionMaxZoom === undefined) return
     deepLinkDone.current = true
@@ -232,7 +250,6 @@ export function useMapController() {
   }, [viewport, regions, filtersReady, regionMaxZoom, filters.region, handlers])
 
   // ?musician=<slug>: fly to the pin and open its preview; an unknown slug or a musician without a pin gets a toast.
-  const [searchParams, setSearchParams] = useSearchParams()
   const wantedSlug = searchParams.get('musician')
   useEffect(() => {
     if (!wantedSlug || !viewport || !pins) return
@@ -255,6 +272,8 @@ export function useMapController() {
 
   return {
     mapRef,
+    /** Camera to open on instead of the overview (Back to this entry); null for a fresh visit. */
+    initialCamera,
     level,
     items,
     names,

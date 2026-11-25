@@ -34,7 +34,13 @@ export default function MapPage() {
         <div className="n-map-body">
           {Filters && map.regionOptions && <Filters slot="panel" {...filterProps} />}
           <div className="n-map-stage">
-            <MapView ref={map.mapRef} level={map.level} onViewport={handlers.onViewport} onBackgroundClick={handlers.closeSheets}>
+            <MapView
+              ref={map.mapRef}
+              level={map.level}
+              initialCamera={map.initialCamera}
+              onViewport={handlers.onViewport}
+              onBackgroundClick={handlers.closeSheets}
+            >
               <MapOverlays fillOpacity={map.fillOpacity} />
               <MapMarkers
                 items={map.items}
