@@ -3,8 +3,9 @@
 //  - the `maplibre` chunk (maplibre-gl + react-map-gl) is reachable from the map route `/` only, never from
 //    `/m/:slug`, `/suggest`, `/about` or the not-found page;
 //  - first-load JS of every route (start + its page chunk and what that imports) without maplibre stays under
-//    START_BUDGET_KB too, `/` included (the Ukraine geometry is fetched from /geo at runtime, not bundled).
-import { readFileSync } from 'node:fs'
+//    START_BUDGET_KB too, `/` included (the Ukraine geometry is fetched from /geo at runtime, not bundled);
+//  - no test files (the MSW worker, fixture audio and images) in the production build.
+import { readdirSync, readFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { gzipSync } from 'node:zlib'
@@ -65,11 +66,19 @@ export function analyze(manifest, sizeOf, { entry = 'index.html', routes = ROUTE
   return { startKb, mapKb: mapKey ? kb([mapKey]) : 0, perRoute, errors }
 }
 
+/** Test-only files of the mock build (vite.config.ts copies them only with VITE_API_MOCK=1 or the dev server). */
+export const TEST_FILES = ['fixtures', 'mockServiceWorker.js']
+
+/** The test-only entries among the top-level entries of a dist directory. */
+export const testFilesIn = (entries) => entries.filter((e) => TEST_FILES.includes(e))
+
 function main() {
   const dist = resolve(dirname(fileURLToPath(import.meta.url)), '../dist')
   const manifest = JSON.parse(readFileSync(join(dist, '.vite/manifest.json'), 'utf8'))
   const sizeOf = (file) => gzipSync(readFileSync(join(dist, file)), { level: 9 }).length
   const { startKb, mapKb, perRoute, errors } = analyze(manifest, sizeOf)
+  const stray = testFilesIn(readdirSync(dist))
+  if (stray.length) errors.push(`test files in the production build: ${stray.join(', ')}`)
   console.log(`start JS: ${startKb.toFixed(1)} KB gzip (budget ${START_BUDGET_KB})`)
   console.log(`maplibre chunk: ${mapKb.toFixed(1)} KB gzip`)
   for (const [route, r] of Object.entries(perRoute)) {

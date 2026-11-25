@@ -71,7 +71,8 @@ services:
       NASHI_S3_PUBLIC_BASE_URL: http://localhost:${NASHI_MINIO_PORT:-9000}/nashi-v2
       NASHI_TELEGRAM_POLLING_ENABLED: "false"
       NASHI_TELEGRAM_SENDING_ENABLED: "false"
-      NASHI_CORS_ALLOWED_ORIGINS: http://localhost:${NASHI_WEB_PORT:-4175},http://127.0.0.1:${NASHI_WEB_PORT:-4175},http://localhost:5173
+      # web image, studio, and the web dev server (its proxy drops Origin; listed for a dev server without the proxy)
+      NASHI_CORS_ALLOWED_ORIGINS: http://localhost:${NASHI_WEB_PORT:-4175},http://127.0.0.1:${NASHI_WEB_PORT:-4175},http://localhost:5173,http://localhost:5174,http://127.0.0.1:5174
       NASHI_SITE_BASE_URL: http://localhost:${NASHI_WEB_PORT:-4175}
     ports:
       - "127.0.0.1:${NASHI_BACKEND_PORT:-8081}:8080"

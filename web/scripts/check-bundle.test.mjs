@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { analyze } from './check-bundle.mjs'
+import { analyze, testFilesIn } from './check-bundle.mjs'
 
 const KB = 1024
 const sizes = { 'a/index.js': 100 * KB, 'a/vendor.js': 50 * KB, 'a/maplibre-x.js': 300 * KB, 'a/MapPage.js': 10 * KB, 'a/Musician.js': 5 * KB }
@@ -46,4 +46,9 @@ test('a build without a maplibre chunk fails', () => {
   delete m.m
   m['src/pages/MapPage.tsx'].imports = ['index.html']
   assert.match(analyze(m, sizeOf, { routes }).errors[0], /not split out/)
+})
+
+test('a production build must not ship the mock worker or the fixtures', () => {
+  assert.deepEqual(testFilesIn(['assets', 'geo', 'index.html']), [])
+  assert.deepEqual(testFilesIn(['assets', 'fixtures', 'geo', 'index.html', 'mockServiceWorker.js']), ['fixtures', 'mockServiceWorker.js'])
 })

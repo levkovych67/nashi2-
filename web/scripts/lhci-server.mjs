@@ -48,8 +48,11 @@ createServer((req, res) => {
     res.end(gz ? gzipSync(text) : text)
     return
   }
-  let file = join(dist, decodeURIComponent(url.pathname))
-  if (!file.startsWith(dist) || !existsSync(file) || !statSync(file).isFile()) file = join(dist, 'index.html')
+  // the build is a production one (no test files in it); the local stand-in photo comes from contracts/fixtures
+  const fromFixtures = url.pathname.startsWith('/fixtures/')
+  const root = fromFixtures ? fixtures : dist
+  let file = join(root, decodeURIComponent(url.pathname.slice(fromFixtures ? '/fixtures'.length : 0)))
+  if (!file.startsWith(root) || !existsSync(file) || !statSync(file).isFile()) file = join(dist, 'index.html')
   const ext = extname(file)
   const headers = { 'Content-Type': types[ext] ?? 'application/octet-stream', 'Cache-Control': 'public, max-age=3600' }
   const gzip = compressible.has(ext) && /\bgzip\b/.test(req.headers['accept-encoding'] ?? '')
