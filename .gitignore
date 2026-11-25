@@ -17,3 +17,5 @@ playwright-report/
 test-results/
 /infra/secrets/
 /contracts/geo/source/
+dist-lhci/
+.lighthouseci/

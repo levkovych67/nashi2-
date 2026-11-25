@@ -20,7 +20,8 @@ export default defineConfig({
     command: 'npm run dev -w web',
     cwd: '..',
     url: host,
-    reuseExistingServer: !process.env.CI,
+    // always our own mock server: a dev server already on this port may run without VITE_API_MOCK and hit a real backend
+    reuseExistingServer: false,
     env: { VITE_API_MOCK: '1', VITE_MAP_STYLE: 'blank' },
   },
 })

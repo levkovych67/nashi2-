@@ -21,7 +21,22 @@ export default defineConfig({
     alias: { '@contracts': fileURLToPath(new URL('../contracts', import.meta.url)) },
   },
   // maplibre-gl alone is ~1 MB minified; it is loaded lazily with the map route.
-  build: { chunkSizeWarningLimit: 1100 },
+  build: {
+    chunkSizeWarningLimit: 1100,
+    manifest: true,
+    rollupOptions: {
+      output: {
+        // maplibre-gl + react-map-gl in one chunk of their own, imported only by the map route
+        // React stays out of it: otherwise the maplibre chunk absorbs React and every route has to load the map code.
+        manualChunks: (id) => {
+          if (/node_modules\/(maplibre-gl|react-map-gl|@maplibre)\//.test(id)) return 'maplibre'
+          // vite's dynamic-import helper too: every route uses it, and it would otherwise land in the maplibre chunk
+          if (id.includes('vite/preload-helper') || /node_modules\/(react|react-dom|scheduler)\//.test(id)) return 'vendor'
+          return undefined
+        },
+      },
+    },
+  },
   server: {
     port: 5174,
     strictPort: true,
