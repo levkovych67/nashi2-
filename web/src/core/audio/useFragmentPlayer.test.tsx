@@ -29,6 +29,7 @@ function fakeEngine() {
       plays.push({ id, f })
       set({ status: 'playing', musicianId: id, clipId: f.clipId })
     },
+    unlock() {},
     stop(o) {
       stops.push(o)
       set({ status: 'idle', musicianId: null, clipId: null })
@@ -59,7 +60,10 @@ const mockDesktop = (matches: boolean) =>
 
 describe('useFragmentPlayer', () => {
   beforeEach(() => mockDesktop(true))
-  afterEach(() => vi.unstubAllGlobals())
+  afterEach(() => {
+    vi.unstubAllGlobals()
+    vi.restoreAllMocks()
+  })
 
   it('204 marks musician as noAudio and does not play', async () => {
     const f = fakeEngine()
@@ -131,6 +135,28 @@ describe('useFragmentPlayer', () => {
     vi.spyOn(document, 'visibilityState', 'get').mockReturnValue('hidden')
     act(() => void document.dispatchEvent(new Event('visibilitychange')))
     expect(f.stops.length).toBeGreaterThan(before)
+  })
+
+  it('unmounting stops the engine and cancels an in-flight fetch', async () => {
+    let release!: () => void
+    const gate = new Promise<void>((r) => (release = r))
+    server.use(
+      http.get('*/musicians/:id/fragment', async () => {
+        await gate
+        return HttpResponse.json({
+          clipId: 'late', url: 'https://x/a.wav', startSec: 0, durationSec: 15,
+          fadeInMs: 300, fadeOutMs: 600, title: 't', source: 'UPLOAD', attribution: 'a',
+        })
+      }),
+    )
+    const f = fakeEngine()
+    const { result, unmount } = setup(f.engine)
+    act(() => result.current.player.playMusician(WITH_AUDIO))
+    unmount()
+    expect(f.stops.at(-1)).toEqual({ fade: true })
+    release()
+    await new Promise((r) => setTimeout(r, 50))
+    expect(f.plays).toHaveLength(0)
   })
 
   it('desktop hover plays after 250 ms and stops with fade on leave', async () => {

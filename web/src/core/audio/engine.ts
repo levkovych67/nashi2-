@@ -28,11 +28,15 @@ export interface EngineState {
 export interface AudioEngine {
   play(musicianId: string, f: Fragment): Promise<void>
   stop(opts?: { fade?: boolean }): void
+  /** Call from a user gesture: primes the shared element so later async play() is allowed (iOS). */
+  unlock(): void
   getState(): EngineState
   subscribe(l: (s: EngineState) => void): () => void
 }
 
 const FADE_STEP_MS = 50
+// 44-byte silent PCM WAV (1 sample).
+const SILENT_WAV = 'data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAESsAABErAAABAAgAZGF0YQIAAACAgA=='
 const IDLE: EngineState = { status: 'idle', musicianId: null, clipId: null }
 
 /** iOS Safari: `volume` is read-only, so a write is silently ignored. */
@@ -179,8 +183,25 @@ export function createAudioEngine(deps: { audio: AudioLike; clock: Clock; volume
     set(IDLE)
   }
 
+  let unlocked = false
+  function unlock() {
+    if (unlocked || state.status !== 'idle') return
+    unlocked = true
+    try {
+      audio.src = SILENT_WAV
+      const p = audio.play() as Promise<void> | undefined
+      audio.pause()
+      p?.catch((e: unknown) => {
+        if ((e as { name?: string })?.name === 'NotAllowedError') unlocked = false
+      })
+    } catch {
+      unlocked = false
+    }
+  }
+
   return {
     play,
+    unlock,
     stop,
     getState: () => state,
     subscribe(l) {

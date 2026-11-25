@@ -133,7 +133,14 @@ export function useFragmentPlayer() {
     return () => document.removeEventListener('visibilitychange', onVisibility)
   }, [stop])
 
-  useEffect(() => () => hover.cancel(), [hover])
+  useEffect(
+    () => () => {
+      token.current++ // cancel any in-flight fetch so it cannot start playback after unmount
+      hover.cancel()
+      engine?.stop({ fade: true })
+    },
+    [engine, hover],
+  )
 
   return { state, previewId, noAudio, pointerEnter, pointerLeave, gesture, playMusician: (id: string) => void playMusician(id), stop: () => stop({ fade: true }) }
 }

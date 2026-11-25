@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState, type ReactNode } from 'react'
+import { onFirstActivation } from './activation'
 import { createAudioEngine, isVolumeWritable, type AudioEngine, type Clock, type EngineState } from './engine'
 
 declare global {
@@ -26,6 +27,7 @@ const PUBLISH = import.meta.env.DEV || import.meta.env.VITE_API_MOCK === '1'
 
 export function AudioRoot({ children }: { children: ReactNode }) {
   const [engine] = useState(createBrowserEngine)
+  useEffect(() => onFirstActivation(document, () => engine.unlock()), [engine])
   useEffect(() => {
     if (!PUBLISH) return
     window.__nashiAudioState = engine.getState()
