@@ -458,8 +458,3 @@
   cursor: pointer;
 }
 
-.n-preview-placeholder p {
-  margin: var(--n-space-3) 0 0;
-  color: var(--n-color-text-muted);
-  font-size: var(--n-font-size-sm);
-}

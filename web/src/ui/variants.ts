@@ -8,6 +8,7 @@ import { BubbleCount } from './map/variants/BubbleCount'
 import { LegendBar } from './map/variants/LegendBar'
 import { InCardPlayer } from './musician/variants/InCardPlayer'
 import { EditorialPage } from './musician/variants/EditorialPage'
+import { BottomSheetPreview } from './musician/variants/BottomSheetPreview'
 import { HeartBurst } from './musician/variants/HeartBurst'
 
 // Registry of IMPLEMENTED variants per decision (one per decision: the customer's selection), filled in by the UI
@@ -23,6 +24,7 @@ export const VARIANTS: VariantRegistry = {
   'map.cluster': { BUBBLE_COUNT: BubbleCount },
   'map.origin-notice': { LEGEND_BAR: LegendBar },
   'nav.structure': { TOP_BAR_MENU: TopBarMenu },
+  'musician.preview': { BOTTOM_SHEET: BottomSheetPreview },
   'musician.page': { EDITORIAL: EditorialPage },
   'like.button': { HEART_BURST: HeartBurst },
   'audio.player': { IN_CARD: InCardPlayer },

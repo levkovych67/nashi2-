@@ -73,6 +73,23 @@ describe('useFragmentPlayer', () => {
     expect(f.plays).toHaveLength(0)
   })
 
+  it('exposes the current fragment, also while loading and to a second consumer, and drops it on stop', async () => {
+    const f = fakeEngine()
+    const { result } = setup(f.engine)
+    expect(result.current.player.fragment).toBeNull()
+    await act(async () => result.current.player.playMusician(WITH_AUDIO))
+    await waitFor(() => expect(f.plays).toHaveLength(1))
+    expect(result.current.player.fragment?.clipId).toBe(f.plays[0].f.clipId)
+    expect(result.current.player.fragment?.title).toBe(f.plays[0].f.title)
+    act(() => f.set({ status: 'loading', musicianId: WITH_AUDIO, clipId: f.plays[0].f.clipId }))
+    expect(result.current.player.fragment?.title).toBe(f.plays[0].f.title)
+    // another hook instance on the same engine (the preview card next to the map controller) sees it too
+    const other = setup(f.engine)
+    expect(other.result.current.player.fragment?.clipId).toBe(f.plays[0].f.clipId)
+    act(() => result.current.player.stop())
+    expect(result.current.player.fragment).toBeNull()
+  })
+
   it('second play of same musician sends exclude = previous clipId', async () => {
     const seen: Array<string | null> = []
     server.use(

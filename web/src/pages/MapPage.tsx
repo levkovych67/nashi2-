@@ -9,10 +9,10 @@ import { MapControls } from '../ui/map/MapControls'
 import { MapMarkers } from '../ui/map/MapMarkers'
 import { MapOverlays } from '../ui/map/MapOverlays'
 import { MapView } from '../ui/map/MapView'
-import { MusicianPreviewPlaceholder } from '../ui/map/MusicianPreviewPlaceholder'
 import { NearMeButton } from '../ui/map/NearMeButton'
 import { OriginNotice } from '../ui/map/OriginNotice'
 import { PinStackList } from '../ui/map/PinStackList'
+import { MusicianPreview } from '../ui/musician/MusicianPreview'
 import { ResultsCount } from '../ui/map/ResultsCount'
 import { SoundToggle } from '../ui/map/SoundToggle'
 import { useMapController } from '../ui/map/useMapController'
@@ -55,9 +55,7 @@ export default function MapPage() {
             </MapControls>
             <Toast message={map.toast} />
             {previewPin ? (
-              <BottomSheet testId="musician-preview" label={previewPin.name} onClose={handlers.closeSheets}>
-                <MusicianPreviewPlaceholder name={previewPin.name} />
-              </BottomSheet>
+              <MusicianPreview pin={previewPin} onClose={handlers.closeSheets} />
             ) : (
               stack && (
                 <BottomSheet label={stack.title} onClose={handlers.closeSheets}>

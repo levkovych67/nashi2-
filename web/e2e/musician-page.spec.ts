@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { text } from './helpers/map'
+import { activatePin, mapEl, text } from './helpers/map'
 
 test('unknown slug shows not found with a link to the map', async ({ page }) => {
   await page.goto('/m/no-such-musician')
@@ -45,4 +45,23 @@ test('page shows all blocks and «Показати на карті» goes to the
   await expect(page.getByTestId('text-source')).toContainText('CC BY-SA')
   await page.getByRole('link', { name: text('musician.showOnMap') }).click()
   await expect(page).toHaveURL(/\/\?musician=okean-elzy$/)
+})
+
+test('page from map preview and back to map', async ({ page, isMobile }) => {
+  // the fixtures hold a page for this musician only; the deep link brings the camera to its pin, then the pin is used
+  await page.goto('/?musician=okean-elzy')
+  const pin = page.locator('[data-testid="pin"][data-slug="okean-elzy"]')
+  await expect(pin).toBeVisible({ timeout: 15_000 })
+  await page.keyboard.press('Escape')
+  await expect(page.getByTestId('musician-preview')).toBeHidden()
+  await page.waitForTimeout(800) // the camera has stopped
+  await activatePin(pin, isMobile)
+  const preview = page.getByTestId('musician-preview')
+  await expect(preview.getByRole('heading', { name: 'Океан Ельзи' })).toBeVisible()
+  await preview.getByRole('link', { name: text('preview.openProfile') }).click()
+  await expect(page).toHaveURL(/\/m\/okean-elzy$/)
+  await expect(page.getByTestId('musician-name')).toHaveText('Океан Ельзи')
+  await page.getByRole('link', { name: text('musician.showOnMap') }).click()
+  await expect(mapEl(page)).toBeVisible()
+  await expect(page.getByTestId('musician-preview').getByRole('heading', { name: 'Океан Ельзи' })).toBeVisible()
 })

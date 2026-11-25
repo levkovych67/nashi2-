@@ -12,6 +12,8 @@ import { reducePinGesture, type MobileTrigger, type PinGesture } from './mobileT
 type Fragment = components['schemas']['Fragment']
 
 const HOVER_INTENT_MS = 250
+// Fragments handed to an engine, so every consumer (map controller, in-card player) sees what is playing.
+const played = new WeakMap<object, Map<string, Fragment>>()
 const IDLE: EngineState = { status: 'idle', musicianId: null, clipId: null }
 const isDesktop = () => window.matchMedia?.('(hover: hover) and (pointer: fine)').matches ?? false
 
@@ -36,6 +38,9 @@ export function useFragmentPlayer() {
     useCallback((l) => engine?.subscribe(l) ?? (() => {}), [engine]),
     () => engine?.getState() ?? IDLE,
   )
+
+  // Fragment of the current engine state (also while it is loading); null when idle or unknown.
+  const fragment = (engine && state.clipId && state.status !== 'idle' ? played.get(engine)?.get(state.clipId) : undefined) ?? null
 
   const fetchFragment = useCallback(
     (id: string, exclude?: string): Promise<Fragment | null> =>
@@ -74,6 +79,8 @@ export function useFragmentPlayer() {
           return
         }
         lastClip.current.set(id, f.clipId)
+        if (!played.has(engine)) played.set(engine, new Map())
+        played.get(engine)!.set(f.clipId, f)
         await engine.play(id, f)
         if (my !== token.current) return
         const s = engine.getState()
@@ -142,5 +149,5 @@ export function useFragmentPlayer() {
     [engine, hover],
   )
 
-  return { state, previewId, noAudio, pointerEnter, pointerLeave, gesture, playMusician: (id: string) => void playMusician(id), stop: () => stop({ fade: true }) }
+  return { state, fragment, previewId, noAudio, pointerEnter, pointerLeave, gesture, playMusician: (id: string) => void playMusician(id), stop: () => stop({ fade: true }) }
 }

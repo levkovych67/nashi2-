@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { MapRef } from 'react-map-gl/maplibre'
+import { useSearchParams } from 'react-router-dom'
 import { useFilters, useMapPins, useMapPlaces, useMapRegions, usePublicConfig } from '../../api/queries'
 import type { components } from '../../api/types.gen'
 import { useFragmentPlayer } from '../../core/audio/useFragmentPlayer'
@@ -37,6 +38,8 @@ export interface MapHandlers extends MarkerHandlers {
   toggleSound(): void
 }
 
+// close enough that the musician's pin stands out of any cluster
+const PIN_ZOOM = 16
 const NO_INSETS = { top: 0, right: 0, bottom: 0, left: 0 }
 const WORLD: BBox = [-180, -85, 180, 85]
 const NO_MARKERS = { items: [] as MapItem[], capped: false }
@@ -213,6 +216,28 @@ export function useMapController() {
     const selected = regions.filter((r) => filters.region?.includes(r.code))
     if (selected.length > 0) handlers.openRegions(selected, false)
   }, [viewport, regions, filtersReady, regionMaxZoom, filters.region, handlers])
+
+  // ?musician=<slug>: fly to the pin and open its preview; an unknown slug or a musician without a pin gets a toast.
+  const [searchParams, setSearchParams] = useSearchParams()
+  const wantedSlug = searchParams.get('musician')
+  useEffect(() => {
+    if (!wantedSlug || !viewport || !pins) return
+    const pin = pins.find((p) => p.slug === wantedSlug)
+    if (pin) {
+      if (mapRef.current) moveCamera(mapRef.current, { ...placeCamera(pin.lon, pin.lat, prefersReducedMotion()), zoom: PIN_ZOOM })
+      setStack(null)
+      setMousePreview(pin.id)
+    } else {
+      toast.show(t('errors.notFound'))
+    }
+    setSearchParams(
+      (sp) => {
+        sp.delete('musician')
+        return sp
+      },
+      { replace: true },
+    )
+  }, [wantedSlug, viewport, pins, toast.show, t, setSearchParams])
 
   return {
     mapRef,

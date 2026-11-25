@@ -59,7 +59,7 @@ describe('variant registry', () => {
   })
 
   it('returns null when nothing is registered, and when several are but the chosen one is not', () => {
-    expect(resolveVariant('musician.preview', design('musician.preview', 'FLOATING_CARD'))).toBeNull()
+    expect(resolveVariant('submission.form', design('submission.form', 'WIZARD'))).toBeNull()
     withRegistry('audio.player', { MINI_BAR: A, IN_CARD: B }, () => {
       const d = loadDesignConfig({ schemaVersion: 1, decisions: {} })
       expect(resolveVariant('audio.player', design('audio.player', 'MINI_BAR'))).toBe(A)

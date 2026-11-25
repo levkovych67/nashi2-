@@ -164,6 +164,49 @@ describe('useMapController', () => {
     await waitFor(() => expect(search).toBe(''))
   })
 
+  describe('?musician= deep link', () => {
+    const VIEWPORT = { bbox: [22, 44, 41, 53] as [number, number, number, number], zoom: 5.5 }
+    function setupAt(url: string) {
+      const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+      const wrapper = ({ children }: { children: ReactNode }) => (
+        <QueryClientProvider client={client}>
+          <MemoryRouter initialEntries={[url]}>
+            <Probe />
+            {children}
+          </MemoryRouter>
+        </QueryClientProvider>
+      )
+      const hook = renderHook(() => useMapController(), { wrapper })
+      const flyTo = vi.fn()
+      ;(hook.result.current.mapRef as { current: unknown }).current = { flyTo, fitBounds: vi.fn(), cameraForBounds: vi.fn() }
+      act(() => hook.result.current.handlers.onViewport(VIEWPORT))
+      return { ...hook, flyTo }
+    }
+
+    it('flies to the pin of the slug, opens its preview and drops the param', async () => {
+      const { result, flyTo } = setupAt('/?musician=okean-elzy')
+      await waitFor(() => expect(result.current.previewPin?.slug).toBe('okean-elzy'))
+      expect(flyTo).toHaveBeenCalledTimes(1)
+      expect(flyTo.mock.calls[0][0]).toMatchObject({ center: [okeanElzy.lon, okeanElzy.lat], zoom: 16 })
+      expect(result.current.toast).toBeNull()
+      expect(player.gesture).not.toHaveBeenCalled()
+      await waitFor(() => expect(search).toBe(''))
+    })
+
+    it('unknown slug: toast errors.notFound, no camera move, no preview', async () => {
+      const { result, flyTo } = setupAt('/?musician=does-not-exist')
+      await waitFor(() => expect(result.current.toast).toBe('Цю сторінку не знайдено.'))
+      expect(flyTo).not.toHaveBeenCalled()
+      expect(result.current.previewPin).toBeUndefined()
+    })
+
+    it('keeps other params when it drops ?musician=', async () => {
+      const { result } = setupAt('/?musician=okean-elzy&region=LVIV')
+      await waitFor(() => expect(result.current.previewPin).toBeDefined())
+      await waitFor(() => expect(search).toBe('?region=LVIV'))
+    })
+  })
+
   it('counts the musicians that match the filters', async () => {
     const { result } = setup()
     await waitFor(() => expect(result.current.resultsCount).toBe(3661))
