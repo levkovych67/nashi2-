@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
-import { MemoryRouter, useLocation } from 'react-router-dom'
+import { MemoryRouter, useLocation, useSearchParams } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { useMapModel } from './useMapModel'
 
@@ -12,7 +12,10 @@ function setup(url: string) {
       <MemoryRouter initialEntries={[url]}>{children}</MemoryRouter>
     </QueryClientProvider>
   )
-  return renderHook(() => ({ model: useMapModel(), search: useLocation().search }), { wrapper })
+  return renderHook(
+    () => ({ model: useMapModel(), search: useLocation().search, setParams: useSearchParams()[1] }),
+    { wrapper },
+  )
 }
 
 describe('useMapModel', () => {
@@ -34,5 +37,16 @@ describe('useMapModel', () => {
     expect(result.current.search).toBe('?region=ODESA')
     act(() => result.current.model.setFilters({}))
     expect(result.current.search).toBe('')
+  })
+
+  it('keeps the same indexes when an unrelated search param changes', async () => {
+    const { result } = setup('/?region=LVIV')
+    await waitFor(() => expect(result.current.model.loading).toBe(false))
+    const before = result.current.model.indexes
+    act(() => result.current.setParams((sp) => new URLSearchParams([...sp, ['pin', 'x']])))
+    expect(result.current.search).toContain('pin=x')
+    expect(result.current.model.indexes).toBe(before)
+    act(() => result.current.model.setFilters({ region: ['ODESA'] }))
+    expect(result.current.model.indexes).not.toBe(before)
   })
 })

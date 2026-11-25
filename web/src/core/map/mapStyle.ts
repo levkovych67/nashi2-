@@ -1,6 +1,6 @@
 import type { StyleSpecification } from 'maplibre-gl'
 
-const UKRAINIAN_NAME = ['coalesce', ['get', 'name:uk'], ['get', 'name']]
+const ukrainianName = () => ['coalesce', ['get', 'name:uk'], ['get', 'name']]
 
 function replaceDeep<T>(value: T, replacements: [string, string][]): T {
   if (typeof value === 'string') {
@@ -14,7 +14,7 @@ function replaceDeep<T>(value: T, replacements: [string, string][]): T {
 }
 
 /**
- * Pure: fills the URL placeholders, shows Ukrainian names on every label (fallback: local name) and hides the
+ * Pure: fills the URL placeholders, shows Ukrainian names on every layer that has a text-field (fallback: local name) and hides the
  * basemap's own borders, because national and regional borders come from our GeoJSON (with Crimea).
  */
 export function prepareMapStyle(style: StyleSpecification, urls: { tiles: string; glyphs: string }): StyleSpecification {
@@ -25,8 +25,8 @@ export function prepareMapStyle(style: StyleSpecification, urls: { tiles: string
   return {
     ...filled,
     layers: filled.layers.map((layer) => {
-      if (layer.type === 'symbol') {
-        return { ...layer, layout: { ...layer.layout, 'text-field': UKRAINIAN_NAME } }
+      if (layer.type === 'symbol' && layer.layout?.['text-field'] !== undefined) {
+        return { ...layer, layout: { ...layer.layout, 'text-field': ukrainianName() } }
       }
       if ('source-layer' in layer && layer['source-layer'] === 'boundary') {
         return { ...layer, layout: { ...layer.layout, visibility: 'none' as const } }

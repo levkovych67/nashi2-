@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { ApiProblem } from '../../api/client'
 import { useFilters, useMapPins, useMapPlaces, useMapRegions, usePublicConfig } from '../../api/queries'
@@ -22,7 +22,11 @@ export function useMapModel(): {
   const configQuery = usePublicConfig()
 
   const defs = filtersQuery.data
-  const filters = useMemo(() => (defs ? parseFilterParams(searchParams, defs) : {}), [searchParams, defs])
+  const parsed = useMemo(() => (defs ? parseFilterParams(searchParams, defs) : {}), [searchParams, defs])
+  // Unrelated query params change `searchParams` but not the filters; keep the previous object so indexes are not rebuilt.
+  const filtersRef = useRef(parsed)
+  if (JSON.stringify(filtersRef.current) !== JSON.stringify(parsed)) filtersRef.current = parsed
+  const filters = filtersRef.current
 
   const setFilters = useCallback(
     (next: FilterState) => {

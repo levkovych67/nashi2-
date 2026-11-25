@@ -4,6 +4,8 @@ import { blankStyle, prepareMapStyle } from './mapStyle'
 
 const urls = { tiles: 'https://tiles.test/{z}/{x}/{y}.pbf', glyphs: 'https://glyphs.test/{fontstack}/{range}.pbf' }
 
+const textField = (l: { layout?: object }) => (l.layout as Record<string, unknown> | undefined)?.['text-field']
+
 const fixture = (): StyleSpecification => ({
   version: 8,
   glyphs: '{{GLYPHS_URL}}',
@@ -26,11 +28,17 @@ describe('prepareMapStyle', () => {
   })
 
   it('every symbol text-field is coalesce(name:uk, name)', () => {
-    const symbols = prepareMapStyle(fixture(), urls).layers.filter((l) => l.type === 'symbol')
-    expect(symbols).toHaveLength(3)
+    const symbols = prepareMapStyle(fixture(), urls).layers.filter((l) => l.type === 'symbol' && textField(l))
+    expect(symbols.map((l) => l.id)).toEqual(['country', 'city'])
     for (const l of symbols) {
-      expect(l.layout?.['text-field']).toEqual(['coalesce', ['get', 'name:uk'], ['get', 'name']])
+      expect(textField(l)).toEqual(['coalesce', ['get', 'name:uk'], ['get', 'name']])
     }
+    expect(textField(symbols[0])).not.toBe(textField(symbols[1]))
+  })
+
+  it('leaves icon-only symbol layers unchanged', () => {
+    const poi = prepareMapStyle(fixture(), urls).layers.find((l) => l.id === 'poi')
+    expect(poi?.layout).toEqual({ 'icon-image': 'x' })
   })
 
   it('hides every layer of source-layer boundary (borders come from our GeoJSON with Crimea)', () => {
