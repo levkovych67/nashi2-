@@ -1,0 +1,127 @@
+/* App frame. Colours, fonts and sizes come only from the --n-* design tokens (D-68). */
+
+.n-app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background: var(--n-color-bg);
+  color: var(--n-color-text);
+  font-family: var(--n-font-family-body);
+}
+
+.n-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* nav.structure = TOP_BAR_MENU */
+.n-topbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--n-space-3);
+  padding: var(--n-space-3) var(--n-space-5);
+  background: var(--n-color-surface);
+  border-bottom: 1px solid var(--n-color-border);
+}
+
+.n-topbar__brand {
+  color: var(--n-color-text);
+  font: var(--n-font-weight-bold) var(--n-font-size-3xl) / var(--n-font-line-height-tight) var(--n-font-family-display);
+  letter-spacing: -0.06em;
+  text-decoration: none;
+}
+
+.n-topbar__tagline {
+  display: none;
+  margin: 0 0 0 auto;
+  color: var(--n-color-text-muted);
+  font: var(--n-font-weight-medium) var(--n-font-size-sm) / 1.3 var(--n-font-family-body);
+}
+
+.n-topbar__nav {
+  margin-left: auto;
+}
+
+.n-topbar__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--n-size-touch-min);
+  padding: 0 var(--n-space-4);
+  border: 1px solid var(--n-color-border);
+  border-radius: var(--n-radius-sm);
+  color: var(--n-color-text);
+  font: var(--n-font-weight-medium) var(--n-font-size-sm) / 1.2 var(--n-font-family-body);
+  text-decoration: none;
+}
+
+.n-topbar__link:hover {
+  background: var(--n-color-surface-raised);
+}
+
+.n-topbar__link.active {
+  border-color: var(--n-color-accent);
+  background: var(--n-color-accent);
+  color: var(--n-color-on-accent);
+}
+
+.n-topbar__brand:focus-visible,
+.n-topbar__link:focus-visible {
+  outline: 3px solid var(--n-color-focus);
+  outline-offset: 2px;
+}
+
+@media (min-width: 1024px) {
+  .n-topbar__tagline {
+    display: block;
+  }
+
+  .n-topbar__nav {
+    margin-left: var(--n-space-4);
+  }
+}
+
+/* Non-modal bottom sheet inside a positioned parent (the map stage) */
+.n-sheet {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  max-height: 60%;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: var(--n-space-2) var(--n-space-5) var(--n-space-5);
+  border: 1px solid var(--n-color-border);
+  border-bottom: 0;
+  border-radius: var(--n-radius-lg) var(--n-radius-lg) 0 0;
+  background: var(--n-color-surface);
+  color: var(--n-color-text);
+  box-shadow: var(--n-shadow-lg);
+}
+
+.n-sheet__handle {
+  display: block;
+  width: var(--n-space-10);
+  height: var(--n-space-1);
+  margin: 0 auto var(--n-space-3);
+  border-radius: var(--n-radius-pill);
+  background: var(--n-color-border);
+}
+
+.n-sheet__title {
+  margin: 0;
+  color: var(--n-color-text);
+  font: var(--n-font-weight-bold) var(--n-font-size-2xl) / var(--n-font-line-height-tight) var(--n-font-family-display);
+}
+
+@media (min-width: 1024px) {
+  .n-sheet {
+    left: 50%;
+    width: min(640px, calc(100% - 2 * var(--n-space-6)));
+    transform: translateX(-50%);
+  }
+}

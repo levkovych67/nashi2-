@@ -1,5 +1,9 @@
 import type { ComponentType } from 'react'
 import type { DecisionId, DesignConfig } from '../core/design/types'
+import { TopBarMenu } from './layout/variants/TopBarMenu'
+import { AvatarRing } from './map/variants/AvatarRing'
+import { BubbleCount } from './map/variants/BubbleCount'
+import { LegendBar } from './map/variants/LegendBar'
 
 // Registry of IMPLEMENTED variants per decision (one per decision: the customer's selection), filled in by the UI
 // tasks. Decisions that are core configuration (not components) never appear here.
@@ -7,7 +11,12 @@ export const CORE_CONFIG_DECISIONS: readonly DecisionId[] = ['map.aggregation', 
 
 export type VariantRegistry = Partial<Record<DecisionId, Record<string, ComponentType<any>>>>
 
-export const VARIANTS: VariantRegistry = {}
+export const VARIANTS: VariantRegistry = {
+  'map.pin': { AVATAR_RING: AvatarRing },
+  'map.cluster': { BUBBLE_COUNT: BubbleCount },
+  'map.origin-notice': { LEGEND_BAR: LegendBar },
+  'nav.structure': { TOP_BAR_MENU: TopBarMenu },
+}
 
 const warned = new Set<string>()
 

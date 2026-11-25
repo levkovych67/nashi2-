@@ -20,6 +20,8 @@ export default defineConfig({
   resolve: {
     alias: { '@contracts': fileURLToPath(new URL('../contracts', import.meta.url)) },
   },
+  // maplibre-gl alone is ~1 MB minified; it is loaded lazily with the map route.
+  build: { chunkSizeWarningLimit: 1100 },
   server: {
     port: 5174,
     strictPort: true,
