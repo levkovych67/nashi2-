@@ -1,0 +1,77 @@
+{
+  "id": "f03712c19bb4a37c6a009362",
+  "slug": "plach-yeremii",
+  "name": "Плач Єремії",
+  "kind": "BAND",
+  "tagline": "український концептуальний рок-гурт",
+  "summary": "«Плач Єремії» — український концептуальний рок-гурт. Є одним із найвизначніших українських рок-гуртів, вважається в Україні культовим. Гурт здобув чимало вітчизняних нагород у номінації рок-музики.",
+  "description": "«Плач Єремії» — український концептуальний рок-гурт. Є одним із найвизначніших українських рок-гуртів, вважається в Україні культовим. Гурт здобув чимало вітчизняних нагород у номінації рок-музики.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Плач Єремії (гурт)",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9F%D0%BB%D0%B0%D1%87_%D0%84%D1%80%D0%B5%D0%BC%D1%96%D1%97_%28%D0%B3%D1%83%D1%80%D1%82%29",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q36036",
+    "placeName": "Львів",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 49.859897080553914,
+    "lon": 24.029477663167402
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [
+    "сентиментальна балада",
+    "фольк-рок",
+    "блюз-рок"
+  ],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_f03712c19bb4a37c6a009362_1",
+        "title": "Демоетюд 4",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "http://plach-jeremiji.org.ua/"
+    },
+    {
+      "platform": "SPOTIFY",
+      "group": "MUSIC",
+      "url": "https://open.spotify.com/artist/7ifsjGOD2trth519JuzcuW"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/867059"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9F%D0%BB%D0%B0%D1%87_%D0%84%D1%80%D0%B5%D0%BC%D1%96%D1%97_%28%D0%B3%D1%83%D1%80%D1%82%29"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 7416,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

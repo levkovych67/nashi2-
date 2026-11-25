@@ -1,0 +1,50 @@
+{
+  "id": "659af17c6f85ac878c83297e",
+  "slug": "adolf-barzhanskyi",
+  "name": "Адольф Баржанський",
+  "kind": "PERSON",
+  "tagline": "1900, Одеса) — український композитор і піаніст",
+  "summary": "Баржанський Адольф Соломонович (1851, Одеса — 1900, Одеса) — український композитор і піаніст.",
+  "description": "Баржанський Адольф Соломонович (1851, Одеса — 1900, Одеса) — український композитор і піаніст. Його батько, власник великої торгової фірми, дав йому комерційну освіту; проте, відчуваючи з дитинства покликання до музики, Адольф Баржанський незабаром залишив комерційну діяльність і вирушив за кордон, де навчався у консерваторіях Відня, Парижа та Лейпцигу. Він виявив безперечний талант як піаніст та композитор. З творів Баржанського слід згадати: «Над морем», «Спогади», «Колискова пісня», «Glückliches Heim», «Scherzo», «Andacht». Всі ці твори видано у Брейткопфа та Гертля у Лейпцигу.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Баржанський Адольф Соломонович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%91%D0%B0%D1%80%D0%B6%D0%B0%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9_%D0%90%D0%B4%D0%BE%D0%BB%D1%8C%D1%84_%D0%A1%D0%BE%D0%BB%D0%BE%D0%BC%D0%BE%D0%BD%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q1874",
+    "placeName": "Одеса",
+    "region": "ODESA",
+    "regionName": "Одеська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 46.50270972274915,
+    "lon": 30.73444193069325
+  },
+  "dates": {
+    "birth": "1851",
+    "death": "1900",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%91%D0%B0%D1%80%D0%B6%D0%B0%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9_%D0%90%D0%B4%D0%BE%D0%BB%D1%8C%D1%84_%D0%A1%D0%BE%D0%BB%D0%BE%D0%BC%D0%BE%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 5341,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

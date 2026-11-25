@@ -1,0 +1,52 @@
+{
+  "id": "96f07d3081fcf23ef931c3de",
+  "slug": "999",
+  "name": "999",
+  "kind": "BAND",
+  "tagline": "український музичний гурт",
+  "summary": "«999» (Три Дев'ятки) — український музичний гурт.",
+  "description": "«999» (Три Дев'ятки) — український музичний гурт.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "999 (гурт)",
+    "url": "https://uk.wikipedia.org/wiki/999_%28%D0%B3%D1%83%D1%80%D1%82%29",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q36036",
+    "placeName": "Львів",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 49.82837961807576,
+    "lon": 24.00221341674719
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [
+    "психоделічний рок"
+  ],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/999_%28%D0%B3%D1%83%D1%80%D1%82%29"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 6309,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

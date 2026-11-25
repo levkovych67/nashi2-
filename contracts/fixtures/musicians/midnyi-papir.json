@@ -1,0 +1,70 @@
+{
+  "id": "6c616a827657ce10c9bfa3b4",
+  "slug": "midnyi-papir",
+  "name": "Мідний папір",
+  "kind": "BAND",
+  "tagline": null,
+  "summary": "Вигадана заявка для студії «Наші». Дует поєднує акустичну гітару з електронною перкусією.",
+  "description": "Вигадана заявка для студії «Наші». Дует поєднує акустичну гітару з електронною перкусією.",
+  "textSource": null,
+  "images": [
+    {
+      "url": "/fixtures/img/extra-1.svg",
+      "thumbUrl": "/fixtures/img/extra-1.svg",
+      "alt": "Мідний папір",
+      "credit": null
+    }
+  ],
+  "origin": {
+    "placeId": "Q156747",
+    "placeName": "Полтава",
+    "region": "POLTAVA",
+    "regionName": "Полтавська область",
+    "basis": "ORIGIN",
+    "precision": "CITY",
+    "lat": 49.60302977703692,
+    "lon": 34.566945217128726
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [
+    "інді",
+    "електроніка"
+  ],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_6c616a827657ce10c9bfa3b4_1",
+        "title": "Демоетюд 3",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_6c616a827657ce10c9bfa3b4_2",
+        "title": "Демоетюд 4",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_6c616a827657ce10c9bfa3b4_3",
+        "title": "Демоетюд 5",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [],
+  "youtubeChannelUrl": null,
+  "likesCount": 3497,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

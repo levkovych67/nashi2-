@@ -1,0 +1,50 @@
+{
+  "id": "f803c6011b89e21d4083db7a",
+  "slug": "avram-hrebin",
+  "name": "Аврам Гребінь",
+  "kind": "PERSON",
+  "tagline": "пом. 27 грудня 1961, с. Дмитрівка Менського району) — український лірник",
+  "summary": "Аврам Родіонович Гребінь (Гребень; нар. 8 листопада (27 жовтня) 1878, містечко Березна, нині смт Менського району Чернігівської області — пом. 27 грудня 1961, с. Дмитрівка Менського району) — український лірник.",
+  "description": "Аврам Родіонович Гребінь (Гребень; нар. 8 листопада (27 жовтня) 1878, містечко Березна, нині смт Менського району Чернігівської області — пом. 27 грудня 1961, с. Дмитрівка Менського району) — український лірник.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Гребінь Аврам Родіонович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%93%D1%80%D0%B5%D0%B1%D1%96%D0%BD%D1%8C_%D0%90%D0%B2%D1%80%D0%B0%D0%BC_%D0%A0%D0%BE%D0%B4%D1%96%D0%BE%D0%BD%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q2473471",
+    "placeName": "Березна",
+    "region": "CHERNIHIV",
+    "regionName": "Чернігівська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 51.56050651306988,
+    "lon": 31.7881810420255
+  },
+  "dates": {
+    "birth": "1878-10-26",
+    "death": "1961-12-27",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%93%D1%80%D0%B5%D0%B1%D1%96%D0%BD%D1%8C_%D0%90%D0%B2%D1%80%D0%B0%D0%BC_%D0%A0%D0%BE%D0%B4%D1%96%D0%BE%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 3170,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

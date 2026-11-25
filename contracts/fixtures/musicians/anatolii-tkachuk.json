@@ -1,0 +1,50 @@
+{
+  "id": "005079050434628c63c56ba8",
+  "slug": "anatolii-tkachuk",
+  "name": "Анатолій Ткачук",
+  "kind": "PERSON",
+  "tagline": "український композитор та диригент",
+  "summary": "Анатолій Павлович Ткачук (нар. 24 серпня 1950) — український композитор та диригент.",
+  "description": "Анатолій Павлович Ткачук (нар. 24 серпня 1950) — український композитор та диригент.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Ткачук Анатолій Павлович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A2%D0%BA%D0%B0%D1%87%D1%83%D0%BA_%D0%90%D0%BD%D0%B0%D1%82%D0%BE%D0%BB%D1%96%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q166709",
+    "placeName": "Вінницька область",
+    "region": "VINNYTSIA",
+    "regionName": "Вінницька область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 48.928385820349845,
+    "lon": 28.67504450245359
+  },
+  "dates": {
+    "birth": "1950-08-24",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A2%D0%BA%D0%B0%D1%87%D1%83%D0%BA_%D0%90%D0%BD%D0%B0%D1%82%D0%BE%D0%BB%D1%96%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 9323,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

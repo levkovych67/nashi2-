@@ -1,0 +1,64 @@
+{
+  "id": "9c29282f107a38a5d233610e",
+  "slug": "adolf-leshchynskyi",
+  "name": "Адольф Лещинський",
+  "kind": "PERSON",
+  "tagline": "10 червня 1995, Харків, Україна) — радянський скрипаль і педагог",
+  "summary": "Адольф Арнольдович Лещинський (12 липня 1915, Відень, Нижня Австрія, Цислейтанія, Австро-Угорщина — 10 червня 1995, Харків, Україна) — радянський скрипаль і педагог. Член КПРС з 1947 року.",
+  "description": "Адольф Арнольдович Лещинський (12 липня 1915, Відень, Нижня Австрія, Цислейтанія, Австро-Угорщина — 10 червня 1995, Харків, Україна) — радянський скрипаль і педагог. Член КПРС з 1947 року.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Лещинський Адольф Арнольдович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9B%D0%B5%D1%89%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9_%D0%90%D0%B4%D0%BE%D0%BB%D1%8C%D1%84_%D0%90%D1%80%D0%BD%D0%BE%D0%BB%D1%8C%D0%B4%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/%D0%90.%D0%90.%D0%9B%D0%B5%D1%89%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9.jpg/500px-%D0%90.%D0%90.%D0%9B%D0%B5%D1%89%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/%D0%90.%D0%90.%D0%9B%D0%B5%D1%89%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9.jpg/500px-%D0%90.%D0%90.%D0%9B%D0%B5%D1%89%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9.jpg",
+      "alt": "Адольф Лещинський",
+      "credit": {
+        "author": "Богдан Поляков",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:%D0%90.%D0%90.%D0%9B%D0%B5%D1%89%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q157725",
+    "placeName": "Чернівці",
+    "region": "CHERNIVTSI",
+    "regionName": "Чернівецька область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 48.29554877189853,
+    "lon": 25.901490629060568
+  },
+  "dates": {
+    "birth": "1915-07-12",
+    "death": "1995",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [
+    "класична музика"
+  ],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9B%D0%B5%D1%89%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9_%D0%90%D0%B4%D0%BE%D0%BB%D1%8C%D1%84_%D0%90%D1%80%D0%BD%D0%BE%D0%BB%D1%8C%D0%B4%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 9220,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

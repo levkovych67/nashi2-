@@ -6,9 +6,14 @@ node_modules/
 .env
 .env.*
 !.env.example
+*.env
 dist/
 build/
 .gradle/
-*.env
+.npm-cache/
+.vite/
+*.tsbuildinfo
+playwright-report/
+test-results/
 /infra/secrets/
 /contracts/geo/source/

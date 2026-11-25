@@ -1,0 +1,55 @@
+{
+  "id": "02194fa13f039b599cd0ddf0",
+  "slug": "leonida-balanovska",
+  "name": "Леоніда Балановська",
+  "kind": "PERSON",
+  "tagline": "28 серпня 1960, Москва) — українська співачка (сопрано)",
+  "summary": "Леоніда Миколаївна Балановська (нар. 26 жовтня (7 листопада) 1883, Шпола, нині Черкаської області — 28 серпня 1960, Москва) — українська співачка (сопрано).",
+  "description": "Леоніда Миколаївна Балановська (нар. 26 жовтня (7 листопада) 1883, Шпола, нині Черкаської області — 28 серпня 1960, Москва) — українська співачка (сопрано).",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Балановська Леоніда Миколаївна",
+    "url": "https://uk.wikipedia.org/wiki/%D0%91%D0%B0%D0%BB%D0%B0%D0%BD%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B0_%D0%9B%D0%B5%D0%BE%D0%BD%D1%96%D0%B4%D0%B0_%D0%9C%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D1%97%D0%B2%D0%BD%D0%B0",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q145957",
+    "placeName": "Шпола",
+    "region": "CHERKASY",
+    "regionName": "Черкаська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.03283018466199,
+    "lon": 31.410459170167233
+  },
+  "dates": {
+    "birth": "1883-11-19",
+    "death": "1960-08-28",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/3485624"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%91%D0%B0%D0%BB%D0%B0%D0%BD%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B0_%D0%9B%D0%B5%D0%BE%D0%BD%D1%96%D0%B4%D0%B0_%D0%9C%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D1%97%D0%B2%D0%BD%D0%B0"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 7652,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

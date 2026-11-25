@@ -1,0 +1,69 @@
+{
+  "id": "01affb29e068ca57c29d032f",
+  "slug": "kostiantyn-dankevych",
+  "name": "Костянтин Данькевич",
+  "kind": "PERSON",
+  "tagline": "26 лютого 1984(1984-02-26) , Київ ) — український композитор, піаніст, педагог, Народний артист СРСР (1954)",
+  "summary": "Костянтин Федорович Данькевич ( 11 (24) грудня 1905 , Одеса, Херсонська губернія — 26 лютого 1984(1984-02-26) , Київ ) — український композитор, піаніст, педагог, Народний артист СРСР (1954).",
+  "description": "Костянтин Федорович Данькевич ( 11 (24) грудня 1905 , Одеса, Херсонська губернія — 26 лютого 1984(1984-02-26) , Київ ) — український композитор, піаніст, педагог, Народний артист СРСР (1954).",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Данькевич Костянтин Федорович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%94%D0%B0%D0%BD%D1%8C%D0%BA%D0%B5%D0%B2%D0%B8%D1%87_%D0%9A%D0%BE%D1%81%D1%82%D1%8F%D0%BD%D1%82%D0%B8%D0%BD_%D0%A4%D0%B5%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Kostyantyn_Dankevych.png",
+      "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Kostyantyn_Dankevych.png",
+      "alt": "Костянтин Данькевич",
+      "credit": {
+        "author": "unknown",
+        "license": "Public domain",
+        "licenseUrl": null,
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kostyantyn_Dankevych.png"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q1874",
+    "placeName": "Одеса",
+    "region": "ODESA",
+    "regionName": "Одеська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 46.4973014114481,
+    "lon": 30.735555301322833
+  },
+  "dates": {
+    "birth": "1905-12-24",
+    "death": "1984-02-26",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [
+    "опера"
+  ],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://esu.com.ua/search_articles.php?id=23615"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%94%D0%B0%D0%BD%D1%8C%D0%BA%D0%B5%D0%B2%D0%B8%D1%87_%D0%9A%D0%BE%D1%81%D1%82%D1%8F%D0%BD%D1%82%D0%B8%D0%BD_%D0%A4%D0%B5%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 1641,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

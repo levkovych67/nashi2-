@@ -1,0 +1,144 @@
+[
+  {
+    "key": "region",
+    "label": "Область",
+    "type": "MULTI_SELECT",
+    "options": [
+      {
+        "value": "CRIMEA",
+        "label": "Автономна Республіка Крим",
+        "count": 54
+      },
+      {
+        "value": "VINNYTSIA",
+        "label": "Вінницька область",
+        "count": 103
+      },
+      {
+        "value": "VOLYN",
+        "label": "Волинська область",
+        "count": 69
+      },
+      {
+        "value": "DNIPROPETROVSK",
+        "label": "Дніпропетровська область",
+        "count": 147
+      },
+      {
+        "value": "DONETSK",
+        "label": "Донецька область",
+        "count": 118
+      },
+      {
+        "value": "ZHYTOMYR",
+        "label": "Житомирська область",
+        "count": 98
+      },
+      {
+        "value": "ZAKARPATTIA",
+        "label": "Закарпатська область",
+        "count": 67
+      },
+      {
+        "value": "ZAPORIZHZHIA",
+        "label": "Запорізька область",
+        "count": 68
+      },
+      {
+        "value": "IVANO_FRANKIVSK",
+        "label": "Івано-Франківська область",
+        "count": 165
+      },
+      {
+        "value": "KYIV",
+        "label": "Київська область",
+        "count": 132
+      },
+      {
+        "value": "KIROVOHRAD",
+        "label": "Кіровоградська область",
+        "count": 68
+      },
+      {
+        "value": "LUHANSK",
+        "label": "Луганська область",
+        "count": 52
+      },
+      {
+        "value": "LVIV",
+        "label": "Львівська область",
+        "count": 484
+      },
+      {
+        "value": "MYKOLAIV",
+        "label": "Миколаївська область",
+        "count": 40
+      },
+      {
+        "value": "ODESA",
+        "label": "Одеська область",
+        "count": 191
+      },
+      {
+        "value": "POLTAVA",
+        "label": "Полтавська область",
+        "count": 156
+      },
+      {
+        "value": "RIVNE",
+        "label": "Рівненська область",
+        "count": 54
+      },
+      {
+        "value": "SUMY",
+        "label": "Сумська область",
+        "count": 91
+      },
+      {
+        "value": "TERNOPIL",
+        "label": "Тернопільська область",
+        "count": 165
+      },
+      {
+        "value": "KHARKIV",
+        "label": "Харківська область",
+        "count": 265
+      },
+      {
+        "value": "KHERSON",
+        "label": "Херсонська область",
+        "count": 42
+      },
+      {
+        "value": "KHMELNYTSKYI",
+        "label": "Хмельницька область",
+        "count": 109
+      },
+      {
+        "value": "CHERKASY",
+        "label": "Черкаська область",
+        "count": 94
+      },
+      {
+        "value": "CHERNIVTSI",
+        "label": "Чернівецька область",
+        "count": 115
+      },
+      {
+        "value": "CHERNIHIV",
+        "label": "Чернігівська область",
+        "count": 100
+      },
+      {
+        "value": "KYIV_CITY",
+        "label": "Київ",
+        "count": 603
+      },
+      {
+        "value": "SEVASTOPOL_CITY",
+        "label": "Севастополь",
+        "count": 11
+      }
+    ]
+  }
+]

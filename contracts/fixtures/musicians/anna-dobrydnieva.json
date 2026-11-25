@@ -1,0 +1,112 @@
+{
+  "id": "01bf5255b662d788b233fd2c",
+  "slug": "anna-dobrydnieva",
+  "name": "Анна Добриднєва",
+  "kind": "PERSON",
+  "tagline": "українська співачка, авторка пісень, телеведуча, солістка гурту «Пара Нормальних»",
+  "summary": "Ганна Юріївна Добриднєва (нар. 23 грудня 1985(1985-12-23) , Кривий Ріг, Дніпропетровська область ) — українська співачка, авторка пісень, телеведуча, солістка гурту «Пара Нормальних». З 2014 року активно працює над сольним проєктом «Анна Добриднєва».",
+  "description": "Ганна Юріївна Добриднєва (нар. 23 грудня 1985(1985-12-23) , Кривий Ріг, Дніпропетровська область ) — українська співачка, авторка пісень, телеведуча, солістка гурту «Пара Нормальних». З 2014 року активно працює над сольним проєктом «Анна Добриднєва». Пісні та кліпи Анни Добриднєвої активно ротуються на радіо та телебаченні України та країн пострадянського простору. Авторські сингли «Пасьянс» та «Бабочка» стали офіційними саундтреками до популярного серіалу «Молодіжка-2». Авторський сингл «Не відпускай» став офіційним саундтреком до серіалу «Гра у долю».",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Добриднєва Ганна Юріївна",
+    "url": "https://uk.wikipedia.org/wiki/%D0%94%D0%BE%D0%B1%D1%80%D0%B8%D0%B4%D0%BD%D1%94%D0%B2%D0%B0_%D0%93%D0%B0%D0%BD%D0%BD%D0%B0_%D0%AE%D1%80%D1%96%D1%97%D0%B2%D0%BD%D0%B0",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Anna_Dobridneva_2019.jpg/500px-Anna_Dobridneva_2019.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Anna_Dobridneva_2019.jpg/500px-Anna_Dobridneva_2019.jpg",
+      "alt": "Анна Добриднєва",
+      "credit": {
+        "author": "Василий Галушкин",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Anna_Dobridneva_2019.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q157137",
+    "placeName": "Кривий Ріг",
+    "region": "DNIPROPETROVSK",
+    "regionName": "Дніпропетровська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 47.919582602594694,
+    "lon": 33.39042381167562
+  },
+  "dates": {
+    "birth": "1985-12-23",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_01bf5255b662d788b233fd2c_1",
+        "title": "Демоетюд 3",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_01bf5255b662d788b233fd2c_2",
+        "title": "Демоетюд 4",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "http://www.dobrydneva.com/"
+    },
+    {
+      "platform": "INSTAGRAM",
+      "group": "SOCIAL",
+      "url": "https://www.instagram.com/anna_dobrydneva/"
+    },
+    {
+      "platform": "FACEBOOK",
+      "group": "SOCIAL",
+      "url": "https://www.facebook.com/DOBRYDNEVA"
+    },
+    {
+      "platform": "YOUTUBE",
+      "group": "VIDEO",
+      "url": "https://www.youtube.com/channel/UCx6nAjV6COxV5sLNVrGKRiQ"
+    },
+    {
+      "platform": "SPOTIFY",
+      "group": "MUSIC",
+      "url": "https://open.spotify.com/artist/1Iop07bykRPNXMxn4zSSAy"
+    },
+    {
+      "platform": "APPLE_MUSIC",
+      "group": "MUSIC",
+      "url": "https://music.apple.com/artist/938690070"
+    },
+    {
+      "platform": "DEEZER",
+      "group": "MUSIC",
+      "url": "https://www.deezer.com/artist/7032159"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%94%D0%BE%D0%B1%D1%80%D0%B8%D0%B4%D0%BD%D1%94%D0%B2%D0%B0_%D0%93%D0%B0%D0%BD%D0%BD%D0%B0_%D0%AE%D1%80%D1%96%D1%97%D0%B2%D0%BD%D0%B0"
+    }
+  ],
+  "youtubeChannelUrl": "https://www.youtube.com/channel/UCx6nAjV6COxV5sLNVrGKRiQ",
+  "likesCount": 8599,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

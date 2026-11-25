@@ -8,6 +8,12 @@ const CITY_RADIUS_M = { CITY: 3000, TOWN: 1200, VILLAGE: 400, OTHER: 400 };
 
 const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
 
+/** SHA-256 digest of a UTF-8 string (Buffer). */
+export const hash = (value) => createHash('sha256').update(value, 'utf8').digest();
+
+/** Stable 24-hex id for a fixture record, derived from its Wikidata QID (studio fixtures only). */
+export const fixtureId = (qid) => hash('fixture:' + qid).toString('hex').slice(0, 24);
+
 /** Radius in metres: from the area when known, otherwise from the settlement type. */
 export function radiusMeters(type, areaKm2) {
   if (areaKm2 != null) return clamp(0.6 * Math.sqrt(areaKm2 / Math.PI) * 1000, 150, 8000);
@@ -21,7 +27,7 @@ export function radiusMeters(type, areaKm2) {
 export function pinFor(artistId, place, precision) {
   if (precision === 'EXACT') return { lat: place.lat, lon: place.lon };
   const R = radiusMeters(place.type, place.areaKm2);
-  const h = createHash('sha256').update(`${artistId}:${place.placeId}`, 'utf8').digest();
+  const h = hash(`${artistId}:${place.placeId}`);
   const u1 = h.readUInt32BE(0) / TWO_POW_32;
   const u2 = h.readUInt32BE(4) / TWO_POW_32;
   const r = R * Math.sqrt(u1);

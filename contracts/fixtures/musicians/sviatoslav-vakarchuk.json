@@ -1,0 +1,130 @@
+{
+  "id": "d28d3f91ed467a133a6a8ec1",
+  "slug": "sviatoslav-vakarchuk",
+  "name": "Святослав Вакарчук",
+  "kind": "PERSON",
+  "tagline": "український музикант, лідер гурту «Океан Ельзи», громадський діяч, колишній політичний діяч та голова партії «Голос», композитор, автор пісень, лейтенант ЗСУ",
+  "summary": "Святослав Іванович Вакарчук (нар. 14 травня 1975(1975-05-14) , Мукачеве, Закарпатська область ) — український музикант, лідер гурту «Океан Ельзи», громадський діяч, колишній політичний діяч та голова партії «Голос», композитор, автор пісень, лейтенант ЗСУ.",
+  "description": "Святослав Іванович Вакарчук (нар. 14 травня 1975(1975-05-14) , Мукачеве, Закарпатська область ) — український музикант, лідер гурту «Океан Ельзи», громадський діяч, колишній політичний діяч та голова партії «Голос», композитор, автор пісень, лейтенант ЗСУ. Здобув всеукраїнське та міжнародне визнання як музикант, вокаліст, лідер рок-гурту «Океан Ельзи», композитор. Заслужений артист України (2005), кавалер Ордену Свободи, народний депутат України 6-го скликання від партії «Наша Україна» (від 2007 до 2008) і 9-го скл. (2019—2020). Лауреат премії імені Василя Стуса (2014). Почесний громадянин Києва (2015) та Львова (2014). Кандидат фізико-математичних наук (2009). Син колишнього міністра освіти та науки України, фізика та політика Івана Вакарчука.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Вакарчук Святослав Іванович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%92%D0%B0%D0%BA%D0%B0%D1%80%D1%87%D1%83%D0%BA_%D0%A1%D0%B2%D1%8F%D1%82%D0%BE%D1%81%D0%BB%D0%B0%D0%B2_%D0%86%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Svyatoslav_Vakarchuk_July_2016.jpg/500px-Svyatoslav_Vakarchuk_July_2016.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Svyatoslav_Vakarchuk_July_2016.jpg/500px-Svyatoslav_Vakarchuk_July_2016.jpg",
+      "alt": "Святослав Вакарчук",
+      "credit": {
+        "author": "U.S. Embassy Kyiv Ukraine",
+        "license": "Public domain",
+        "licenseUrl": null,
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Svyatoslav_Vakarchuk_July_2016.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q146456",
+    "placeName": "Мукачево",
+    "region": "ZAKARPATTIA",
+    "regionName": "Закарпатська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 48.443661727552964,
+    "lon": 22.72620617616689
+  },
+  "dates": {
+    "birth": "1975-05-14",
+    "death": null,
+    "activeFrom": "1994",
+    "activeTo": null
+  },
+  "genres": [
+    "рок-музика",
+    "артрок",
+    "фольк-рок",
+    "інді-рок",
+    "альтернативний рок"
+  ],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_d28d3f91ed467a133a6a8ec1_1",
+        "title": "Демоетюд 5",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_d28d3f91ed467a133a6a8ec1_2",
+        "title": "Демоетюд 6",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_d28d3f91ed467a133a6a8ec1_3",
+        "title": "Демоетюд 1",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "https://okeanelzy.com/"
+    },
+    {
+      "platform": "INSTAGRAM",
+      "group": "SOCIAL",
+      "url": "https://www.instagram.com/sviatoslav.vakarchuk/"
+    },
+    {
+      "platform": "FACEBOOK",
+      "group": "SOCIAL",
+      "url": "https://www.facebook.com/sviatoslav.vakarchuk"
+    },
+    {
+      "platform": "X",
+      "group": "SOCIAL",
+      "url": "https://x.com/s_vakarchuk"
+    },
+    {
+      "platform": "TELEGRAM",
+      "group": "SOCIAL",
+      "url": "https://t.me/s/sviatoslavvakarchuk"
+    },
+    {
+      "platform": "YOUTUBE",
+      "group": "VIDEO",
+      "url": "https://www.youtube.com/channel/UCrZThgsH2L80kFY_2ritv5w"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/720474"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://esu.com.ua/search_articles.php?id=32916"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%92%D0%B0%D0%BA%D0%B0%D1%80%D1%87%D1%83%D0%BA_%D0%A1%D0%B2%D1%8F%D1%82%D0%BE%D1%81%D0%BB%D0%B0%D0%B2_%D0%86%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": "https://www.youtube.com/channel/UCrZThgsH2L80kFY_2ritv5w",
+  "likesCount": 6337,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

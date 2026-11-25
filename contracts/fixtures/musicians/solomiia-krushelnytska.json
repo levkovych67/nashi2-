@@ -1,0 +1,79 @@
+{
+  "id": "4a6b316d9051d869486304c0",
+  "slug": "solomiia-krushelnytska",
+  "name": "Соломія Крушельницька",
+  "kind": "PERSON",
+  "tagline": "16 листопада 1952, Львів, Українська РСР) — українська оперна співачка, педагогиня",
+  "summary": "Соломія Амвросіївна Крушельницька (23 вересня 1872, Білявинці, Бучацький повіт, Королівство Галичини та Володимирії, Австро-Угорщина, нині Бучацька ОТГ, Чортківський район, Тернопільська область, Україна — 16 листопада 1952, Львів, Українська РСР) — українська оперна співачка, педагогиня.",
+  "description": "Соломія Амвросіївна Крушельницька (23 вересня 1872, Білявинці, Бучацький повіт, Королівство Галичини та Володимирії, Австро-Угорщина, нині Бучацька ОТГ, Чортківський район, Тернопільська область, Україна — 16 листопада 1952, Львів, Українська РСР) — українська оперна співачка, педагогиня. За життя визнавана найвидатнішою співачкою світу. Серед її численних нагород та відзнак, зокрема, звання «Вагнерівська примадонна» XX століття. Співати з Крушельницькою на одній сцені вважали за честь Енріко Карузо, Тітта Руффо, Федір Шаляпін. Італійський композитор Джакомо Пуччіні подарував їй свій портрет з написом «Найвеличнішій і найчарівнішій Баттерфляй — Джакомо Пуччіні. Торре 1904» («Alla più grande e deliziosa Butterfly – Giacomo Puccini. Torre 1904»). У сучасній українській традиції входить до переліку найвідоміших жінок давньої та сучасної України.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Крушельницька Соломія Амвросіївна",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9A%D1%80%D1%83%D1%88%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D1%86%D1%8C%D0%BA%D0%B0_%D0%A1%D0%BE%D0%BB%D0%BE%D0%BC%D1%96%D1%8F_%D0%90%D0%BC%D0%B2%D1%80%D0%BE%D1%81%D1%96%D1%97%D0%B2%D0%BD%D0%B0",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Krushelnytska_5-2.jpg/500px-Krushelnytska_5-2.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Krushelnytska_5-2.jpg/500px-Krushelnytska_5-2.jpg",
+      "alt": "Соломія Крушельницька",
+      "credit": {
+        "author": "Unknown author Unknown author",
+        "license": "Public domain",
+        "licenseUrl": null,
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Krushelnytska_5-2.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q4083385",
+    "placeName": "Білявинці",
+    "region": "TERNOPIL",
+    "regionName": "Тернопільська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.15153144352621,
+    "lon": 25.36789802579003
+  },
+  "dates": {
+    "birth": "1872-09-23",
+    "death": "1952-11-16",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [
+    "опера"
+  ],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "http://www.salomeamuseum.lviv.ua/"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/1233634"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://esu.com.ua/search_articles.php?id=219"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9A%D1%80%D1%83%D1%88%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D1%86%D1%8C%D0%BA%D0%B0_%D0%A1%D0%BE%D0%BB%D0%BE%D0%BC%D1%96%D1%8F_%D0%90%D0%BC%D0%B2%D1%80%D0%BE%D1%81%D1%96%D1%97%D0%B2%D0%BD%D0%B0"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 7403,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

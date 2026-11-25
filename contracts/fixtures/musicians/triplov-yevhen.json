@@ -1,0 +1,62 @@
+{
+  "id": "01756aa151b0ef7e4cd2beff",
+  "slug": "triplov-yevhen",
+  "name": "Тріплов Євген",
+  "kind": "PERSON",
+  "tagline": "Гарбаренко Євген Степанович; нар. 9 червня 1987, Васильків, Україна) — український музичний продюсер, режисер, автор пісень та співак",
+  "summary": "Тріплов Євген (справжнє ім'я — Гарбаренко Євген Степанович; нар. 9 червня 1987, Васильків, Україна) — український музичний продюсер, режисер, автор пісень та співак. Співзасновник і учасник гурту Бамбинтон.",
+  "description": "Тріплов Євген (справжнє ім'я — Гарбаренко Євген Степанович; нар. 9 червня 1987, Васильків, Україна) — український музичний продюсер, режисер, автор пісень та співак. Співзасновник і учасник гурту Бамбинтон.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Тріплов Євген",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A2%D1%80%D1%96%D0%BF%D0%BB%D0%BE%D0%B2_%D0%84%D0%B2%D0%B3%D0%B5%D0%BD",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Triplov_Ukrainian_Producer.png/500px-Triplov_Ukrainian_Producer.png",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Triplov_Ukrainian_Producer.png/500px-Triplov_Ukrainian_Producer.png",
+      "alt": "Тріплов Євген",
+      "credit": {
+        "author": "Владислав Кузніченко",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Triplov_Ukrainian_Producer.png"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q997421",
+    "placeName": "Васильків",
+    "region": "KYIV",
+    "regionName": "Київська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 50.17374884214339,
+    "lon": 30.362815517220508
+  },
+  "dates": {
+    "birth": "1987-06-09",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A2%D1%80%D1%96%D0%BF%D0%BB%D0%BE%D0%B2_%D0%84%D0%B2%D0%B3%D0%B5%D0%BD"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 3573,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "010d509ea0f449bdac027bd2",
+  "slug": "volodymyr-slipak",
+  "name": "Володимир Сліпак",
+  "kind": "PERSON",
+  "tagline": "1 листопада 2019, м. Полтава) — радянський, український композитор та педагог",
+  "summary": "Володимир Олексійович Сліпак (2 червня 1941, м. Свердловськ — 1 листопада 2019, м. Полтава) — радянський, український композитор та педагог.",
+  "description": "Володимир Олексійович Сліпак (2 червня 1941, м. Свердловськ — 1 листопада 2019, м. Полтава) — радянський, український композитор та педагог.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Сліпак Володимир Олексійович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A1%D0%BB%D1%96%D0%BF%D0%B0%D0%BA_%D0%92%D0%BE%D0%BB%D0%BE%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%9E%D0%BB%D0%B5%D0%BA%D1%81%D1%96%D0%B9%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q572366",
+    "placeName": "Довжанськ",
+    "region": "LUHANSK",
+    "regionName": "Луганська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 48.08069269125331,
+    "lon": 39.644320923121946
+  },
+  "dates": {
+    "birth": "1941-06-02",
+    "death": "2019-11-01",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A1%D0%BB%D1%96%D0%BF%D0%B0%D0%BA_%D0%92%D0%BE%D0%BB%D0%BE%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%9E%D0%BB%D0%B5%D0%BA%D1%81%D1%96%D0%B9%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 3101,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

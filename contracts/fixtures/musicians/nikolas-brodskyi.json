@@ -1,0 +1,68 @@
+{
+  "id": "019648d6c047c73790d795ed",
+  "slug": "nikolas-brodskyi",
+  "name": "Ніколас Бродський",
+  "kind": "PERSON",
+  "tagline": "24 грудня 1958(1958-12-24) , Голлівуд, Каліфорнія ) — американський композитор і автор пісень єврейського походження",
+  "summary": "Ніколас Бродський, також відомий як Міклош Бродський (англ. Nicholas Brodszky; угор. Brodszky Miklós 20 квітня 1905(1905-04-20) , Одеса, Херсонська губернія — 24 грудня 1958(1958-12-24) , Голлівуд, Каліфорнія ) — американський композитор і автор пісень єврейського походження.",
+  "description": "Ніколас Бродський, також відомий як Міклош Бродський (англ. Nicholas Brodszky; угор. Brodszky Miklós 20 квітня 1905(1905-04-20) , Одеса, Херсонська губернія — 24 грудня 1958(1958-12-24) , Голлівуд, Каліфорнія ) — американський композитор і автор пісень єврейського походження. Найбільшу популярність здобула його музика до кінофільмів «Петер» (1934), «Рибалка з Нового Орлеана» (1950), «Серенада» (1956) та інших. П'ять разів номінувався на премію «Оскар» у категорії «Найкраща оригінальна пісня до фільму».",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Ніколас Бродський",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9D%D1%96%D0%BA%D0%BE%D0%BB%D0%B0%D1%81_%D0%91%D1%80%D0%BE%D0%B4%D1%81%D1%8C%D0%BA%D0%B8%D0%B9",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q1874",
+    "placeName": "Одеса",
+    "region": "ODESA",
+    "regionName": "Одеська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 46.485648593629854,
+    "lon": 30.73830917025147
+  },
+  "dates": {
+    "birth": "1905-04-20",
+    "death": "1958-12-24",
+    "activeFrom": "1932",
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_019648d6c047c73790d795ed_1",
+        "title": "Демоетюд 5",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "SPOTIFY",
+      "group": "MUSIC",
+      "url": "https://open.spotify.com/artist/3lysq4szqck6pHx8wtsSU9"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/745751"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9D%D1%96%D0%BA%D0%BE%D0%BB%D0%B0%D1%81_%D0%91%D1%80%D0%BE%D0%B4%D1%81%D1%8C%D0%BA%D0%B8%D0%B9"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 873,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "004e0941ba6661eee53a6dc6",
+  "slug": "volodymyr-kudovba",
+  "name": "Володимир Кудовба",
+  "kind": "PERSON",
+  "tagline": "український співак, Заслужений артист України",
+  "summary": "Володимир Юрійович Кудовба (* 31 травня 1976, Перемишляни) — український співак, Заслужений артист України.",
+  "description": "Володимир Юрійович Кудовба (* 31 травня 1976, Перемишляни) — український співак, Заслужений артист України.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Кудовба Володимир Юрійович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9A%D1%83%D0%B4%D0%BE%D0%B2%D0%B1%D0%B0_%D0%92%D0%BE%D0%BB%D0%BE%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%AE%D1%80%D1%96%D0%B9%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q997462",
+    "placeName": "Перемишляни",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.675579179481545,
+    "lon": 24.55852761645816
+  },
+  "dates": {
+    "birth": "1976-05-31",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9A%D1%83%D0%B4%D0%BE%D0%B2%D0%B1%D0%B0_%D0%92%D0%BE%D0%BB%D0%BE%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%AE%D1%80%D1%96%D0%B9%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 8445,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

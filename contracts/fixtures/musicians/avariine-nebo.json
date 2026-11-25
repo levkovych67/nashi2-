@@ -1,0 +1,50 @@
+{
+  "id": "743ea2d221049c3934811172",
+  "slug": "avariine-nebo",
+  "name": "Аварійне Небо",
+  "kind": "BAND",
+  "tagline": "український рок-гурт",
+  "summary": "ANEBO — український рок-гурт",
+  "description": "ANEBO — український рок-гурт",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Anebo",
+    "url": "https://uk.wikipedia.org/wiki/Anebo",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q1899",
+    "placeName": "Київ",
+    "region": "KYIV_CITY",
+    "regionName": "Київ",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 50.45566385145441,
+    "lon": 30.53717982700597
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/Anebo"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 1764,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

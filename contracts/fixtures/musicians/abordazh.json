@@ -1,0 +1,65 @@
+{
+  "id": "bca5f37ef16633aad59deca0",
+  "slug": "abordazh",
+  "name": "Абордаж",
+  "kind": "BAND",
+  "tagline": "павер-метал гурт, заснований у Феодосії в 1992 під назвою «Disaster», в 1997 перейменований на «Абордаж», а у 2004 році переїхав до Санкт-Петербурга",
+  "summary": "«Абордаж» — павер-метал гурт, заснований у Феодосії в 1992 під назвою «Disaster», в 1997 перейменований на «Абордаж», а у 2004 році переїхав до Санкт-Петербурга.",
+  "description": "«Абордаж» — павер-метал гурт, заснований у Феодосії в 1992 під назвою «Disaster», в 1997 перейменований на «Абордаж», а у 2004 році переїхав до Санкт-Петербурга. Склад: Андрій Машошин — вокал, ритм-гітара (Citadel) (1992-) Денис «Боча» Бочкарьов — клавішні (Скрабл) (1999—2004, 2006-, також ударні 2001) Вадим «Wayland» Паршуткін — соло-гітара (Fear of Insomnia) (2005-2006, 2009-) Іван Ширяєв — ударні (2010-) Олексій Стрельцов — бас-гітара (2010-) (Эксергия)",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Абордаж (гурт)",
+    "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B1%D0%BE%D1%80%D0%B4%D0%B0%D0%B6_%28%D0%B3%D1%83%D1%80%D1%82%29",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q158491",
+    "placeName": "Феодосія",
+    "region": "CRIMEA",
+    "regionName": "Автономна Республіка Крим",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 45.05876943461153,
+    "lon": 35.375207741511794
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "http://abordaj.ru/"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/6170235"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.last.fm/music/%D0%90%D0%B1%D0%BE%D1%80%D0%B4%D0%B0%D0%B6"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B1%D0%BE%D1%80%D0%B4%D0%B0%D0%B6_%28%D0%B3%D1%83%D1%80%D1%82%29"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 683,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

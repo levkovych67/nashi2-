@@ -1,0 +1,62 @@
+{
+  "id": "d63e0a485930f5145240705f",
+  "slug": "chotyry-berehy",
+  "name": "Чотири береги",
+  "kind": "BAND",
+  "tagline": null,
+  "summary": "Вигадана заявка для студії «Наші». Інструментальне тріо створює імпровізації для контрабаса, альта і кларнета.",
+  "description": "Вигадана заявка для студії «Наші». Інструментальне тріо створює імпровізації для контрабаса, альта і кларнета.",
+  "textSource": null,
+  "images": [
+    {
+      "url": "/fixtures/img/extra-3.svg",
+      "thumbUrl": "/fixtures/img/extra-3.svg",
+      "alt": "Чотири береги",
+      "credit": null
+    }
+  ],
+  "origin": {
+    "placeId": "Q157725",
+    "placeName": "Чернівці",
+    "region": "CHERNIVTSI",
+    "regionName": "Чернівецька область",
+    "basis": "ORIGIN",
+    "precision": "CITY",
+    "lat": 48.30502289150405,
+    "lon": 25.921593165115883
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [
+    "джаз"
+  ],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_d63e0a485930f5145240705f_1",
+        "title": "Демоетюд 4",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_d63e0a485930f5145240705f_2",
+        "title": "Демоетюд 5",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [],
+  "youtubeChannelUrl": null,
+  "likesCount": 8527,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

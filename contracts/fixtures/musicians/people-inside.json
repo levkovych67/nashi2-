@@ -1,0 +1,50 @@
+{
+  "id": "02d0646faab18316e372c708",
+  "slug": "people-inside",
+  "name": "People Inside",
+  "kind": "BAND",
+  "tagline": "український рок-гурт, утворений у Києві у 2010 році",
+  "summary": "People Inside — український рок-гурт, утворений у Києві у 2010 році. У 2011 гурт випустив дебютний EP «Любов Моя». Основними мовами виконання є українська та російська. Восени 2011 у музиці року виходить дебютний кліп гурту на пісню «Хочу бути з тобою».",
+  "description": "People Inside — український рок-гурт, утворений у Києві у 2010 році. У 2011 гурт випустив дебютний EP «Любов Моя». Основними мовами виконання є українська та російська. Восени 2011 у музиці року виходить дебютний кліп гурту на пісню «Хочу бути з тобою». А у 2012 році вийшов перший сингл «Краски», до якого також було відзнято відео та показане на деяких телеканалах, орієнтованих на рок-музику.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "People Inside",
+    "url": "https://uk.wikipedia.org/wiki/People_Inside",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q1899",
+    "placeName": "Київ",
+    "region": "KYIV_CITY",
+    "regionName": "Київ",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 50.4318569092763,
+    "lon": 30.54880732376376
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/People_Inside"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 9129,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

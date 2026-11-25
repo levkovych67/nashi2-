@@ -1,0 +1,62 @@
+{
+  "id": "8d120ed2c0aa6c49beae0815",
+  "slug": "adam-yezhy-kharasovskyi",
+  "name": "Адам Єжи Харасовський",
+  "kind": "PERSON",
+  "tagline": "польський композитор і диригент, піаніст, знавець творчості Фридерика Шопена, інженер-механік, поліглот",
+  "summary": "Харасовський Адам (народився 16 вересня 1904 року в Делятині, помер 16 червня 1996 року в Ровнгемсі, Англія) — польський композитор і диригент, піаніст, знавець творчості Фридерика Шопена, інженер-механік, поліглот.",
+  "description": "Харасовський Адам (народився 16 вересня 1904 року в Делятині, помер 16 червня 1996 року в Ровнгемсі, Англія) — польський композитор і диригент, піаніст, знавець творчості Фридерика Шопена, інженер-механік, поліглот. З 1939 року проживав у Великій Британії, був технічним офіцером Польських Повітряних Сил, пізніше офіцером та інструктором Королівських Повітряних Сил Великої Британії; керував польськими та британськими хорами та оперними музичними групами, а також займався письменницькою діяльністю, націленим на відвідування англомовної публіки з польською музикою; чоловік видавниці та журналістки Ядвіги Хара.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Адам Єжи Харасовський",
+    "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B4%D0%B0%D0%BC_%D0%84%D0%B6%D0%B8_%D0%A5%D0%B0%D1%80%D0%B0%D1%81%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B8%D0%B9",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Adam_Harasowski_1935.jpg/500px-Adam_Harasowski_1935.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Adam_Harasowski_1935.jpg/500px-Adam_Harasowski_1935.jpg",
+      "alt": "Адам Єжи Харасовський",
+      "credit": {
+        "author": "Unknown author Unknown author",
+        "license": "Public domain",
+        "licenseUrl": null,
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Adam_Harasowski_1935.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q1184359",
+    "placeName": "Делятин",
+    "region": "IVANO_FRANKIVSK",
+    "regionName": "Івано-Франківська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 48.52947315570461,
+    "lon": 24.634928820573723
+  },
+  "dates": {
+    "birth": "1904-09-16",
+    "death": "1996-06-16",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B4%D0%B0%D0%BC_%D0%84%D0%B6%D0%B8_%D0%A5%D0%B0%D1%80%D0%B0%D1%81%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B8%D0%B9"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 8583,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

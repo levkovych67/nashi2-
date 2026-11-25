@@ -1,0 +1,62 @@
+{
+  "id": "a3b98f914db5ecca52a8e90e",
+  "slug": "avraam-firkovych",
+  "name": "Авраам Фіркович",
+  "kind": "PERSON",
+  "tagline": "метеор), 2 вересня 1787, Луцьк — 17 (29) червня 1874, Чуфут-Кале) — караїмський письменник і археолог, збирач древніх рукописів, священнослужитель-газзан",
+  "summary": "Авраам Самуїлович (Самойлович) Фіркович (дав.-євр. אברהם בן שמואל פירכוויץ, псевд.-акронім Эвен Решеф (дав.-євр. אבן רשף — метеор), 2 вересня 1787, Луцьк — 17 (29) червня 1874, Чуфут-Кале) — караїмський письменник і археолог, збирач древніх рукописів, священнослужитель-газзан.",
+  "description": "Авраам Самуїлович (Самойлович) Фіркович (дав.-євр. אברהם בן שמואל פירכוויץ, псевд.-акронім Эвен Решеф (дав.-євр. אבן רשף — метеор), 2 вересня 1787, Луцьк — 17 (29) червня 1874, Чуфут-Кале) — караїмський письменник і археолог, збирач древніх рукописів, священнослужитель-газзан.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Фіркович Авраам Самуїлович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A4%D1%96%D1%80%D0%BA%D0%BE%D0%B2%D0%B8%D1%87_%D0%90%D0%B2%D1%80%D0%B0%D0%B0%D0%BC_%D0%A1%D0%B0%D0%BC%D1%83%D1%97%D0%BB%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Ruman_Firkovichphoto.jpg/500px-Ruman_Firkovichphoto.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Ruman_Firkovichphoto.jpg/500px-Ruman_Firkovichphoto.jpg",
+      "alt": "Авраам Фіркович",
+      "credit": {
+        "author": "National Library of Russia.",
+        "license": "Public domain",
+        "licenseUrl": null,
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ruman_Firkovichphoto.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q7550",
+    "placeName": "Луцьк",
+    "region": "VOLYN",
+    "regionName": "Волинська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 50.73385154047876,
+    "lon": 25.30242025540369
+  },
+  "dates": {
+    "birth": "1787-09-07",
+    "death": "1874-06-08",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A4%D1%96%D1%80%D0%BA%D0%BE%D0%B2%D0%B8%D1%87_%D0%90%D0%B2%D1%80%D0%B0%D0%B0%D0%BC_%D0%A1%D0%B0%D0%BC%D1%83%D1%97%D0%BB%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 449,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

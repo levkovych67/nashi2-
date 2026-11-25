@@ -1,0 +1,95 @@
+{
+  "id": "009b8e7e563fdce2ae4b947a",
+  "slug": "kroda",
+  "name": "Kroda",
+  "kind": "BAND",
+  "tagline": "український паган-фолк і блек-метал гурт, заснований у 2003 році",
+  "summary": "Kroda (укр. Крода) — український паган-фолк і блек-метал гурт, заснований у 2003 році. Тематика текстів — природа, язичництво, історія.",
+  "description": "Kroda (укр. Крода) — український паган-фолк і блек-метал гурт, заснований у 2003 році. Тематика текстів — природа, язичництво, історія.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Kroda",
+    "url": "https://uk.wikipedia.org/wiki/Kroda",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q48256",
+    "placeName": "Дніпро",
+    "region": "DNIPROPETROVSK",
+    "regionName": "Дніпропетровська область",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 48.45286368308421,
+    "lon": 35.073984338575116
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": "2003",
+    "activeTo": null
+  },
+  "genres": [
+    "блек-метал",
+    "Паган-метал"
+  ],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_009b8e7e563fdce2ae4b947a_1",
+        "title": "Демоетюд 3",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_009b8e7e563fdce2ae4b947a_2",
+        "title": "Демоетюд 4",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_009b8e7e563fdce2ae4b947a_3",
+        "title": "Демоетюд 5",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "https://kroda.com.ua/"
+    },
+    {
+      "platform": "BANDCAMP",
+      "group": "MUSIC",
+      "url": "https://kroda.bandcamp.com/"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/810562"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.last.fm/music/Kroda"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/Kroda"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 1299,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

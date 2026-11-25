@@ -1,0 +1,81 @@
+{
+  "id": "ca0b247be392343ace02fb4c",
+  "slug": "abram-holdfaden",
+  "name": "Абрам Гольдфаден",
+  "kind": "PERSON",
+  "tagline": "9 січня 1908, Нью-Йорк) — єврейський поет і драматург",
+  "summary": "|Фото= Абрам Ґольдфаден (Аврахам Ґольденфоден, 24 липня 1840, Старокостянтинів — 9 січня 1908, Нью-Йорк) — єврейський поет і драматург. Існують різні варіанти написання його імені та прізвища, викликані відмінністю між діалектами мови їдиш: Авром, Аврам, Авроні, Аврум та інші. Автор близько 60 п'єс.",
+  "description": "|Фото= Абрам Ґольдфаден (Аврахам Ґольденфоден, 24 липня 1840, Старокостянтинів — 9 січня 1908, Нью-Йорк) — єврейський поет і драматург. Існують різні варіанти написання його імені та прізвища, викликані відмінністю між діалектами мови їдиш: Авром, Аврам, Авроні, Аврум та інші. Автор близько 60 п'єс. У 1876 році Ґольдфаден заснував у Румунії першу у світі професійну театральну трупу, що ставила п'єси на їдиші. Завдяки його зусиллям також була здійснена перша театральна постановка в США на мові іврит.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Абрам Гольдфаден",
+    "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B1%D1%80%D0%B0%D0%BC_%D0%93%D0%BE%D0%BB%D1%8C%D0%B4%D1%84%D0%B0%D0%B4%D0%B5%D0%BD",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Abraham_Goldfaden.png/500px-Abraham_Goldfaden.png",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Abraham_Goldfaden.png/500px-Abraham_Goldfaden.png",
+      "alt": "Абрам Гольдфаден",
+      "credit": {
+        "author": "unbekannt (Ausschnitt Abraham Goldfaden von birkho)",
+        "license": "Public domain",
+        "licenseUrl": null,
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Abraham_Goldfaden.png"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q997429",
+    "placeName": "Старокостянтинів",
+    "region": "KHMELNYTSKYI",
+    "regionName": "Хмельницька область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.76360593906895,
+    "lon": 27.22470534964535
+  },
+  "dates": {
+    "birth": "1840-07-24",
+    "death": "1908-01-09",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [
+    "єврейський театр мовою їдиш"
+  ],
+  "materials": {
+    "clips": [],
+    "works": [
+      {
+        "title": "David at War",
+        "year": null,
+        "type": "OTHER",
+        "url": null
+      }
+    ],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/1554101"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.last.fm/music/Abraham"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B1%D1%80%D0%B0%D0%BC_%D0%93%D0%BE%D0%BB%D1%8C%D0%B4%D1%84%D0%B0%D0%B4%D0%B5%D0%BD"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 8671,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

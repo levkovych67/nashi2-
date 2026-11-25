@@ -1,0 +1,55 @@
+{
+  "id": "017483eb590eb6c10424f345",
+  "slug": "borys-demenko",
+  "name": "Борис Деменко",
+  "kind": "PERSON",
+  "tagline": "4 квітня 2021) — український піаніст, музикознавець, педагог, доктор мистецтвознавства (1997)",
+  "summary": "Борис Вадимович Деменко (20 квітня 1941, Львів — 4 квітня 2021) — український піаніст, музикознавець, педагог, доктор мистецтвознавства (1997). Професор (2000). Член НСКУ (1991). Голова правління Музфонду України (1994—96).",
+  "description": "Борис Вадимович Деменко (20 квітня 1941, Львів — 4 квітня 2021) — український піаніст, музикознавець, педагог, доктор мистецтвознавства (1997). Професор (2000). Член НСКУ (1991). Голова правління Музфонду України (1994—96).",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Деменко Борис Вадимович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%94%D0%B5%D0%BC%D0%B5%D0%BD%D0%BA%D0%BE_%D0%91%D0%BE%D1%80%D0%B8%D1%81_%D0%92%D0%B0%D0%B4%D0%B8%D0%BC%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q36036",
+    "placeName": "Львів",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 49.82758140353187,
+    "lon": 24.047003396561276
+  },
+  "dates": {
+    "birth": "1941-04-20",
+    "death": "2021-04-04",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://esu.com.ua/search_articles.php?id=21398"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%94%D0%B5%D0%BC%D0%B5%D0%BD%D0%BA%D0%BE_%D0%91%D0%BE%D1%80%D0%B8%D1%81_%D0%92%D0%B0%D0%B4%D0%B8%D0%BC%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 7579,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

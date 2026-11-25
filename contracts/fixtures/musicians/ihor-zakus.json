@@ -1,0 +1,97 @@
+{
+  "id": "0020093dc8080b4a9cf48a5d",
+  "slug": "ihor-zakus",
+  "name": "Ігор Закус",
+  "kind": "PERSON",
+  "tagline": "український бас-гітарист, музикант, композитор, викладач",
+  "summary": "Ігор Миронович Закус (нар. 6 березня 1966, Червоноград) — український бас-гітарист, музикант, композитор, викладач. Заслужений артист України. Народився і виріс в місті Червонограді, Львівської області. Закінчив Львівське музичне училище та Львівську музичну академію по класу гобоя.",
+  "description": "Ігор Миронович Закус (нар. 6 березня 1966, Червоноград) — український бас-гітарист, музикант, композитор, викладач. Заслужений артист України. Народився і виріс в місті Червонограді, Львівської області. Закінчив Львівське музичне училище та Львівську музичну академію по класу гобоя. Паралельно займався бас-гітарою, і сьогодні відомий саме як бас-гітарист. Стилі, в яких працює Ігор — jazz, funk, fusion, рор. Ігор заснував свою першу групу Fest ще тоді, коли жив у Львові. Ця група випустила лише один альбом: («У колі друзів») в 1999 році. Кожен з наступних двох альбомів Закуса («Посвяти», 2003 і «Тут був Закус», 2006) виявився своєрідним проривом у плані майстерності, кращого запису та нових мелодій, які визначали власний стиль Ігоря. Ігор Закус співпрацював з Оксаною Білозір, Таїсією Повалій, Іриною Білик, гуртом ВІА Гра. У лютому 2007 року Закус став художнім керівником і співзасновником успішного проєкту JazzKolo. JazzKolo відомий за кількістю живих концертів, компакт-дисків і DVD-дисків. «Джаз-Коло» — це проєкт, створений для підтримки українського джазу, спрямований на об'єднання музикантів та розвиток української імпровізаційної музики. До проєкту запрошуються найкращі сили музичної еліти країни, утворюється новий, несподіваний, цікавий музичний продукт, який фіксується на аудіо та відео та складає архів вітчизняної джазової музики. 29.02.2008 р.…",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Закус Ігор Миронович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%97%D0%B0%D0%BA%D1%83%D1%81_%D0%86%D0%B3%D0%BE%D1%80_%D0%9C%D0%B8%D1%80%D0%BE%D0%BD%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q156825",
+    "placeName": "Шептицький",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 50.387592005442265,
+    "lon": 24.240265257278747
+  },
+  "dates": {
+    "birth": "1966-03-06",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [
+    "джаз"
+  ],
+  "materials": {
+    "clips": [
+      {
+        "clipId": "c_0020093dc8080b4a9cf48a5d_1",
+        "title": "Демоетюд 2",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      },
+      {
+        "clipId": "c_0020093dc8080b4a9cf48a5d_2",
+        "title": "Демоетюд 3",
+        "source": "UPLOAD",
+        "durationSec": 15,
+        "externalUrl": null
+      }
+    ],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WEBSITE",
+      "group": "REFERENCE",
+      "url": "http://igorzakus.com.ua/"
+    },
+    {
+      "platform": "FACEBOOK",
+      "group": "SOCIAL",
+      "url": "https://www.facebook.com/igorzakus"
+    },
+    {
+      "platform": "YOUTUBE",
+      "group": "VIDEO",
+      "url": "https://www.youtube.com/channel/UC5jTGtwB3c5MR2roWBmiTnA"
+    },
+    {
+      "platform": "SOUNDCLOUD",
+      "group": "MUSIC",
+      "url": "https://soundcloud.com/2rudwidzispk"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/2520968"
+    },
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.last.fm/music/%D0%86%D0%B3%D0%BE%D1%80+%D0%97%D0%B0%D0%BA%D1%83%D1%81"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%97%D0%B0%D0%BA%D1%83%D1%81_%D0%86%D0%B3%D0%BE%D1%80_%D0%9C%D0%B8%D1%80%D0%BE%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": "https://www.youtube.com/channel/UC5jTGtwB3c5MR2roWBmiTnA",
+  "likesCount": 5643,
+  "hasAudio": true,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

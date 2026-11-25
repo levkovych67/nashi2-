@@ -1,0 +1,55 @@
+{
+  "id": "038751700d05a20b1e9faffd",
+  "slug": "formula-vody",
+  "name": "Формула води",
+  "kind": "BAND",
+  "tagline": "український синті-поп гурт",
+  "summary": "Формула води — український синті-поп гурт.",
+  "description": "Формула води — український синті-поп гурт.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Формула води (гурт)",
+    "url": "https://uk.wikipedia.org/wiki/%D0%A4%D0%BE%D1%80%D0%BC%D1%83%D0%BB%D0%B0_%D0%B2%D0%BE%D0%B4%D0%B8_%28%D0%B3%D1%83%D1%80%D1%82%29",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q36036",
+    "placeName": "Львів",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 49.86054504497454,
+    "lon": 24.006714987694938
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/1463162"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%A4%D0%BE%D1%80%D0%BC%D1%83%D0%BB%D0%B0_%D0%B2%D0%BE%D0%B4%D0%B8_%28%D0%B3%D1%83%D1%80%D1%82%29"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 6455,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

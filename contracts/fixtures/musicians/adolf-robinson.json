@@ -1,0 +1,62 @@
+{
+  "id": "bd501710a845753d16fa2623",
+  "slug": "adolf-robinson",
+  "name": "Адольф Робінсон",
+  "kind": "PERSON",
+  "tagline": "25 серпня 1920, Відень) — австрійський баритон, який мав велику оперну кар'єру протягом другої половини XIX століття",
+  "summary": "Адольф Робінсон (нім. Adolf Robinson; 8 липня 1838, Станіслав — 25 серпня 1920, Відень) — австрійський баритон, який мав велику оперну кар'єру протягом другої половини XIX століття.",
+  "description": "Адольф Робінсон (нім. Adolf Robinson; 8 липня 1838, Станіслав — 25 серпня 1920, Відень) — австрійський баритон, який мав велику оперну кар'єру протягом другої половини XIX століття. Його великий сценічний репертуар містив численні вагнерівські ролі, такі як Вотан у циклі «Перстень Нібелунга» та Ганс Сакс у «Нюрнберзьких мейстерзінгерах». Інші основні здобутки його кар'єри включали провідні ролі у «Вільгельмі Теллі» Россіні, «Дон Жуані» Моцарта, «Ріголетто» Верді, «Зампі» Герольда та «Der Templer und die Jüdin» Маршнера. Робінсон навчався у Прока і Леві у Відні і здобув освіту в знаменитій школі співу Франческо Ламперті в Мілані. У 1857 році він дебютував в Театрі Оломоуця у ролі Карло у «Ернані» Верді. З 1862 року він співав у Граці в Берлінській опері. Він також був задіяний в Німецькому театрі в Празі, в Оперному театрі в Гамбурзі, в міському театрі Вроцлава і в муніципальному театрі Бремена. В той же час він залишив роботу після тривалих виступах в оперних театрах німецькомовного світу. Чотири рази він подорожував до Північної Америки, де в 1884—89 з великим успіхом виступав на нью-йоркській «Метрополітен-опері». Там він співав у 1887 році на прем'єрі опери Віктора Несслера «Der Trompeter von Säkkingen». 25 січня 1888 він зіграв роль Гунтера в американській прем'єрі «Загибелі богів» Вагнера. Він також з'явився у ролі Курвенала в нью-йоркській прем'єрі «Трістана та Ізольди» в 1886 році.…",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Адольф Робінсон",
+    "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B4%D0%BE%D0%BB%D1%8C%D1%84_%D0%A0%D0%BE%D0%B1%D1%96%D0%BD%D1%81%D0%BE%D0%BD",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Adolf_Robinson_1893_Vilimek.jpg/500px-Adolf_Robinson_1893_Vilimek.jpg",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Adolf_Robinson_1893_Vilimek.jpg/500px-Adolf_Robinson_1893_Vilimek.jpg",
+      "alt": "Адольф Робінсон",
+      "credit": {
+        "author": "Jan Vilímek",
+        "license": "Public domain",
+        "licenseUrl": null,
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Adolf_Robinson_1893_Vilimek.jpg"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q156726",
+    "placeName": "Івано-Франківськ",
+    "region": "IVANO_FRANKIVSK",
+    "regionName": "Івано-Франківська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 48.91372149969113,
+    "lon": 24.675573792157472
+  },
+  "dates": {
+    "birth": "1838-07-08",
+    "death": "1920-08-25",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%B4%D0%BE%D0%BB%D1%8C%D1%84_%D0%A0%D0%BE%D0%B1%D1%96%D0%BD%D1%81%D0%BE%D0%BD"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 9508,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

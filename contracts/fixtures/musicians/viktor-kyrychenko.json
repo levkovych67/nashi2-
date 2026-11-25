@@ -1,0 +1,55 @@
+{
+  "id": "01e1e730c68d6823c763a6f6",
+  "slug": "viktor-kyrychenko",
+  "name": "Віктор Кириченко",
+  "kind": "PERSON",
+  "tagline": "український поет, прозаїк, автор текстів пісень, композитор",
+  "summary": "Кириченко Віктор Олексійович — український поет, прозаїк, автор текстів пісень, композитор.",
+  "description": "Кириченко Віктор Олексійович — український поет, прозаїк, автор текстів пісень, композитор.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Кириченко Віктор Олексійович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9A%D0%B8%D1%80%D0%B8%D1%87%D0%B5%D0%BD%D0%BA%D0%BE_%D0%92%D1%96%D0%BA%D1%82%D0%BE%D1%80_%D0%9E%D0%BB%D0%B5%D0%BA%D1%81%D1%96%D0%B9%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q2012050",
+    "placeName": "Донецька область",
+    "region": "DONETSK",
+    "regionName": "Донецька область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 48.14282934229872,
+    "lon": 37.747880627233194
+  },
+  "dates": {
+    "birth": "1941-07-02",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://esu.com.ua/search_articles.php?id=6396"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9A%D0%B8%D1%80%D0%B8%D1%87%D0%B5%D0%BD%D0%BA%D0%BE_%D0%92%D1%96%D0%BA%D1%82%D0%BE%D1%80_%D0%9E%D0%BB%D0%B5%D0%BA%D1%81%D1%96%D0%B9%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 1523,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

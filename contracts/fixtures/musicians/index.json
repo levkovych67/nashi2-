@@ -1,0 +1,218 @@
+{
+  "items": [
+    {
+      "id": "9f77083e3af09c0016796c3a",
+      "slug": "oneiroid",
+      "name": "«Онейроїд»",
+      "kind": "BAND",
+      "hasAudio": true,
+      "placeName": "Полтава",
+      "region": "POLTAVA",
+      "likesCount": 4906
+    },
+    {
+      "id": "3d981e58a395ef61b9245e90",
+      "slug": "5-vymir",
+      "name": "5 Vymir",
+      "kind": "BAND",
+      "hasAudio": true,
+      "placeName": "Київ",
+      "region": "KYIV_CITY",
+      "likesCount": 4272
+    },
+    {
+      "id": "0d9b7c6c78f2e3b8f0f60ac2",
+      "slug": "5nizza",
+      "name": "5'nizza",
+      "kind": "BAND",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/5%27nizza_Reunion_2015-06-05_5647.jpg/500px-5%27nizza_Reunion_2015-06-05_5647.jpg",
+      "hasAudio": false,
+      "placeName": "Харків",
+      "region": "KHARKIV",
+      "likesCount": 7684
+    },
+    {
+      "id": "96f07d3081fcf23ef931c3de",
+      "slug": "999",
+      "name": "999",
+      "kind": "BAND",
+      "hasAudio": false,
+      "placeName": "Львів",
+      "region": "LVIV",
+      "likesCount": 6309
+    },
+    {
+      "id": "3cbc2859d549e7a5604feb01",
+      "slug": "abzdolts",
+      "name": "Абздольц",
+      "kind": "BAND",
+      "hasAudio": false,
+      "placeName": "Київ",
+      "region": "KYIV_CITY",
+      "likesCount": 4740
+    },
+    {
+      "id": "bca5f37ef16633aad59deca0",
+      "slug": "abordazh",
+      "name": "Абордаж",
+      "kind": "BAND",
+      "hasAudio": false,
+      "placeName": "Феодосія",
+      "region": "CRIMEA",
+      "likesCount": 683
+    },
+    {
+      "id": "ca0b247be392343ace02fb4c",
+      "slug": "abram-holdfaden",
+      "name": "Абрам Гольдфаден",
+      "kind": "PERSON",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Abraham_Goldfaden.png/500px-Abraham_Goldfaden.png",
+      "hasAudio": false,
+      "placeName": "Старокостянтинів",
+      "region": "KHMELNYTSKYI",
+      "likesCount": 8671
+    },
+    {
+      "id": "f5a034ebd7d09cfba148f585",
+      "slug": "abram-lufer",
+      "name": "Абрам Луфер",
+      "kind": "PERSON",
+      "hasAudio": false,
+      "placeName": "Київ",
+      "region": "KYIV_CITY",
+      "likesCount": 4719
+    },
+    {
+      "id": "3ad29a55de3b0c48b26cb147",
+      "slug": "abu-kasymovi-kaptsi",
+      "name": "Абу-Касимові Капці",
+      "kind": "BAND",
+      "hasAudio": false,
+      "placeName": "Львів",
+      "region": "LVIV",
+      "likesCount": 1784
+    },
+    {
+      "id": "743ea2d221049c3934811172",
+      "slug": "avariine-nebo",
+      "name": "Аварійне Небо",
+      "kind": "BAND",
+      "hasAudio": false,
+      "placeName": "Київ",
+      "region": "KYIV_CITY",
+      "likesCount": 1764
+    },
+    {
+      "id": "c13ae200035358e1a0b1a5c8",
+      "slug": "aviator",
+      "name": "Авіатор",
+      "kind": "BAND",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/%D0%90%D0%B2%D1%96%D0%B0%D1%82%D0%BE%D1%80_-_%D1%84%D0%BE%D1%82%D0%BE.JPG/500px-%D0%90%D0%B2%D1%96%D0%B0%D1%82%D0%BE%D1%80_-_%D1%84%D0%BE%D1%82%D0%BE.JPG",
+      "hasAudio": true,
+      "placeName": "Київ",
+      "region": "KYIV_CITY",
+      "likesCount": 6327
+    },
+    {
+      "id": "7eab3a960bb1ad72ed96c9e2",
+      "slug": "avraam-kefeli",
+      "name": "Авраам Кефелі",
+      "kind": "PERSON",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Abraham_Kefeli.png/500px-Abraham_Kefeli.png",
+      "hasAudio": true,
+      "placeName": "Сімферополь",
+      "region": "CRIMEA",
+      "likesCount": 2064
+    },
+    {
+      "id": "a3b98f914db5ecca52a8e90e",
+      "slug": "avraam-firkovych",
+      "name": "Авраам Фіркович",
+      "kind": "PERSON",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Ruman_Firkovichphoto.jpg/500px-Ruman_Firkovichphoto.jpg",
+      "hasAudio": false,
+      "placeName": "Луцьк",
+      "region": "VOLYN",
+      "likesCount": 449
+    },
+    {
+      "id": "f803c6011b89e21d4083db7a",
+      "slug": "avram-hrebin",
+      "name": "Аврам Гребінь",
+      "kind": "PERSON",
+      "hasAudio": false,
+      "placeName": "Березна",
+      "region": "CHERNIHIV",
+      "likesCount": 3170
+    },
+    {
+      "id": "b5045d8d6f958a8c7a35c228",
+      "slug": "avreliia-tsetsyliia-dobrovolska",
+      "name": "Аврелія-Цецилія Добровольська",
+      "kind": "PERSON",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/Dobrovol%27skaya_Avreliya_03.jpg/500px-Dobrovol%27skaya_Avreliya_03.jpg",
+      "hasAudio": false,
+      "placeName": "Біла Церква",
+      "region": "KYIV",
+      "likesCount": 8319
+    },
+    {
+      "id": "8d120ed2c0aa6c49beae0815",
+      "slug": "adam-yezhy-kharasovskyi",
+      "name": "Адам Єжи Харасовський",
+      "kind": "PERSON",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Adam_Harasowski_1935.jpg/500px-Adam_Harasowski_1935.jpg",
+      "hasAudio": false,
+      "placeName": "Делятин",
+      "region": "IVANO_FRANKIVSK",
+      "likesCount": 8583
+    },
+    {
+      "id": "0ad9936f8196255e672fc912",
+      "slug": "adam-soltys",
+      "name": "Адам Солтис",
+      "kind": "PERSON",
+      "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/7/73/Adam_So%C5%82tys_%28-1936%29.JPG",
+      "hasAudio": false,
+      "placeName": "Львів",
+      "region": "LVIV",
+      "likesCount": 6548
+    },
+    {
+      "id": "659af17c6f85ac878c83297e",
+      "slug": "adolf-barzhanskyi",
+      "name": "Адольф Баржанський",
+      "kind": "PERSON",
+      "hasAudio": false,
+      "placeName": "Одеса",
+      "region": "ODESA",
+      "likesCount": 5341
+    },
+    {
+      "id": "9c29282f107a38a5d233610e",
+      "slug": "adolf-leshchynskyi",
+      "name": "Адольф Лещинський",
+      "kind": "PERSON",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/%D0%90.%D0%90.%D0%9B%D0%B5%D1%89%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9.jpg/500px-%D0%90.%D0%90.%D0%9B%D0%B5%D1%89%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9.jpg",
+      "hasAudio": false,
+      "placeName": "Чернівці",
+      "region": "CHERNIVTSI",
+      "likesCount": 9220
+    },
+    {
+      "id": "bd501710a845753d16fa2623",
+      "slug": "adolf-robinson",
+      "name": "Адольф Робінсон",
+      "kind": "PERSON",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Adolf_Robinson_1893_Vilimek.jpg/500px-Adolf_Robinson_1893_Vilimek.jpg",
+      "hasAudio": false,
+      "placeName": "Івано-Франківськ",
+      "region": "IVANO_FRANKIVSK",
+      "likesCount": 9508
+    }
+  ],
+  "page": 0,
+  "size": 20,
+  "totalItems": 3661,
+  "totalPages": 184
+}

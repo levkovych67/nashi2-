@@ -1,0 +1,47 @@
+{
+  "id": "a479df38a9cf625030321249",
+  "slug": "tykha-liniia",
+  "name": "Тиха лінія",
+  "kind": "PERSON",
+  "tagline": null,
+  "summary": "Вигадана заявка для студії «Наші». Сольний проєкт досліджує польові записи та повільні фортепіанні композиції.",
+  "description": "Вигадана заявка для студії «Наші». Сольний проєкт досліджує польові записи та повільні фортепіанні композиції.",
+  "textSource": null,
+  "images": [
+    {
+      "url": "/fixtures/img/extra-2.svg",
+      "thumbUrl": "/fixtures/img/extra-2.svg",
+      "alt": "Тиха лінія",
+      "credit": null
+    }
+  ],
+  "origin": {
+    "placeId": "Q158292",
+    "placeName": "Кропивницький",
+    "region": "KIROVOHRAD",
+    "regionName": "Кіровоградська область",
+    "basis": "ORIGIN",
+    "precision": "CITY",
+    "lat": 48.489507286457766,
+    "lon": 32.284230811288346
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [
+    "ембієнт"
+  ],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [],
+  "youtubeChannelUrl": null,
+  "likesCount": 6110,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

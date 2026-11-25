@@ -1,0 +1,55 @@
+{
+  "id": "01d8230e560c703842e1a36f",
+  "slug": "opalnyi-prynts",
+  "name": "Опальний Принц",
+  "kind": "BAND",
+  "tagline": "український музичний гурт з міста Львова",
+  "summary": "Опальний Принц (Opalni Prinz) — український музичний гурт з міста Львова.",
+  "description": "Опальний Принц (Opalni Prinz) — український музичний гурт з міста Львова.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Опальний принц",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9E%D0%BF%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%B9_%D0%BF%D1%80%D0%B8%D0%BD%D1%86",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q36036",
+    "placeName": "Львів",
+    "region": "LVIV",
+    "regionName": "Львівська область",
+    "basis": "FORMATION",
+    "precision": "SETTLEMENT",
+    "lat": 49.848556907869494,
+    "lon": 24.011044168299605
+  },
+  "dates": {
+    "birth": null,
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/3137306"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9E%D0%BF%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%B9_%D0%BF%D1%80%D0%B8%D0%BD%D1%86"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 3868,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

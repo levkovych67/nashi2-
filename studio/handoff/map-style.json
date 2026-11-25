@@ -1,0 +1,185 @@
+{
+  "version": 8,
+  "name": "light-minimal",
+  "glyphs": "{{GLYPHS_URL}}",
+  "sources": {
+    "regions": {
+      "type": "geojson",
+      "data": "/geo/regions.geojson"
+    },
+    "outline": {
+      "type": "geojson",
+      "data": "/geo/ukraine-outline.geojson"
+    },
+    "openmaptiles": {
+      "type": "vector",
+      "url": "{{TILES_URL}}",
+      "attribution": "© OpenStreetMap · OpenMapTiles · OpenFreeMap"
+    }
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "#f4f7f5"
+      }
+    },
+    {
+      "id": "territory",
+      "type": "fill",
+      "source": "regions",
+      "paint": {
+        "fill-color": "#e6ebdf"
+      }
+    },
+    {
+      "id": "parks",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "landcover",
+      "paint": {
+        "fill-color": "#d4e3d3",
+        "fill-opacity": 0.65
+      }
+    },
+    {
+      "id": "water",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "water",
+      "paint": {
+        "fill-color": "#c9dfea"
+      }
+    },
+    {
+      "id": "rivers",
+      "type": "line",
+      "minzoom": 6,
+      "source": "openmaptiles",
+      "source-layer": "waterway",
+      "paint": {
+        "line-color": "#c9dfea",
+        "line-width": 1.4
+      }
+    },
+    {
+      "id": "roads",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "minzoom": 8,
+      "filter": [
+        "any",
+        [
+          ">=",
+          [
+            "zoom"
+          ],
+          11
+        ],
+        [
+          "in",
+          [
+            "get",
+            "class"
+          ],
+          [
+            "literal",
+            [
+              "motorway",
+              "trunk",
+              "primary"
+            ]
+          ]
+        ]
+      ],
+      "paint": {
+        "line-color": "#bdc1b7",
+        "line-width": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          5,
+          0.5,
+          12,
+          1.6,
+          17,
+          5
+        ]
+      }
+    },
+    {
+      "id": "place-names",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "minzoom": 7,
+      "layout": {
+        "text-field": [
+          "coalesce",
+          [
+            "get",
+            "name:uk"
+          ],
+          [
+            "get",
+            "name"
+          ]
+        ],
+        "text-font": [
+          "Noto Sans Regular"
+        ],
+        "text-size": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          5,
+          10,
+          12,
+          14
+        ]
+      },
+      "paint": {
+        "text-color": "#3c5a5e",
+        "text-halo-color": "#e6ebdf",
+        "text-halo-width": 1.4
+      }
+    },
+    {
+      "id": "region-color",
+      "type": "fill",
+      "source": "regions",
+      "paint": {
+        "fill-color": "#254578",
+        "fill-opacity": 0
+      }
+    },
+    {
+      "id": "region-line",
+      "type": "line",
+      "source": "regions",
+      "paint": {
+        "line-color": "#8a9f93",
+        "line-width": 1
+      }
+    },
+    {
+      "id": "ua-outline-line",
+      "type": "line",
+      "source": "outline",
+      "paint": {
+        "line-color": "#355b69",
+        "line-width": 1.8
+      }
+    }
+  ]
+}

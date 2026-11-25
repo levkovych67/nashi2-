@@ -1,0 +1,50 @@
+{
+  "id": "0086f9e5c98eeec34c25f117",
+  "slug": "olena-hrozovska",
+  "name": "Олена Грозовська",
+  "kind": "PERSON",
+  "tagline": "українська художниця, ілюстраторка книг, мистецтвознавиця, кураторка мистецьких проектів, співачка",
+  "summary": "Олена Грозовська (нар. 1973 р. Київ, УРСР) — українська художниця, ілюстраторка книг, мистецтвознавиця, кураторка мистецьких проектів, співачка. Засновниця та солістка етноджазових гуртів «Сонцекльош» (2005—2012) та «GrozovSka band» (з 2012). Засновниця журналу «Антиквар»[джерело?].",
+  "description": "Олена Грозовська (нар. 1973 р. Київ, УРСР) — українська художниця, ілюстраторка книг, мистецтвознавиця, кураторка мистецьких проектів, співачка. Засновниця та солістка етноджазових гуртів «Сонцекльош» (2005—2012) та «GrozovSka band» (з 2012). Засновниця журналу «Антиквар»[джерело?]. Лауреат Шевченківської премії України у номінації «Творче кураторство культурно-мистецьких проєктів».",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Грозовська Олена Олегівна",
+    "url": "https://uk.wikipedia.org/wiki/%D0%93%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B0_%D0%9E%D0%BB%D0%B5%D0%BD%D0%B0_%D0%9E%D0%BB%D0%B5%D0%B3%D1%96%D0%B2%D0%BD%D0%B0",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [],
+  "origin": {
+    "placeId": "Q1899",
+    "placeName": "Київ",
+    "region": "KYIV_CITY",
+    "regionName": "Київ",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 50.44406223198765,
+    "lon": 30.520492711981525
+  },
+  "dates": {
+    "birth": "1973-05-12",
+    "death": null,
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%93%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B0_%D0%9E%D0%BB%D0%B5%D0%BD%D0%B0_%D0%9E%D0%BB%D0%B5%D0%B3%D1%96%D0%B2%D0%BD%D0%B0"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 1572,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}

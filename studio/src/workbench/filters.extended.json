@@ -1,0 +1,19 @@
+[
+  {
+    "key": "kind",
+    "label": "Тип",
+    "type": "SINGLE_SELECT",
+    "options": [
+      { "value": "PERSON", "label": "Музикант" },
+      { "value": "BAND", "label": "Гурт" }
+    ]
+  },
+  { "key": "hasAudio", "label": "Є аудіофрагмент", "type": "BOOLEAN" },
+  {
+    "key": "period",
+    "label": "Рік народження або заснування",
+    "type": "RANGE",
+    "min": 1,
+    "max": 9999
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "clipId": "c_59a38f3aed44ead13bd9be1f_1",
+  "title": "Демоетюд 1",
+  "source": "UPLOAD",
+  "durationSec": 15,
+  "externalUrl": null,
+  "url": "/fixtures/audio/clip-01.wav",
+  "startSec": 0,
+  "fadeInMs": 300,
+  "fadeOutMs": 600,
+  "attribution": "Синтетичний демонстраційний звук студії «Наші»",
+  "expiresAt": null
+}

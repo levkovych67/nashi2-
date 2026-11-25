@@ -1,0 +1,67 @@
+{
+  "id": "01b8b02ed5fa872f52996a59",
+  "slug": "oleksandr-kozarenko",
+  "name": "Олександр Козаренко",
+  "kind": "PERSON",
+  "tagline": "21 березня 2023, Івано-Франківськ) — український композитор, піаніст, музикознавець",
+  "summary": "Олександр Володимирович Козаренко (24 серпня 1963, Коломия — 21 березня 2023, Івано-Франківськ) — український композитор, піаніст, музикознавець.",
+  "description": "Олександр Володимирович Козаренко (24 серпня 1963, Коломия — 21 березня 2023, Івано-Франківськ) — український композитор, піаніст, музикознавець.",
+  "textSource": {
+    "type": "WIKIPEDIA",
+    "title": "Козаренко Олександр Володимирович",
+    "url": "https://uk.wikipedia.org/wiki/%D0%9A%D0%BE%D0%B7%D0%B0%D1%80%D0%B5%D0%BD%D0%BA%D0%BE_%D0%9E%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%92%D0%BE%D0%BB%D0%BE%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B8%D1%87",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.uk"
+  },
+  "images": [
+    {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Oleksandr_Kozarenko_in_Krushelnytska_museum_02.JPG/500px-Oleksandr_Kozarenko_in_Krushelnytska_museum_02.JPG",
+      "thumbUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Oleksandr_Kozarenko_in_Krushelnytska_museum_02.JPG/500px-Oleksandr_Kozarenko_in_Krushelnytska_museum_02.JPG",
+      "alt": "Олександр Козаренко",
+      "credit": {
+        "author": "Юрій Булка",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Oleksandr_Kozarenko_in_Krushelnytska_museum_02.JPG"
+      }
+    }
+  ],
+  "origin": {
+    "placeId": "Q52193",
+    "placeName": "Коломия",
+    "region": "IVANO_FRANKIVSK",
+    "regionName": "Івано-Франківська область",
+    "basis": "BIRTH",
+    "precision": "SETTLEMENT",
+    "lat": 48.53299997325615,
+    "lon": 25.05340939045392
+  },
+  "dates": {
+    "birth": "1963-08-24",
+    "death": "2023-03-21",
+    "activeFrom": null,
+    "activeTo": null
+  },
+  "genres": [],
+  "materials": {
+    "clips": [],
+    "works": [],
+    "videos": []
+  },
+  "links": [
+    {
+      "platform": "OTHER",
+      "group": "SOCIAL",
+      "url": "https://www.discogs.com/artist/7718202"
+    },
+    {
+      "platform": "WIKIPEDIA",
+      "group": "REFERENCE",
+      "url": "https://uk.wikipedia.org/wiki/%D0%9A%D0%BE%D0%B7%D0%B0%D1%80%D0%B5%D0%BD%D0%BA%D0%BE_%D0%9E%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%92%D0%BE%D0%BB%D0%BE%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+    }
+  ],
+  "youtubeChannelUrl": null,
+  "likesCount": 1543,
+  "hasAudio": false,
+  "updatedAt": "2026-11-08T18:35:57Z"
+}
