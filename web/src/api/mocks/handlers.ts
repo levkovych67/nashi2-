@@ -57,6 +57,8 @@ function problem(status: number, code: string, title: string) {
   )
 }
 
+const aborted = new Set<string>()
+
 const url = (path: string) => `${API_BASE}${path}`
 
 export const handlers = [
@@ -132,7 +134,27 @@ export const handlers = [
     return HttpResponse.json(hits.slice(0, limit))
   }),
 
-  http.post(url('/submissions'), async () => {
+  // Magic markers in the musician's name drive the e2e: `[msw:400]` answers a 400 with a field error on `summary`,
+  // `[msw:abort]` drops the first request of that name (network failure) and accepts the retry.
+  http.post(url('/submissions'), async ({ request }) => {
+    const form = await request.formData()
+    const data = JSON.parse(await (form.get('data') as Blob).text()) as { name: string }
+    if (data.name.includes('[msw:400]')) {
+      return HttpResponse.json(
+        {
+          type: 'https://nashi.example/problems/validation_failed',
+          title: 'Некоректні дані',
+          status: 400,
+          code: 'VALIDATION_FAILED',
+          errors: [{ field: 'summary', message: 'Опис не пройшов перевірку редакції' }],
+        },
+        { status: 400, headers: { 'Content-Type': 'application/problem+json' } },
+      )
+    }
+    if (data.name.includes('[msw:abort]') && !aborted.has(data.name)) {
+      aborted.add(data.name)
+      return HttpResponse.error()
+    }
     await delay(1500)
     return HttpResponse.json({ id: 'mock-submission', status: 'PENDING' }, { status: 202 })
   }),
