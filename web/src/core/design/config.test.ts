@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { loadDesignConfig } from './config'
+import { loadDesignConfig, withDecisionOverrides } from './config'
 
 afterEach(() => vi.restoreAllMocks())
 
@@ -35,5 +35,20 @@ describe('design config', () => {
     expect(c.variant('map.pin')).toBe('AVATAR_RING')
     expect(c.variant('map.pin')).toBe('AVATAR_RING')
     expect(warn).toHaveBeenCalledTimes(1)
+  })
+
+  it('withDecisionOverrides puts test decisions over the handoff ones and leaves the file alone', () => {
+    const file = {
+      schemaVersion: 1,
+      decisions: {
+        'map.aggregation': { variant: 'CHOROPLETH_PLACE_PIN', status: 'PROPOSED' as const },
+        'map.pin': { variant: 'AVATAR_RING', status: 'PROPOSED' as const },
+      },
+    }
+    const merged = withDecisionOverrides(file, { 'map.aggregation': { variant: 'CHOROPLETH_PLACE_PIN', status: 'APPROVED' } })
+    expect(loadDesignConfig(merged).variant('map.aggregation')).toBe('CHOROPLETH_PLACE_PIN')
+    expect(merged.decisions['map.pin']).toEqual(file.decisions['map.pin'])
+    expect(file.decisions['map.aggregation'].status).toBe('PROPOSED')
+    expect(withDecisionOverrides(file, undefined)).toBe(file)
   })
 })

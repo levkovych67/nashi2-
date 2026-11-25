@@ -6,6 +6,8 @@ import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-rou
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { server } from '../../api/mocks/node'
 import type { components } from '../../api/types.gen'
+import { DesignContext, loadDesignConfig } from '../../core/design/config'
+import type { DesignConfig } from '../../core/design/types'
 import { loadGeo } from '../../core/map/geo'
 import { useMapController } from './useMapController'
 
@@ -35,14 +37,16 @@ function Probe() {
   return null
 }
 
-function setup() {
+function setup(design: DesignConfig = loadDesignConfig(null)) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   const wrapper = ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={client}>
-      <MemoryRouter initialEntries={['/']}>
-        <Probe />
-        {children}
-      </MemoryRouter>
+      <DesignContext.Provider value={design}>
+        <MemoryRouter initialEntries={['/']}>
+          <Probe />
+          {children}
+        </MemoryRouter>
+      </DesignContext.Provider>
     </QueryClientProvider>
   )
   return renderHook(() => useMapController(), { wrapper })
@@ -321,6 +325,52 @@ describe('useMapController', () => {
       await waitFor(() => expect(out.map).not.toBeNull())
       expect(out.map!.initialCamera).toEqual({ center: HERE.center, zoom: HERE.zoom })
       expect(search).toBe('?region=LVIV')
+    })
+  })
+
+  describe('APPROVED CHOROPLETH_PLACE_PIN + UKRAINE_WITH_NEAR_ME_PROMPT (the studio proposal)', () => {
+    const approved = loadDesignConfig({
+      schemaVersion: 1,
+      decisions: {
+        'map.aggregation': { variant: 'CHOROPLETH_PLACE_PIN', status: 'APPROVED' },
+        'map.initial-view': { variant: 'UKRAINE_WITH_NEAR_ME_PROMPT', status: 'APPROVED' },
+      },
+    })
+    const UKRAINE = { zoom: 5.5, bbox: [22, 44, 41, 53] as [number, number, number, number], center: [31.5, 48.5] as [number, number] }
+    const LVIV_PLACES = { zoom: 8.5, bbox: [23, 49, 25, 50.5] as [number, number, number, number], center: [24, 49.8] as [number, number] }
+
+    it('shades every region by its count at region level, with numerals and the legend', async () => {
+      const { result } = setup(approved)
+      await waitFor(() => expect(result.current.resultsCount).toBe(3661))
+      act(() => result.current.handlers.onViewport(UKRAINE))
+      expect(result.current.level).toBe('REGION')
+      expect(result.current.numeralRegions).toBe(true)
+      expect(result.current.choroplethLegend).toBe(true)
+      const opacity = result.current.fillOpacity
+      expect(Object.keys(opacity)).toHaveLength(27)
+      expect(opacity.KYIV_CITY).toBeCloseTo(0.6) // most musicians: darkest
+      expect(opacity.SEVASTOPOL_CITY).toBeCloseTo(0.15) // fewest: lightest
+      expect(opacity.LVIV).toBeGreaterThan(opacity.ODESA)
+    })
+
+    it('drops the shading and the legend below region level; a selected region still stands out', async () => {
+      const { result } = setup(approved)
+      await waitFor(() => expect(result.current.regionOptions).toBeDefined())
+      act(() => result.current.handlers.applyRegions(['LVIV']))
+      act(() => result.current.handlers.onViewport(LVIV_PLACES))
+      expect(result.current.level).toBe('PLACE')
+      expect(result.current.choroplethLegend).toBe(false)
+      await waitFor(() => expect(result.current.fillOpacity).toEqual({ LVIV: 0.35 }))
+    })
+
+    it('the PROPOSED default (REGION_PLACE_PIN) has neither', async () => {
+      const { result } = setup()
+      await waitFor(() => expect(result.current.resultsCount).toBe(3661))
+      act(() => result.current.handlers.onViewport(UKRAINE))
+      expect(result.current.level).toBe('REGION')
+      expect(result.current.numeralRegions).toBe(false)
+      expect(result.current.choroplethLegend).toBe(false)
+      expect(result.current.fillOpacity).toEqual({})
     })
   })
 })

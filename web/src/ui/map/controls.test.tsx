@@ -7,6 +7,7 @@ import { BottomSheet } from '../layout/BottomSheet'
 import { Toast, useToast } from '../layout/Toast'
 import { TopBarMenu } from '../layout/variants/TopBarMenu'
 import { FilterSheet } from './FilterSheet'
+import { ChoroplethLegend } from './ChoroplethLegend'
 import { MapStatus } from './MapStatus'
 import { ZoomButtons } from './ZoomButtons'
 import { NearMeButton } from './NearMeButton'
@@ -150,6 +151,32 @@ describe('NearMeButton', () => {
     window.localStorage.setItem('nashi.nearMeSeen', '1')
     render(withView('UKRAINE_WITH_NEAR_ME_PROMPT', <NearMeButton onClick={() => {}} />))
     expect(screen.getByTestId('near-me').dataset.prompt).toBe('false')
+    expect(screen.queryByTestId('near-me-hint')).toBeNull()
+  })
+
+  it('the prompt carries the handoff caption, which describes the button and goes once it is pressed', () => {
+    render(withView('UKRAINE_WITH_NEAR_ME_PROMPT', <NearMeButton onClick={() => {}} />))
+    const hint = screen.getByTestId('near-me-hint')
+    expect(hint.textContent).toBe('Знайдіть музикантів зі своєї області')
+    const button = screen.getByTestId('near-me')
+    expect(button.getAttribute('aria-describedby')).toBe(hint.id)
+    fireEvent.click(button)
+    expect(screen.queryByTestId('near-me-hint')).toBeNull()
+    expect(button.getAttribute('aria-describedby')).toBeNull()
+  })
+
+  it('has no caption while map.initial-view is UKRAINE', () => {
+    render(<NearMeButton onClick={() => {}} />)
+    expect(screen.queryByTestId('near-me-hint')).toBeNull()
+  })
+})
+
+describe('ChoroplethLegend', () => {
+  it('reads «Менше музикантів — Більше» around a decorative scale', () => {
+    render(<ChoroplethLegend />)
+    const legend = screen.getByTestId('choropleth-legend')
+    expect(legend.textContent).toBe('Менше музикантівБільше')
+    expect(legend.querySelector('[aria-hidden="true"]')).not.toBeNull()
   })
 })
 

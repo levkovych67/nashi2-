@@ -280,6 +280,8 @@ export function useMapController() {
     placeName,
     numeralRegions: mode === 'CHOROPLETH_PLACE_PIN',
     fillOpacity,
+    /** The regions are shaded by count (CHOROPLETH_PLACE_PIN at region level): the key «Менше — Більше» explains it. */
+    choroplethLegend: choropleth,
     muted,
     blocked: audio.status === 'blocked',
     toast: toast.message,

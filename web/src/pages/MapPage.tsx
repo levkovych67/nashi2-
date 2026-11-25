@@ -4,6 +4,7 @@ import { BottomSheet } from '../ui/layout/BottomSheet'
 import { Toast } from '../ui/layout/Toast'
 import { resolveVariant } from '../ui/variants'
 import { BackToUkraine } from '../ui/map/BackToUkraine'
+import { ChoroplethLegend } from '../ui/map/ChoroplethLegend'
 import type { FilterSheet } from '../ui/map/FilterSheet'
 import { MapControls } from '../ui/map/MapControls'
 import { MapMarkers } from '../ui/map/MapMarkers'
@@ -54,7 +55,12 @@ export default function MapPage() {
             </MapView>
             <MapControls
               sound={<SoundToggle muted={map.muted} blocked={map.blocked} onToggle={handlers.toggleSound} />}
-              count={map.resultsCount !== null && <ResultsCount count={map.resultsCount} />}
+              count={
+                <>
+                  {map.choroplethLegend && <ChoroplethLegend />}
+                  {map.resultsCount !== null && <ResultsCount count={map.resultsCount} />}
+                </>
+              }
               status={<MapStatus loading={map.loading} error={map.loadError} onRetry={handlers.retryLoad} />}
             >
               {Filters && map.regionOptions && <Filters slot="button" {...filterProps} />}

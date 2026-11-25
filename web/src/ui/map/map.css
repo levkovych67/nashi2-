@@ -251,6 +251,52 @@
   position: absolute;
   bottom: var(--n-space-6);
   left: var(--n-space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--n-space-2);
+}
+
+/* map.aggregation = CHOROPLETH_PLACE_PIN: key of the region shading, above the results count */
+.n-choropleth-legend {
+  display: flex;
+  align-items: center;
+  gap: var(--n-space-2);
+  margin: 0;
+  padding: var(--n-space-1) var(--n-space-3);
+  border-radius: var(--n-radius-sm);
+  background: var(--n-color-surface);
+  color: var(--n-color-text);
+  font: var(--n-font-weight-medium) var(--n-font-size-xs) / 1.3 var(--n-font-family-body);
+}
+
+.n-choropleth-legend__scale {
+  flex: none;
+  width: var(--n-space-12);
+  height: var(--n-space-2);
+  border-radius: var(--n-radius-pill);
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--n-color-map-region-fill-active) 15%, transparent),
+    color-mix(in srgb, var(--n-color-map-region-fill-active) 60%, transparent)
+  );
+  outline: 1px solid var(--n-color-border);
+}
+
+/* map.initial-view = UKRAINE_WITH_NEAR_ME_PROMPT: the caption above the prompt */
+.n-near-me {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--n-space-1);
+}
+
+.n-near-me__hint {
+  padding: var(--n-space-1) var(--n-space-2);
+  border-radius: var(--n-radius-sm);
+  background: var(--n-color-surface);
+  color: var(--n-color-text);
+  font: var(--n-font-weight-medium) var(--n-font-size-xs) / 1.3 var(--n-font-family-body);
 }
 
 .n-map-ui .n-map-button,

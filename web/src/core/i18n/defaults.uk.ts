@@ -185,4 +185,7 @@ export const DEFAULT_COPY = {
   "map.zoomGroup": "Масштаб карти",
   "map.zoomIn": "Збільшити масштаб",
   "map.zoomOut": "Зменшити масштаб",
+  "map.choroplethLess": "Менше музикантів",
+  "map.choroplethMore": "Більше",
+  "map.nearMePrompt": "Знайдіть музикантів зі своєї області",
 } as const

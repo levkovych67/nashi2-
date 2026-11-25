@@ -65,3 +65,16 @@ export async function settled(locator: Locator) {
     }, { intervals: [150], timeout: 10_000 })
     .toBe(true)
 }
+
+/**
+ * Test-only: the studio's proposal for the map (CHOROPLETH_PLACE_PIN, UKRAINE_WITH_NEAR_ME_PROMPT) as APPROVED, without
+ * touching src/design/decisions.json. The app reads window.__nashiDecisions in mock / dev mode only.
+ */
+export async function approveMapProposal(page: Page) {
+  await page.addInitScript(() => {
+    window.__nashiDecisions = {
+      'map.aggregation': { variant: 'CHOROPLETH_PLACE_PIN', status: 'APPROVED' },
+      'map.initial-view': { variant: 'UKRAINE_WITH_NEAR_ME_PROMPT', status: 'APPROVED' },
+    }
+  })
+}

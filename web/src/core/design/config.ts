@@ -29,6 +29,11 @@ export function loadDesignConfig(file: DecisionsFile | null): DesignConfig {
   }
 }
 
+/** The handoff decisions with `override` on top (test-only injection of APPROVED variants); the file stays as is. */
+export function withDecisionOverrides(file: DecisionsFile, override: DecisionsFile['decisions'] | undefined): DecisionsFile {
+  return override ? { ...file, decisions: { ...file.decisions, ...override } } : file
+}
+
 export const DesignContext = createContext<DesignConfig>(loadDesignConfig(null))
 
 export function useDesign(): DesignConfig {
