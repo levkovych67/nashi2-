@@ -37,18 +37,19 @@ export function BottomSheetPreview({ pin, onClose }: PreviewSkinProps) {
             )}
           </figure>
           <div className="n-preview__info">
-            <p className="n-preview__eyebrow">{t(`musician.kind.${pin.kind}`)}</p>
-            {place && <p className="n-preview__place">{place}</p>}
-            {musician && <LikeButton musicianId={musician.id} serverCount={musician.likesCount} />}
+            <p className="n-preview__eyebrow">{[t(`musician.kind.${pin.kind}`), place].filter(Boolean).join(' · ')}</p>
+            <p className="n-preview__notice" data-testid="preview-origin-notice">
+              {t('map.originNotice')}
+            </p>
           </div>
         </div>
+        <div className="n-preview__actions">
+          {musician && <LikeButton musicianId={musician.id} serverCount={musician.likesCount} />}
+          <Link className="n-musician__button" to={`/m/${encodeURIComponent(pin.slug)}`}>
+            {t('preview.openProfile')}
+          </Link>
+        </div>
         <MusicianAudio musicianId={pin.id} hasAudio={pin.hasAudio} />
-        <Link className="n-musician__button" to={`/m/${encodeURIComponent(pin.slug)}`}>
-          {t('preview.openProfile')}
-        </Link>
-        <p className="n-preview__notice" data-testid="preview-origin-notice">
-          {t('map.originNotice')}
-        </p>
       </div>
     </BottomSheet>
   )

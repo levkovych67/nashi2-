@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { activatePin, mapEl, text } from './helpers/map'
+import { activatePin, mapEl, settled, text } from './helpers/map'
 
 test('unknown slug shows not found with a link to the map', async ({ page }) => {
   await page.goto('/m/no-such-musician')
@@ -54,7 +54,7 @@ test('page from map preview and back to map', async ({ page, isMobile }) => {
   await expect(pin).toBeVisible({ timeout: 15_000 })
   await page.keyboard.press('Escape')
   await expect(page.getByTestId('musician-preview')).toBeHidden()
-  await page.waitForTimeout(800) // the camera has stopped
+  await settled(pin) // the camera has stopped
   await activatePin(pin, isMobile)
   const preview = page.getByTestId('musician-preview')
   await expect(preview.getByRole('heading', { name: 'Океан Ельзи' })).toBeVisible()

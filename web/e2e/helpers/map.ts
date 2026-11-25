@@ -52,3 +52,16 @@ export async function openFilters(page: Page, isMobile: boolean) {
   if (isMobile) await page.getByTestId('filters-open').click()
   await expect(page.getByRole('button', { name: text('filters.apply') })).toBeVisible()
 }
+
+/** Waits until the element stops moving (the camera has come to rest), instead of sleeping a fixed time. */
+export async function settled(locator: Locator) {
+  let previous = ''
+  await expect
+    .poll(async () => {
+      const now = JSON.stringify(await locator.boundingBox())
+      const same = now === previous
+      previous = now
+      return same
+    }, { intervals: [150], timeout: 10_000 })
+    .toBe(true)
+}

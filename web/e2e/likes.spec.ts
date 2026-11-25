@@ -12,7 +12,10 @@ test('7 taps add 7 at once, one POST of 7 follows within 600 ms, and the server 
 
   const request = page.waitForRequest((r) => r.method() === 'POST' && r.url().endsWith('/likes'))
   const button = page.getByTestId('like-button')
-  for (let i = 0; i < 7; i++) await button.click()
+  // seven taps inside one batch window: a click loop through the driver can outlast the 600 ms window under load
+  await button.evaluate((el) => {
+    for (let i = 0; i < 7; i++) (el as HTMLElement).click()
+  })
   const tapped = Date.now()
   expect(digits(await count.textContent())).toBe(before + 7) // optimistic: no waiting for the server
   const sent = await request
