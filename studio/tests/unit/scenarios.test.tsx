@@ -13,6 +13,11 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { FlowPage } from '../../src/pages/FlowPage'
 import { scenarios } from '../../src/flows/scenarios'
 import { choose, reset } from '../../src/selection/store'
+import { recordedDecisions } from '../../src/selection/selection'
+
+// An empty draft falls back to the variant recorded in decisions/decisions.json, then to the studio's default.
+const expected = (c: Record<string, string>, id: string, fallback: string) =>
+  c[id] || recordedDecisions[id]?.variant || fallback
 
 const choices: Record<string, string>[] = [
   {},
@@ -106,19 +111,19 @@ it.each(choices.map((c, i) => [i, c] as const))(
     }
     expect(
       document.querySelector('.journey-gesture')?.getAttribute('data-trigger'),
-    ).toBe(c['audio.mobile-trigger'] || 'TAP_PREVIEW_AND_PLAY')
+    ).toBe(expected(c, 'audio.mobile-trigger', 'TAP_PREVIEW_AND_PLAY'))
     await act(async () => {
       next()
     })
     expect(step()).toBe(7)
     expect(screen.getByRole('article').className).toContain(
-      c['musician.preview'] || 'BOTTOM_SHEET',
+      expected(c, 'musician.preview', 'BOTTOM_SHEET'),
     )
     next()
     expect(step()).toBe(8)
     await screen.findByTestId('musician-name')
     expect(document.querySelector('.artist-profile')?.className).toContain(
-      c['musician.page'] || 'HERO',
+      expected(c, 'musician.page', 'HERO'),
     )
     const initial = screen.getByTestId('likes-count').textContent
     fireEvent.click(screen.getByTestId('like-button'))
