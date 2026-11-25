@@ -3,6 +3,7 @@ import { ApiProblem } from '../api/client'
 import { useMusician } from '../api/queries'
 import { useDesign } from '../core/design/config'
 import { useCopy } from '../core/i18n/copy'
+import { loadErrorKey } from '../core/i18n/loadError'
 import { AppShell } from '../ui/layout/AppShell'
 import type { MusicianPageSkinProps } from '../ui/musician/variants/EditorialPage'
 import { resolveVariant } from '../ui/variants'
@@ -16,7 +17,7 @@ const shorten = (text: string) => (text.length > DESCRIPTION_MAX ? `${text.slice
 export default function MusicianPage() {
   const t = useCopy()
   const { slug = '' } = useParams()
-  const { data, error } = useMusician(slug)
+  const { data, error, isPending, refetch } = useMusician(slug)
   const Page = resolveVariant<MusicianPageSkinProps>('musician.page', useDesign())
 
   if (error instanceof ApiProblem && error.status === 404) return <NotFoundPage />
@@ -31,10 +32,18 @@ export default function MusicianPage() {
             {Page && <Page musician={data} />}
           </>
         )}
-        {error && (
-          <p role="alert" className="n-musician__page">
-            {t(error instanceof ApiProblem && error.status === 0 ? 'errors.network' : 'errors.generic')}
+        {isPending && (
+          <p role="status" className="n-musician__page n-musician__status" data-testid="page-loading">
+            {t('common.loading')}
           </p>
+        )}
+        {error && (
+          <div role="alert" className="n-musician__page n-musician__status" data-testid="page-error">
+            <p>{t(loadErrorKey(error))}</p>
+            <button type="button" className="n-musician__button n-musician__button--primary" onClick={() => void refetch()}>
+              {t('errors.retry')}
+            </button>
+          </div>
         )}
       </div>
     </AppShell>

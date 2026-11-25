@@ -1,8 +1,11 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
+import { http, HttpResponse } from 'msw'
 import type { ReactNode } from 'react'
 import { MemoryRouter, useLocation, useSearchParams } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
+import { ApiProblem } from '../../api/client'
+import { server } from '../../api/mocks/node'
 import { useMapModel } from './useMapModel'
 
 function setup(url: string) {
@@ -48,5 +51,30 @@ describe('useMapModel', () => {
     expect(result.current.model.indexes).toBe(before)
     act(() => result.current.model.setFilters({ region: ['ODESA'] }))
     expect(result.current.model.indexes).not.toBe(before)
+  })
+
+  it('reports a failed request and retry() loads it again', async () => {
+    let fail = true
+    let release!: () => void
+    const gate = new Promise<void>((r) => (release = r))
+    server.use(
+      http.get('*/map/pins', async () => {
+        if (fail) return HttpResponse.error()
+        await gate
+        return undefined // the fixture handler answers
+      }),
+    )
+    const { result } = setup('/')
+    await waitFor(() => expect(result.current.model.error).toBeInstanceOf(ApiProblem))
+    expect(result.current.model.error?.status).toBe(0)
+    expect(result.current.model.loading).toBe(false)
+    expect(result.current.model.indexes).not.toBeNull() // the server counts are there, only the pins are missing
+    fail = false
+    act(() => result.current.model.retry())
+    await waitFor(() => expect(result.current.model.loading).toBe(true))
+    expect(result.current.model.error).toBeNull()
+    release()
+    await waitFor(() => expect(result.current.model.loading).toBe(false))
+    expect(result.current.model.error).toBeNull()
   })
 })

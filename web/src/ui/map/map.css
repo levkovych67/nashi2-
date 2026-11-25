@@ -256,8 +256,53 @@
 .n-map-ui .n-map-button,
 .n-map-ui .n-results-count,
 .n-map-ui .n-sound__hint,
+.n-map-ui .n-map-status,
 .n-map-ui .n-sheet {
   pointer-events: auto;
+}
+
+/* Loading / error note under the controls */
+.n-map-ui__status {
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--n-space-3);
+}
+
+.n-map-status {
+  box-sizing: border-box;
+  max-width: 420px;
+  margin: 0;
+  padding: var(--n-space-2) var(--n-space-4);
+  border: 1px solid var(--n-color-border);
+  border-radius: var(--n-radius-md);
+  background: var(--n-color-surface-raised);
+  color: var(--n-color-text);
+  font: var(--n-font-weight-medium) var(--n-font-size-sm) / var(--n-font-line-height-normal) var(--n-font-family-body);
+  box-shadow: var(--n-shadow-md);
+}
+
+/* a fast load never shows the note */
+.n-map-status--loading {
+  animation: n-map-status-in var(--n-motion-duration-base) var(--n-motion-easing-standard) 400ms both;
+}
+
+@keyframes n-map-status-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.n-map-status--error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--n-space-3);
+  border-color: var(--n-color-danger);
+}
+
+.n-map-status--error p {
+  flex: 1 1 12em;
+  margin: 0;
 }
 
 .n-results-count {

@@ -7,6 +7,7 @@ import { BottomSheet } from '../layout/BottomSheet'
 import { Toast, useToast } from '../layout/Toast'
 import { TopBarMenu } from '../layout/variants/TopBarMenu'
 import { FilterSheet } from './FilterSheet'
+import { MapStatus } from './MapStatus'
 import { NearMeButton } from './NearMeButton'
 import { RegionFilter } from './RegionFilter'
 import { SoundToggle } from './SoundToggle'
@@ -228,5 +229,25 @@ describe('EqualizerBadge', () => {
     const badge = screen.getByTestId('playing-badge')
     expect(badge.getAttribute('aria-hidden')).toBe('true')
     expect(badge.querySelectorAll('b')).toHaveLength(3)
+  })
+})
+
+describe('MapStatus', () => {
+  it('says the map is loading in a polite status', () => {
+    render(<MapStatus loading error={null} onRetry={() => {}} />)
+    expect(screen.getByRole('status').textContent).toBe('Завантажуємо карту…')
+  })
+
+  it('shows a failed load as an alert with a retry button', () => {
+    const onRetry = vi.fn()
+    render(<MapStatus loading={false} error="errors.network" onRetry={onRetry} />)
+    expect(screen.getByRole('alert').textContent).toContain('Перевірте підключення й спробуйте ще раз.')
+    fireEvent.click(screen.getByRole('button', { name: 'Спробувати ще' }))
+    expect(onRetry).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders nothing when the map is ready', () => {
+    const { container } = render(<MapStatus loading={false} error={null} onRetry={() => {}} />)
+    expect(container.textContent).toBe('')
   })
 })

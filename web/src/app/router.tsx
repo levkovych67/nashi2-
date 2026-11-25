@@ -1,5 +1,6 @@
 import { lazy } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
+import { RouteError } from '../ui/layout/RouteError'
 
 const MapPage = lazy(() => import('../pages/MapPage'))
 const MusicianPage = lazy(() => import('../pages/MusicianPage'))
@@ -15,4 +16,7 @@ export const routes = [
   { path: '*', element: <NotFoundPage /> },
 ]
 
-export const createRouter = () => createBrowserRouter(routes)
+// A pathless parent gives every route the Ukrainian error element (render errors, a chunk gone after a deploy).
+export const appRoutes = [{ errorElement: <RouteError />, children: routes }]
+
+export const createRouter = () => createBrowserRouter(appRoutes)

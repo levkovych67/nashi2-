@@ -7,6 +7,7 @@ import { useFragmentPlayer } from '../../core/audio/useFragmentPlayer'
 import { useDesign } from '../../core/design/config'
 import { activeFilterCount, applyFilters } from '../../core/filters/filterState'
 import { useCopy } from '../../core/i18n/copy'
+import { loadErrorKey } from '../../core/i18n/loadError'
 import type { AggregationMode, BBox, MapItem } from '../../core/map/aggregation'
 import { clusterCamera, placeCamera, regionsCamera, ukraineCamera, type CameraMove } from '../../core/map/camera'
 import { regionAt } from '../../core/map/geo'
@@ -36,6 +37,8 @@ export interface MapHandlers extends MarkerHandlers {
   /** Position → region → camera. Does not write ?region. A refusal or a position outside Ukraine shows a toast. */
   nearMe(): void
   toggleSound(): void
+  /** Loads the map data that failed to load again. */
+  retryLoad(): void
 }
 
 // close enough that the musician's pin stands out of any cluster
@@ -53,7 +56,8 @@ export function useMapController() {
   const t = useCopy()
   const mode = useDesign().variant('map.aggregation') as AggregationMode
   // indexes exist as soon as the server counts do; the pins query may still be loading
-  const { indexes, filters, setFilters } = useMapModel()
+  const { indexes, filters, setFilters, loading, error, retry } = useMapModel()
+  const loadError = error ? loadErrorKey(error) : null
   const { state: audio, previewId: tapPreview, gesture, pointerEnter, pointerLeave, stop } = useFragmentPlayer()
   const toast = useToast()
   const pins = useMapPins().data?.pins
@@ -104,9 +108,9 @@ export function useMapController() {
   const previewId = mousePreview ?? tapPreview
   const playingId = audio.status === 'playing' ? audio.musicianId : null
 
-  const latest = useRef({ indexes, viewport, regions, filters, setFilters, regionMaxZoom, names, visiblePins, t, tapPreview, gesture, pointerEnter, pointerLeave, stop, muted, blocked: false, notify: toast.show })
+  const latest = useRef({ indexes, viewport, regions, filters, setFilters, regionMaxZoom, names, visiblePins, t, tapPreview, gesture, pointerEnter, pointerLeave, stop, muted, blocked: false, notify: toast.show, loadError, retry })
   useLayoutEffect(() => {
-    latest.current = { indexes, viewport, regions, filters, setFilters, regionMaxZoom, names, visiblePins, t, tapPreview, gesture, pointerEnter, pointerLeave, stop, muted, blocked: audio.status === 'blocked', notify: toast.show }
+    latest.current = { indexes, viewport, regions, filters, setFilters, regionMaxZoom, names, visiblePins, t, tapPreview, gesture, pointerEnter, pointerLeave, stop, muted, blocked: audio.status === 'blocked', notify: toast.show, loadError, retry }
   })
 
   const handlers = useMemo<MapHandlers>(() => {
@@ -183,15 +187,20 @@ export function useMapController() {
           refuse()
           return
         }
+        // without the regions (or their geometry) the position cannot be placed: say why, not "no region found"
+        const unavailable = () => now().notify(now().t(now().loadError ?? 'errors.network'))
         navigator.geolocation.getCurrentPosition(
           ({ coords }) => {
             regionAt(coords.longitude, coords.latitude).then(
               (code) => {
-                const region = code ? now().regions?.find((r) => r.code === code) : undefined
+                if (!code) return refuse() // outside Ukraine
+                const { regions: all } = now()
+                if (!all) return unavailable()
+                const region = all.find((r) => r.code === code)
                 if (region) openRegions([region], true)
                 else refuse()
               },
-              refuse,
+              unavailable,
             )
           },
           refuse,
@@ -209,6 +218,7 @@ export function useMapController() {
         writeMuted(!wasMuted)
         if (!wasMuted) stopAudio()
       },
+      retryLoad: () => now().retry(),
     }
   }, [])
 
@@ -254,6 +264,10 @@ export function useMapController() {
     muted,
     blocked: audio.status === 'blocked',
     toast: toast.message,
+    /** Map data is still on its way (also again after a retry). */
+    loading: loading && !loadError,
+    /** Copy key of a failed load; the map offers a retry. */
+    loadError,
     /** Musicians matching the filters; null until the pins have loaded. */
     resultsCount: pins ? visiblePins.length : null,
     activeFilterCount: activeFilterCount(filters),

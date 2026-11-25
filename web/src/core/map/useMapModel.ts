@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useMemo, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { ApiProblem } from '../../api/client'
@@ -12,6 +13,8 @@ export function useMapModel(): {
   setFilters(s: FilterState): void
   loading: boolean
   error: ApiProblem | null
+  /** Loads the failed requests again (they are `loading` again until they answer). */
+  retry(): void
 } {
   const [searchParams, setSearchParams] = useSearchParams()
   const mode = useDesign().variant('map.aggregation') as AggregationMode
@@ -56,7 +59,13 @@ export function useMapModel(): {
     })
   }, [pins, regions, places, filters, regionMaxZoom, placeMaxZoom, mode])
 
+  const queryClient = useQueryClient()
+  const retry = useCallback(
+    () => void queryClient.refetchQueries({ type: 'active', predicate: (q) => q.state.status === 'error' }),
+    [queryClient],
+  )
+
   const queries = [pinsQuery, regionsQuery, placesQuery, filtersQuery, configQuery]
   const error = (queries.find((q) => q.error)?.error as ApiProblem | undefined) ?? null
-  return { indexes, filters, setFilters, loading: queries.some((q) => q.isPending), error }
+  return { indexes, filters, setFilters, loading: queries.some((q) => q.isPending), error, retry }
 }

@@ -22,6 +22,17 @@
   border-top: 3px solid var(--n-color-accent);
 }
 
+/* Loading and load-error note in place of the page */
+.n-musician__status {
+  align-items: flex-start;
+  color: var(--n-color-text);
+  font: var(--n-font-weight-medium) var(--n-font-size-md) / var(--n-font-line-height-normal) var(--n-font-family-body);
+}
+
+.n-musician__status p {
+  margin: 0;
+}
+
 .n-musician__lead,
 .n-musician__text,
 .n-musician__columns {

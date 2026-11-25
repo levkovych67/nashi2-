@@ -204,4 +204,33 @@ describe('MusicianPage', () => {
     expect(await screen.findByText(t('errors.notFound'))).toBeTruthy()
     expect(screen.getByRole('link', { name: t('errors.backToMap') }).getAttribute('href')).toBe('/')
   })
+
+  it('says the page is loading while the musician loads', async () => {
+    let release!: () => void
+    const gate = new Promise<void>((r) => (release = r))
+    server.use(
+      http.get(`${API_BASE}/musicians/${FULL.slug}`, async () => {
+        await gate
+        return HttpResponse.json(FULL)
+      }),
+    )
+    renderPage(FULL.slug)
+    expect((await screen.findByRole('status')).textContent).toBe(t('common.loading'))
+    release()
+    await screen.findByTestId('musician-name')
+    expect(screen.queryByText(t('common.loading'))).toBeNull()
+  })
+
+  it('a failed load says what happened and retry loads the page', async () => {
+    let fail = true
+    server.use(
+      http.get(`${API_BASE}/musicians/${FULL.slug}`, () => (fail ? HttpResponse.error() : HttpResponse.json(FULL))),
+    )
+    renderPage(FULL.slug)
+    expect((await screen.findByRole('alert')).textContent).toContain(t('errors.network'))
+    fail = false
+    fireEvent.click(screen.getByRole('button', { name: t('errors.retry') }))
+    expect(await screen.findByTestId('musician-name')).toBeTruthy()
+    expect(screen.queryByRole('alert')).toBeNull()
+  })
 })

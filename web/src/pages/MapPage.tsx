@@ -7,6 +7,7 @@ import { BackToUkraine } from '../ui/map/BackToUkraine'
 import type { FilterSheet } from '../ui/map/FilterSheet'
 import { MapControls } from '../ui/map/MapControls'
 import { MapMarkers } from '../ui/map/MapMarkers'
+import { MapStatus } from '../ui/map/MapStatus'
 import { MapOverlays } from '../ui/map/MapOverlays'
 import { MapView } from '../ui/map/MapView'
 import { NearMeButton } from '../ui/map/NearMeButton'
@@ -48,6 +49,7 @@ export default function MapPage() {
             <MapControls
               sound={<SoundToggle muted={map.muted} blocked={map.blocked} onToggle={handlers.toggleSound} />}
               count={map.resultsCount !== null && <ResultsCount count={map.resultsCount} />}
+              status={<MapStatus loading={map.loading} error={map.loadError} onRetry={handlers.retryLoad} />}
             >
               {Filters && map.regionOptions && <Filters slot="button" {...filterProps} />}
               <NearMeButton onClick={handlers.nearMe} />

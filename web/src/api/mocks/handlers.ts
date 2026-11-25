@@ -61,12 +61,25 @@ const aborted = new Set<string>()
 
 const url = (path: string) => `${API_BASE}${path}`
 
+declare global {
+  // e2e switch, set by a test in the page: `{ '/map/pins': 500 }` answers that status, `'network'` drops the request.
+  // eslint-disable-next-line no-var
+  var __nashiMockFail: Record<string, number | 'network'> | undefined
+}
+
+/** The response a test asked for instead of the fixture, while the switch for `path` is set. */
+function failure(path: string) {
+  const mode = globalThis.__nashiMockFail?.[path]
+  if (mode === undefined) return undefined
+  return mode === 'network' ? HttpResponse.error() : problem(mode, 'INTERNAL', 'Помилка сервера')
+}
+
 export const handlers = [
-  http.get(url('/map/pins'), () => HttpResponse.json(mapPins)),
-  http.get(url('/map/regions'), () => HttpResponse.json(mapRegions)),
-  http.get(url('/map/places'), () => HttpResponse.json(mapPlaces)),
-  http.get(url('/filters'), () => HttpResponse.json(filters)),
-  http.get(url('/config/public'), () => HttpResponse.json(publicConfig)),
+  http.get(url('/map/pins'), () => failure('/map/pins') ?? HttpResponse.json(mapPins)),
+  http.get(url('/map/regions'), () => failure('/map/regions') ?? HttpResponse.json(mapRegions)),
+  http.get(url('/map/places'), () => failure('/map/places') ?? HttpResponse.json(mapPlaces)),
+  http.get(url('/filters'), () => failure('/filters') ?? HttpResponse.json(filters)),
+  http.get(url('/config/public'), () => failure('/config/public') ?? HttpResponse.json(publicConfig)),
   http.get(url('/health'), () => HttpResponse.json({ status: 'UP' })),
 
   http.get(url('/musicians'), ({ request }) => {

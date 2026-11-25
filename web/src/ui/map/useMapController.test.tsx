@@ -1,8 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
+import { http, HttpResponse } from 'msw'
 import type { ReactNode } from 'react'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { server } from '../../api/mocks/node'
 import type { components } from '../../api/types.gen'
 import { loadGeo } from '../../core/map/geo'
 import { useMapController } from './useMapController'
@@ -126,6 +128,46 @@ describe('useMapController', () => {
       act(() => result.current.handlers.toggleSound())
       expect(player.stop).toHaveBeenCalled()
       expect(result.current.muted).toBe(false)
+    })
+  })
+
+  describe('loading and errors', () => {
+    it('says it is loading until the map has something to show', async () => {
+      const { result } = setup()
+      expect(result.current.loading).toBe(true)
+      expect(result.current.loadError).toBeNull()
+      await waitFor(() => expect(result.current.loading).toBe(false))
+    })
+
+    it('a failed load shows its message instead of an empty map, and retry loads it again', async () => {
+      let fail = true
+      server.use(http.get('*/map/regions', () => (fail ? HttpResponse.error() : undefined)))
+      const { result } = setup()
+      await waitFor(() => expect(result.current.loadError).toBe('errors.network'))
+      expect(result.current.loading).toBe(false)
+      fail = false
+      act(() => result.current.handlers.retryLoad())
+      await waitFor(() => expect(result.current.loadError).toBeNull())
+      await waitFor(() => expect(result.current.regionOptions).toBeDefined())
+    })
+
+    it('a server error says the generic message', async () => {
+      server.use(http.get('*/map/pins', () => new HttpResponse(null, { status: 500 })))
+      const { result } = setup()
+      await waitFor(() => expect(result.current.loadError).toBe('errors.generic'))
+    })
+
+    it('near me while the regions did not load says the load error, not that the region is unknown', async () => {
+      server.use(http.get('*/map/regions', () => HttpResponse.error()))
+      stubPosition(24.03, 49.84)
+      const { result } = setup()
+      await waitFor(() => expect(result.current.loadError).toBe('errors.network'))
+      act(() => result.current.handlers.nearMe())
+      await act(async () => {
+        await loadGeo()
+        await Promise.resolve()
+      })
+      await waitFor(() => expect(result.current.toast).toBe('Перевірте підключення й спробуйте ще раз.'))
     })
   })
 

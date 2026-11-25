@@ -176,4 +176,10 @@ export const DEFAULT_COPY = {
   "about.source.map": "Основа карти: OpenStreetMap, OpenMapTiles, OpenFreeMap.",
   "about.source.borders": "Межі областей: geoBoundaries.",
   "common.close": "Закрити",
+  // Not in the contract list (section 8): product texts the studio may still override.
+  "common.loading": "Завантаження…",
+  "map.loading": "Завантажуємо карту…",
+  "errors.retry": "Спробувати ще",
+  "errors.page": "Не вдалося показати сторінку.",
+  "errors.reload": "Оновити сторінку",
 } as const
