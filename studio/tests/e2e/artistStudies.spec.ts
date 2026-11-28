@@ -1,5 +1,16 @@
-import { expect, test } from '@playwright/test'
+import { expect, test, type Locator } from '@playwright/test'
 import { join } from 'node:path'
+
+// The pins first render on the static Lviv plate and move into the map once its
+// tiles have loaded. A hover or a hold that began on the static pin ends with it,
+// so the gesture is repeated on the pin until the expected reaction shows.
+const onSettledPin = (gesture: () => Promise<void>) =>
+  expect(gesture).toPass({ timeout: 15_000 })
+const centre = async (pin: Locator) => {
+  await pin.scrollIntoViewIfNeeded()
+  const box = (await pin.boundingBox())!
+  return [box.x + box.width / 2, box.y + box.height / 2] as const
+}
 
 for (const variant of [
   'TAP_PREVIEW_AND_PLAY',
@@ -12,12 +23,15 @@ for (const variant of [
     const pin = page.getByRole('button', { name: 'Океан Ельзи, є фрагмент' })
     const state = page.getByTestId('playing-indicator')
     if (variant === 'LONG_PRESS_PLAY') {
-      await pin.scrollIntoViewIfNeeded()
-      const box = (await pin.boundingBox())!
-      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2)
-      await page.mouse.down()
-      await expect(state).toContainText('Океан Ельзи')
-      await page.mouse.up()
+      await onSettledPin(async () => {
+        await page.mouse.move(...(await centre(pin)))
+        await page.mouse.down()
+        try {
+          await expect(state).toContainText('Океан Ельзи')
+        } finally {
+          await page.mouse.up()
+        }
+      })
       await expect(page.getByRole('article')).toHaveCount(0)
     } else {
       await pin.tap()
@@ -44,13 +58,17 @@ for (const variant of ['RING_PROGRESS', 'EQUALIZER_BADGE']) {
     test.skip(info.project.name !== 'desktop', 'Наведення вказівника')
     await page.goto('/v/audio.desktop-hover/' + variant)
     const pin = page.getByRole('button', { name: 'Океан Ельзи, є фрагмент' })
-    await pin.hover()
-    await expect(page.getByRole('status')).toContainText('натисніть')
+    await onSettledPin(async () => {
+      await pin.hover()
+      await expect(page.getByRole('status')).toContainText('натисніть')
+    })
     await page.getByRole('button', { name: 'Увімкнути звук' }).click()
-    await pin.hover()
-    await expect(page.getByTestId('playing-indicator')).toContainText(
-      'Океан Ельзи',
-    )
+    await onSettledPin(async () => {
+      await pin.hover()
+      await expect(page.getByTestId('playing-indicator')).toContainText(
+        'Океан Ельзи',
+      )
+    })
     await page.getByRole('button', { name: 'Вимкнути звук' }).click()
     await expect(page.getByTestId('playing-indicator')).toHaveCount(0)
   })
