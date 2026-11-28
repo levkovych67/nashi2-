@@ -116,8 +116,15 @@ jobs:
           printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy
           chmod 600 ~/.ssh/deploy
           printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          target="$SSH_HOST"
+          # A value pasted into the secrets form often carries a trailing newline or space, or a leading "ssh ":
+          # keep the last whitespace-separated word
+          target="$(printf '%s' "$SSH_HOST" | awk '{ for (i = 1; i <= NF; i++) last = $i } END { print last }')"
+          target="${target#ssh://}"
           [[ "$target" == *@* ]] || target="$SSH_USER@$target"
+          if [[ ! "$target" =~ ^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+$ ]]; then
+            echo "::error::DEPLOY_HOST must be user@host or a bare host (it has ${#SSH_HOST} characters)"
+            exit 1
+          fi
           # The GHCR packages are private: the server logs in with this job's token (it expires with the job, goes over
           # stdin, never into the command line) for the pull and the rollback inside deploy.sh, then logs out
           ssh -i ~/.ssh/deploy -p "$SSH_PORT" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes "$target" \
