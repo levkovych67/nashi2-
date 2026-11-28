@@ -1,4 +1,4 @@
-# Production / staging stack. Every setting comes from infra/.env (template: infra/.env.example); see infra/DEPLOY.md.
+# Production stack. Every setting comes from infra/.env (template: infra/.env.example); see infra/DEPLOY.md.
 #   docker compose -f infra/docker-compose.prod.yml up -d --build --wait     # build the images on this machine
 #   docker compose -f infra/docker-compose.prod.yml pull && … up -d --wait   # or run images a pipeline published
 # The host nginx (TLS) proxies the domain to the web container; web serves the SPA and proxies /api/ to backend.

@@ -17,7 +17,7 @@
 | `infra/docker-compose.prod.yml` | стек: mongo (з паролем), backend, web; MinIO — за бажанням (`COMPOSE_PROFILES=minio`) |
 | `infra/.env.example` | шаблон налаштувань; копія `infra/.env` живе лише на сервері (у git не потрапляє) |
 | `infra/scripts/deploy.sh <тег>` | оновлення: підтягує образи, перезапускає, чекає здоров'я, при збої повертає попередній тег |
-| `.github/workflows/deploy.yml` | пайплайн: збирає образи в GHCR і запускає `deploy.sh` на сервері по SSH |
+| `.github/workflows/deploy.yml` | пайплайн: пуш у `main` → тести → образи в GHCR → `deploy.sh` на сервері по SSH |
 
 Усі команди нижче — з кореня репозиторію. `docker compose` сам читає `infra/.env`, бо він лежить поряд з compose-файлом.
 
@@ -51,7 +51,7 @@ docker compose -f infra/docker-compose.prod.yml down -v     # зупинити �
 
 - **Сервер:** Ubuntu 24.04, від 2 vCPU / 4 ГБ RAM / 30 ГБ диска. Встановити Docker Engine з плагіном compose, nginx,
   certbot (`python3-certbot-nginx`), git. Окремий користувач для деплою в групі `docker`.
-- **Домен:** A-запис на IP сервера (для staging — піддомен, наприклад `v2-staging.<домен>`).
+- **Домен:** A-запис на IP сервера.
 - **S3 (AWS):** бакет у `eu-north-1`; IAM-користувач з `s3:GetObject`, `s3:PutObject`, `s3:DeleteObject` на
   `arn:aws:s3:::<бакет>/*` і `s3:ListBucket` на `arn:aws:s3:::<бакет>`. Публічно читається лише префікс `artists/`
   (фото музикантів); `submissions/` лишається приватним. Політика бакета (і дозволити bucket policies у «Block public access»):
@@ -129,7 +129,7 @@ docker compose -f infra/docker-compose.prod.yml ps  # усі healthy
 
 ## 7. Оновлення і відкат
 
-- **Пайплайном** — розділ 9.
+- **Пайплайном** — автоматично після пушу в `main` (розділ 9).
 - **Вручну, збираючи на сервері:**
   ```bash
   cd /opt/nashi-v2 && git pull && docker compose -f infra/docker-compose.prod.yml up -d --build --wait
@@ -158,13 +158,24 @@ docker compose -f infra/docker-compose.prod.yml exec -T mongo sh -c 'mongorestor
 
 ## 9. Пайплайн (GitHub Actions)
 
-`.github/workflows/deploy.yml` запускається вручну: **Actions → Deploy → Run workflow**, вибрати гілку чи коміт і
-середовище `staging` або `production`. Він збирає образи `ghcr.io/<власник>/nashi-v2-backend:<sha>` і
-`…-web:<sha>`, публікує їх у GHCR, а потім по SSH виконує на сервері:
-`git checkout <sha>` → `infra/scripts/deploy.sh <sha>`.
+Staging немає: `main` — це продакшен. `.github/workflows/deploy.yml` запускається на кожен пуш у `main`, що
+змінює `backend/`, `web/`, `contracts/`, `infra/` або залежності (зміни лише в `*.md`, `docs/`, `studio/` деплой не
+запускають). Його також можна запустити вручну: **Actions → Deploy → Run workflow** — наприклад, щоб передеплоїти.
 
-**У GitHub** (Settings → Environments) створити середовища `staging` і `production`. Для `production` варто
-ввімкнути «Required reviewers», щоб деплой на прод потребував підтвердження. У кожному середовищі:
+Кроки:
+1. **backend** — `./gradlew test` (Mongo і MinIO піднімає Testcontainers);
+2. **web** — тести контракту, типи, юніт-тести, збірка, бюджети бандла;
+3. **images** — лише якщо обидві перевірки зелені: образи `ghcr.io/<власник>/nashi-v2-backend:<sha>` і `…-web:<sha>` у GHCR;
+4. **deploy** — по SSH на сервері: `git checkout <sha>` → `infra/scripts/deploy.sh <sha>`. Якщо нова версія не стала
+   healthy за 180 с, скрипт повертає попередню, а запуск у GitHub стає червоним.
+
+Поки змінна `DEPLOY_ENABLED` не дорівнює `true`, виконуються лише перевірки (кроки 1–2), а збірка образів і деплой
+пропускаються. Так можна пушити ще до того, як готовий сервер.
+
+**У GitHub:**
+- Settings → Secrets and variables → Actions → Variables: `DEPLOY_ENABLED=true` (коли сервер готовий),
+  за потреби `DEPLOY_DIR` (за замовчуванням `/opt/nashi-v2`).
+- Settings → Environments → `production` (створиться сам при першому деплої, але секрети краще додати заздалегідь):
 
 | Секрет | Що це |
 |---|---|
@@ -174,37 +185,25 @@ docker compose -f infra/docker-compose.prod.yml exec -T mongo sh -c 'mongorestor
 | `DEPLOY_SSH_KEY` | приватний ключ цього користувача (окремий ключ лише для деплою) |
 | `DEPLOY_SSH_KNOWN_HOSTS` | результат `ssh-keyscan -p <порт> <сервер>` |
 
-Змінна середовища (Variables) `DEPLOY_DIR` — каталог на сервері, за замовчуванням `/opt/nashi-v2`.
-
 **На сервері:**
-- репозиторій склонований у `DEPLOY_DIR` (розділ 3), `infra/.env` заповнений;
+- репозиторій склонований у `/opt/nashi-v2` (розділ 3), `infra/.env` заповнений;
 - в `infra/.env`: `DEPLOY_IMAGE_PREFIX=ghcr.io/<власник маленькими літерами>/nashi-v2`;
 - нові пакети GHCR приватні: або зробити `nashi-v2-backend` і `nashi-v2-web` публічними в налаштуваннях пакета,
   або один раз виконати на сервері `docker login ghcr.io` з токеном, що має лише `read:packages`.
 
-Секрети застосунку (`infra/.env`) живуть лише на сервері, у GitHub їх немає.
+## Скільки файлів конфігурації
 
-Пайплайн не запускає тести: CI для backend і web ще не налаштований. До того перед деплоєм проганяйте тести
-локально (`cd backend && ./gradlew test`, `npm test -w web`, `npm run e2e -w web`).
+Застосунок налаштовує **один файл** — `infra/.env` на сервері: і Docker (образи, порт, пароль Mongo), і backend
+(база, S3, Telegram, домен). У git він не потрапляє, `git checkout` під час деплою його не чіпає, `deploy.sh` змінює в
+ньому лише `DEPLOY_IMAGE_TAG`. Файл лежить усередині копії репозиторію, тож `git clean -fdx` у `/opt/nashi-v2`
+його видалить — тримайте копію значень у менеджері паролів.
 
-## 10. Staging на тому самому сервері
-
-Друга копія з власною назвою проєкту, портом, ботом і бакетом:
-
-```bash
-git clone https://github.com/levkovych67/nashi2-.git /opt/nashi-v2-staging
-# в /opt/nashi-v2-staging/infra/.env додатково:
-#   COMPOSE_PROJECT_NAME=nashi-v2-staging
-#   DEPLOY_WEB_PORT=4184
-#   окремі NASHI_TELEGRAM_* (тестовий бот і група), NASHI_S3_BUCKET, NASHI_SITE_BASE_URL=https://v2-staging.<домен>
-```
-
-nginx: такий самий блок для `v2-staging.<домен>` з `proxy_pass http://127.0.0.1:4184`. У GitHub-середовищі
-`staging`: `DEPLOY_DIR=/opt/nashi-v2-staging`.
+Окрім нього є ще дві речі, які налаштовуються один раз і не змінюються з релізами: nginx сервера (розділ 4) і
+SSH-секрети в GitHub (розділ 9). `infra/docker-compose.prod.yml` лежить у репозиторії, редагувати його на сервері не треба.
 
 ## Ще не зроблено перед продакшеном
 
-- CI для backend і web (тести на кожен пуш).
+- E2E-тести web у пайплайні (зараз їхні знімки-еталони є лише для macOS).
 - Заголовки безпеки (CSP) і загальний ліміт запитів на nginx сервера.
 - Автоматичне копіювання бекапів поза сервер і моніторинг доступності.
 - Юридичне підтвердження умов Deezer і Apple — без нього прев'ю з цих джерел вимкнені.

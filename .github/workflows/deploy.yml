@@ -1,25 +1,63 @@
-# Manual deploy: Actions → Deploy → Run workflow → staging | production (infra/DEPLOY.md, section "Пайплайн").
-# Builds the backend and web images for the chosen commit, publishes them to GHCR, then over SSH checks out that commit
-# on the server and runs infra/scripts/deploy.sh <sha> (health wait, rollback to the last good tag).
-# Each GitHub environment (staging, production) holds its own secrets and variables.
+# Production pipeline (infra/DEPLOY.md, section "Пайплайн"): every push to main that touches the product runs the
+# backend and web checks; when they pass and the repository variable DEPLOY_ENABLED is "true", it builds the backend
+# and web images, publishes them to GHCR, and over SSH checks out that commit on the server and runs
+# infra/scripts/deploy.sh <sha> (health wait, rollback to the last good tag). Run it by hand to redeploy.
 name: Deploy
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - 'web/**'
+      - 'contracts/**'
+      - 'infra/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/deploy.yml'
+      - '!**/*.md'
   workflow_dispatch:
-    inputs:
-      environment:
-        description: Where to deploy
-        type: choice
-        options: [staging, production]
-        default: staging
 permissions:
   contents: read
-  packages: write
 concurrency:
-  group: deploy-${{ inputs.environment }}
+  group: deploy-production
   cancel-in-progress: false
 jobs:
-  images:
+  backend:
     runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+      # Testcontainers starts Mongo and MinIO in the runner's Docker
+      - run: ./gradlew test --no-daemon
+        working-directory: backend
+
+  web:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test -w contracts
+      - run: npm run typecheck -w web
+      - run: npm test -w web
+      - run: npm run test:scripts -w web
+      - run: npm run build -w web
+      - run: npm run check:bundle -w web
+
+  images:
+    needs: [backend, web]
+    if: vars.DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-buildx-action@v3
@@ -38,7 +76,7 @@ jobs:
           tags: ${{ env.IMAGE_PREFIX }}-backend:${{ github.sha }}
           cache-from: type=gha,scope=backend
           cache-to: type=gha,mode=max,scope=backend
-      # One web image serves every environment: it calls the API at the relative /api/v2 and bakes in no domain
+      # The web image calls the API at the relative /api/v2 and bakes in no domain
       - uses: docker/build-push-action@v6
         with:
           context: .
@@ -51,7 +89,7 @@ jobs:
   deploy:
     needs: images
     runs-on: ubuntu-24.04
-    environment: ${{ inputs.environment }}
+    environment: production
     steps:
       - name: Deploy over SSH
         shell: bash
