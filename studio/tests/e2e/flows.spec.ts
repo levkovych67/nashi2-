@@ -1,6 +1,11 @@
 import { expect, test } from '@playwright/test'
 import { join } from 'node:path'
 import { submissionScreens } from '../../scripts/qa/submissionScenario'
+import { recordedDecisions } from './recordedDecisions'
+
+// An empty draft falls back to the variant recorded in decisions/decisions.json, then to the studio's default.
+const expected = (c: Record<string, string>, id: string, fallback: string) =>
+  c[id] || recordedDecisions[id]?.variant || fallback
 
 const combinations: Record<string, Record<string, string>> = {
   default: {},
@@ -56,12 +61,12 @@ for (const [name, choices] of Object.entries(combinations)) {
           await expect(viewport.locator('.journey-gesture')).toHaveAttribute(
             'data-trigger',
             info.project.name === 'mobile'
-              ? choices['audio.mobile-trigger'] || 'TAP_PREVIEW_AND_PLAY'
-              : 'RING_PROGRESS',
+              ? expected(choices, 'audio.mobile-trigger', 'TAP_PREVIEW_AND_PLAY')
+              : expected(choices, 'audio.desktop-hover', 'RING_PROGRESS'),
           )
         if (step === 7)
           await expect(viewport.getByRole('article')).toHaveClass(
-            new RegExp(choices['musician.preview'] || 'BOTTOM_SHEET'),
+            new RegExp(expected(choices, 'musician.preview', 'BOTTOM_SHEET')),
           )
         if (step === 8) {
           await expect(viewport.getByTestId('musician-name')).toBeVisible()
@@ -73,7 +78,7 @@ for (const [name, choices] of Object.entries(combinations)) {
           )
         if (step === 10)
           await expect(
-            viewport.getByLabel('Музикант', { exact: true }),
+            viewport.getByRole('combobox', { name: 'Музикант', exact: true }),
           ).toBeVisible()
         if (step < 8 || step === 10)
           await expect(
@@ -103,7 +108,7 @@ for (const [name, choices] of Object.entries(combinations)) {
             .locator('.scenario-frame')
             .screenshot({ path: join(info.outputDir, label + '.png') })
         },
-        choices['submission.form'] === 'WIZARD',
+        expected(choices, 'submission.form', 'SINGLE_PAGE') === 'WIZARD',
       )
       await expect(page.getByTestId('flow-progress')).toHaveAttribute(
         'data-step',

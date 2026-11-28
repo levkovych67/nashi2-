@@ -20,6 +20,9 @@ test('a shared draft survives navigation and reload and opens its fullscreen QR'
 
 test('a bad link displays a Ukrainian notice, including on the audit route', async ({ page }) => {
   await page.goto('/audit?sel=%25%25%25')
-  await expect(page.getByRole('status')).toContainText('Частину вибору з посилання не розпізнано')
+  // The audit route has its own status (the finding count), so pick the notice among the status regions.
+  await expect(
+    page.getByRole('status').filter({ hasText: 'Частину вибору з посилання не розпізнано' }),
+  ).toBeVisible()
   await expect(page).toHaveURL(/\/audit$/)
 })

@@ -5,7 +5,8 @@ test('від бази карти до повного профілю Львова
   await expect(page.getByTestId('region-bubble').first()).toBeVisible()
   await page.getByLabel('Область або місто').selectOption('LVIV')
   await page.getByLabel('Населений пункт').selectOption('Q36036')
-  const artist = page.getByLabel('Музикант', { exact: true })
+  // getByLabel compares the whole <label> text, which for a wrapped <select> includes every option.
+  const artist = page.getByRole('combobox', { name: 'Музикант', exact: true })
   await artist.selectOption({ label: 'Океан Ельзи' })
   await page.getByRole('button', { name: 'Профіль музиканта' }).click()
   await expect(
