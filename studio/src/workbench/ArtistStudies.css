@@ -64,7 +64,9 @@
   isolation: isolate;
   background: var(--land);
 }
-.artist-map-host,
+/* .artist-map scopes the host above maplibre-gl.css, whose .maplibregl-map { position: relative }
+   loads later and would otherwise collapse the host to 0px, hiding the map and its pins. */
+.artist-map .artist-map-host,
 .artist-map-fallback,
 .artist-map-fallback > svg {
   position: absolute;
