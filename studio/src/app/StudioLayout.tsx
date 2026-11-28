@@ -11,16 +11,18 @@ const sections = [
 ]
 
 export function StudioLayout() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   const content = useRef<HTMLDivElement>(null)
   const previousPath = useRef(pathname)
   useEffect(() => {
     if (pathname !== previousPath.current) {
       previousPath.current = pathname
-      window.scrollTo(0, 0)
+      // A link to an anchor (/audit#A-10) is scrolled by the page itself; this
+      // effect runs after the page's, so resetting here would undo that scroll.
+      if (!hash) window.scrollTo(0, 0)
       content.current?.focus({ preventScroll: true })
     }
-  }, [pathname])
+  }, [pathname, hash])
 
   return (
     <>
