@@ -1,0 +1,117 @@
+# Production / staging stack. Every setting comes from infra/.env (template: infra/.env.example); see infra/DEPLOY.md.
+#   docker compose -f infra/docker-compose.prod.yml up -d --build --wait     # build the images on this machine
+#   docker compose -f infra/docker-compose.prod.yml pull && … up -d --wait   # or run images a pipeline published
+# The host nginx (TLS) proxies the domain to the web container; web serves the SPA and proxies /api/ to backend.
+# Mongo and backend have no host ports. The project name differs from the local dev stack (nashi-v2), so both can run
+# on one machine.
+name: nashi-v2-prod
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: 20m
+    max-file: "5"
+
+services:
+  mongo:
+    image: mongo:8
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:?set MONGO_ROOT_USERNAME in infra/.env}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:?set MONGO_ROOT_PASSWORD in infra/.env}
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging: *logging
+
+  # Self-hosted S3 (MinIO): only with COMPOSE_PROFILES=minio in infra/.env (local runs, or a server without AWS S3).
+  # Its credentials are the backend's S3 keys.
+  minio:
+    profiles: ["minio"]
+    image: pgsty/minio:RELEASE.2026-08-04T00-00-00Z
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${NASHI_S3_ACCESS_KEY_ID:?set NASHI_S3_ACCESS_KEY_ID in infra/.env}
+      MINIO_ROOT_PASSWORD: ${NASHI_S3_SECRET_ACCESS_KEY:?set NASHI_S3_SECRET_ACCESS_KEY in infra/.env}
+    ports:
+      # Browsers load photos from here (NASHI_S3_PUBLIC_BASE_URL); on a server put it behind the host nginx
+      - "127.0.0.1:${DEPLOY_MINIO_PORT:-9100}:9000"
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9000/minio/health/live || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging: *logging
+
+  minio-init:
+    profiles: ["minio"]
+    image: pgsty/mc:RELEASE.2026-08-04T00-00-00Z
+    depends_on:
+      minio:
+        condition: service_healthy
+    restart: "no"
+    environment:
+      S3_USER: ${NASHI_S3_ACCESS_KEY_ID}
+      S3_PASSWORD: ${NASHI_S3_SECRET_ACCESS_KEY}
+      S3_BUCKET: ${NASHI_S3_BUCKET:?set NASHI_S3_BUCKET in infra/.env}
+    entrypoint:
+      - /bin/sh
+      - -c
+      # Only artists/ is public; submissions/ stays private (the bot sends those photos itself)
+      - |
+        set -e
+        mc alias set local http://minio:9000 "$$S3_USER" "$$S3_PASSWORD"
+        mc mb --ignore-existing "local/$$S3_BUCKET"
+        mc anonymous set download "local/$$S3_BUCKET/artists"
+
+  backend:
+    image: ${DEPLOY_IMAGE_PREFIX:-nashi-v2}-backend:${DEPLOY_IMAGE_TAG:-local}
+    build:
+      context: ..
+      dockerfile: infra/backend.Dockerfile
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+        required: false
+    # All backend settings (SPRING_*, NASHI_*) are read from the same file; Spring maps NASHI_S3_BUCKET to
+    # nashi.s3.bucket and so on. StartupConfigGuard stops the app when a required one is missing.
+    env_file: .env
+    environment:
+      # The image defaults to the local profile; any other profile means production rules
+      SPRING_PROFILES_ACTIVE: prod
+    logging: *logging
+
+  web:
+    image: ${DEPLOY_IMAGE_PREFIX:-nashi-v2}-web:${DEPLOY_IMAGE_TAG:-local}
+    build:
+      context: ..
+      dockerfile: infra/web.Dockerfile
+      args:
+        VITE_API_BASE_URL: /api/v2
+        VITE_SITE_BASE_URL: ${NASHI_SITE_BASE_URL:?set NASHI_SITE_BASE_URL in infra/.env}
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${DEPLOY_WEB_PORT:-4174}:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/ || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    logging: *logging
+
+volumes:
+  mongo-data:
+  minio-data:

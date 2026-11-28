@@ -19,3 +19,4 @@ test-results/
 /contracts/geo/source/
 dist-lhci/
 .lighthouseci/
+/infra/.last-good-tag

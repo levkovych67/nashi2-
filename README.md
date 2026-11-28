@@ -66,6 +66,11 @@ infra/scripts/local-up.sh --with-web   # backend і web (nginx) у Docker, web �
 Подробиці: [web/README.md](web/README.md) (змінні, e2e, візуальні еталони, дизайн, Lighthouse) ·
 [infra/LOCAL.md](infra/LOCAL.md) (локальний стек, порти, перевірка web).
 
+## Деплой
+
+[infra/DEPLOY.md](infra/DEPLOY.md): сервер, `infra/.env` (шаблон `infra/.env.example`), nginx і HTTPS, перший запуск
+продакшену, оновлення й відкат (`infra/scripts/deploy.sh`), бекапи, пайплайн `.github/workflows/deploy.yml`.
+
 
 Контракт API — `contracts/openapi.yaml` (опис і тест-вектори: `contracts/README.md`). Рішення щодо версій і
 архітектури — `docs/adr/`.
