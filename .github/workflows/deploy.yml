@@ -74,6 +74,8 @@ jobs:
           file: infra/backend.Dockerfile
           push: true
           tags: ${{ env.IMAGE_PREFIX }}-backend:${{ github.sha }}
+          # Links the GHCR package to this repository (its page, and Actions access for packages this job creates)
+          labels: org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
           cache-from: type=gha,scope=backend
           cache-to: type=gha,mode=max,scope=backend
       # The web image calls the API at the relative /api/v2 and bakes in no domain
@@ -83,6 +85,7 @@ jobs:
           file: infra/web.Dockerfile
           push: true
           tags: ${{ env.IMAGE_PREFIX }}-web:${{ github.sha }}
+          labels: org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
           cache-from: type=gha,scope=web
           cache-to: type=gha,mode=max,scope=web
 
@@ -90,6 +93,9 @@ jobs:
     needs: images
     runs-on: ubuntu-24.04
     environment: production
+    permissions:
+      contents: read
+      packages: read
     steps:
       - name: Deploy over SSH
         shell: bash
@@ -102,6 +108,8 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
           DEPLOY_DIR: ${{ vars.DEPLOY_DIR || '/opt/nashi-v2' }}
           SHA: ${{ github.sha }}
+          REGISTRY_USER: ${{ github.actor }}
+          REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           install -dm 700 ~/.ssh
@@ -110,5 +118,8 @@ jobs:
           printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
           target="$SSH_HOST"
           [[ "$target" == *@* ]] || target="$SSH_USER@$target"
+          # The GHCR packages are private: the server logs in with this job's token (it expires with the job, goes over
+          # stdin, never into the command line) for the pull and the rollback inside deploy.sh, then logs out
           ssh -i ~/.ssh/deploy -p "$SSH_PORT" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes "$target" \
-            "set -e; cd '$DEPLOY_DIR'; git fetch --quiet origin '$SHA'; git checkout --quiet --detach '$SHA'; infra/scripts/deploy.sh '$SHA'"
+            "set -e; cd '$DEPLOY_DIR'; git fetch --quiet origin '$SHA'; git checkout --quiet --detach '$SHA'; docker login ghcr.io -u '$REGISTRY_USER' --password-stdin > /dev/null; trap 'docker logout ghcr.io > /dev/null' EXIT; infra/scripts/deploy.sh '$SHA'" \
+            <<< "$REGISTRY_TOKEN"
