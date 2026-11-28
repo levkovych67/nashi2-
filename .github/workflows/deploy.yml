@@ -94,11 +94,12 @@ jobs:
       - name: Deploy over SSH
         shell: bash
         env:
-          SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
-          SSH_USER: ${{ secrets.DEPLOY_SSH_USER }}
-          SSH_PORT: ${{ secrets.DEPLOY_SSH_PORT || '22' }}
+          # DEPLOY_HOST: user@host (or a bare host, then vars.DEPLOY_USER, default deploy)
+          SSH_HOST: ${{ secrets.DEPLOY_HOST }}
+          SSH_USER: ${{ vars.DEPLOY_USER || 'deploy' }}
+          SSH_PORT: ${{ vars.DEPLOY_SSH_PORT || '22' }}
           SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          SSH_KNOWN_HOSTS: ${{ secrets.DEPLOY_SSH_KNOWN_HOSTS }}
+          SSH_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
           DEPLOY_DIR: ${{ vars.DEPLOY_DIR || '/opt/nashi-v2' }}
           SHA: ${{ github.sha }}
         run: |
@@ -107,5 +108,7 @@ jobs:
           printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy
           chmod 600 ~/.ssh/deploy
           printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          ssh -i ~/.ssh/deploy -p "$SSH_PORT" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" \
+          target="$SSH_HOST"
+          [[ "$target" == *@* ]] || target="$SSH_USER@$target"
+          ssh -i ~/.ssh/deploy -p "$SSH_PORT" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes "$target" \
             "set -e; cd '$DEPLOY_DIR'; git fetch --quiet origin '$SHA'; git checkout --quiet --detach '$SHA'; infra/scripts/deploy.sh '$SHA'"

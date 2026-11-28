@@ -106,6 +106,37 @@ sudo nginx -t && sudo systemctl reload nginx
 sudo certbot --nginx -d <домен>       # додає HTTPS і переадресацію з HTTP
 ```
 
+### Фото в MinIO на тому самому сервері (так працює nashi.now)
+
+Без AWS: MinIO запускається в стеку, nginx віддає з нього лише читання за адресою `/s3/`.
+
+У `infra/.env`:
+```
+COMPOSE_PROFILES=minio
+NASHI_S3_ENDPOINT=http://minio:9000
+NASHI_S3_PATH_STYLE_ACCESS=true
+NASHI_S3_BUCKET=nashi-v2
+NASHI_S3_REGION=us-east-1
+NASHI_S3_ACCESS_KEY_ID=<довільний логін MinIO>
+NASHI_S3_SECRET_ACCESS_KEY=<openssl rand -hex 24>
+NASHI_S3_PUBLIC_BASE_URL=https://<домен>/s3/nashi-v2
+DEPLOY_MINIO_PORT=9100
+```
+
+У блок `server` домену в nginx:
+```nginx
+    location /s3/ {
+        limit_except GET HEAD { deny all; }
+        proxy_pass http://127.0.0.1:9100/;
+        proxy_set_header Host 127.0.0.1:9100;
+        proxy_hide_header Set-Cookie;
+        add_header Cache-Control "public, max-age=86400";
+    }
+```
+
+Фото тоді живуть лише на диску сервера (Docker-том `nashi-v2-prod_minio-data`), тож їх треба бекапити разом із
+базою (розділ 8).
+
 ## 5. Перевірка
 
 ```bash
@@ -173,17 +204,20 @@ Staging немає: `main` — це продакшен. `.github/workflows/deplo
 пропускаються. Так можна пушити ще до того, як готовий сервер.
 
 **У GitHub:**
-- Settings → Secrets and variables → Actions → Variables: `DEPLOY_ENABLED=true` (коли сервер готовий),
-  за потреби `DEPLOY_DIR` (за замовчуванням `/opt/nashi-v2`).
-- Settings → Environments → `production` (створиться сам при першому деплої, але секрети краще додати заздалегідь):
+Settings → Secrets and variables → Actions:
 
 | Секрет | Що це |
 |---|---|
-| `DEPLOY_SSH_HOST` | адреса сервера |
-| `DEPLOY_SSH_USER` | користувач для деплою (у групі `docker`, власник `/opt/nashi-v2`) |
+| `DEPLOY_HOST` | `користувач@сервер`, наприклад `deploy@185.233.45.191` (або лише сервер — тоді користувач зі змінної `DEPLOY_USER`) |
+| `DEPLOY_SSH_KEY` | приватний ключ цього користувача (окремий ключ лише для деплою; його публічна частина — у `~/.ssh/authorized_keys` користувача на сервері) |
+| `DEPLOY_KNOWN_HOSTS` | результат `ssh-keyscan <сервер>` |
+
+| Змінна (Variables) | Що це |
+|---|---|
+| `DEPLOY_ENABLED` | `true` — збирати образи й деплоїти; інакше лише перевірки |
+| `DEPLOY_USER` | користувач, якщо в `DEPLOY_HOST` його немає (за замовчуванням `deploy`) |
 | `DEPLOY_SSH_PORT` | порт SSH, якщо не 22 |
-| `DEPLOY_SSH_KEY` | приватний ключ цього користувача (окремий ключ лише для деплою) |
-| `DEPLOY_SSH_KNOWN_HOSTS` | результат `ssh-keyscan -p <порт> <сервер>` |
+| `DEPLOY_DIR` | каталог на сервері (за замовчуванням `/opt/nashi-v2`) |
 
 **На сервері:**
 - репозиторій склонований у `/opt/nashi-v2` (розділ 3), `infra/.env` заповнений;
