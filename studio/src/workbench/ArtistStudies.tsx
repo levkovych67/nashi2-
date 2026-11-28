@@ -461,7 +461,9 @@ function ArtistMapStudy({
           return
         }
         setHint(false)
-        setPin(p)
+        // Hover only plays, as in the flow: a card opening under the map would
+        // push the hovered pin away from the pointer and end the fragment.
+        // A click still opens the card.
         if (!p.hasAudio && !all) deck.stop()
         else if (deck.state.id !== p.id || deck.state.status !== 'playing')
           deck.toggle(p)
@@ -544,7 +546,10 @@ function ArtistMapStudy({
           {id !== 'audio.player' && (
             <small>{deck.state.clip?.attribution}</small>
           )}
-          {!pin && <button onClick={() => deck.toggle(current)}>Пауза</button>}
+          {/* On desktop the fragment plays only while the pointer rests on the pin. */}
+          {!pin && !desktop && (
+            <button onClick={() => deck.toggle(current)}>Пауза</button>
+          )}
         </div>
       )}
       {(!pin || desktop) && audio && tips[variant] && (

@@ -55,10 +55,25 @@ export function StudyCityMap({
         )
         const bounds = new lib.LngLatBounds()
         pins.forEach((p) => bounds.extend([p.lon, p.lat]))
+        let fitted: { width: number; height: number } | undefined
         const fit = () => {
           map.resize()
-          if (div.clientWidth < 135 || div.clientHeight < 110) return
-          const right = div.clientWidth > 720 ? inset + 36 : 36
+          const { clientWidth: width, clientHeight: height } = div
+          if (width < 135 || height < 110) return
+          const previous = fitted
+          fitted = { width, height }
+          if (previous?.width === width) {
+            // Only the height changed: a hint, the now-playing line or a card
+            // opened or closed under the map. Keep the pins where they are, so a
+            // hovered pin stays under the pointer, unless one would be cut off.
+            map.panBy([0, (height - previous.height) / 2], { duration: 0 })
+            const visible = pins.every((p) => {
+              const { y } = map.project([p.lon, p.lat])
+              return y >= 0 && y <= height
+            })
+            if (visible) return
+          }
+          const right = width > 720 ? inset + 36 : 36
           map.fitBounds(bounds, {
             padding: { top: 42, bottom: 52, left: 56, right },
             maxZoom: 13,
