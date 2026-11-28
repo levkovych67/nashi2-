@@ -36,13 +36,11 @@
   font: inherit;
   color: inherit;
 }
+/* Buttons stay a separate selector: inside :is() they took the (0,3,1) specificity of the
+   input:not():not() branch, which beat .sub-primary and left its light text on the light field. */
+.submission-study button,
 .submission-study
-  :is(
-    button,
-    select,
-    input:not([type='radio']):not([type='checkbox']),
-    textarea
-  ) {
+  :is(select, input:not([type='radio']):not([type='checkbox']), textarea) {
   min-height: 44px;
   border: 1px solid var(--line, #859487);
   border-radius: 3px;
